@@ -1,9 +1,0 @@
-
-> @ochotona/cli@0.1.0 format /Users/hungtran/MyApps/ocho/node/packages/cli
-> prettier --check "src/**/*.ts"
-
-Checking formatting...
-src/index.ts[2K[1G[[33mwarn[39m] src/index.ts
-[[33mwarn[39m] Code style issues found in the above file. Run Prettier with --write to fix.
-[41m[30m ELIFECYCLE [39m[49m [31mCommand failed with exit code 1.[39m
-[43m[30m WARN [39m[49m  Local package.json exists, but node_modules missing, did you mean to install?

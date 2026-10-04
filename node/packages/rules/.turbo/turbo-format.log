@@ -1,5 +1,0 @@
-
-> @ochotona/rules@0.1.0 format /Users/hungtran/MyApps/ocho/node/packages/rules
-> prettier --check "src/**/*.ts"
-
-Checking formatting...

@@ -1,7 +1,0 @@
-
-> @ochotona/cli@0.1.0 build /Users/hungtran/MyApps/ocho/node/packages/cli
-> rollup -c ../../rollup.config.base.js
-
-[36m
-[1msrc/index.ts[22m → [1mdist/index.js, dist/index.esm.js[22m...[39m
-[32mcreated [1mdist/index.js, dist/index.esm.js[22m in [1m486ms[22m[39m

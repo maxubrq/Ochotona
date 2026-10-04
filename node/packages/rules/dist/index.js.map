@@ -1,1 +1,0 @@
-{"version":3,"file":"index.js","sources":["../src/index.ts"],"sourcesContent":["export function rules() {\n  console.log('Hello from rules');\n}\n"],"names":[],"mappings":"sCAEA"}
