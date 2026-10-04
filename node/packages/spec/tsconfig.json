@@ -4,6 +4,8 @@
     "outDir": "./dist",
     "module": "ESNext",
     "moduleResolution": "Bundler",
+    "lib": ["ES2022"],
+    "types": [],
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
 }

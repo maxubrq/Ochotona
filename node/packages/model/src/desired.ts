@@ -1,3 +1,4 @@
+import type { Tolerance } from '@ochotona/spec';
 import { APPLY_TO, type ApplyTo, QUEUE_TYPES, type QueueType } from './actual';
 import type { Diag } from './diag';
 import { type ObjectRef, parseObjectSelector } from './ref';
@@ -24,7 +25,7 @@ import {
 /** Major của schema `ocho.yaml` mà gói này hỗ trợ. */
 export const SUPPORTED_SPEC_MAJOR = 0;
 
-export type Tolerance = 'strict' | 'loose' | 'undeclared';
+export type { Tolerance } from '@ochotona/spec';
 export const TOLERANCES: readonly Tolerance[] = [
   'strict',
   'loose',

@@ -1,4 +1,5 @@
 // Đơn vị và biểu diễn chung. Chuyển đổi đơn vị chỉ xảy ra ở ingest/.
+import type { ArgValue } from '@ochotona/spec';
 
 /** Thời điểm, ISO 8601 UTC có mili-giây, đuôi `Z`: `2026-10-04T01:22:10.123Z`. */
 export type Instant = string & { readonly __brand: 'Instant' };
@@ -12,22 +13,10 @@ export interface Rate {
   readonly windowSeconds: number;
 }
 
-export interface Version {
-  readonly major: number;
-  readonly minor: number;
-  readonly patch: number;
-  readonly pre?: string;
-  readonly raw: string;
-}
-
-/** Giá trị argument hoặc policy, giữ nguyên kiểu JSON. */
-export type ArgValue =
-  | string
-  | number
-  | boolean
-  | null
-  | readonly ArgValue[]
-  | { readonly [k: string]: ArgValue };
+// Kiểu và hàm phiên bản dùng chung nằm ở @ochotona/spec; model xuất lại để
+// code gọi không đổi.
+export type { ArgValue, Version } from '@ochotona/spec';
+export { compareVersion, parseVersion } from '@ochotona/spec';
 
 export type ArgMap = Readonly<Record<string, ArgValue>>;
 
@@ -72,51 +61,6 @@ export function latestInstant(xs: readonly Instant[]): Instant | undefined {
   let best: Instant | undefined;
   for (const x of xs) if (best === undefined || x > best) best = x;
   return best;
-}
-
-const VERSION_RE = /^(\d+)\.(\d+)(?:\.(\d+))?(?:-([0-9A-Za-z.-]+))?$/;
-
-/**
- * Parse phiên bản RabbitMQ; thiếu patch thì là 0; không khớp thì `null`.
- * @example parseVersion('4.3.0-rc.1') // { major: 4, minor: 3, patch: 0, pre: 'rc.1', raw: '4.3.0-rc.1' }
- */
-export function parseVersion(s: string): Version | null {
-  const m = VERSION_RE.exec(s);
-  if (!m) return null;
-  const v = {
-    major: Number(m[1]),
-    minor: Number(m[2]),
-    patch: m[3] === undefined ? 0 : Number(m[3]),
-    raw: s,
-  };
-  return m[4] === undefined ? v : { ...v, pre: m[4] };
-}
-
-/**
- * So sánh theo semver: bản có `pre` nhỏ hơn bản phát hành cùng số.
- * @example compareVersion(parseVersion('4.0.0-rc.1')!, parseVersion('4.0')!) // -1
- */
-export function compareVersion(a: Version, b: Version): -1 | 0 | 1 {
-  for (const k of ['major', 'minor', 'patch'] as const) {
-    if (a[k] !== b[k]) return a[k] < b[k] ? -1 : 1;
-  }
-  if (a.pre === b.pre) return 0;
-  if (a.pre === undefined) return 1;
-  if (b.pre === undefined) return -1;
-  const pa = a.pre.split('.');
-  const pb = b.pre.split('.');
-  for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
-    if (pa[i] === undefined) return -1;
-    if (pb[i] === undefined) return 1;
-    const na = /^\d+$/.test(pa[i]) ? Number(pa[i]) : NaN;
-    const nb = /^\d+$/.test(pb[i]) ? Number(pb[i]) : NaN;
-    if (!Number.isNaN(na) && !Number.isNaN(nb)) {
-      if (na !== nb) return na < nb ? -1 : 1;
-    } else if (!Number.isNaN(na)) return -1;
-    else if (!Number.isNaN(nb)) return 1;
-    else if (pa[i] !== pb[i]) return pa[i] < pb[i] ? -1 : 1;
-  }
-  return 0;
 }
 
 /** Số đếm hợp lệ: nguyên, ≥ 0, ≤ `Number.MAX_SAFE_INTEGER`. */

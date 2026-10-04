@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ochotona:data:codes",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["codes"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "$comment": { "type": "string" },
+    "codes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "owner", "kind", "meaning", "status"],
+        "properties": {
+          "code": { "type": "string", "pattern": "^[A-Z]{1,4}-?[0-9]{1,2}$" },
+          "owner": { "enum": ["spec-core", "tool"] },
+          "kind": {
+            "enum": [
+              "invariant",
+              "forbidden",
+              "spec-rule",
+              "tool-rule",
+              "diagnostic",
+              "assumption",
+              "test",
+              "exclusion",
+              "model-invariant",
+              "cli-invariant",
+              "lesson-error"
+            ]
+          },
+          "meaning": { "type": "string", "minLength": 1 },
+          "enforces": { "type": "string" },
+          "status": { "enum": ["active", "deprecated", "proposed"] },
+          "deprecatedAt": {
+            "type": "string",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+          }
+        },
+        "if": { "properties": { "status": { "const": "deprecated" } } },
+        "then": { "required": ["deprecatedAt"] }
+      }
+    }
+  }
+}

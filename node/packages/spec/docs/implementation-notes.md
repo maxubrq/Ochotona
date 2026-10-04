@@ -1,0 +1,52 @@
+# Ghi chú hiện thực v0.1
+
+Những chỗ mã nguồn khác hoặc thêm so với [spec](./spec.md), và lý do. Khi spec và mã khác nhau mà không có dòng ở đây, đó là lỗi.
+
+## Bổ sung so với spec
+
+| Chỗ                                               | Thay đổi                                                                                             | Lý do                                                                                                                                              |
+| ------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `registerMessages(lang, messages)`                | Xuất ra công khai; entry `i18n/en`, `i18n/vi` tự gọi khi được import                                 | `format` giữ đúng chữ ký của spec mà vẫn không kéo văn bản vào entry chính. Gọi `format` với ngôn ngữ chưa nạp thì ném lỗi nói rõ entry cần import |
+| `package.json` `sideEffects`                      | Khai `dist/i18n/*` có side effect                                                                    | Bundler không được bỏ `import '@ochotona/spec/i18n/vi'`                                                                                            |
+| `spec.json`                                       | Thêm `results`, `tolerances`, `objectKinds`, `reasonKinds`                                           | Kiểu `Result`, `Tolerance`, `ObjectKind`, `ReasonKind` sinh từ dữ liệu; `reasonKinds` quyết định khoá `reason.<kind>` bắt buộc                     |
+| `CodeEntry.kind`                                  | Thêm `lesson-error` cho LE1 đến LE20                                                                 | Spec đăng ký LE trong `codes.json` nhưng danh sách `kind` chưa có loại cho chúng                                                                   |
+| `CodeEntry.deprecatedAt`                          | Ngày dự kiến gỡ, bắt buộc khi `status: deprecated`                                                   | Chính sách deprecate của spec đòi ngày gỡ cho cả mã                                                                                                |
+| `Exclusion.rulesOutcome`                          | Tuỳ chọn; có khi và chỉ khi `scopes` chứa `rules`                                                    | Với EX2 (chỉ topology) giá trị này không có nghĩa                                                                                                  |
+| `BlindSpot`                                       | Trường `id`, `name`, `caughtBy` (`doctor`, `client`, `lint`, `decide`, `none`), `rules`, `plannedIn` | Spec chỉ cho bảng, chưa cho hình dạng                                                                                                              |
+| `i18n/glossary.json`                              | Mỗi thuật ngữ kèm danh sách bản dịch bị cấm                                                          | Test "chặn bản dịch" cần biết bản dịch nào                                                                                                         |
+| `exclusion.<MÃ>`                                  | Một câu cho mỗi loại trừ, cả hai thứ tiếng                                                           | Spec nói có văn bản nhưng chưa có trong bảng khoá                                                                                                  |
+| `AssumptionCode`                                  | GC1 đến GC19                                                                                         | Spec ví dụ tới GC17, nhưng chính spec thêm GC18, GC19                                                                                              |
+| `SeverityDef`, `QueueType`, `FixKind`, `SourceId` | Kiểu phụ xuất ra                                                                                     | Đặt tên cho kiểu đã có trong các interface của spec                                                                                                |
+
+## Quyết định nhỏ spec chưa nói
+
+- **Ajv strict trừ `strictRequired`.** Khoá trong nhánh `if/then` được khai ở `properties` của schema cha, nhưng `strictRequired` chỉ nhìn trong nhánh nên báo nhầm.
+- **`capabilitiesFor`.** Bản có `pre` luôn là `untested`, kể cả khi `major.minor` nằm trong danh sách đã test, đúng dòng `4.3.0-rc.1` của bảng test.
+- **`defaultsFor` với phiên bản nhỏ hơn `minSupported`** dùng khoảng đầu thay vì ném lỗi, giống `capabilitiesFor` của model.
+- **Khuôn câu.** Cho phép nhiều cấu trúc số nhiều trong một khuôn (N1, T1 cần hai). Nhánh số nhiều chỉ chứa chữ và `#`, không chứa tham số, để "không lồng" được hiểu chặt.
+- **Kiểm tham số luật.** Hợp các tham số của `title`, `what`, `dataSafety`, `next`, `mechanism` phải đúng bằng `params`; `action` chỉ được dùng `params` cộng `{objects}`, vì `{objects}` do bề mặt điền.
+- **`specRef` của VT, DX** trỏ về chính mã đó (`spec/0.4#VT1`). Neo này cần spec lõi 0.4.1 thêm các mã VT (đề xuất 2 của spec CLI); DX chưa có đề xuất tương ứng.
+- **`enforces`.** VT1 cưỡng chế T1, VT2 cưỡng chế T4; các luật VT, DX khác không có đối ứng.
+- **`format`** giữ `console.warn` trong bản build (terser không bỏ), vì cảnh báo rơi về tiếng Anh là hành vi của spec.
+- **Schema `report:1`.** `broker.version`, `nodes`, `metadataStore` cho phép `null` khi không đọc được; trạng thái nguồn có thêm `not_attempted` như model; `actions` tối đa 3, mức S1 đến S3; `startedAt`, `durationMs` tuỳ chọn.
+- **Schema `snapshot:1`** đóng ở vỏ ngoài; bên trong `actual` để mở vì hình dạng chi tiết do model kiểm (SNAP2, SNAP3).
+- **Schema `ocho-yaml:0.1`** chỉ phục vụ gợi ý trong editor; không diễn đạt Y4 (đúng một dạng đích), Y5, Y13.
+
+## Dữ liệu cần người duyệt
+
+- **Văn bản luật.** T2 và T5 lấy nguyên từ spec. Văn bản của 20 luật còn lại, mọi mã chẩn đoán, lý do `unknown` và loại trừ là bản nháp đầu, viết theo quy tắc của spec; cần người duyệt câu chữ, nhất là bản tiếng Việt.
+- **Tham số luật** (`params`) do bản này đặt, trừ T2 và T5. `@ochotona/rules` phải truyền đúng các tham số đó.
+- **Sổ đăng ký mã spec lõi.** Repo chưa có văn bản spec lõi 0.4, nên chỉ đăng ký những mã được nhắc trong các tab đã có. Nghĩa của A4, V1, E1 đến E3, G1 đến G14 và phần lớn CT là chỗ giữ chỗ (`Spec core … X`); tiền tố K chưa có mã nào. S1 đến S4 (số thứ tự producer) không đăng ký vì trùng mức nghiêm trọng; SQ1 đến SQ4 đăng ký với `status: proposed`.
+- **Đầu ra mẫu của tab chính** không qua `finding:1` nguyên trạng: `object` thiếu `id` và `label`. Test dùng bản đã chỉnh; mẫu `ocho.report/1` dùng mã LE thay cho `#2`.
+
+## Tình trạng so với định nghĩa hoàn thành
+
+| Mục                                                                                                                                      | Tình trạng                                                                                                 |
+| ---------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| Chín file `data/`: 22 luật, 11 khoá, 4 khoảng phiên bản, 9 loại trừ, 20 điểm mù, mọi mã                                                  | Có; mã spec lõi chỉ đủ phần repo có tài liệu (xem trên)                                                    |
+| `codegen` xanh với toàn bộ kiểm chéo                                                                                                     | Có; mỗi kiểm có một ca dữ liệu hỏng trong `test/checks.test.ts`                                            |
+| `dist` không import gì, chạy ở runtime không có `node:`                                                                                  | Có, `test/dist.test.ts` nạp bản CJS trong context `vm` trống                                               |
+| Kích thước: phần không văn bản ≤ 150 KB, mỗi ngôn ngữ ≤ 60 KB                                                                            | Có: khoảng 50 KB, 18 KB, 20 KB                                                                             |
+| Bốn schema hợp đồng; đầu ra mẫu qua được                                                                                                 | Có, với mẫu đã chỉnh như trên                                                                              |
+| Chuyển `Version`, `ArgValue`, `parseVersion`, `compareVersion`, bảng năng lực, bảng khoá, loại trừ từ model sang spec (thay đổi 1 đến 4) | Có: model phụ thuộc gói này và xuất lại; xem [ghi chú của model](../../model/docs/implementation-notes.md) |
+| Hợp đồng với `@ochotona/rules` (mức trong `severities`, tham số trong `params`)                                                          | Chưa có gói rules để chạy                                                                                  |

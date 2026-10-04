@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ochotona:data:capabilities",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["ranges"],
+  "$defs": {
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "caps": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "retry",
+        "nackCountsTowardDeliveryLimit",
+        "consumerTimeoutScope",
+        "mirroredClassicQueues",
+        "metadataStores",
+        "metadataDefault",
+        "defaults",
+        "ochoSets",
+        "endpoints"
+      ],
+      "properties": {
+        "retry": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mechanism", "transientFailure", "mainQueueDeadLetter"],
+          "properties": {
+            "mechanism": { "enum": ["dlx_ttl_tiers", "quorum_delayed_retry"] },
+            "transientFailure": {
+              "enum": ["reject_requeue_false", "reject_requeue_true"]
+            },
+            "mainQueueDeadLetter": { "enum": ["ocho.retry", "ocho.parking"] }
+          }
+        },
+        "nackCountsTowardDeliveryLimit": { "type": "boolean" },
+        "consumerTimeoutScope": { "enum": ["channel", "consumer"] },
+        "mirroredClassicQueues": { "enum": ["available", "removed"] },
+        "metadataStores": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "enum": ["mnesia", "khepri"] }
+        },
+        "metadataDefault": { "enum": ["mnesia", "khepri"] },
+        "defaults": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["classic", "quorum"],
+          "properties": {
+            "classic": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["overflow"],
+              "properties": { "overflow": { "const": "drop-head" } }
+            },
+            "quorum": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["overflow", "deadLetterStrategy", "deliveryLimit"],
+              "properties": {
+                "overflow": { "const": "drop-head" },
+                "deadLetterStrategy": { "const": "at-most-once" },
+                "deliveryLimit": { "type": ["integer", "null"], "minimum": 1 }
+              }
+            }
+          }
+        },
+        "ochoSets": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["deliveryLimit"],
+          "properties": { "deliveryLimit": { "type": "integer", "minimum": 1 } }
+        },
+        "endpoints": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["deprecatedFeaturesUsed", "vhostDefaultQueueType"],
+          "properties": {
+            "deprecatedFeaturesUsed": { "type": "boolean" },
+            "vhostDefaultQueueType": { "type": "boolean" }
+          }
+        }
+      }
+    }
+  },
+  "properties": {
+    "$schema": { "type": "string" },
+    "$comment": { "type": "string" },
+    "ranges": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["from", "caps"],
+        "properties": {
+          "from": { "$ref": "#/$defs/version" },
+          "to": { "$ref": "#/$defs/version" },
+          "caps": { "$ref": "#/$defs/caps" }
+        }
+      }
+    }
+  }
+}

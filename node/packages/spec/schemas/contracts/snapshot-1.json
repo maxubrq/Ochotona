@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ochotona:schema:snapshot:1",
+  "title": "ocho.snapshot/1",
+  "$comment": "The envelope is closed. The inner shape of actual is checked by @ochotona/model (loadSnapshot, SNAP2, SNAP3).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "tool", "takenAt", "context", "redaction", "actual"],
+  "properties": {
+    "schema": { "const": "ocho.snapshot/1" },
+    "tool": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version", "spec"],
+      "properties": {
+        "name": { "const": "ocho" },
+        "version": { "type": "string" },
+        "spec": { "type": "string" }
+      }
+    },
+    "takenAt": { "type": "string", "format": "date-time" },
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "urlHash"],
+      "properties": {
+        "name": { "type": "string" },
+        "urlHash": { "type": "string" }
+      }
+    },
+    "redaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["hosts"],
+      "properties": { "hosts": { "type": "boolean" } }
+    },
+    "actual": {
+      "type": "object",
+      "required": ["meta", "broker"],
+      "properties": {
+        "meta": { "type": "object" },
+        "broker": { "type": "object" }
+      }
+    }
+  }
+}

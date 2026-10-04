@@ -1,0 +1,192 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ochotona:schema:ocho-yaml:0.1",
+  "title": "ocho.yaml 0.1",
+  "$comment": "Editor hints only. Full validation (Y1 to Y14, including cross-references such as Y5 and Y13) is done by @ochotona/model.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["spec", "broker"],
+  "$defs": {
+    "name": { "type": "string", "minLength": 1 },
+    "vhost": { "type": "string", "minLength": 1, "default": "/" },
+    "args": { "type": "object" },
+    "tolerance": { "enum": ["strict", "loose", "undeclared"] },
+    "names": { "type": "array", "items": { "$ref": "#/$defs/name" } },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "pattern", "definition"],
+      "properties": {
+        "vhost": { "$ref": "#/$defs/vhost" },
+        "name": { "$ref": "#/$defs/name" },
+        "pattern": { "type": "string" },
+        "apply_to": {
+          "enum": [
+            "all",
+            "exchanges",
+            "queues",
+            "classic_queues",
+            "quorum_queues",
+            "streams"
+          ]
+        },
+        "priority": { "type": "integer" },
+        "definition": { "$ref": "#/$defs/args" }
+      }
+    }
+  },
+  "properties": {
+    "spec": { "type": "string", "pattern": "^[0-9]+(\\.[0-9]+)*$" },
+    "broker": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["min_version"],
+      "properties": { "min_version": { "type": "string" } }
+    },
+    "families": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["exchange", "routing_key", "queue", "members"],
+        "properties": {
+          "vhost": { "$ref": "#/$defs/vhost" },
+          "exchange": { "type": "string" },
+          "routing_key": { "type": "string" },
+          "queue": { "type": "string" },
+          "members": {
+            "oneOf": [
+              { "const": "registry" },
+              {
+                "type": "array",
+                "items": { "type": "string", "pattern": "^[^.*#/+]+$" }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "flows": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "vhost": { "$ref": "#/$defs/vhost" },
+          "tolerance": { "$ref": "#/$defs/tolerance" },
+          "family": { "type": "string" },
+          "exchange": { "type": "string" },
+          "routing_key": { "type": "string" },
+          "groups": { "$ref": "#/$defs/names" },
+          "queue": { "type": "string" }
+        }
+      }
+    },
+    "services": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["user"],
+        "properties": {
+          "user": { "$ref": "#/$defs/name" },
+          "flows": { "$ref": "#/$defs/names" }
+        }
+      }
+    },
+    "waivers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["rule", "object", "reason", "by", "until"],
+        "properties": {
+          "rule": { "type": "string", "pattern": "^[A-Z]{1,4}[0-9]{1,2}$" },
+          "object": {
+            "oneOf": [
+              { "type": "string" },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["kind"],
+                "properties": {
+                  "kind": { "type": "string" },
+                  "vhost": { "$ref": "#/$defs/vhost" },
+                  "name": { "type": "string" }
+                }
+              }
+            ]
+          },
+          "reason": { "type": "string", "minLength": 1 },
+          "by": { "type": "string", "minLength": 1 },
+          "until": {
+            "type": "string",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+          }
+        }
+      }
+    },
+    "topology": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "exchanges": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "type"],
+            "properties": {
+              "vhost": { "$ref": "#/$defs/vhost" },
+              "name": { "type": "string" },
+              "type": { "type": "string" },
+              "durable": { "type": "boolean" },
+              "auto_delete": { "type": "boolean" },
+              "internal": { "type": "boolean" },
+              "arguments": { "$ref": "#/$defs/args" },
+              "flow": { "type": "string" }
+            }
+          }
+        },
+        "queues": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name"],
+            "properties": {
+              "vhost": { "$ref": "#/$defs/vhost" },
+              "name": { "type": "string" },
+              "type": { "enum": ["classic", "quorum", "stream"] },
+              "durable": { "type": "boolean" },
+              "auto_delete": { "type": "boolean" },
+              "arguments": { "$ref": "#/$defs/args" },
+              "flow": { "type": "string" }
+            }
+          }
+        },
+        "bindings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["source", "destination"],
+            "properties": {
+              "vhost": { "$ref": "#/$defs/vhost" },
+              "source": { "type": "string" },
+              "destination": { "type": "string" },
+              "destination_type": { "enum": ["queue", "exchange"] },
+              "routing_key": { "type": "string" },
+              "arguments": { "$ref": "#/$defs/args" }
+            }
+          }
+        },
+        "policies": { "type": "array", "items": { "$ref": "#/$defs/policy" } },
+        "operator_policies": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/policy" }
+        }
+      }
+    }
+  }
+}

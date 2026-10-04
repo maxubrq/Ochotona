@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ochotona:schema:report:1",
+  "title": "ocho.report/1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "tool",
+    "broker",
+    "sources",
+    "filters",
+    "findings",
+    "actions",
+    "blindSpots",
+    "summary",
+    "exitCode"
+  ],
+  "$defs": {
+    "sourceState": {
+      "enum": ["ok", "unavailable", "forbidden", "not_attempted"]
+    },
+    "count": { "type": "integer", "minimum": 0 }
+  },
+  "properties": {
+    "schema": { "const": "ocho.report/1" },
+    "tool": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "spec"],
+      "properties": {
+        "version": { "type": "string" },
+        "spec": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+$" }
+      }
+    },
+    "broker": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "nodes", "metadataStore"],
+      "properties": {
+        "version": { "type": ["string", "null"] },
+        "nodes": { "type": ["integer", "null"], "minimum": 0 },
+        "metadataStore": { "enum": ["mnesia", "khepri", null] }
+      }
+    },
+    "sources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["http.list", "http.stats", "prometheus"],
+      "properties": {
+        "http.list": { "$ref": "#/$defs/sourceState" },
+        "http.stats": { "$ref": "#/$defs/sourceState" },
+        "prometheus": { "$ref": "#/$defs/sourceState" }
+      }
+    },
+    "filters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["vhost", "flow", "targetVersion"],
+      "properties": {
+        "vhost": { "type": ["string", "null"] },
+        "flow": { "type": ["string", "null"] },
+        "targetVersion": { "type": ["string", "null"] }
+      }
+    },
+    "startedAt": { "type": "string", "format": "date-time" },
+    "durationMs": { "$ref": "#/$defs/count" },
+    "findings": {
+      "type": "array",
+      "items": { "$ref": "urn:ochotona:schema:finding:1" }
+    },
+    "actions": {
+      "type": "array",
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["rule", "severity", "objects", "text"],
+        "properties": {
+          "rule": { "type": "string", "pattern": "^[A-Z]{1,4}[0-9]{1,2}$" },
+          "severity": { "enum": ["S1", "S2", "S3"] },
+          "objects": { "type": "integer", "minimum": 1 },
+          "text": { "type": "string" }
+        }
+      }
+    },
+    "blindSpots": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^LE[0-9]+$" }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fail", "pass", "not_checked", "not_applicable", "waived"],
+      "properties": {
+        "fail": { "$ref": "#/$defs/count" },
+        "pass": { "$ref": "#/$defs/count" },
+        "not_checked": { "$ref": "#/$defs/count" },
+        "not_applicable": { "$ref": "#/$defs/count" },
+        "waived": { "$ref": "#/$defs/count" }
+      }
+    },
+    "exitCode": { "enum": [0, 1, 2, 3, 4, 5, 130] }
+  }
+}

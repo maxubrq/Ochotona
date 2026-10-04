@@ -1,5 +1,7 @@
 // Đơn vị, giá trị, phiên bản
 export * from './units';
+// Kiểu nguyên thuỷ dùng chung, nằm ở @ochotona/spec; xuất lại để code gọi không đổi.
+export type { Severity, ObjectKind } from '@ochotona/spec';
 export type { Diag } from './diag';
 
 // Observed: known, unknown, isKnown, map, all, firstKnown, derive, rootReason, displayOr

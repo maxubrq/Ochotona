@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ochotona:data:keys",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["keys"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "$comment": { "type": "string" },
+    "keys": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "canonical",
+          "appliesTo",
+          "resolution",
+          "valueType",
+          "operatorPolicyAllowed",
+          "usedBy"
+        ],
+        "properties": {
+          "canonical": { "type": "string", "pattern": "^[a-z][a-z-]*$" },
+          "argument": { "type": "string", "minLength": 1 },
+          "policy": { "type": "string", "minLength": 1 },
+          "appliesTo": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": { "enum": ["exchange", "classic", "quorum", "stream"] }
+          },
+          "resolution": {
+            "enum": ["argument_wins", "lower_wins", "argument_only"]
+          },
+          "valueType": { "enum": ["string", "integer", "enum"] },
+          "enum": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": { "type": "string" }
+          },
+          "unit": { "enum": ["ms", "bytes", "count"] },
+          "operatorPolicyAllowed": { "type": "boolean" },
+          "usedBy": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": { "type": "string" }
+          },
+          "assumption": { "type": "string", "pattern": "^GC[0-9]+$" }
+        },
+        "allOf": [
+          {
+            "if": { "properties": { "valueType": { "const": "enum" } } },
+            "then": { "required": ["enum"] },
+            "else": { "not": { "required": ["enum"] } }
+          },
+          {
+            "if": { "properties": { "valueType": { "const": "integer" } } },
+            "then": { "required": ["unit"] },
+            "else": { "not": { "required": ["unit"] } }
+          },
+          {
+            "if": {
+              "properties": { "resolution": { "const": "argument_only" } }
+            },
+            "then": {
+              "required": ["argument"],
+              "not": { "required": ["policy"] }
+            },
+            "else": { "required": ["policy"] }
+          }
+        ]
+      }
+    }
+  }
+}

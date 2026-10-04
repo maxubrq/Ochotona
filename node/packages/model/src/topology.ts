@@ -1,3 +1,4 @@
+import { type Exclusion, exclusionsFor } from '@ochotona/spec';
 import type { Actual, ApplyTo, QueueType } from './actual';
 import { type Observed, all, known } from './observed';
 import { type ObjectRef, argsKey, compareStr, refKey, stableJson } from './ref';
@@ -188,34 +189,57 @@ function withoutFlow<T extends { flow?: string }>(x: T): Omit<T, 'flow'> {
   return rest;
 }
 
+type ExclusionTarget = {
+  readonly name?: string;
+  readonly exclusive?: boolean;
+  readonly source?: string;
+  readonly queue?: string;
+  readonly hasOutgoingBindings?: boolean;
+};
+
 /**
- * Chuẩn hoá trước khi so: bỏ exchange `""` và `amq.*`, queue exclusive,
- * `amq.gen-*`, `mqtt-subscription-*`, binding từ exchange mặc định; bỏ `flow`;
+ * Đối tượng có khớp một loại trừ hệ thống không. Điều kiện trong `match` là AND;
+ * trường mà đối tượng không mang thì không khớp.
+ * @example matchesExclusion(exclusionsFor('queue', 'topology')[1], { name: 'amq.gen-x' }) // true
+ */
+export function matchesExclusion(x: Exclusion, o: ExclusionTarget): boolean {
+  const m = x.match;
+  if (m.nameEquals !== undefined && o.name !== m.nameEquals) return false;
+  if (m.namePrefix !== undefined && !o.name?.startsWith(m.namePrefix))
+    return false;
+  if (m.exclusive !== undefined && o.exclusive !== m.exclusive) return false;
+  if (m.sourceEquals !== undefined && o.source !== m.sourceEquals) return false;
+  if (m.queueEquals !== undefined && o.queue !== m.queueEquals) return false;
+  if (
+    m.hasOutgoingBindings !== undefined &&
+    o.hasOutgoingBindings !== m.hasOutgoingBindings
+  )
+    return false;
+  return true;
+}
+
+const keep =
+  (kind: Exclusion['kind']) =>
+  (o: ExclusionTarget): boolean =>
+    !exclusionsFor(kind, 'topology').some((x) => matchesExclusion(x, o));
+
+/**
+ * Chuẩn hoá trước khi so: bỏ đối tượng khớp loại trừ hệ thống phạm vi
+ * `topology` của `@ochotona/spec` (EX1, EX2, EX4, EX5, EX6, EX8); bỏ `flow`;
  * sắp theo `refKey`. Không ép kiểu, không thêm mặc định.
  */
 export function normalizeTopology(t: Topology): Topology {
   return {
     exchanges: sortSection(
       'exchanges',
-      t.exchanges
-        .filter((e) => e.name !== '' && !e.name.startsWith('amq.'))
-        .map(withoutFlow),
+      t.exchanges.filter(keep('exchange')).map(withoutFlow),
     ),
     queues: sortSection(
       'queues',
-      t.queues
-        // Queue exclusive đã bị bỏ ở topologyFromActual vì TopoQueue không mang trường đó.
-        .filter(
-          (q) =>
-            !q.name.startsWith('amq.gen-') &&
-            !q.name.startsWith('mqtt-subscription-'),
-        )
-        .map(withoutFlow),
+      // Queue exclusive (EX4) đã bị bỏ ở topologyFromActual vì TopoQueue không mang trường đó.
+      t.queues.filter(keep('queue')).map(withoutFlow),
     ),
-    bindings: sortSection(
-      'bindings',
-      t.bindings.filter((b) => b.source !== ''),
-    ),
+    bindings: sortSection('bindings', t.bindings.filter(keep('binding'))),
     policies: sortSection('policies', t.policies),
     operatorPolicies: sortSection('operatorPolicies', t.operatorPolicies),
   };

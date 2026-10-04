@@ -2,7 +2,7 @@
 
 Lõi thuần của Ocho. Gói định nghĩa broker RabbitMQ trông như thế nào (`Actual`) và người dùng muốn gì (`Desired`). Trên hai thứ đó, nó tính giá trị hiệu lực, chuẩn hoá topology, diff, và lưu, nạp ảnh chụp.
 
-Gói không có I/O, không đọc đồng hồ, không gọi mạng. Phụ thuộc lúc chạy duy nhất là `node:crypto`.
+Gói không có I/O, không đọc đồng hồ, không gọi mạng. Phụ thuộc lúc chạy là `@ochotona/spec` (bảng khoá, bảng năng lực, loại trừ hệ thống, kiểu phiên bản) và `node:crypto`.
 
 ```
 spec ← model ← rules, broker, compiler ← cli
@@ -62,7 +62,7 @@ flows.toleranceOf({ kind: 'queue', vhost: '/', name: 'orders' }); // 'strict' | 
 ```
 src/
   units.ts observed.ts ref.ts     đơn vị, Observed, định danh đối tượng
-  actual.ts caps.ts               kiểu của Actual, bảng năng lực theo phiên bản
+  actual.ts caps.ts               kiểu của Actual, bảng năng lực dựng từ spec
   ingest/                         JSON của HTTP API và văn bản Prometheus → Actual
   build-actual.ts derive.ts       dựng Actual và mọi phép suy ra
   effective.ts                    chọn policy, gộp giá trị hiệu lực, tự kiểm với broker

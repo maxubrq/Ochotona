@@ -1,0 +1,114 @@
+// Sinh bởi scripts/codegen.ts từ data/. Không sửa tay.
+
+import type { BlindSpot } from '../types';
+
+export const BLIND_SPOTS = [
+  {
+    id: 'LE1',
+    name: 'Publishing without confirms',
+    caughtBy: 'doctor',
+    rules: ['R1'],
+  },
+  { id: 'LE2', name: 'Dual write', caughtBy: 'client', rules: [] },
+  {
+    id: 'LE3',
+    name: 'Unroutable messages not handled',
+    caughtBy: 'doctor',
+    rules: ['T2'],
+  },
+  {
+    id: 'LE4',
+    name: 'Auto-ack in a strict flow',
+    caughtBy: 'doctor',
+    rules: ['C1'],
+  },
+  { id: 'LE5', name: 'Ack before commit', caughtBy: 'client', rules: [] },
+  { id: 'LE6', name: 'Non-idempotent consumer', caughtBy: 'client', rules: [] },
+  {
+    id: 'LE7',
+    name: 'Classic queue for data that must not be lost',
+    caughtBy: 'doctor',
+    rules: ['T1', 'VT1'],
+  },
+  {
+    id: 'LE8',
+    name: 'Relying on global ordering',
+    caughtBy: 'none',
+    rules: [],
+  },
+  {
+    id: 'LE9',
+    name: 'At-most-once dead-lettering',
+    caughtBy: 'doctor',
+    rules: ['T4', 'T5', 'VT2'],
+  },
+  {
+    id: 'LE10',
+    name: 'Not handling the UNKNOWN outcome',
+    caughtBy: 'client',
+    rules: [],
+  },
+  {
+    id: 'LE11',
+    name: 'Immediate requeue on failure',
+    caughtBy: 'doctor',
+    rules: ['F4'],
+  },
+  {
+    id: 'LE12',
+    name: 'Prefetch 0 or 1 without measuring',
+    caughtBy: 'doctor',
+    rules: ['C2'],
+  },
+  {
+    id: 'LE13',
+    name: 'One connection per message',
+    caughtBy: 'doctor',
+    rules: ['DX3'],
+  },
+  {
+    id: 'LE14',
+    name: 'Sharing a channel across threads',
+    caughtBy: 'lint',
+    rules: [],
+    plannedIn: '0.2',
+  },
+  {
+    id: 'LE15',
+    name: 'Publisher and consumer on one connection',
+    caughtBy: 'doctor',
+    rules: ['N1'],
+  },
+  {
+    id: 'LE16',
+    name: 'Queue used as storage',
+    caughtBy: 'doctor',
+    rules: ['DX1', 'T3'],
+  },
+  {
+    id: 'LE17',
+    name: 'Per-message TTL for retry',
+    caughtBy: 'lint',
+    rules: [],
+    plannedIn: '0.2',
+  },
+  {
+    id: 'LE18',
+    name: 'Unbounded dynamic queue creation',
+    caughtBy: 'doctor',
+    rules: ['DX3'],
+  },
+  {
+    id: 'LE19',
+    name: 'Cluster spread across regions',
+    caughtBy: 'none',
+    rules: [],
+  },
+  {
+    id: 'LE20',
+    name: 'RabbitMQ as synchronous RPC for everything',
+    caughtBy: 'decide',
+    rules: [],
+    plannedIn: '0.2',
+  },
+] as const satisfies readonly BlindSpot[];

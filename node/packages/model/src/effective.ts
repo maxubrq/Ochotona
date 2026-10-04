@@ -9,6 +9,13 @@ import type {
   QueueType,
   ReadAnomaly,
 } from './actual';
+import {
+  type KeyDef,
+  keyByArgument,
+  keyByCanonical,
+  keyByPolicy,
+  keys,
+} from '@ochotona/spec';
 import type { Capabilities } from './caps';
 import { type Observed, known, unknown } from './observed';
 import { compareStr, stableJson } from './ref';
@@ -19,90 +26,26 @@ import {
   latestInstant,
 } from './units';
 
-type MergeRule = 'argument_wins' | 'lower_wins' | 'argument_only';
+// Bảng khoá (giả định GC10) là `keys.json` của @ochotona/spec; model không viết
+// cứng tên khoá nào. Khoá ngoài bảng được coi là `argument_wins`.
 
-interface KeyDef {
-  readonly key: string;
-  readonly arg: string;
-  readonly policy: string | null;
-  readonly rule: MergeRule;
-}
-
-/** Bảng khoá v0.1 (giả định GC10). */
-export const EFFECTIVE_KEYS: readonly KeyDef[] = [
-  {
-    key: 'alternate-exchange',
-    arg: 'alternate-exchange',
-    policy: 'alternate-exchange',
-    rule: 'argument_wins',
-  },
-  {
-    key: 'dead-letter-exchange',
-    arg: 'x-dead-letter-exchange',
-    policy: 'dead-letter-exchange',
-    rule: 'argument_wins',
-  },
-  {
-    key: 'dead-letter-routing-key',
-    arg: 'x-dead-letter-routing-key',
-    policy: 'dead-letter-routing-key',
-    rule: 'argument_wins',
-  },
-  {
-    key: 'dead-letter-strategy',
-    arg: 'x-dead-letter-strategy',
-    policy: 'dead-letter-strategy',
-    rule: 'argument_wins',
-  },
-  {
-    key: 'overflow',
-    arg: 'x-overflow',
-    policy: 'overflow',
-    rule: 'argument_wins',
-  },
-  {
-    key: 'max-length',
-    arg: 'x-max-length',
-    policy: 'max-length',
-    rule: 'lower_wins',
-  },
-  {
-    key: 'max-length-bytes',
-    arg: 'x-max-length-bytes',
-    policy: 'max-length-bytes',
-    rule: 'lower_wins',
-  },
-  {
-    key: 'message-ttl',
-    arg: 'x-message-ttl',
-    policy: 'message-ttl',
-    rule: 'lower_wins',
-  },
-  { key: 'expires', arg: 'x-expires', policy: 'expires', rule: 'lower_wins' },
-  {
-    key: 'delivery-limit',
-    arg: 'x-delivery-limit',
-    policy: 'delivery-limit',
-    rule: 'lower_wins',
-  },
-  {
-    key: 'queue-type',
-    arg: 'x-queue-type',
-    policy: null,
-    rule: 'argument_only',
-  },
-];
-
-const BY_KEY = new Map(EFFECTIVE_KEYS.map((d) => [d.key, d]));
-const BY_ARG = new Map(EFFECTIVE_KEYS.map((d) => [d.arg, d]));
+/** Bảng khoá argument và policy, xuất lại từ `@ochotona/spec`. */
+export const EFFECTIVE_KEYS: readonly KeyDef[] = keys;
 
 /** Tên argument → khoá chuẩn. Ngoài bảng thì bỏ tiền tố `x-`. */
 export function canonicalArgKey(arg: string): string {
-  return BY_ARG.get(arg)?.key ?? (arg.startsWith('x-') ? arg.slice(2) : arg);
+  return (
+    keyByArgument(arg)?.canonical ?? (arg.startsWith('x-') ? arg.slice(2) : arg)
+  );
 }
 
-function ruleOf(key: string): MergeRule {
-  return BY_KEY.get(key)?.rule ?? 'argument_wins';
+/** Khoá policy → khoá chuẩn. Ngoài bảng thì giữ nguyên. */
+function canonicalPolicyKey(key: string): string {
+  return keyByPolicy(key)?.canonical ?? key;
+}
+
+function ruleOf(key: string): KeyDef['resolution'] {
+  return keyByCanonical(key)?.resolution ?? 'argument_wins';
 }
 
 export type PolicyTarget = 'exchange' | QueueType;
@@ -347,8 +290,8 @@ export function resolveEffective(
 
   // Bước 4: policy rồi operator policy.
   if (pc.policy) {
-    for (const [k, v] of Object.entries(pc.policy.definition)) {
-      slots.set(k, {
+    for (const [pk, v] of Object.entries(pc.policy.definition)) {
+      slots.set(canonicalPolicyKey(pk), {
         value: v,
         layer: 'policy',
         by: pc.policy.ref.name,
@@ -358,14 +301,19 @@ export function resolveEffective(
   }
   if (oc.policy) {
     const by = oc.policy.ref.name;
-    for (const [k, v] of Object.entries(oc.policy.definition)) {
+    for (const [pk, v] of Object.entries(oc.policy.definition)) {
+      const k = canonicalPolicyKey(pk);
       const cur = slots.get(k);
-      if (!isNum(v)) {
+      const allowed = keyByPolicy(pk)?.operatorPolicyAllowed;
+      if (allowed === false || !isNum(v)) {
         anomalies.push({
           kind: 'unexpected_operator_key',
           collection: 'operatorPolicies',
           ref: oc.policy.ref,
-          detail: `key ${k} is not numeric`,
+          detail:
+            allowed === false
+              ? `key ${pk} is not allowed in operator policies`
+              : `key ${pk} is not numeric`,
         });
       }
       if (!cur) {

@@ -1,0 +1,147 @@
+// Sinh bởi scripts/codegen.ts từ data/. Không sửa tay.
+
+import type { KeyDef } from '../types';
+
+export type CanonicalKey =
+  | 'alternate-exchange'
+  | 'dead-letter-exchange'
+  | 'dead-letter-routing-key'
+  | 'dead-letter-strategy'
+  | 'delivery-limit'
+  | 'expires'
+  | 'max-length'
+  | 'max-length-bytes'
+  | 'message-ttl'
+  | 'overflow'
+  | 'queue-type';
+
+export const KEYS = [
+  {
+    canonical: 'alternate-exchange',
+    argument: 'alternate-exchange',
+    policy: 'alternate-exchange',
+    appliesTo: ['exchange'],
+    resolution: 'argument_wins',
+    valueType: 'string',
+    operatorPolicyAllowed: false,
+    usedBy: ['L3', 'T2'],
+    assumption: 'GC10',
+  },
+  {
+    canonical: 'dead-letter-exchange',
+    argument: 'x-dead-letter-exchange',
+    policy: 'dead-letter-exchange',
+    appliesTo: ['classic', 'quorum'],
+    resolution: 'argument_wins',
+    valueType: 'string',
+    operatorPolicyAllowed: false,
+    usedBy: ['L3', 'T4', 'T5', 'T9', 'VT2'],
+    assumption: 'GC10',
+  },
+  {
+    canonical: 'dead-letter-routing-key',
+    argument: 'x-dead-letter-routing-key',
+    policy: 'dead-letter-routing-key',
+    appliesTo: ['classic', 'quorum'],
+    resolution: 'argument_wins',
+    valueType: 'string',
+    operatorPolicyAllowed: false,
+    usedBy: ['L3', 'T4', 'T5', 'T9'],
+    assumption: 'GC10',
+  },
+  {
+    canonical: 'dead-letter-strategy',
+    argument: 'x-dead-letter-strategy',
+    policy: 'dead-letter-strategy',
+    appliesTo: ['quorum'],
+    resolution: 'argument_wins',
+    valueType: 'enum',
+    enum: ['at-least-once', 'at-most-once'],
+    operatorPolicyAllowed: false,
+    usedBy: ['L3', 'T5'],
+    assumption: 'GC10',
+  },
+  {
+    canonical: 'delivery-limit',
+    argument: 'x-delivery-limit',
+    policy: 'delivery-limit',
+    appliesTo: ['quorum'],
+    resolution: 'lower_wins',
+    valueType: 'integer',
+    unit: 'count',
+    operatorPolicyAllowed: true,
+    usedBy: ['T4', 'VT2'],
+    assumption: 'GC10',
+  },
+  {
+    canonical: 'expires',
+    argument: 'x-expires',
+    policy: 'expires',
+    appliesTo: ['classic', 'quorum'],
+    resolution: 'lower_wins',
+    valueType: 'integer',
+    unit: 'ms',
+    operatorPolicyAllowed: true,
+    usedBy: ['T9'],
+    assumption: 'GC10',
+  },
+  {
+    canonical: 'max-length',
+    argument: 'x-max-length',
+    policy: 'max-length',
+    appliesTo: ['classic', 'quorum'],
+    resolution: 'lower_wins',
+    valueType: 'integer',
+    unit: 'count',
+    operatorPolicyAllowed: true,
+    usedBy: ['T3'],
+    assumption: 'GC10',
+  },
+  {
+    canonical: 'max-length-bytes',
+    argument: 'x-max-length-bytes',
+    policy: 'max-length-bytes',
+    appliesTo: ['classic', 'quorum', 'stream'],
+    resolution: 'lower_wins',
+    valueType: 'integer',
+    unit: 'bytes',
+    operatorPolicyAllowed: true,
+    usedBy: ['T3'],
+    assumption: 'GC10',
+  },
+  {
+    canonical: 'message-ttl',
+    argument: 'x-message-ttl',
+    policy: 'message-ttl',
+    appliesTo: ['classic', 'quorum'],
+    resolution: 'lower_wins',
+    valueType: 'integer',
+    unit: 'ms',
+    operatorPolicyAllowed: true,
+    usedBy: ['T9'],
+    assumption: 'GC10',
+  },
+  {
+    canonical: 'overflow',
+    argument: 'x-overflow',
+    policy: 'overflow',
+    appliesTo: ['classic', 'quorum'],
+    resolution: 'argument_wins',
+    valueType: 'enum',
+    enum: ['drop-head', 'reject-publish', 'reject-publish-dlx'],
+    operatorPolicyAllowed: false,
+    usedBy: ['T3', 'T5'],
+    assumption: 'GC10',
+  },
+  {
+    canonical: 'queue-type',
+    argument: 'x-queue-type',
+    appliesTo: ['classic', 'quorum', 'stream'],
+    resolution: 'argument_only',
+    valueType: 'enum',
+    enum: ['classic', 'quorum', 'stream'],
+    operatorPolicyAllowed: false,
+    usedBy: ['T1'],
+    assumption: 'GC10',
+  },
+] as const satisfies readonly KeyDef[];

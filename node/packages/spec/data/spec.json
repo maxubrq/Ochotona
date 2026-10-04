@@ -1,0 +1,72 @@
+{
+  "$schema": "../schemas/data/spec.schema.json",
+  "spec": "0.4.0",
+  "contracts": { "finding": 1, "report": 1, "snapshot": 1, "ochoYaml": "0.1" },
+  "broker": { "minSupported": "3.13.0", "tested": ["3.13", "4.2", "4.3"] },
+  "severities": [
+    {
+      "level": "S1",
+      "tier": 1,
+      "label": { "en": "DATA SAFETY", "vi": "AN TOÀN DỮ LIỆU" }
+    },
+    {
+      "level": "S2",
+      "tier": 2,
+      "label": { "en": "SEMANTICS", "vi": "ĐÚNG NGỮ NGHĨA" }
+    },
+    {
+      "level": "S3",
+      "tier": 3,
+      "label": { "en": "OPERABILITY", "vi": "VẬN HÀNH ĐƯỢC" }
+    },
+    {
+      "level": "S4",
+      "tier": 4,
+      "label": { "en": "PERFORMANCE", "vi": "HIỆU NĂNG" }
+    },
+    { "level": "S5", "tier": 5, "label": { "en": "COST", "vi": "CHI PHÍ" } }
+  ],
+  "results": ["fail", "pass", "not_checked", "not_applicable"],
+  "tolerances": ["strict", "loose", "undeclared"],
+  "objectKinds": [
+    "broker",
+    "node",
+    "vhost",
+    "exchange",
+    "queue",
+    "binding",
+    "policy",
+    "operator_policy",
+    "connection",
+    "channel",
+    "consumer",
+    "flow",
+    "family"
+  ],
+  "reasonKinds": [
+    "source_unavailable",
+    "forbidden",
+    "endpoint_missing",
+    "field_absent",
+    "model_mismatch",
+    "tie",
+    "regex_unsupported",
+    "inconsistent_read",
+    "depends_on",
+    "error"
+  ],
+  "exitCodes": {
+    "0": "No fail and no not_checked at or above the --fail-on level",
+    "1": "At least one fail at or above the --fail-on level",
+    "2": "No fail, but a rule at or above the --fail-on level could not be checked",
+    "3": "Cannot connect to the broker, missing read permission, or unsupported broker version",
+    "4": "Invalid arguments",
+    "5": "Internal error in Ocho",
+    "130": "Interrupted with Ctrl-C"
+  },
+  "docs": {
+    "$comment": "<org> waits for the GitHub organization name.",
+    "spec": "https://github.com/<org>/ochotona/blob/v{toolVersion}/docs/spec/{specVersion}.md#{anchor}",
+    "lesson": "https://github.com/<org>/ochotona/blob/v{toolVersion}/docs/lesson.md#{anchor}"
+  }
+}

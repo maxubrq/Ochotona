@@ -1,0 +1,21 @@
+{
+  "$schema": "../../schemas/data/glossary.schema.json",
+  "$comment": "RabbitMQ terms kept in English in vi.json, as in the core spec. A forbidden entry is a translation that must not appear.",
+  "terms": [
+    {
+      "term": "alternate exchange",
+      "forbidden": ["exchange thay thế", "exchange dự phòng", "sàn thay thế"]
+    },
+    {
+      "term": "consumer",
+      "forbidden": ["người tiêu dùng", "bên tiêu thụ", "người tiêu thụ"]
+    },
+    { "term": "dead-letter", "forbidden": ["thư chết", "thư hỏng"] },
+    {
+      "term": "exchange",
+      "forbidden": ["bộ trao đổi", "sàn giao dịch", "sàn trao đổi"]
+    },
+    { "term": "policy", "forbidden": ["chính sách"] },
+    { "term": "queue", "forbidden": ["hàng đợi", "hàng chờ"] }
+  ]
+}

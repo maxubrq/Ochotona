@@ -1,17 +1,60 @@
 {
   "name": "@ochotona/spec",
   "version": "0.1.0",
-  "description": "",
+  "description": "Bản máy đọc được của spec Ocho: danh mục luật, văn bản en/vi, bảng năng lực, khoá, loại trừ, sổ đăng ký mã, JSON Schema hợp đồng",
+  "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.js"
+    },
+    "./i18n/en": {
+      "types": "./dist/types/i18n/en.d.ts",
+      "import": "./dist/i18n/en.esm.js",
+      "require": "./dist/i18n/en.js"
+    },
+    "./i18n/vi": {
+      "types": "./dist/types/i18n/vi.d.ts",
+      "import": "./dist/i18n/vi.esm.js",
+      "require": "./dist/i18n/vi.js"
+    },
+    "./data/*": "./data/*",
+    "./schemas/*": "./schemas/*",
+    "./package.json": "./package.json"
+  },
+  "sideEffects": [
+    "./dist/i18n/*",
+    "./src/i18n/*"
+  ],
+  "files": [
+    "dist",
+    "data",
+    "schemas",
+    "docs"
+  ],
   "scripts": {
-    "build": "rollup -c ../../rollup.config.base.js",
-    "format": "prettier --check \"src/**/*.ts\"",
-    "format:fix": "prettier --write \"src/**/*.ts\""
+    "build": "rollup -c",
+    "codegen": "node scripts/codegen.ts",
+    "codegen:check": "node scripts/codegen.ts && git diff --exit-code src/gen",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc -p tsconfig.check.json",
+    "format": "prettier --check \"src/**/*.ts\" \"scripts/**/*.ts\" \"test/**/*.ts\" \"data/**/*.json\" \"schemas/**/*.json\"",
+    "format:fix": "prettier --write \"src/**/*.ts\" \"scripts/**/*.ts\" \"test/**/*.ts\" \"data/**/*.json\" \"schemas/**/*.json\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module"
+  "devDependencies": {
+    "@types/node": "^26.6.4",
+    "ajv": "^8",
+    "ajv-formats": "^3",
+    "vitest": "5.0.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
 }

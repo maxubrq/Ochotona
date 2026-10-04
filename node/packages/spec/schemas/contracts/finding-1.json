@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ochotona:schema:finding:1",
+  "title": "ocho.finding/1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "rule", "severity", "result", "object", "specRef"],
+  "properties": {
+    "schema": { "const": "ocho.finding/1" },
+    "rule": { "type": "string", "pattern": "^[A-Z]{1,4}[0-9]{1,2}$" },
+    "severity": { "enum": ["S1", "S2", "S3", "S4", "S5"] },
+    "result": { "enum": ["fail", "pass", "not_checked", "not_applicable"] },
+    "object": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "label"],
+      "properties": {
+        "id": { "type": "string" },
+        "kind": {
+          "enum": [
+            "broker",
+            "node",
+            "vhost",
+            "exchange",
+            "queue",
+            "binding",
+            "policy",
+            "operator_policy",
+            "connection",
+            "channel",
+            "consumer"
+          ]
+        },
+        "label": { "type": "string" }
+      }
+    },
+    "what": { "type": "string" },
+    "dataSafety": { "type": "string" },
+    "next": { "type": "string" },
+    "mechanism": { "type": "string" },
+    "notChecked": {
+      "type": "object",
+      "required": ["reason"],
+      "properties": {
+        "reason": { "type": "string" },
+        "path": { "type": "string" },
+        "unlock": { "type": "string" }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["kind", "source"],
+        "properties": {
+          "kind": { "enum": ["observed", "inferred"] },
+          "source": { "type": "string" },
+          "value": {},
+          "since": { "type": "string", "format": "date-time" },
+          "observedAt": { "type": "string", "format": "date-time" },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "fix": {
+      "type": "object",
+      "required": ["kind"],
+      "properties": {
+        "kind": {
+          "enum": [
+            "policy",
+            "argument_migration",
+            "client_change",
+            "config",
+            "none"
+          ]
+        },
+        "set": { "type": "object" },
+        "rabbitmqadmin": { "type": "string" }
+      }
+    },
+    "specRef": {
+      "type": "string",
+      "pattern": "^spec/[0-9]+\\.[0-9]+#[A-Z-]+[0-9]+$"
+    },
+    "waiver": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "required": ["reason", "by", "until"],
+          "properties": {
+            "reason": { "type": "string" },
+            "by": { "type": "string" },
+            "until": { "type": "string", "format": "date" }
+          }
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "result": { "const": "fail" } } },
+      "then": {
+        "required": ["what", "dataSafety", "next", "mechanism", "evidence"]
+      }
+    },
+    {
+      "if": { "properties": { "result": { "const": "not_checked" } } },
+      "then": { "required": ["notChecked"] }
+    }
+  ]
+}
