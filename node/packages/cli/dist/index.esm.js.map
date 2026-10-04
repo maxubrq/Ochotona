@@ -1,1 +1,1 @@
-{"version":3,"file":"index.esm.js","sources":["../src/index.ts"],"sourcesContent":["export function cli() {\n  return \"Hello from CLI\";\n}\n\n(() => {\n  cli();\n})()\n"],"names":[],"mappings":"SAAgB,GAAG,GAAA;AACjB,IAAA,OAAO,gBAAgB;AACzB;;"}
+{"version":3,"file":"index.esm.js","sources":["../src/index.ts"],"sourcesContent":["export function cli() {\n  return 'Hello from CLI';\n}\n\n(() => {\n  cli();\n})();\n"],"names":["cli"],"mappings":"SAAgBA,IACd,MAAO,gBACT"}

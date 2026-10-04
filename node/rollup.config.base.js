@@ -1,24 +1,28 @@
 // /Users/hungtran/MyApps/ocho/node/rollup.config.js
-import resolve from "@rollup/plugin-node-resolve";
-import commonjs from "@rollup/plugin-commonjs";
-import typescript from "@rollup/plugin-typescript";
-import { createRequire } from "module";
+import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
+import typescript from '@rollup/plugin-typescript';
+import terser from '@rollup/plugin-terser';
+import { createRequire } from 'module';
 
 // Tự động đọc file package.json của package con đang thực hiện build
 const require = createRequire(import.meta.url);
 const pkg = require(`${process.cwd()}/package.json`);
 
+const isProduction =
+  process.env.NODE_ENV === 'production' || !process.env.ROLLUP_WATCH;
+
 export default {
-  input: "src/index.ts",
+  input: 'src/index.ts',
   output: [
     {
-      file: pkg.main || "dist/index.js",
-      format: "cjs",
+      file: pkg.main || 'dist/index.js',
+      format: 'cjs',
       sourcemap: true,
     },
     {
-      file: pkg.module || "dist/index.esm.js",
-      format: "esm",
+      file: pkg.module || 'dist/index.esm.js',
+      format: 'esm',
       sourcemap: true,
     },
   ],
@@ -27,16 +31,28 @@ export default {
     ...Object.keys(pkg.peerDependencies || {}),
   ],
   plugins: [
-    resolve(),
+    resolve({
+      extensions: ['.ts', '.js', '.json'],
+    }),
     commonjs(),
     typescript({
-      tsconfig: "./tsconfig.json",
+      tsconfig: './tsconfig.json',
       declaration: true,
-      declarationDir: "./dist/types",
+      declarationDir: './dist/types',
       compilerOptions: {
-        module: "NodeNext",
-        moduleResolution: "NodeNext"
-      }
+        module: 'preserve',
+        moduleResolution: 'Bundler',
+      },
     }),
+    isProduction &&
+      terser({
+        compress: {
+          drop_console: true,
+          drop_debugger: true,
+        },
+        output: {
+          comments: false,
+        },
+      }),
   ],
 };

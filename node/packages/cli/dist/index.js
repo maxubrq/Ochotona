@@ -1,8 +1,2 @@
-'use strict';
-
-function cli() {
-    return "Hello from CLI";
-}
-
-exports.cli = cli;
+"use strict";exports.cli=function(){return"Hello from CLI"};
 //# sourceMappingURL=index.js.map
