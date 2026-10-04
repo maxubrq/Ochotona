@@ -1,12 +1,20 @@
 {
   "name": "ochotona",
   "private": true,
+  "packageManager": "pnpm@9.0.0",
+  "type": "module",
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint"
   },
   "devDependencies": {
-    "turbo": "^2.11.7"
+    "@rollup/plugin-commonjs": "^29.0.3",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-typescript": "^12.3.0",
+    "rollup": "^4.64.0",
+    "tslib": "^2.8.1",
+    "turbo": "^2.11.7",
+    "typescript": "^5.9.3"
   }
 }
