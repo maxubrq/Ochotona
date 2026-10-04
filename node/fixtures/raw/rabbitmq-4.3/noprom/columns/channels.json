@@ -1,0 +1,49 @@
+{
+  "status": "ok",
+  "pages": [
+    {
+      "body": {
+        "total_count": 2,
+        "item_count": 2,
+        "filtered_count": 2,
+        "page": 1,
+        "page_size": 500,
+        "page_count": 1,
+        "items": [
+          {
+            "connection_details": {
+              "name": "conn-1b46e98381"
+            },
+            "confirm": false,
+            "consumer_count": 1,
+            "message_stats": [],
+            "name": "conn-2e9fbbfffe",
+            "number": 1,
+            "prefetch_count": 20,
+            "user": "ocho-admin",
+            "vhost": "/"
+          },
+          {
+            "connection_details": {
+              "name": "conn-7e2ec91707"
+            },
+            "confirm": true,
+            "consumer_count": 0,
+            "message_stats": {
+              "publish": 43,
+              "publish_details": {
+                "rate": 0
+              }
+            },
+            "name": "conn-a603f4fd17",
+            "number": 1,
+            "prefetch_count": 0,
+            "user": "ocho-admin",
+            "vhost": "/"
+          }
+        ]
+      },
+      "observedAt": "2026-10-04T06:18:02.400Z"
+    }
+  ]
+}

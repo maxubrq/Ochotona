@@ -1,0 +1,37 @@
+{
+  "status": "ok",
+  "pages": [
+    {
+      "body": [
+        {
+          "arguments": {},
+          "ack_required": true,
+          "active": true,
+          "activity_status": "up",
+          "channel_details": {
+            "connection_name": "conn-1d0692f587",
+            "name": "conn-cedbbc3102",
+            "node": "rabbit@host-a34f5ea964",
+            "number": 1,
+            "peer_host": "host-56d60e71f5",
+            "peer_port": 45530,
+            "user": "ocho-admin"
+          },
+          "consumer_tag": "amq.ctag-pA9KPHCdW1Ykhi7LM3UPrQ",
+          "consumer_timeout": 1800000,
+          "exclusive": false,
+          "prefetch_count": 20,
+          "queue": {
+            "name": "ocho.traffic",
+            "vhost": "/"
+          }
+        }
+      ],
+      "observedAt": "2026-10-04T06:13:51.708Z"
+    },
+    {
+      "body": [],
+      "observedAt": "2026-10-04T06:13:51.835Z"
+    }
+  ]
+}

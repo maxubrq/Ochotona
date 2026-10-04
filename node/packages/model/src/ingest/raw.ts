@@ -18,9 +18,16 @@ import {
 /** Đầu vào thô do `@ochotona/broker` thu về. */
 export type RawResult<T = unknown> =
   | { status: 'ok'; pages: readonly { body: T; observedAt: Instant }[] }
-  | { status: 'http_error'; code: number }
-  | { status: 'network_error'; message: string }
-  | { status: 'not_attempted' };
+  | { status: 'http_error'; code: number; note?: HttpErrorNote }
+  | { status: 'network_error'; message: string; kind?: NetworkErrorKind }
+  | { status: 'not_attempted'; reason?: NotAttemptedReason };
+
+export type NetworkErrorKind = 'dns' | 'connect' | 'timeout' | 'reset' | 'tls';
+/** `code` của `http_error` có `note` là mã HTTP của response cuối cùng nhận được. */
+export type HttpErrorNote =
+  'parse_error' | 'body_too_large' | 'pagination_runaway';
+/** `capability`: phiên bản broker không có endpoint; `off`: người dùng tắt nguồn. */
+export type NotAttemptedReason = 'capability' | 'off';
 
 export interface RawResponses {
   overview: RawResult;
@@ -55,10 +62,17 @@ export function reasonOf(
       if (raw.code === 401 || raw.code === 403)
         return { kind: 'forbidden', status: raw.code };
       if (raw.code === 404) return { kind: 'endpoint_missing', status: 404 };
-      return { kind: 'error', message: `HTTP ${raw.code}` };
+      return {
+        kind: 'error',
+        message: raw.note
+          ? `${raw.note} (HTTP ${raw.code})`
+          : `HTTP ${raw.code}`,
+      };
     case 'network_error':
       return { kind: 'error', message: raw.message };
     case 'not_attempted':
+      if (raw.reason === 'capability')
+        return { kind: 'endpoint_missing', status: 404 };
       return { kind: 'source_unavailable' };
   }
 }

@@ -1,6 +1,6 @@
 {
   "$schema": "../schemas/data/capabilities.schema.json",
-  "$comment": "Every range carries every field; ranges never inherit. defaults.quorum.deliveryLimit null means unlimited, not unknown.",
+  "$comment": "Every range carries every field; ranges never inherit. defaults.quorum.deliveryLimit null means unlimited, not unknown. statsOffLists: what /api/{connections,channels,consumers} return when management_agent.disable_metrics_collector = true (observed on the SUT matrix 2026-10-04): listed = real items (fewer fields), rejected = HTTP 400, empty = HTTP 200 with an empty list that must not be trusted.",
   "ranges": [
     {
       "from": "3.13.0",
@@ -17,17 +17,26 @@
         "metadataStores": ["mnesia"],
         "metadataDefault": "mnesia",
         "defaults": {
-          "classic": { "overflow": "drop-head" },
+          "classic": {
+            "overflow": "drop-head"
+          },
           "quorum": {
             "overflow": "drop-head",
             "deadLetterStrategy": "at-most-once",
             "deliveryLimit": null
           }
         },
-        "ochoSets": { "deliveryLimit": 10 },
+        "ochoSets": {
+          "deliveryLimit": 10
+        },
         "endpoints": {
           "deprecatedFeaturesUsed": true,
           "vhostDefaultQueueType": true
+        },
+        "statsOffLists": {
+          "connections": "listed",
+          "channels": "rejected",
+          "consumers": "rejected"
         }
       }
     },
@@ -46,17 +55,26 @@
         "metadataStores": ["mnesia", "khepri"],
         "metadataDefault": "mnesia",
         "defaults": {
-          "classic": { "overflow": "drop-head" },
+          "classic": {
+            "overflow": "drop-head"
+          },
           "quorum": {
             "overflow": "drop-head",
             "deadLetterStrategy": "at-most-once",
             "deliveryLimit": 20
           }
         },
-        "ochoSets": { "deliveryLimit": 10 },
+        "ochoSets": {
+          "deliveryLimit": 10
+        },
         "endpoints": {
           "deprecatedFeaturesUsed": true,
           "vhostDefaultQueueType": true
+        },
+        "statsOffLists": {
+          "connections": "listed",
+          "channels": "rejected",
+          "consumers": "rejected"
         }
       }
     },
@@ -75,17 +93,26 @@
         "metadataStores": ["mnesia", "khepri"],
         "metadataDefault": "khepri",
         "defaults": {
-          "classic": { "overflow": "drop-head" },
+          "classic": {
+            "overflow": "drop-head"
+          },
           "quorum": {
             "overflow": "drop-head",
             "deadLetterStrategy": "at-most-once",
             "deliveryLimit": 20
           }
         },
-        "ochoSets": { "deliveryLimit": 10 },
+        "ochoSets": {
+          "deliveryLimit": 10
+        },
         "endpoints": {
           "deprecatedFeaturesUsed": true,
           "vhostDefaultQueueType": true
+        },
+        "statsOffLists": {
+          "connections": "listed",
+          "channels": "rejected",
+          "consumers": "rejected"
         }
       }
     },
@@ -103,17 +130,26 @@
         "metadataStores": ["khepri"],
         "metadataDefault": "khepri",
         "defaults": {
-          "classic": { "overflow": "drop-head" },
+          "classic": {
+            "overflow": "drop-head"
+          },
           "quorum": {
             "overflow": "drop-head",
             "deadLetterStrategy": "at-most-once",
             "deliveryLimit": 20
           }
         },
-        "ochoSets": { "deliveryLimit": 10 },
+        "ochoSets": {
+          "deliveryLimit": 10
+        },
         "endpoints": {
           "deprecatedFeaturesUsed": true,
           "vhostDefaultQueueType": true
+        },
+        "statsOffLists": {
+          "connections": "empty",
+          "channels": "empty",
+          "consumers": "rejected"
         }
       }
     }

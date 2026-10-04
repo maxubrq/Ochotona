@@ -264,6 +264,12 @@ export interface Capabilities {
     readonly deprecatedFeaturesUsed: boolean;
     readonly vhostDefaultQueueType: boolean;
   };
+  // /api/{connections,channels,consumers} khi tắt bộ thu thống kê
+  readonly statsOffLists: {
+    readonly connections: 'listed' | 'rejected' | 'empty';
+    readonly channels: 'listed' | 'rejected' | 'empty';
+    readonly consumers: 'listed' | 'rejected' | 'empty';
+  };
 }
 ```
 
@@ -283,6 +289,11 @@ export interface Capabilities {
 | `ochoSets.deliveryLimit` | 10 | 10 | 10 | 10 |
 | `endpoints.deprecatedFeaturesUsed` | true (GC17) | true | true | true |
 | `endpoints.vhostDefaultQueueType` | true (GC15) | true | true | true |
+| `statsOffLists.connections` | `listed` | `listed` | `listed` | `empty` |
+| `statsOffLists.channels` | `rejected` | `rejected` | `rejected` | `empty` |
+| `statsOffLists.consumers` | `rejected` | `rejected` | `rejected` | `rejected` |
+
+`statsOffLists` ghi điều quan sát được trên ma trận `SUT/` (4 tháng 10 năm 2026) khi đặt `management_agent.disable_metrics_collector = true`: `listed` trả phần tử thật (ít trường hơn), `rejected` trả 400, `empty` trả 200 với danh sách rỗng không đáng tin. Model đổi `empty` thành `unknown: source_unavailable`, kể cả khi danh sách có vẻ hợp lệ.
 
 Các mặc định `overflow` và `deadLetterStrategy` giống nhau ở mọi khoảng nên không lặp trong bảng; trong file JSON chúng vẫn có đủ ở từng khoảng.
 
@@ -450,6 +461,8 @@ export interface CodeEntry {
 | CX6 | File context có quyền rộng hơn 0600 |
 | CX7 | `password_command` lỗi hoặc quá 10 giây |
 | CX8 | Phiên bản broker nhỏ hơn `broker.minSupported` |
+| CX9 | Broker trả 403 ở `/api/overview`: user không có tag management nào |
+| CX10 | URL không hợp lệ: scheme khác http và https, hoặc có query, fragment |
 | OC1 | Lệnh chỉ đọc đang chạy bằng user có tag `administrator` |
 
 Mã của Tiêu chuẩn A (A1 đến A15, B, C, G1, G2) và của khung nghệ nhân không vào sổ, vì công cụ không phát ra chúng. Nhưng chữ A1 của spec lõi (luật nguồn) và A1 của Tiêu chuẩn A (ý định rõ) trùng nhau trong tài liệu; đề xuất từ nay các tài liệu viết mã Tiêu chuẩn A kèm tiền tố, ví dụ `TCA-A15`.

@@ -93,6 +93,12 @@ export interface BrokerInfo {
     readonly version: Observed<Version>;
     readonly unroutableDropped: Observed<number>;
     readonly unroutableReturned: Observed<number>;
+    /**
+     * `rabbitmq_erlang_uptime_seconds` của node trả lời Prometheus. Dự phòng cho
+     * `completeSince` của bộ đếm Prometheus khi `/api/nodes` không có uptime
+     * (thống kê tắt). Ảnh chụp cũ không có trường này.
+     */
+    readonly prometheusUptime?: Observed<Seconds>;
   };
 }
 
@@ -106,8 +112,15 @@ export interface Totals {
 
 export interface Counter {
   readonly count: number;
-  /** Bộ đếm chắc chắn đầy đủ kể từ thời điểm này (readStartedAt − uptime nhỏ nhất). */
+  /** Bộ đếm chắc chắn đầy đủ kể từ thời điểm này (readStartedAt − uptime nhỏ nhất của phạm vi). */
   readonly completeSince: Instant;
+  /**
+   * `cluster`: tổng của mọi node (`http.stats`, hoặc Prometheus trên cluster một
+   * node). `node`: Prometheus chỉ có số của node đang trả lời (GC22), con số là cận dưới.
+   */
+  readonly scope:
+    | { readonly kind: 'cluster' }
+    | { readonly kind: 'node'; readonly node: string };
 }
 
 export interface Churn {

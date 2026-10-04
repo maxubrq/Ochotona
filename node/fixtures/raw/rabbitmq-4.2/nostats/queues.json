@@ -1,0 +1,126 @@
+{
+  "status": "ok",
+  "pages": [
+    {
+      "body": {
+        "filtered_count": 5,
+        "item_count": 5,
+        "items": [
+          {
+            "arguments": {
+              "x-max-length": 10000,
+              "x-overflow": "reject-publish",
+              "x-queue-type": "classic"
+            },
+            "auto_delete": false,
+            "durable": true,
+            "effective_policy_definition": {
+              "message-ttl": 86400000
+            },
+            "exclusive": false,
+            "internal": false,
+            "internal_owner": false,
+            "name": "audit",
+            "node": "rabbit@host-b7dc58ab21",
+            "operator_policy": null,
+            "policy": "audit-ttl",
+            "state": "running",
+            "type": "classic",
+            "vhost": "/"
+          },
+          {
+            "arguments": {
+              "x-queue-type": "classic"
+            },
+            "auto_delete": false,
+            "durable": true,
+            "effective_policy_definition": {},
+            "exclusive": false,
+            "internal": false,
+            "internal_owner": false,
+            "name": "events.unrouted",
+            "node": "rabbit@host-b7dc58ab21",
+            "operator_policy": null,
+            "policy": null,
+            "state": "running",
+            "type": "classic",
+            "vhost": "/"
+          },
+          {
+            "arguments": {
+              "x-queue-type": "classic"
+            },
+            "auto_delete": true,
+            "durable": true,
+            "effective_policy_definition": {},
+            "exclusive": false,
+            "internal": false,
+            "internal_owner": false,
+            "name": "ocho.traffic",
+            "node": "rabbit@host-b7dc58ab21",
+            "operator_policy": null,
+            "policy": null,
+            "state": "running",
+            "type": "classic",
+            "vhost": "/"
+          },
+          {
+            "arguments": {
+              "x-dead-letter-exchange": "orders.dlx",
+              "x-delivery-limit": 10,
+              "x-queue-type": "quorum"
+            },
+            "auto_delete": false,
+            "delivery_limit": 10,
+            "durable": true,
+            "effective_policy_definition": {
+              "max-length": 100000
+            },
+            "exclusive": false,
+            "internal": false,
+            "internal_owner": false,
+            "leader": "rabbit@host-b7dc58ab21",
+            "members": ["rabbit@host-b7dc58ab21"],
+            "name": "orders.created",
+            "node": "rabbit@host-b7dc58ab21",
+            "online": ["rabbit@host-b7dc58ab21"],
+            "operator_policy": null,
+            "policy": "orders-limit",
+            "state": "running",
+            "type": "quorum",
+            "vhost": "payments"
+          },
+          {
+            "arguments": {
+              "x-queue-type": "quorum"
+            },
+            "auto_delete": false,
+            "delivery_limit": 20,
+            "durable": true,
+            "effective_policy_definition": {
+              "max-length": 100000
+            },
+            "exclusive": false,
+            "internal": false,
+            "internal_owner": false,
+            "leader": "rabbit@host-b7dc58ab21",
+            "members": ["rabbit@host-b7dc58ab21"],
+            "name": "orders.parking",
+            "node": "rabbit@host-b7dc58ab21",
+            "online": ["rabbit@host-b7dc58ab21"],
+            "operator_policy": null,
+            "policy": "orders-limit",
+            "state": "running",
+            "type": "quorum",
+            "vhost": "payments"
+          }
+        ],
+        "page": 1,
+        "page_count": 1,
+        "page_size": 500,
+        "total_count": 5
+      },
+      "observedAt": "2026-10-04T06:13:47.413Z"
+    }
+  ]
+}

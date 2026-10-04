@@ -15,6 +15,7 @@ import { type CapabilityTable, capabilitiesFor } from './caps';
 import { resolveEffective, selfCheck } from './effective';
 import { type Observed, all, derive, known, unknown } from './observed';
 import { refKey } from './ref';
+import { nodeOfPromPath } from './ingest/broker';
 import {
   type Version,
   compareVersion,
@@ -67,8 +68,38 @@ function counter(
       path,
     );
   }
+  // Prometheus chỉ có số của node đang trả lời; cluster một node thì như toàn cluster.
+  let scope: Counter['scope'] = { kind: 'cluster' };
+  let inScope = running;
+  if (count.prov.source === 'prometheus' && nodes.value.length > 1) {
+    const name = nodeOfPromPath(count.prov.path);
+    const node = running.find((n) => n.ref.name === name);
+    if (!node) {
+      return unknown(
+        {
+          kind: 'error',
+          message:
+            name === null
+              ? 'prometheus node unknown on a multi-node cluster'
+              : `prometheus node ${name} not among running nodes`,
+        },
+        'derived',
+        path,
+      );
+    }
+    scope = { kind: 'node', node: node.ref.name };
+    inScope = [node];
+  }
+  // Thống kê tắt thì /api/nodes không có uptime. Bộ đếm Prometheus là của
+  // đúng node trả lời, nên uptime Prometheus của node đó thay được.
+  const promUptime = base.broker.reported.prometheusUptime;
+  const useProm =
+    count.prov.source === 'prometheus' &&
+    inScope.length === 1 &&
+    inScope[0].uptime.state === 'unknown' &&
+    promUptime?.state === 'known';
   const uptimes = all(
-    running.map((n) => n.uptime),
+    useProm ? [promUptime] : inScope.map((n) => n.uptime),
     path,
   );
   if (uptimes.state === 'unknown') return uptimes;
@@ -77,7 +108,7 @@ function counter(
     instantMs(base.meta.readStartedAt) - minUptime * 1000,
   );
   return known(
-    { count: count.value, completeSince },
+    { count: count.value, completeSince, scope },
     {
       source: count.prov.source,
       path: count.prov.path,

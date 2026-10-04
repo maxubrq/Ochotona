@@ -27,6 +27,11 @@ export const CAPABILITY_RANGES = [
       },
       ochoSets: { deliveryLimit: 10 },
       endpoints: { deprecatedFeaturesUsed: true, vhostDefaultQueueType: true },
+      statsOffLists: {
+        connections: 'listed',
+        channels: 'rejected',
+        consumers: 'rejected',
+      },
     },
   },
   {
@@ -53,6 +58,11 @@ export const CAPABILITY_RANGES = [
       },
       ochoSets: { deliveryLimit: 10 },
       endpoints: { deprecatedFeaturesUsed: true, vhostDefaultQueueType: true },
+      statsOffLists: {
+        connections: 'listed',
+        channels: 'rejected',
+        consumers: 'rejected',
+      },
     },
   },
   {
@@ -79,6 +89,11 @@ export const CAPABILITY_RANGES = [
       },
       ochoSets: { deliveryLimit: 10 },
       endpoints: { deprecatedFeaturesUsed: true, vhostDefaultQueueType: true },
+      statsOffLists: {
+        connections: 'listed',
+        channels: 'rejected',
+        consumers: 'rejected',
+      },
     },
   },
   {
@@ -104,6 +119,11 @@ export const CAPABILITY_RANGES = [
       },
       ochoSets: { deliveryLimit: 10 },
       endpoints: { deprecatedFeaturesUsed: true, vhostDefaultQueueType: true },
+      statsOffLists: {
+        connections: 'empty',
+        channels: 'empty',
+        consumers: 'rejected',
+      },
     },
   },
 ] as const satisfies readonly CapabilityRange[];

@@ -30,6 +30,7 @@ import {
   parseQueue,
 } from './ingest/objects';
 import type { FieldCtx, RawResponses } from './ingest/raw';
+import { emptyButCounted, statsOffGuard } from './ingest/stats-off';
 import type { Observed } from './observed';
 import { type ObjectRef, refKey } from './ref';
 import type { Instant } from './units';
@@ -83,18 +84,52 @@ function ingestBase(raw: RawResponses, ctx: BuildContext): ActualBase {
     );
   const vh = (x: { ref: { vhost: string } }) => x.ref.vhost;
 
+  // CL2: danh sách rỗng không đáng tin thì thành unknown, không bao giờ thành [].
+  const guard = <T>(
+    collection:
+      'exchanges' | 'queues' | 'connections' | 'channels' | 'consumers',
+    endpoint: string,
+    l: IngestedList<T>,
+  ): IngestedList<T> => {
+    const replaced =
+      (collection === 'connections' ||
+      collection === 'channels' ||
+      collection === 'consumers'
+        ? statsOffGuard<T>(
+            collection,
+            raw[collection],
+            raw.overview,
+            sources,
+            ctx.caps,
+          )
+        : null) ??
+      (ctx.scope.vhosts === 'all'
+        ? emptyButCounted(
+            collection,
+            l.list,
+            l.readCount,
+            raw.overview,
+            endpoint,
+          )
+        : null);
+    return replaced ? { ...l, list: replaced } : l;
+  };
   const nodes = list('nodes', '/api/nodes', parseNode);
   const vhosts = list(
     'vhosts',
     '/api/vhosts',
     scoped(parseVhost, (v) => v.ref.name),
   );
-  const exchanges = list(
+  const exchanges = guard(
     'exchanges',
     '/api/exchanges',
-    scoped(parseExchange, vh),
+    list('exchanges', '/api/exchanges', scoped(parseExchange, vh)),
   );
-  const queues = list('queues', '/api/queues', scoped(parseQueue, vh));
+  const queues = guard(
+    'queues',
+    '/api/queues',
+    list('queues', '/api/queues', scoped(parseQueue, vh)),
+  );
   const bindings = list('bindings', '/api/bindings', scoped(parseBinding, vh));
   const policies = list(
     'policies',
@@ -106,20 +141,32 @@ function ingestBase(raw: RawResponses, ctx: BuildContext): ActualBase {
     '/api/operator-policies',
     scoped(parsePolicy('operator_policy'), vh),
   );
-  const connections = list(
+  const connections = guard(
     'connections',
     '/api/connections',
-    scoped(parseConnection, (c) => c.vhost),
+    list(
+      'connections',
+      '/api/connections',
+      scoped(parseConnection, (c) => c.vhost),
+    ),
   );
-  const channels = list(
+  const channels = guard(
     'channels',
     '/api/channels',
-    scoped(parseChannel, (c) => c.vhost),
+    list(
+      'channels',
+      '/api/channels',
+      scoped(parseChannel, (c) => c.vhost),
+    ),
   );
-  const consumers = list(
+  const consumers = guard(
     'consumers',
     '/api/consumers',
-    scoped(parseConsumer, (c) => c.queue.vhost),
+    list(
+      'consumers',
+      '/api/consumers',
+      scoped(parseConsumer, (c) => c.queue.vhost),
+    ),
   );
 
   const anomalies: ReadAnomaly[] = [

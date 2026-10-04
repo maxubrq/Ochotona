@@ -1,0 +1,121 @@
+{
+  "status": "ok",
+  "pages": [
+    {
+      "body": [
+        {
+          "cluster_state": {
+            "rabbit@full": "running"
+          },
+          "default_queue_type": "undefined",
+          "description": "",
+          "message_stats": {
+            "ack": 17,
+            "ack_details": {
+              "rate": 0
+            },
+            "confirm": 17,
+            "confirm_details": {
+              "rate": 0
+            },
+            "deliver": 17,
+            "deliver_details": {
+              "rate": 0
+            },
+            "deliver_get": 17,
+            "deliver_get_details": {
+              "rate": 0
+            },
+            "deliver_no_ack": 0,
+            "deliver_no_ack_details": {
+              "rate": 0
+            },
+            "drop_unroutable": 0,
+            "drop_unroutable_details": {
+              "rate": 0
+            },
+            "get": 0,
+            "get_details": {
+              "rate": 0
+            },
+            "get_empty": 0,
+            "get_empty_details": {
+              "rate": 0
+            },
+            "get_no_ack": 0,
+            "get_no_ack_details": {
+              "rate": 0
+            },
+            "publish": 17,
+            "publish_details": {
+              "rate": 0
+            },
+            "redeliver": 0,
+            "redeliver_details": {
+              "rate": 0
+            },
+            "return_unroutable": 0,
+            "return_unroutable_details": {
+              "rate": 0
+            }
+          },
+          "messages": 0,
+          "messages_details": {
+            "rate": 0
+          },
+          "messages_ready": 0,
+          "messages_ready_details": {
+            "rate": 0
+          },
+          "messages_unacknowledged": 0,
+          "messages_unacknowledged_details": {
+            "rate": 0
+          },
+          "metadata": {
+            "description": "",
+            "tags": []
+          },
+          "name": "/",
+          "recv_oct": 3778,
+          "recv_oct_details": {
+            "rate": 0
+          },
+          "send_oct": 4414,
+          "send_oct_details": {
+            "rate": 0
+          },
+          "tags": [],
+          "tracing": false
+        },
+        {
+          "cluster_state": {
+            "rabbit@full": "running"
+          },
+          "default_queue_type": "quorum",
+          "description": "",
+          "messages": 0,
+          "messages_details": {
+            "rate": 0
+          },
+          "messages_ready": 0,
+          "messages_ready_details": {
+            "rate": 0
+          },
+          "messages_unacknowledged": 0,
+          "messages_unacknowledged_details": {
+            "rate": 0
+          },
+          "metadata": {
+            "description": "",
+            "tags": [],
+            "default_queue_type": "quorum"
+          },
+          "name": "payments",
+          "tags": [],
+          "tracing": false
+        }
+      ],
+      "observedAt": "2026-10-04T06:15:47.701Z"
+    }
+  ]
+}

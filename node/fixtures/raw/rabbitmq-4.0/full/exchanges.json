@@ -1,0 +1,210 @@
+{
+  "status": "ok",
+  "pages": [
+    {
+      "body": {
+        "filtered_count": 19,
+        "item_count": 19,
+        "items": [
+          {
+            "arguments": {},
+            "auto_delete": false,
+            "durable": true,
+            "internal": false,
+            "name": "",
+            "type": "direct",
+            "user_who_performed_action": "rmq-internal",
+            "vhost": "/"
+          },
+          {
+            "arguments": {},
+            "auto_delete": false,
+            "durable": true,
+            "internal": false,
+            "name": "",
+            "type": "direct",
+            "user_who_performed_action": "rmq-internal",
+            "vhost": "payments"
+          },
+          {
+            "arguments": {},
+            "auto_delete": false,
+            "durable": true,
+            "internal": false,
+            "name": "amq.direct",
+            "type": "direct",
+            "user_who_performed_action": "rmq-internal",
+            "vhost": "/"
+          },
+          {
+            "arguments": {},
+            "auto_delete": false,
+            "durable": true,
+            "internal": false,
+            "name": "amq.direct",
+            "type": "direct",
+            "user_who_performed_action": "rmq-internal",
+            "vhost": "payments"
+          },
+          {
+            "arguments": {},
+            "auto_delete": false,
+            "durable": true,
+            "internal": false,
+            "name": "amq.fanout",
+            "type": "fanout",
+            "user_who_performed_action": "rmq-internal",
+            "vhost": "/"
+          },
+          {
+            "arguments": {},
+            "auto_delete": false,
+            "durable": true,
+            "internal": false,
+            "name": "amq.fanout",
+            "type": "fanout",
+            "user_who_performed_action": "rmq-internal",
+            "vhost": "payments"
+          },
+          {
+            "arguments": {},
+            "auto_delete": false,
+            "durable": true,
+            "internal": false,
+            "name": "amq.headers",
+            "type": "headers",
+            "user_who_performed_action": "rmq-internal",
+            "vhost": "/"
+          },
+          {
+            "arguments": {},
+            "auto_delete": false,
+            "durable": true,
+            "internal": false,
+            "name": "amq.headers",
+            "type": "headers",
+            "user_who_performed_action": "rmq-internal",
+            "vhost": "payments"
+          },
+          {
+            "arguments": {},
+            "auto_delete": false,
+            "durable": true,
+            "internal": false,
+            "name": "amq.match",
+            "type": "headers",
+            "user_who_performed_action": "rmq-internal",
+            "vhost": "/"
+          },
+          {
+            "arguments": {},
+            "auto_delete": false,
+            "durable": true,
+            "internal": false,
+            "name": "amq.match",
+            "type": "headers",
+            "user_who_performed_action": "rmq-internal",
+            "vhost": "payments"
+          },
+          {
+            "arguments": {},
+            "auto_delete": false,
+            "durable": true,
+            "internal": true,
+            "name": "amq.rabbitmq.trace",
+            "type": "topic",
+            "user_who_performed_action": "rmq-internal",
+            "vhost": "/"
+          },
+          {
+            "arguments": {},
+            "auto_delete": false,
+            "durable": true,
+            "internal": true,
+            "name": "amq.rabbitmq.trace",
+            "type": "topic",
+            "user_who_performed_action": "rmq-internal",
+            "vhost": "payments"
+          },
+          {
+            "arguments": {},
+            "auto_delete": false,
+            "durable": true,
+            "internal": false,
+            "name": "amq.topic",
+            "type": "topic",
+            "user_who_performed_action": "rmq-internal",
+            "vhost": "/"
+          },
+          {
+            "arguments": {},
+            "auto_delete": false,
+            "durable": true,
+            "internal": false,
+            "name": "amq.topic",
+            "type": "topic",
+            "user_who_performed_action": "rmq-internal",
+            "vhost": "payments"
+          },
+          {
+            "arguments": {},
+            "auto_delete": false,
+            "durable": true,
+            "internal": false,
+            "name": "direct",
+            "type": "direct",
+            "user_who_performed_action": "ocho-admin",
+            "vhost": "/"
+          },
+          {
+            "arguments": {
+              "alternate-exchange": "events.unrouted"
+            },
+            "auto_delete": false,
+            "durable": true,
+            "internal": false,
+            "name": "events",
+            "type": "topic",
+            "user_who_performed_action": "rmq-internal",
+            "vhost": "/"
+          },
+          {
+            "arguments": {},
+            "auto_delete": false,
+            "durable": true,
+            "internal": false,
+            "name": "events.unrouted",
+            "type": "fanout",
+            "user_who_performed_action": "rmq-internal",
+            "vhost": "/"
+          },
+          {
+            "arguments": {},
+            "auto_delete": false,
+            "durable": true,
+            "internal": false,
+            "name": "orders",
+            "type": "topic",
+            "user_who_performed_action": "rmq-internal",
+            "vhost": "payments"
+          },
+          {
+            "arguments": {},
+            "auto_delete": false,
+            "durable": true,
+            "internal": false,
+            "name": "orders.dlx",
+            "type": "fanout",
+            "user_who_performed_action": "rmq-internal",
+            "vhost": "payments"
+          }
+        ],
+        "page": 1,
+        "page_count": 1,
+        "page_size": 500,
+        "total_count": 19
+      },
+      "observedAt": "2026-10-04T06:16:47.980Z"
+    }
+  ]
+}

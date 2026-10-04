@@ -479,6 +479,20 @@
       "status": "active"
     },
     {
+      "code": "CX9",
+      "owner": "tool",
+      "kind": "diagnostic",
+      "meaning": "Broker returns 403 at /api/overview: the user has no management tag",
+      "status": "active"
+    },
+    {
+      "code": "CX10",
+      "owner": "tool",
+      "kind": "diagnostic",
+      "meaning": "Invalid broker URL: scheme other than http or https, or a query or fragment",
+      "status": "active"
+    },
+    {
       "code": "D5",
       "owner": "spec-core",
       "kind": "invariant",

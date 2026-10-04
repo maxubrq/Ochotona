@@ -1,0 +1,15 @@
+{
+  "label": "rabbitmq-4.0",
+  "variant": "nostats",
+  "recordedAt": "2026-10-04T06:16:53.294Z",
+  "brokerVersion": "4.0.9",
+  "nodes": 1,
+  "ochoVersion": "0.1.0",
+  "userTags": ["monitoring"],
+  "sources": {
+    "http.list": "ok",
+    "http.stats": "unavailable",
+    "prometheus": "ok"
+  },
+  "redacted": "hosts"
+}

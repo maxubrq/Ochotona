@@ -1,0 +1,36 @@
+{
+  "status": "ok",
+  "pages": [
+    {
+      "body": {
+        "total_count": 3,
+        "item_count": 3,
+        "filtered_count": 3,
+        "page": 1,
+        "page_size": 500,
+        "page_count": 1,
+        "items": [
+          {
+            "name": "conn-0839c246c6",
+            "vhost": "/",
+            "user": "ocho-admin",
+            "node": "rabbit@host-0f6331528b"
+          },
+          {
+            "name": "conn-0d30e0e891",
+            "vhost": "/",
+            "user": "ocho-admin",
+            "node": "rabbit@host-0f6331528b"
+          },
+          {
+            "name": "conn-158f3b5d7d",
+            "vhost": "/",
+            "user": "ocho-admin",
+            "node": "rabbit@host-0f6331528b"
+          }
+        ]
+      },
+      "observedAt": "2026-10-04T06:16:00.447Z"
+    }
+  ]
+}

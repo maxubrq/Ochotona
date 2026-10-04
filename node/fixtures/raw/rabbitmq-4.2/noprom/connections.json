@@ -1,0 +1,201 @@
+{
+  "status": "ok",
+  "pages": [
+    {
+      "body": {
+        "total_count": 3,
+        "item_count": 3,
+        "filtered_count": 3,
+        "page": 1,
+        "page_size": 500,
+        "page_count": 1,
+        "items": [
+          {
+            "auth_mechanism": "PLAIN",
+            "channel_max": 2047,
+            "channels": 0,
+            "client_properties": {
+              "capabilities": "client-408cea7ee6",
+              "connection_name": "perf-test-configuration-0",
+              "copyright": "client-6fcba80dbe",
+              "information": "client-5a480baea4",
+              "platform": "client-41b4c7e6d6",
+              "product": "RabbitMQ",
+              "version": "5.33.0"
+            },
+            "connected_at": 1791094388814,
+            "frame_max": 131072,
+            "garbage_collection": {
+              "fullsweep_after": 65535,
+              "max_heap_size": 0,
+              "min_bin_vheap_size": 46422,
+              "min_heap_size": 233,
+              "minor_gcs": 20
+            },
+            "host": "host-217152a47e",
+            "name": "conn-b354dbd531",
+            "node": "rabbit@host-a34f5ea964",
+            "peer_cert_issuer": null,
+            "peer_cert_serial_number": null,
+            "peer_cert_subject": null,
+            "peer_cert_validity": null,
+            "peer_host": "host-56d60e71f5",
+            "peer_port": 45526,
+            "port": 5672,
+            "protocol": "AMQP 0-9-1",
+            "recv_cnt": 7,
+            "recv_oct": 507,
+            "recv_oct_details": {
+              "rate": 0
+            },
+            "reductions": 25680,
+            "reductions_details": {
+              "rate": 0
+            },
+            "send_cnt": 4,
+            "send_oct": 566,
+            "send_oct_details": {
+              "rate": 0
+            },
+            "send_pend": 0,
+            "ssl": false,
+            "ssl_cipher": null,
+            "ssl_hash": null,
+            "ssl_key_exchange": null,
+            "ssl_protocol": null,
+            "state": "running",
+            "timeout": 60,
+            "type": "network",
+            "user": "ocho-admin",
+            "user_provided_name": "perf-test-configuration-0",
+            "user_who_performed_action": "ocho-admin",
+            "vhost": "/"
+          },
+          {
+            "auth_mechanism": "PLAIN",
+            "channel_max": 2047,
+            "channels": 1,
+            "client_properties": {
+              "capabilities": "client-408cea7ee6",
+              "connection_name": "perf-test-consumer-0",
+              "copyright": "client-6fcba80dbe",
+              "information": "client-5a480baea4",
+              "platform": "client-41b4c7e6d6",
+              "product": "RabbitMQ",
+              "version": "5.33.0"
+            },
+            "connected_at": 1791094388989,
+            "frame_max": 131072,
+            "garbage_collection": {
+              "fullsweep_after": 65535,
+              "max_heap_size": 0,
+              "min_bin_vheap_size": 46422,
+              "min_heap_size": 233,
+              "minor_gcs": 47
+            },
+            "host": "host-217152a47e",
+            "name": "conn-1d0692f587",
+            "node": "rabbit@host-a34f5ea964",
+            "peer_cert_issuer": null,
+            "peer_cert_serial_number": null,
+            "peer_cert_subject": null,
+            "peer_cert_validity": null,
+            "peer_host": "host-56d60e71f5",
+            "peer_port": 45530,
+            "port": 5672,
+            "protocol": "AMQP 0-9-1",
+            "recv_cnt": 88,
+            "recv_oct": 2275,
+            "recv_oct_details": {
+              "rate": 0
+            },
+            "reductions": 50713,
+            "reductions_details": {
+              "rate": 0
+            },
+            "send_cnt": 85,
+            "send_oct": 10943,
+            "send_oct_details": {
+              "rate": 0
+            },
+            "send_pend": 0,
+            "ssl": false,
+            "ssl_cipher": null,
+            "ssl_hash": null,
+            "ssl_key_exchange": null,
+            "ssl_protocol": null,
+            "state": "running",
+            "timeout": 60,
+            "type": "network",
+            "user": "ocho-admin",
+            "user_provided_name": "perf-test-consumer-0",
+            "user_who_performed_action": "ocho-admin",
+            "vhost": "/"
+          },
+          {
+            "auth_mechanism": "PLAIN",
+            "channel_max": 2047,
+            "channels": 1,
+            "client_properties": {
+              "capabilities": "client-408cea7ee6",
+              "connection_name": "perf-test-producer-0",
+              "copyright": "client-6fcba80dbe",
+              "information": "client-5a480baea4",
+              "platform": "client-41b4c7e6d6",
+              "product": "RabbitMQ",
+              "version": "5.33.0"
+            },
+            "connected_at": 1791094389223,
+            "frame_max": 131072,
+            "garbage_collection": {
+              "fullsweep_after": 65535,
+              "max_heap_size": 0,
+              "min_bin_vheap_size": 46422,
+              "min_heap_size": 233,
+              "minor_gcs": 63
+            },
+            "host": "host-217152a47e",
+            "name": "conn-fdaff51333",
+            "node": "rabbit@host-a34f5ea964",
+            "peer_cert_issuer": null,
+            "peer_cert_serial_number": null,
+            "peer_cert_subject": null,
+            "peer_cert_validity": null,
+            "peer_host": "host-56d60e71f5",
+            "peer_port": 45542,
+            "port": 5672,
+            "protocol": "AMQP 0-9-1",
+            "recv_cnt": 83,
+            "recv_oct": 8007,
+            "recv_oct_details": {
+              "rate": 0
+            },
+            "reductions": 54132,
+            "reductions_details": {
+              "rate": 0
+            },
+            "send_cnt": 80,
+            "send_oct": 2139,
+            "send_oct_details": {
+              "rate": 0
+            },
+            "send_pend": 0,
+            "ssl": false,
+            "ssl_cipher": null,
+            "ssl_hash": null,
+            "ssl_key_exchange": null,
+            "ssl_protocol": null,
+            "state": "running",
+            "timeout": 60,
+            "type": "network",
+            "user": "ocho-admin",
+            "user_provided_name": "perf-test-producer-0",
+            "user_who_performed_action": "ocho-admin",
+            "vhost": "/"
+          }
+        ]
+      },
+      "observedAt": "2026-10-04T06:13:51.707Z"
+    }
+  ]
+}

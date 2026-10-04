@@ -207,6 +207,10 @@
   "diag.CX7.next": "Run the password_command by hand and fix its output.",
   "diag.CX8.message": "RabbitMQ {version} is older than {min}, the oldest version Ocho supports.",
   "diag.CX8.next": "Upgrade the broker to {min} or later.",
+  "diag.CX9.message": "The broker rejected user {user} at /api/overview with 403: the user has no management tag.",
+  "diag.CX9.next": "Add the monitoring tag to the user: rabbitmqctl set_user_tags {user} monitoring",
+  "diag.CX10.message": "The URL {url} is not a valid management URL.",
+  "diag.CX10.next": "Use the form https://host:15671, with no query or fragment.",
   "diag.OC1.message": "A read-only command runs as {user}, which has the administrator tag.",
   "diag.OC1.next": "Create a user with only the monitoring tag for Ocho.",
 

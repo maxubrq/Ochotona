@@ -71,6 +71,8 @@ export type Code =
   | 'CX6'
   | 'CX7'
   | 'CX8'
+  | 'CX9'
+  | 'CX10'
   | 'D5'
   | 'DX1'
   | 'DX2'
@@ -214,6 +216,8 @@ export type DiagCode =
   | 'CX6'
   | 'CX7'
   | 'CX8'
+  | 'CX9'
+  | 'CX10'
   | 'OC1'
   | 'SNAP1'
   | 'SNAP2'
@@ -753,6 +757,22 @@ export const CODES = [
     owner: 'tool',
     kind: 'diagnostic',
     meaning: 'Broker version below broker.minSupported',
+    status: 'active',
+  },
+  {
+    code: 'CX9',
+    owner: 'tool',
+    kind: 'diagnostic',
+    meaning:
+      'Broker returns 403 at /api/overview: the user has no management tag',
+    status: 'active',
+  },
+  {
+    code: 'CX10',
+    owner: 'tool',
+    kind: 'diagnostic',
+    meaning:
+      'Invalid broker URL: scheme other than http or https, or a query or fragment',
     status: 'active',
   },
   {

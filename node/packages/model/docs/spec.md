@@ -202,6 +202,7 @@ export interface Totals {
 export interface Counter {
   readonly count: number;
   readonly completeSince: Instant;   // bộ đếm chắc chắn đầy đủ kể từ thời điểm này
+  readonly scope: { readonly kind: 'cluster' } | { readonly kind: 'node'; readonly node: string };
 }
 export interface Churn {
   readonly connectionCreated: Rate; readonly connectionClosed: Rate;
@@ -329,8 +330,8 @@ Mỗi trường của `Actual` có đúng một đường dẫn nguồn, hoặc 
 | `broker.version` | derived | Nhỏ nhất của `nodes[].version`; nếu không có thì `/api/overview` `rabbitmq_version` | Parse theo mục quy ước |
 | `broker.clusterName` | http.list | `/api/overview` `cluster_name` | — |
 | `broker.totals` | http.list | `/api/overview` `object_totals.{queues,exchanges,connections,channels,consumers}` | — |
-| `broker.counters.unroutableDropped` | prometheus, rồi http.stats | `rabbitmq_global_messages_unroutable_dropped_total` cộng mọi series; rồi `/api/overview` `message_stats.drop_unroutable` | `completeSince` theo mục `Actual` |
-| `broker.counters.unroutableReturned` | prometheus, rồi http.stats | `rabbitmq_global_messages_unroutable_returned_total`; rồi `message_stats.return_unroutable` | Như trên |
+| `broker.counters.unroutableDropped` | http.stats, rồi prometheus | `/api/overview` `message_stats.drop_unroutable`; rồi `rabbitmq_global_messages_unroutable_dropped_total` cộng mọi series | `completeSince` theo mục `Actual`; `scope` theo mục Prometheus của spec broker |
+| `broker.counters.unroutableReturned` | http.stats, rồi prometheus | `message_stats.return_unroutable`; rồi `rabbitmq_global_messages_unroutable_returned_total` | Như trên |
 | `broker.churn` | http.stats | `/api/overview` `churn_rates.{connection_created,connection_closed,queue_declared,queue_created,queue_deleted}_details.rate` | `Rate`, cửa sổ 5 giây |
 | `broker.featureFlags` | http.list | `/api/feature-flags` `[].{name,state}` | — |
 | `broker.metadataStore` | derived | `featureFlags.khepri_db` | `enabled` thì `khepri`, còn lại `mnesia` |

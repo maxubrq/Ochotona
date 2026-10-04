@@ -25,6 +25,7 @@
     "typescript": "^5.9.3"
   },
   "lint-staged": {
-    "*.{ts,js,json,md}": "prettier --write"
+    "*.{ts,js,json,md}": "prettier --write",
+    "fixtures/raw/**/*.{json,txt}": "node packages/broker/tools/redact-raw.ts --check-files"
   }
 }

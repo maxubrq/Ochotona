@@ -1,0 +1,30 @@
+{
+  "status": "ok",
+  "pages": [
+    {
+      "body": [
+        {
+          "vhost": "payments",
+          "name": "orders-limit",
+          "pattern": "^orders\\.",
+          "apply-to": "queues",
+          "definition": {
+            "max-length": 100000
+          },
+          "priority": 0
+        },
+        {
+          "vhost": "/",
+          "name": "audit-ttl",
+          "pattern": "^audit$",
+          "apply-to": "queues",
+          "definition": {
+            "message-ttl": 86400000
+          },
+          "priority": 1
+        }
+      ],
+      "observedAt": "2026-10-04T06:13:43.054Z"
+    }
+  ]
+}

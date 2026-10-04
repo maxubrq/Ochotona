@@ -1,0 +1,140 @@
+{
+  "status": "ok",
+  "pages": [
+    {
+      "body": {
+        "total_count": 2,
+        "item_count": 2,
+        "filtered_count": 2,
+        "page": 1,
+        "page_size": 500,
+        "page_count": 1,
+        "items": [
+          {
+            "acks_uncommitted": 0,
+            "confirm": false,
+            "connection_details": {
+              "name": "conn-08ec848fb9",
+              "peer_host": "host-3841604144",
+              "peer_port": 42658
+            },
+            "consumer_count": 1,
+            "garbage_collection": {
+              "fullsweep_after": 65535,
+              "max_heap_size": 0,
+              "min_bin_vheap_size": 46422,
+              "min_heap_size": 233,
+              "minor_gcs": 14
+            },
+            "global_prefetch_count": 0,
+            "message_stats": {
+              "ack": 27,
+              "ack_details": {
+                "rate": 2
+              },
+              "deliver": 27,
+              "deliver_details": {
+                "rate": 2
+              },
+              "deliver_get": 27,
+              "deliver_get_details": {
+                "rate": 2
+              },
+              "deliver_no_ack": 0,
+              "deliver_no_ack_details": {
+                "rate": 0
+              },
+              "get": 0,
+              "get_details": {
+                "rate": 0
+              },
+              "get_empty": 0,
+              "get_empty_details": {
+                "rate": 0
+              },
+              "get_no_ack": 0,
+              "get_no_ack_details": {
+                "rate": 0
+              },
+              "redeliver": 0,
+              "redeliver_details": {
+                "rate": 0
+              }
+            },
+            "messages_unacknowledged": 1,
+            "messages_uncommitted": 0,
+            "messages_unconfirmed": 0,
+            "name": "conn-3039cbcd8a",
+            "node": "rabbit@host-20f7610f70",
+            "number": 1,
+            "pending_raft_commands": 0,
+            "prefetch_count": 20,
+            "reductions": 11845,
+            "reductions_details": {
+              "rate": 696.2
+            },
+            "state": "running",
+            "transactional": false,
+            "user": "ocho-admin",
+            "user_who_performed_action": "ocho-admin",
+            "vhost": "/"
+          },
+          {
+            "acks_uncommitted": 0,
+            "confirm": true,
+            "connection_details": {
+              "name": "conn-ca4dddd673",
+              "peer_host": "host-3841604144",
+              "peer_port": 42668
+            },
+            "consumer_count": 0,
+            "garbage_collection": {
+              "fullsweep_after": 65535,
+              "max_heap_size": 0,
+              "min_bin_vheap_size": 46422,
+              "min_heap_size": 233,
+              "minor_gcs": 21
+            },
+            "global_prefetch_count": 0,
+            "message_stats": {
+              "confirm": 27,
+              "confirm_details": {
+                "rate": 2
+              },
+              "drop_unroutable": 0,
+              "drop_unroutable_details": {
+                "rate": 0
+              },
+              "publish": 27,
+              "publish_details": {
+                "rate": 2
+              },
+              "return_unroutable": 0,
+              "return_unroutable_details": {
+                "rate": 0
+              }
+            },
+            "messages_unacknowledged": 0,
+            "messages_uncommitted": 0,
+            "messages_unconfirmed": 0,
+            "name": "conn-567d04e187",
+            "node": "rabbit@host-20f7610f70",
+            "number": 1,
+            "pending_raft_commands": 0,
+            "prefetch_count": 0,
+            "reductions": 21305,
+            "reductions_details": {
+              "rate": 1426.4
+            },
+            "state": "running",
+            "transactional": false,
+            "user": "ocho-admin",
+            "user_who_performed_action": "ocho-admin",
+            "vhost": "/"
+          }
+        ]
+      },
+      "observedAt": "2026-10-04T06:15:48.703Z"
+    }
+  ]
+}

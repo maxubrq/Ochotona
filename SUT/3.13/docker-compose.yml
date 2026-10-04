@@ -1,0 +1,116 @@
+# Ma trận RabbitMQ 3.13: bốn biến thể nguồn dữ liệu (xem ../README.md).
+# Cổng: management 31311–31314, Prometheus 31321–31324, AMQP 31331–31334
+# theo thứ tự full, nostats, noprom, listonly.
+name: ocho-sut-313
+
+x-broker: &broker
+  image: rabbitmq:3.13-management
+  healthcheck:
+    test: ["CMD", "rabbitmq-diagnostics", "-q", "check_running"]
+    interval: 5s
+    timeout: 10s
+    retries: 30
+  deploy:
+    resources:
+      limits:
+        memory: 512m
+
+x-traffic: &traffic
+  image: pivotalrabbitmq/perf-test:latest
+  profiles: ["traffic"]
+  restart: on-failure
+
+services:
+  full:
+    <<: *broker
+    hostname: full
+    ports:
+      - "31311:15672"
+      - "31321:15692"
+      - "31331:5672"
+    volumes:
+      - ../common/conf.d/10-base.conf:/etc/rabbitmq/conf.d/10-base.conf:ro
+      - ../common/definitions.json:/etc/rabbitmq/definitions.json:ro
+      - ../common/plugins/with-prometheus:/etc/rabbitmq/enabled_plugins:ro
+
+  full-traffic:
+    <<: *traffic
+    depends_on:
+      full:
+        condition: service_healthy
+    # Một producer có confirm, một consumer: đủ để có connection, channel, consumer và thống kê.
+    command: >-
+      --uri amqp://ocho-admin:ocho-admin@full:5672/%2F
+      --queue ocho.traffic --producers 1 --consumers 1 --rate 2
+      --confirm 10 --qos 20 --flag persistent --id full
+
+  nostats:
+    <<: *broker
+    hostname: nostats
+    ports:
+      - "31312:15672"
+      - "31322:15692"
+      - "31332:5672"
+    volumes:
+      - ../common/conf.d/10-base.conf:/etc/rabbitmq/conf.d/10-base.conf:ro
+      - ../common/definitions.json:/etc/rabbitmq/definitions.json:ro
+      - ../common/plugins/with-prometheus:/etc/rabbitmq/enabled_plugins:ro
+      - ../common/nostats.conf:/etc/rabbitmq/conf.d/20-nostats.conf:ro
+
+  nostats-traffic:
+    <<: *traffic
+    depends_on:
+      nostats:
+        condition: service_healthy
+    # Một producer có confirm, một consumer: đủ để có connection, channel, consumer và thống kê.
+    command: >-
+      --uri amqp://ocho-admin:ocho-admin@nostats:5672/%2F
+      --queue ocho.traffic --producers 1 --consumers 1 --rate 2
+      --confirm 10 --qos 20 --flag persistent --id nostats
+
+  noprom:
+    <<: *broker
+    hostname: noprom
+    ports:
+      - "31313:15672"
+      - "31323:15692"
+      - "31333:5672"
+    volumes:
+      - ../common/conf.d/10-base.conf:/etc/rabbitmq/conf.d/10-base.conf:ro
+      - ../common/definitions.json:/etc/rabbitmq/definitions.json:ro
+      - ../common/plugins/without-prometheus:/etc/rabbitmq/enabled_plugins:ro
+
+  noprom-traffic:
+    <<: *traffic
+    depends_on:
+      noprom:
+        condition: service_healthy
+    # Một producer có confirm, một consumer: đủ để có connection, channel, consumer và thống kê.
+    command: >-
+      --uri amqp://ocho-admin:ocho-admin@noprom:5672/%2F
+      --queue ocho.traffic --producers 1 --consumers 1 --rate 2
+      --confirm 10 --qos 20 --flag persistent --id noprom
+
+  listonly:
+    <<: *broker
+    hostname: listonly
+    ports:
+      - "31314:15672"
+      - "31324:15692"
+      - "31334:5672"
+    volumes:
+      - ../common/conf.d/10-base.conf:/etc/rabbitmq/conf.d/10-base.conf:ro
+      - ../common/definitions.json:/etc/rabbitmq/definitions.json:ro
+      - ../common/plugins/without-prometheus:/etc/rabbitmq/enabled_plugins:ro
+      - ../common/nostats.conf:/etc/rabbitmq/conf.d/20-nostats.conf:ro
+
+  listonly-traffic:
+    <<: *traffic
+    depends_on:
+      listonly:
+        condition: service_healthy
+    # Một producer có confirm, một consumer: đủ để có connection, channel, consumer và thống kê.
+    command: >-
+      --uri amqp://ocho-admin:ocho-admin@listonly:5672/%2F
+      --queue ocho.traffic --producers 1 --consumers 1 --rate 2
+      --confirm 10 --qos 20 --flag persistent --id listonly

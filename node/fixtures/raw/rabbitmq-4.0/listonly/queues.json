@@ -1,0 +1,96 @@
+{
+  "status": "ok",
+  "pages": [
+    {
+      "body": {
+        "filtered_count": 5,
+        "item_count": 5,
+        "items": [
+          {
+            "arguments": {
+              "x-max-length": 10000,
+              "x-overflow": "reject-publish",
+              "x-queue-type": "classic"
+            },
+            "auto_delete": false,
+            "durable": true,
+            "exclusive": false,
+            "name": "audit",
+            "node": "rabbit@host-a92e5ebd65",
+            "policy": "audit-ttl",
+            "state": "running",
+            "type": "classic",
+            "vhost": "/"
+          },
+          {
+            "arguments": {
+              "x-queue-type": "classic"
+            },
+            "auto_delete": false,
+            "durable": true,
+            "exclusive": false,
+            "name": "events.unrouted",
+            "node": "rabbit@host-a92e5ebd65",
+            "state": "running",
+            "type": "classic",
+            "vhost": "/"
+          },
+          {
+            "arguments": {
+              "x-queue-type": "classic"
+            },
+            "auto_delete": true,
+            "durable": true,
+            "exclusive": false,
+            "name": "ocho.traffic",
+            "node": "rabbit@host-a92e5ebd65",
+            "state": "running",
+            "type": "classic",
+            "vhost": "/"
+          },
+          {
+            "arguments": {
+              "x-dead-letter-exchange": "orders.dlx",
+              "x-delivery-limit": 10,
+              "x-queue-type": "quorum"
+            },
+            "auto_delete": false,
+            "durable": true,
+            "exclusive": false,
+            "leader": "rabbit@host-a92e5ebd65",
+            "members": ["rabbit@host-a92e5ebd65"],
+            "name": "orders.created",
+            "node": "rabbit@host-a92e5ebd65",
+            "online": ["rabbit@host-a92e5ebd65"],
+            "policy": "orders-limit",
+            "state": "running",
+            "type": "quorum",
+            "vhost": "payments"
+          },
+          {
+            "arguments": {
+              "x-queue-type": "quorum"
+            },
+            "auto_delete": false,
+            "durable": true,
+            "exclusive": false,
+            "leader": "rabbit@host-a92e5ebd65",
+            "members": ["rabbit@host-a92e5ebd65"],
+            "name": "orders.parking",
+            "node": "rabbit@host-a92e5ebd65",
+            "online": ["rabbit@host-a92e5ebd65"],
+            "policy": "orders-limit",
+            "state": "running",
+            "type": "quorum",
+            "vhost": "payments"
+          }
+        ],
+        "page": 1,
+        "page_count": 1,
+        "page_size": 500,
+        "total_count": 5
+      },
+      "observedAt": "2026-10-04T06:16:59.923Z"
+    }
+  ]
+}

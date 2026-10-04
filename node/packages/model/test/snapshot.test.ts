@@ -8,7 +8,7 @@ import {
   loadSnapshot,
   saveSnapshot,
 } from '../src';
-import { CONN, T2, ctx, rawBroker } from './fixtures';
+import { CONN, T2, ctx, okRaw, rawBroker } from './fixtures';
 
 const opts = (redactHosts: boolean) => ({
   toolVersion: '0.1.0',
@@ -121,5 +121,49 @@ describe('ảnh chụp', () => {
       ctx({ readFinishedAt: '2026-10-04T01:22:10.500Z' as Instant }),
     );
     expect(checkInvariants(late).some((v) => v.code === 'INV3')).toBe(true);
+  });
+});
+
+describe('prometheusUptime trong ảnh chụp', () => {
+  const statsOffRaw = () => {
+    const raw = rawBroker({
+      nodes: okRaw([{ name: 'rabbit@a', running: true, type: 'disc' }]),
+      prometheus: okRaw(
+        [
+          'rabbitmq_identity_info{rabbitmq_node="rabbit@a"} 1',
+          'rabbitmq_erlang_uptime_seconds 600',
+          'rabbitmq_global_messages_unroutable_dropped_total 4',
+          'rabbitmq_global_messages_unroutable_returned_total 0',
+        ].join('\n'),
+      ),
+    });
+    const ov = {
+      ...(raw.overview as { pages: { body: Record<string, unknown> }[] })
+        .pages[0].body,
+    };
+    delete ov.message_stats;
+    delete ov.churn_rates;
+    return { ...raw, overview: okRaw(ov) };
+  };
+
+  it('lưu và nạp lại giữ được bộ đếm tính từ uptime Prometheus', () => {
+    const actual = buildActual(statsOffRaw(), ctx());
+    expect(actual.broker.counters.unroutableDropped.state).toBe('known');
+    const r = loadSnapshot(
+      saveSnapshot(actual, opts(false)),
+      DEFAULT_CAPABILITY_TABLE,
+    );
+    expect(r.ok && r.value.broker.counters.unroutableDropped).toEqual(
+      actual.broker.counters.unroutableDropped,
+    );
+  });
+
+  it('ảnh chụp cũ không có prometheusUptime vẫn nạp được', () => {
+    const doc = JSON.parse(
+      saveSnapshot(buildActual(rawBroker(), ctx()), opts(false)),
+    );
+    delete doc.actual.broker.reported.prometheusUptime;
+    const r = loadSnapshot(JSON.stringify(doc), DEFAULT_CAPABILITY_TABLE);
+    expect(r.ok).toBe(true);
   });
 });

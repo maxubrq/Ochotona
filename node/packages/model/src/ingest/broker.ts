@@ -91,8 +91,11 @@ export function sourcesOf(raw: {
   let stats: SourceState = list;
   if (raw.overview.status === 'ok') {
     const body = raw.overview.pages[raw.overview.pages.length - 1]?.body;
+    // Cùng phép thử với @ochotona/broker (GC21): cần cả hai khoá.
     stats =
-      isPlainObject(body) && 'message_stats' in body ? 'ok' : 'unavailable';
+      isPlainObject(body) && 'message_stats' in body && 'churn_rates' in body
+        ? 'ok'
+        : 'unavailable';
   }
   const p = raw.prometheus;
   const prom: SourceState =
@@ -146,6 +149,7 @@ function promCounter(raw: RawResult<string>, metric: string): Observed<number> {
     return unknown(reason, 'prometheus', path);
   }
   const text = raw.pages.map((p) => p.body).join('\n');
+  const node = prometheusNode(text);
   const sum = sumPrometheus(text, metric);
   if (sum === undefined)
     return unknown({ kind: 'field_absent' }, 'prometheus', path);
@@ -157,7 +161,53 @@ function promCounter(raw: RawResult<string>, metric: string): Observed<number> {
     );
   }
   const observedAt = raw.pages[raw.pages.length - 1].observedAt;
-  return known(sum, { source: 'prometheus', path, observedAt });
+  // Node trả lời được ghi vào đường dẫn nguồn gốc, để `deriveActual` (và ảnh
+  // chụp, vốn lưu `reported`) biết phạm vi của bộ đếm mà không thêm trường.
+  return known(sum, {
+    source: 'prometheus',
+    path: node === null ? path : `${path}{rabbitmq_node="${node}"}`,
+    observedAt,
+  });
+}
+
+/** Nhãn `rabbitmq_node` của `rabbitmq_identity_info`; `null` khi không có. */
+export function prometheusNode(text: string): string | null {
+  const m =
+    /^rabbitmq_identity_info\{[^\n]*?\brabbitmq_node="((?:[^"\\]|\\.)*)"/m.exec(
+      text,
+    );
+  return m ? m[1].replace(/\\(.)/g, '$1') : null;
+}
+
+/** Ngược của đường dẫn trên. */
+export function nodeOfPromPath(path: string): string | null {
+  const m = /\{rabbitmq_node="(.*)"\}$/.exec(path);
+  return m ? m[1] : null;
+}
+
+/** Một gauge không nhãn của node trả lời (endpoint gộp `/metrics`). */
+function promGauge(raw: RawResult<string>, metric: string): Observed<Seconds> {
+  const path = `prom:${metric}`;
+  if (raw.status !== 'ok') {
+    const reason =
+      raw.status === 'not_attempted'
+        ? { kind: 'source_unavailable' as const }
+        : reasonOf(raw);
+    return unknown(reason, 'prometheus', path);
+  }
+  const text = raw.pages.map((p) => p.body).join('\n');
+  const v = sumPrometheus(text, metric);
+  if (v === undefined)
+    return unknown({ kind: 'field_absent' }, 'prometheus', path);
+  if (v === 'invalid' || v < 0) {
+    return unknown(
+      { kind: 'error', message: 'invalid gauge value' },
+      'prometheus',
+      path,
+    );
+  }
+  const observedAt = raw.pages[raw.pages.length - 1].observedAt;
+  return known(v as Seconds, { source: 'prometheus', path, observedAt });
 }
 
 function firstKnownOf<T>(...os: Observed<T>[]): Observed<T> {
@@ -280,19 +330,24 @@ export function ingestBroker(
     churn,
     reported: {
       version: o('rabbitmq_version', 'http.list', asVersion),
+      // http.stats trước: chỉ nó gộp toàn cluster (thay đổi 1 của spec broker).
       unroutableDropped: firstKnownOf(
+        o('message_stats.drop_unroutable', 'http.stats', asCount),
         promCounter(
           raw.prometheus,
           'rabbitmq_global_messages_unroutable_dropped_total',
         ),
-        o('message_stats.drop_unroutable', 'http.stats', asCount),
+      ),
+      prometheusUptime: promGauge(
+        raw.prometheus,
+        'rabbitmq_erlang_uptime_seconds',
       ),
       unroutableReturned: firstKnownOf(
+        o('message_stats.return_unroutable', 'http.stats', asCount),
         promCounter(
           raw.prometheus,
           'rabbitmq_global_messages_unroutable_returned_total',
         ),
-        o('message_stats.return_unroutable', 'http.stats', asCount),
       ),
     },
   };

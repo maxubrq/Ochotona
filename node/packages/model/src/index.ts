@@ -21,7 +21,15 @@ export type { ObjectRef, RefKind } from './ref';
 // Kiểu dữ liệu
 export * from './actual';
 export * from './caps';
-export type { RawResult, RawResponses } from './ingest/raw';
+export type {
+  RawResult,
+  RawResponses,
+  NetworkErrorKind,
+  HttpErrorNote,
+  NotAttemptedReason,
+} from './ingest/raw';
+export { planRead, ENDPOINT_IDS } from './plan';
+export type { EndpointId, EndpointRead, ReadPlan, PlanOptions } from './plan';
 
 // Dựng
 export { buildActual } from './build-actual';

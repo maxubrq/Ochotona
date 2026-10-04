@@ -1,0 +1,17 @@
+{
+  "status": "ok",
+  "pages": [
+    {
+      "body": {
+        "total_count": 0,
+        "item_count": 0,
+        "filtered_count": 0,
+        "page": 1,
+        "page_size": 500,
+        "page_count": 0,
+        "items": []
+      },
+      "observedAt": "2026-10-04T06:17:57.699Z"
+    }
+  ]
+}

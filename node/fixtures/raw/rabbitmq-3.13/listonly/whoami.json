@@ -1,0 +1,13 @@
+{
+  "status": "ok",
+  "pages": [
+    {
+      "body": {
+        "name": "ocho-doctor",
+        "tags": ["monitoring"],
+        "is_internal_user": true
+      },
+      "observedAt": "2026-10-04T06:15:58.440Z"
+    }
+  ]
+}

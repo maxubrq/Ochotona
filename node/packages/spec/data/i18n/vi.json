@@ -207,6 +207,10 @@
   "diag.CX7.next": "Chạy tay password_command và sửa đầu ra của nó.",
   "diag.CX8.message": "RabbitMQ {version} cũ hơn {min}, phiên bản thấp nhất Ocho hỗ trợ.",
   "diag.CX8.next": "Nâng broker lên {min} trở lên.",
+  "diag.CX9.message": "Broker từ chối user {user} ở /api/overview với mã 403: user không có tag management nào.",
+  "diag.CX9.next": "Thêm tag monitoring cho user: rabbitmqctl set_user_tags {user} monitoring",
+  "diag.CX10.message": "URL {url} không phải URL management hợp lệ.",
+  "diag.CX10.next": "Dùng dạng https://host:15671, không có query hay fragment.",
   "diag.OC1.message": "Lệnh chỉ đọc đang chạy bằng {user}, user có tag administrator.",
   "diag.OC1.next": "Tạo cho Ocho một user chỉ có tag monitoring.",
 

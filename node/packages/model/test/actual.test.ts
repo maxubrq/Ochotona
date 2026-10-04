@@ -62,15 +62,16 @@ describe('buildActual: ánh xạ cơ bản', () => {
     ).toBe('derived');
   });
 
-  it('bộ đếm: Prometheus cộng mọi series, completeSince theo uptime nhỏ nhất', () => {
+  it('bộ đếm: http.stats trước, phạm vi cluster, completeSince theo uptime nhỏ nhất', () => {
     expect(val(a.broker.counters.unroutableDropped)).toEqual({
-      count: 8,
+      count: 7,
       completeSince: '2026-10-04T01:21:10.000Z',
+      scope: { kind: 'cluster' },
     });
     expect(
       a.broker.counters.unroutableDropped.state === 'known' &&
         a.broker.counters.unroutableDropped.prov.source,
-    ).toBe('prometheus');
+    ).toBe('http.stats');
   });
 
   it('node: uptime đổi sang giây', () => {
@@ -228,7 +229,69 @@ describe('lý do unknown', () => {
     expect(a.broker.counters.unroutableDropped).toMatchObject({
       state: 'unknown',
       reason: { kind: 'source_unavailable' },
-      source: 'prometheus',
+      source: 'http.stats',
+    });
+  });
+
+  it('http.stats cần cả message_stats và churn_rates (GC21)', () => {
+    const ov = overview();
+    delete (ov as Record<string, unknown>).churn_rates;
+    const a = build({ overview: okRaw(ov, T0) });
+    expect(a.meta.sources['http.stats']).toBe('unavailable');
+  });
+
+  describe('bộ đếm từ Prometheus (thống kê tắt)', () => {
+    const noStats = () => {
+      const ov = overview();
+      delete (ov as Record<string, unknown>).message_stats;
+      return okRaw(ov, T0);
+    };
+    const prom = (identity: string | null) =>
+      okRaw(
+        [
+          ...(identity === null
+            ? []
+            : [
+                `rabbitmq_identity_info{rabbitmq_node="${identity}",rabbitmq_cluster="c"} 1`,
+              ]),
+          'rabbitmq_global_messages_unroutable_dropped_total{protocol="amqp091"} 5',
+          'rabbitmq_global_messages_unroutable_returned_total{protocol="amqp091"} 0',
+        ].join('\n'),
+      );
+
+    it('cluster nhiều node: phạm vi node, completeSince theo uptime của đúng node đó', () => {
+      const a = build({ overview: noStats(), prometheus: prom('rabbit@a') });
+      const c = a.broker.counters.unroutableDropped;
+      expect(val(c)).toEqual({
+        count: 5,
+        // readStartedAt − 3600 giây (uptime của rabbit@a), không phải 60 giây của rabbit@b.
+        completeSince: '2026-10-04T00:22:10.000Z',
+        scope: { kind: 'node', node: 'rabbit@a' },
+      });
+      expect(c.state === 'known' && c.prov.path).toBe(
+        'prom:rabbitmq_global_messages_unroutable_dropped_total{rabbitmq_node="rabbit@a"}',
+      );
+    });
+
+    it('cluster một node: phạm vi cluster', () => {
+      const a = build({
+        overview: noStats(),
+        prometheus: prom(null),
+        nodes: okRaw([node('rabbit@a', '4.2.1', 1000)]),
+      });
+      expect(val(a.broker.counters.unroutableDropped).scope).toEqual({
+        kind: 'cluster',
+      });
+    });
+
+    it('cluster nhiều node mà không biết node trả lời: unknown', () => {
+      for (const id of [null, 'rabbit@zzz']) {
+        const a = build({ overview: noStats(), prometheus: prom(id) });
+        expect(a.broker.counters.unroutableDropped).toMatchObject({
+          state: 'unknown',
+          reason: { kind: 'error' },
+        });
+      }
     });
   });
 

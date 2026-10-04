@@ -1,17 +1,48 @@
 {
   "name": "@ochotona/broker",
   "version": "0.1.0",
-  "description": "",
+  "description": "Đọc RabbitMQ management API và Prometheus, chỉ GET, trả dữ liệu thô cho @ochotona/model",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "scripts": {
     "build": "rollup -c ../../rollup.config.base.js",
-    "format": "prettier --check \"src/**/*.ts\"",
-    "format:fix": "prettier --write \"src/**/*.ts\""
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage --coverage.include=src/**",
+    "typecheck": "tsc --noEmit -p . && tsc -p tsconfig.check.json",
+    "record-raw": "node tools/record-raw.ts",
+    "redact-raw": "node tools/redact-raw.ts",
+    "check-assumptions": "node tools/check-assumptions.ts",
+    "format": "prettier --check \"src/**/*.ts\" \"test/**/*.ts\" \"tools/**/*.ts\"",
+    "format:fix": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" \"tools/**/*.ts\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^26.6.4",
+    "@vitest/coverage-v8": "5.0.3",
+    "vitest": "5.0.3"
+  },
+  "dependencies": {
+    "@ochotona/model": "workspace:*",
+    "@ochotona/spec": "workspace:*",
+    "undici": "^7"
+  },
+  "files": [
+    "dist",
+    "docs"
+  ],
+  "engines": {
+    "node": ">=20"
+  }
 }

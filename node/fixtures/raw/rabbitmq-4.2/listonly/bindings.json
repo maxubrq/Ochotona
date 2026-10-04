@@ -1,0 +1,105 @@
+{
+  "status": "ok",
+  "pages": [
+    {
+      "body": [
+        {
+          "source": "",
+          "vhost": "/",
+          "destination": "audit",
+          "destination_type": "queue",
+          "routing_key": "audit",
+          "arguments": {},
+          "properties_key": "audit"
+        },
+        {
+          "source": "",
+          "vhost": "/",
+          "destination": "events.unrouted",
+          "destination_type": "queue",
+          "routing_key": "events.unrouted",
+          "arguments": {},
+          "properties_key": "events.unrouted"
+        },
+        {
+          "source": "",
+          "vhost": "/",
+          "destination": "ocho.traffic",
+          "destination_type": "queue",
+          "routing_key": "ocho.traffic",
+          "arguments": {},
+          "properties_key": "ocho.traffic"
+        },
+        {
+          "source": "direct",
+          "vhost": "/",
+          "destination": "ocho.traffic",
+          "destination_type": "queue",
+          "routing_key": "6157b406-a689-42e4-b0de-2f07e423496c",
+          "arguments": {},
+          "properties_key": "6157b406-a689-42e4-b0de-2f07e423496c"
+        },
+        {
+          "source": "events",
+          "vhost": "/",
+          "destination": "audit",
+          "destination_type": "queue",
+          "routing_key": "audit.#",
+          "arguments": {},
+          "properties_key": "audit.%23"
+        },
+        {
+          "source": "events.unrouted",
+          "vhost": "/",
+          "destination": "events.unrouted",
+          "destination_type": "queue",
+          "routing_key": "",
+          "arguments": {},
+          "properties_key": "~"
+        }
+      ],
+      "observedAt": "2026-10-04T06:13:55.787Z"
+    },
+    {
+      "body": [
+        {
+          "source": "",
+          "vhost": "payments",
+          "destination": "orders.created",
+          "destination_type": "queue",
+          "routing_key": "orders.created",
+          "arguments": {},
+          "properties_key": "orders.created"
+        },
+        {
+          "source": "",
+          "vhost": "payments",
+          "destination": "orders.parking",
+          "destination_type": "queue",
+          "routing_key": "orders.parking",
+          "arguments": {},
+          "properties_key": "orders.parking"
+        },
+        {
+          "source": "orders",
+          "vhost": "payments",
+          "destination": "orders.created",
+          "destination_type": "queue",
+          "routing_key": "order.created",
+          "arguments": {},
+          "properties_key": "order.created"
+        },
+        {
+          "source": "orders.dlx",
+          "vhost": "payments",
+          "destination": "orders.parking",
+          "destination_type": "queue",
+          "routing_key": "",
+          "arguments": {},
+          "properties_key": "~"
+        }
+      ],
+      "observedAt": "2026-10-04T06:13:55.789Z"
+    }
+  ]
+}

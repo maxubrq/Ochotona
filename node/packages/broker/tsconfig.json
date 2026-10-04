@@ -4,6 +4,7 @@
     "outDir": "./dist",
     "module": "ESNext",
     "moduleResolution": "Bundler",
+    "types": ["node"],
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
 }

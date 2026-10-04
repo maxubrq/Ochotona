@@ -208,6 +208,7 @@ export const actualBaseShape: Shape = obj({
       version: observed(version),
       unroutableDropped: observed(num),
       unroutableReturned: observed(num),
+      'prometheusUptime?': observed(num),
     }),
   }),
   nodes: observed(

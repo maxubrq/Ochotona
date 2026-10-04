@@ -1,0 +1,16 @@
+{
+  "status": "ok",
+  "pages": [
+    {
+      "body": [
+        {
+          "name": "rabbit@host-00f06dec24",
+          "type": "disc",
+          "running": true,
+          "being_drained": false
+        }
+      ],
+      "observedAt": "2026-10-04T06:16:51.138Z"
+    }
+  ]
+}

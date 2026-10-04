@@ -50,6 +50,7 @@ flows.toleranceOf({ kind: 'queue', vhost: '/', name: 'orders' }); // 'strict' | 
 | Nhóm               | Hàm                                                                                                    |
 | ------------------ | ------------------------------------------------------------------------------------------------------ |
 | Dựng               | `buildActual`, `validateDesired`, `buildDesired`, `buildFlowMap`, `buildIndexes`                       |
+| Kế hoạch đọc       | `planRead`, `ENDPOINT_IDS` (cho `@ochotona/broker`)                                                    |
 | Giá trị hiệu lực   | `resolveEffective`                                                                                     |
 | Topology           | `topologyFromActual`, `normalizeTopology`, `diffTopology`                                              |
 | Ảnh chụp           | `saveSnapshot`, `loadSnapshot`                                                                         |
@@ -68,6 +69,7 @@ src/
   effective.ts                    chọn policy, gộp giá trị hiệu lực, tự kiểm với broker
   desired.ts template.ts flow.ts  ocho.yaml, mẫu tên, luồng và dung sai
   topology.ts                     topology chuẩn hoá và diff
+  plan.ts                         kế hoạch đọc: endpoint, cột, tham số cho broker
   snapshot.ts invariants.ts       ảnh chụp ocho.snapshot/1, bất biến
 ```
 

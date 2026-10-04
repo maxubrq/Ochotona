@@ -1,0 +1,39 @@
+{
+  "status": "ok",
+  "pages": [
+    {
+      "body": [
+        {
+          "cluster_state": {
+            "rabbit@listonly": "running"
+          },
+          "default_queue_type": "undefined",
+          "description": "",
+          "metadata": {
+            "description": "",
+            "tags": []
+          },
+          "name": "/",
+          "tags": [],
+          "tracing": false
+        },
+        {
+          "cluster_state": {
+            "rabbit@listonly": "running"
+          },
+          "default_queue_type": "quorum",
+          "description": "",
+          "metadata": {
+            "description": "",
+            "tags": [],
+            "default_queue_type": "quorum"
+          },
+          "name": "payments",
+          "tags": [],
+          "tracing": false
+        }
+      ],
+      "observedAt": "2026-10-04T06:15:59.429Z"
+    }
+  ]
+}

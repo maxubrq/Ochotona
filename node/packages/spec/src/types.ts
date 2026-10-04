@@ -78,7 +78,20 @@ export interface Capabilities {
     readonly deprecatedFeaturesUsed: boolean;
     readonly vhostDefaultQueueType: boolean;
   };
+  /**
+   * `/api/{connections,channels,consumers}` khi tắt bộ thu thống kê
+   * (`management_agent.disable_metrics_collector`): `listed` trả phần tử thật
+   * (ít trường hơn), `rejected` trả 400, `empty` trả 200 với danh sách rỗng
+   * không đáng tin.
+   */
+  readonly statsOffLists: {
+    readonly connections: StatsOffList;
+    readonly channels: StatsOffList;
+    readonly consumers: StatsOffList;
+  };
 }
+
+export type StatsOffList = 'listed' | 'rejected' | 'empty';
 
 export interface CapabilityRange {
   /** Bao gồm, `4.0.0`. */
