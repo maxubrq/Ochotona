@@ -1,17 +1,33 @@
 {
   "name": "@ochotona/model",
   "version": "0.1.0",
-  "description": "",
+  "description": "Lõi thuần của Ocho: Actual, Desired, Observed, giá trị hiệu lực, topology, ảnh chụp",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/types/index.d.ts",
   "scripts": {
     "build": "rollup -c ../../rollup.config.base.js",
-    "format": "prettier --check \"src/**/*.ts\"",
-    "format:fix": "prettier --write \"src/**/*.ts\""
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage --coverage.include=src/**",
+    "typecheck": "tsc --noEmit -p .",
+    "format": "prettier --check \"src/**/*.ts\" \"test/**/*.ts\"",
+    "format:fix": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^26.6.4",
+    "@vitest/coverage-v8": "^5.0.3",
+    "fast-check": "^4.10.2",
+    "vitest": "^5.0.3"
+  },
+  "files": [
+    "dist",
+    "docs"
+  ],
+  "engines": {
+    "node": ">=20"
+  }
 }
