@@ -1,0 +1,4 @@
+
+> @ochotona/spec@0.1.0 format /Users/hungtran/MyApps/ocho/node/packages/spec
+> prettier --check "src/**/*.ts"
+

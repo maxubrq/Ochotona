@@ -6,7 +6,9 @@
   "module": "dist/index.esm.js",
   "types": "dist/types/index.d.ts",
   "scripts": {
-      "build": "rollup -c ../../rollup.config.base.js"
+    "build": "rollup -c ../../rollup.config.base.js",
+    "format": "prettier --check \"src/**/*.ts\"",
+    "format:fix": "prettier --write \"src/**/*.ts\""
   },
   "keywords": [],
   "author": "",

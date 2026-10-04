@@ -1,0 +1,5 @@
+
+> @ochotona/spec@0.1.0 format:fix /Users/hungtran/MyApps/ocho/node/packages/spec
+> prettier --write "src/**/*.ts"
+
+src/index.ts[2K[1Gsrc/index.ts 17ms

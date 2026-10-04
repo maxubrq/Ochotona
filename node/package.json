@@ -6,12 +6,15 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
-    "lint": "turbo lint"
+    "lint": "turbo lint",
+    "format": "turbo format",
+    "format:fix": "turbo format:fix"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^29.0.3",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-typescript": "^12.3.0",
+    "prettier": "^3.9.9",
     "rollup": "^4.64.0",
     "tslib": "^2.8.1",
     "turbo": "^2.11.7",
