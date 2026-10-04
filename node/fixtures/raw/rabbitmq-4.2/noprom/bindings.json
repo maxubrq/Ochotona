@@ -24,6 +24,15 @@
         {
           "source": "",
           "vhost": "/",
+          "destination": "legacy",
+          "destination_type": "queue",
+          "routing_key": "legacy",
+          "arguments": {},
+          "properties_key": "legacy"
+        },
+        {
+          "source": "",
+          "vhost": "/",
           "destination": "ocho.traffic",
           "destination_type": "queue",
           "routing_key": "ocho.traffic",
@@ -31,13 +40,58 @@
           "properties_key": "ocho.traffic"
         },
         {
+          "source": "",
+          "vhost": "/",
+          "destination": "overlap",
+          "destination_type": "queue",
+          "routing_key": "overlap",
+          "arguments": {},
+          "properties_key": "overlap"
+        },
+        {
+          "source": "",
+          "vhost": "/",
+          "destination": "work.backlog",
+          "destination_type": "queue",
+          "routing_key": "work.backlog",
+          "arguments": {},
+          "properties_key": "work.backlog"
+        },
+        {
+          "source": "",
+          "vhost": "/",
+          "destination": "work.classic",
+          "destination_type": "queue",
+          "routing_key": "work.classic",
+          "arguments": {},
+          "properties_key": "work.classic"
+        },
+        {
           "source": "direct",
           "vhost": "/",
           "destination": "ocho.traffic",
           "destination_type": "queue",
-          "routing_key": "23807464-5df2-4154-b316-e63112becb1c",
+          "routing_key": "ae05e969-c0cf-43c2-9a8f-7a7ec4c2fcf0",
           "arguments": {},
-          "properties_key": "23807464-5df2-4154-b316-e63112becb1c"
+          "properties_key": "ae05e969-c0cf-43c2-9a8f-7a7ec4c2fcf0"
+        },
+        {
+          "source": "direct",
+          "vhost": "/",
+          "destination": "work.backlog",
+          "destination_type": "queue",
+          "routing_key": "e42c0588-1e84-47c2-b601-a02e3391b0d5",
+          "arguments": {},
+          "properties_key": "e42c0588-1e84-47c2-b601-a02e3391b0d5"
+        },
+        {
+          "source": "direct",
+          "vhost": "/",
+          "destination": "work.classic",
+          "destination_type": "queue",
+          "routing_key": "efa7c4e3-7c80-448f-81fe-96a45a257413",
+          "arguments": {},
+          "properties_key": "efa7c4e3-7c80-448f-81fe-96a45a257413"
         },
         {
           "source": "events",
@@ -58,7 +112,7 @@
           "properties_key": "~"
         }
       ],
-      "observedAt": "2026-10-04T06:13:51.632Z"
+      "observedAt": "2026-10-04T07:27:28.305Z"
     },
     {
       "body": [
@@ -81,6 +135,15 @@
           "properties_key": "orders.parking"
         },
         {
+          "source": "",
+          "vhost": "payments",
+          "destination": "orders.safe",
+          "destination_type": "queue",
+          "routing_key": "orders.safe",
+          "arguments": {},
+          "properties_key": "orders.safe"
+        },
+        {
           "source": "orders",
           "vhost": "payments",
           "destination": "orders.created",
@@ -99,7 +162,7 @@
           "properties_key": "~"
         }
       ],
-      "observedAt": "2026-10-04T06:13:51.633Z"
+      "observedAt": "2026-10-04T07:27:28.308Z"
     }
   ]
 }

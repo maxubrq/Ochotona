@@ -166,6 +166,53 @@ describe('ngoại lệ publishCount', () => {
   });
 });
 
+describe('users', () => {
+  it('không đọc thì unknown source_unavailable, đọc được thì sắp theo tên', () => {
+    expect(build().users).toMatchObject({
+      state: 'unknown',
+      reason: { kind: 'source_unavailable' },
+    });
+    const a = build({
+      users: okRaw([
+        { name: 'b', tags: 'administrator' },
+        { name: 'a', tags: ['monitoring'] },
+      ]),
+    });
+    expect(val(a.users)).toEqual([
+      { name: 'a', tags: ['monitoring'] },
+      { name: 'b', tags: ['administrator'] },
+    ]);
+    expect(build({ users: httpError(403) }).users).toMatchObject({
+      reason: { kind: 'forbidden' },
+    });
+  });
+});
+
+describe('queue rảnh', () => {
+  const idle = () => {
+    const q = queue('idle');
+    delete (q as Record<string, unknown>).message_stats;
+    return q;
+  };
+
+  it('thống kê bật, không có message_stats: mọi tốc độ là 0', () => {
+    const a = build({ queues: okRaw([idle()]) });
+    const q = val(a.queues)[0];
+    for (const r of [q.publishRate, q.deliverRate, q.redeliverRate])
+      expect(val(r).perSecond).toBe(0);
+  });
+
+  it('thống kê tắt: tốc độ unknown source_unavailable', () => {
+    const ov = overview();
+    delete (ov as Record<string, unknown>).message_stats;
+    const a = build({ overview: okRaw(ov, T0), queues: okRaw([idle()]) });
+    expect(val(a.queues)[0].deliverRate).toMatchObject({
+      state: 'unknown',
+      reason: { kind: 'source_unavailable' },
+    });
+  });
+});
+
 describe('lý do unknown', () => {
   it('403 ở policy: chỉ policy và effective bị ảnh hưởng', () => {
     const a = build({ policies: httpError(403) });

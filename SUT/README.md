@@ -16,7 +16,16 @@ Cấu hình dùng chung nằm trong `common/`: `conf.d/10-base.conf`, `nostats.c
 | `ocho-admin` | `ocho-admin` | `administrator` | Harness: nạp definitions, chạy lưu lượng |
 | `ocho-doctor` | `ocho-doctor` | `monitoring` | Ocho, chỉ đọc (GC1) |
 
-Profile `traffic` chạy thêm một container `perf-test` cho mỗi broker: một producer có confirm và một consumer, 2 message mỗi giây, đủ để có connection, channel, consumer và thống kê.
+Profile `traffic` chạy thêm, cho mỗi broker:
+
+| Container | Lưu lượng | Để có |
+| --- | --- | --- |
+| `<biến thể>-traffic` | perf-test trên `ocho.traffic`: producer có confirm, consumer ack thủ công, 2 message/giây | connection, channel, consumer, thống kê; ca `near` của R1, C1 |
+| `<biến thể>-legacy-traffic` | perf-test trên `work.classic`: publish không confirm, consumer auto-ack | ca `fail` của R1, C1 |
+| `<biến thể>-backlog-traffic` | perf-test trên `work.backlog`: consumer qos 1 chậm hơn producer | classic queue có consumer và có tồn: ca `fail` của T1 |
+| `<biến thể>-mirroring` (chỉ 3.13) | `curl` đặt policy `legacy-ha` (`ha-mode: all`) cho queue `legacy` | ca `fail` của VT1. 4.x từ chối khoá `ha-*`, nên policy này không nằm trong `definitions.json` chung |
+
+Definitions còn có `orders.safe` (quorum, dead-letter at-least-once với reject-publish: ca `near` của T5) và queue `overlap` với hai policy chồng nhau, policy thua mang `dead-letter-exchange` (ca `fail` S1 của L3).
 
 ## Cổng
 
@@ -62,3 +71,14 @@ Khi tắt bộ thu thống kê (`nostats`, `listonly`):
 Thông báo của 400: `Stats in management UI are disabled on this node`. Bảng `check-assumptions` đầy đủ nằm trong `node/packages/broker/docs/spec.md`, mục "Kết quả kiểm giả định".
 
 Model đã xử lý ba hiện tượng ảnh hưởng tới kết quả: danh sách rỗng giả và 400 thành `unknown: source_unavailable`, còn bộ đếm Prometheus lấy uptime từ `rabbitmq_erlang_uptime_seconds` khi `/api/nodes` không có (xem `node/packages/model/docs/implementation-notes.md`).
+
+## Kiểm lệnh sửa của @ochotona/rules
+
+Với broker đang chạy (`KEEP=1 ./record.sh 4.2`) và `rabbitmqadmin` v2:
+
+```sh
+cd ../node/packages/rules
+OCHO_LIVE_URL=http://localhost:42011 RABBITMQADMIN=/path/to/rabbitmqadmin pnpm test:live
+```
+
+Test đọc broker bằng user quản trị, chạy luật, áp mọi lệnh sửa, đọc lại và kiểm các fail đã hết, không có fail mới. Test thay đổi broker; dỡ broker sau khi chạy.

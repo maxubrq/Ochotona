@@ -13,7 +13,10 @@
       "fix": "client_change",
       "specRef": "spec/0.4#C1",
       "lessonRefs": ["lesson#9.4"],
-      "params": { "queue": "string" },
+      "params": {
+        "queue": "string",
+        "connection": "string"
+      },
       "status": "active",
       "since": "0.1.0"
     },
@@ -29,7 +32,14 @@
       "fix": "client_change",
       "specRef": "spec/0.4#C2",
       "lessonRefs": ["lesson#9.12"],
-      "params": { "queue": "string", "prefetch": "number" },
+      "params": {
+        "queue": "string",
+        "prefetch": "number",
+        "rate": "number"
+      },
+      "thresholds": {
+        "highRate": 100
+      },
       "status": "active",
       "since": "0.1.0"
     },
@@ -45,7 +55,12 @@
       "fix": "config",
       "specRef": "spec/0.4#DX1",
       "lessonRefs": ["lesson#9.16"],
-      "params": { "ready": "number" },
+      "params": {
+        "ready": "number"
+      },
+      "thresholds": {
+        "ready": 1000000
+      },
       "status": "active",
       "since": "0.1.0"
     },
@@ -61,7 +76,10 @@
       "fix": "config",
       "specRef": "spec/0.4#DX2",
       "lessonRefs": ["lesson#4"],
-      "params": { "diskFreeLimit": "number", "memLimit": "number" },
+      "params": {
+        "diskFreeLimitBytes": "number",
+        "memLimitBytes": "number"
+      },
       "status": "active",
       "since": "0.1.0"
     },
@@ -77,7 +95,13 @@
       "fix": "client_change",
       "specRef": "spec/0.4#DX3",
       "lessonRefs": ["lesson#9.13", "lesson#9.18"],
-      "params": { "connections": "number", "queues": "number" },
+      "params": {
+        "kind": "string",
+        "rate": "number"
+      },
+      "thresholds": {
+        "perSecond": 5
+      },
       "status": "active",
       "since": "0.1.0"
     },
@@ -93,7 +117,14 @@
       "fix": "client_change",
       "specRef": "spec/0.4#F4",
       "lessonRefs": ["lesson#9.11"],
-      "params": { "redeliver": "number", "deliver": "number" },
+      "params": {
+        "ratio": "number",
+        "deliverRate": "number"
+      },
+      "thresholds": {
+        "minDeliverRate": 1,
+        "ratio": 0.5
+      },
       "status": "active",
       "since": "0.1.0"
     },
@@ -109,7 +140,11 @@
       "fix": "config",
       "specRef": "spec/0.4#L3",
       "lessonRefs": [],
-      "params": { "winner": "string", "losers": "list" },
+      "params": {
+        "winner": "string",
+        "losers": "list",
+        "keys": "list"
+      },
       "status": "active",
       "since": "0.1.0"
     },
@@ -125,7 +160,10 @@
       "fix": "client_change",
       "specRef": "spec/0.4#N1",
       "lessonRefs": ["lesson#9.15"],
-      "params": { "publishers": "number", "consumers": "number" },
+      "params": {
+        "publishChannels": "number",
+        "consumeChannels": "number"
+      },
       "status": "active",
       "since": "0.1.0"
     },
@@ -141,7 +179,10 @@
       "fix": "client_change",
       "specRef": "spec/0.4#N2",
       "lessonRefs": [],
-      "params": { "user": "string" },
+      "params": {
+        "user": "string",
+        "clientProduct": "string"
+      },
       "status": "active",
       "since": "0.1.0"
     },
@@ -157,7 +198,9 @@
       "fix": "client_change",
       "specRef": "spec/0.4#N3",
       "lessonRefs": [],
-      "params": { "user": "string" },
+      "params": {
+        "user": "string"
+      },
       "status": "active",
       "since": "0.1.0"
     },
@@ -173,7 +216,10 @@
       "fix": "config",
       "specRef": "spec/0.4#Q3",
       "lessonRefs": [],
-      "params": { "user": "string" },
+      "params": {
+        "user": "string",
+        "reason": "string"
+      },
       "status": "active",
       "since": "0.1.0"
     },
@@ -189,7 +235,11 @@
       "fix": "client_change",
       "specRef": "spec/0.4#R1",
       "lessonRefs": ["lesson#9.1"],
-      "params": { "connection": "string" },
+      "params": {
+        "connection": "string",
+        "user": "string",
+        "publishCount": "number"
+      },
       "status": "active",
       "since": "0.1.0"
     },
@@ -205,7 +255,10 @@
       "fix": "argument_migration",
       "specRef": "spec/0.4#T1",
       "lessonRefs": ["lesson#9.7"],
-      "params": { "messages": "number", "consumers": "number" },
+      "params": {
+        "messages": "number",
+        "consumers": "number"
+      },
       "status": "active",
       "since": "0.1.0"
     },
@@ -221,7 +274,12 @@
       "fix": "policy",
       "specRef": "spec/0.4#T2",
       "lessonRefs": ["lesson#2.chang-2", "lesson#9.3"],
-      "params": { "count": "number", "since": "instant", "exchanges": "list" },
+      "params": {
+        "reason": "string",
+        "count": "number",
+        "since": "instant",
+        "node": "string"
+      },
       "status": "active",
       "since": "0.1.0"
     },
@@ -237,7 +295,11 @@
       "fix": "policy",
       "specRef": "spec/0.4#T3",
       "lessonRefs": ["lesson#9.16"],
-      "params": { "key": "string", "value": "number", "overflow": "string" },
+      "params": {
+        "limit": "number",
+        "limitKind": "string",
+        "overflowLayer": "string"
+      },
       "status": "active",
       "since": "0.1.0"
     },
@@ -253,7 +315,10 @@
       "fix": "policy",
       "specRef": "spec/0.4#T4",
       "lessonRefs": ["lesson#9.9"],
-      "params": { "limit": "string" },
+      "params": {
+        "limit": "number",
+        "limitLayer": "string"
+      },
       "status": "active",
       "since": "0.1.0"
     },
@@ -269,7 +334,12 @@
       "fix": "policy",
       "specRef": "spec/0.4#T5",
       "lessonRefs": ["lesson#9.9"],
-      "params": { "strategy": "string", "overflow": "string" },
+      "params": {
+        "strategy": "string",
+        "overflow": "string",
+        "strategyLayer": "string",
+        "overflowLayer": "string"
+      },
       "status": "active",
       "since": "0.1.0"
     },
@@ -285,7 +355,11 @@
       "fix": "policy",
       "specRef": "spec/0.4#T9",
       "lessonRefs": [],
-      "params": { "key": "string", "value": "number" },
+      "params": {
+        "ttlMs": "number",
+        "expiresMs": "number",
+        "layer": "string"
+      },
       "status": "active",
       "since": "0.1.0"
     },
@@ -301,7 +375,10 @@
       "fix": "argument_migration",
       "specRef": "spec/0.4#VT1",
       "lessonRefs": ["lesson#9.7"],
-      "params": { "policy": "string", "targetVersion": "string" },
+      "params": {
+        "policy": "string",
+        "targetVersion": "string"
+      },
       "status": "active",
       "since": "0.1.0"
     },
@@ -317,7 +394,10 @@
       "fix": "policy",
       "specRef": "spec/0.4#VT2",
       "lessonRefs": ["lesson#9.9"],
-      "params": { "targetVersion": "string", "limit": "number" },
+      "params": {
+        "targetVersion": "string",
+        "defaultLimit": "number"
+      },
       "status": "active",
       "since": "0.1.0"
     },
@@ -333,7 +413,9 @@
       "fix": "config",
       "specRef": "spec/0.4#VT3",
       "lessonRefs": [],
-      "params": { "features": "list" },
+      "params": {
+        "feature": "string"
+      },
       "status": "active",
       "since": "0.1.0"
     },
@@ -341,7 +423,7 @@
       "code": "VT4",
       "family": "VT",
       "tier": 3,
-      "appliesTo": ["node"],
+      "appliesTo": ["broker"],
       "severities": ["S3"],
       "dependsOnTolerance": false,
       "targetVersionOnly": false,
@@ -349,7 +431,9 @@
       "fix": "config",
       "specRef": "spec/0.4#VT4",
       "lessonRefs": [],
-      "params": { "versions": "list" },
+      "params": {
+        "versions": "list"
+      },
       "status": "active",
       "since": "0.1.0"
     }

@@ -3,3 +3,7 @@ node_modules
 .turbo
 dist
 coverage
+
+# Stryker
+reports/mutation
+.stryker-tmp

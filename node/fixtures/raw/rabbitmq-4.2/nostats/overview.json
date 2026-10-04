@@ -6,9 +6,19 @@
         "management_version": "4.2.9",
         "rates_mode": "basic",
         "sample_retention_policies": {
-          "global": [600, 3600, 28800, 86400],
-          "basic": [600, 3600],
-          "detailed": [600]
+          "global": [
+            600,
+            3600,
+            28800,
+            86400
+          ],
+          "basic": [
+            600,
+            3600
+          ],
+          "detailed": [
+            600
+          ]
         },
         "exchange_types": [
           {
@@ -40,7 +50,7 @@
         "product_version": "4.2.9",
         "product_name": "RabbitMQ",
         "rabbitmq_version": "4.2.9",
-        "cluster_name": "rabbit@host-b7dc58ab21",
+        "cluster_name": "rabbit@host-138d611581",
         "cluster_tags": {},
         "node_tags": {},
         "erlang_version": "27.3.4.18",
@@ -50,14 +60,14 @@
         "default_queue_type": "classic",
         "is_op_policy_updating_enabled": true,
         "enable_queue_totals": false,
-        "node": "rabbit@host-b7dc58ab21",
+        "node": "rabbit@host-138d611581",
         "object_totals": {
-          "queues": 5,
+          "queues": 10,
           "exchanges": 19,
-          "connections": 3
+          "connections": 9
         }
       },
-      "observedAt": "2026-10-04T06:13:46.213Z"
+      "observedAt": "2026-10-04T07:27:22.936Z"
     }
   ]
 }

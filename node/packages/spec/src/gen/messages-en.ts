@@ -4,7 +4,8 @@ import type { I18nKey } from './i18n-keys';
 
 export const messages: Readonly<Record<I18nKey, string>> = {
   'rule.C1.title': 'Consumer acknowledges automatically',
-  'rule.C1.what': 'A consumer on queue {queue} uses automatic acknowledgement.',
+  'rule.C1.what':
+    'A consumer on queue {queue}, connection {connection}, uses automatic acknowledgement.',
   'rule.C1.dataSafety':
     'No. A message is removed as soon as it is sent, so a consumer crash loses it.',
   'rule.C1.next':
@@ -14,6 +15,8 @@ export const messages: Readonly<Record<I18nKey, string>> = {
   'rule.C1.action': 'Use manual ack on {objects}',
   'rule.C2.title': 'Consumer prefetch is unbounded or 1',
   'rule.C2.what': 'A consumer on queue {queue} has prefetch {prefetch}.',
+  'rule.C2.what.one':
+    'A consumer on queue {queue} has prefetch 1 while the queue delivers {rate} messages per second.',
   'rule.C2.dataSafety':
     'Yes. Nothing is lost; prefetch 0 can exhaust consumer memory, and prefetch 1 limits throughput.',
   'rule.C2.next':
@@ -33,7 +36,7 @@ export const messages: Readonly<Record<I18nKey, string>> = {
   'rule.DX1.action': 'Drain the backlog on {objects}',
   'rule.DX2.title': 'Disk free limit is below node memory',
   'rule.DX2.what':
-    'Node has disk_free_limit {diskFreeLimit} bytes and a memory limit of {memLimit} bytes.',
+    'Node has disk_free_limit {diskFreeLimitBytes} bytes and a memory limit of {memLimitBytes} bytes.',
   'rule.DX2.dataSafety':
     'Not known. The disk can fill before the broker blocks publishers, and a full disk can lose messages.',
   'rule.DX2.next':
@@ -41,9 +44,11 @@ export const messages: Readonly<Record<I18nKey, string>> = {
   'rule.DX2.mechanism':
     'When paging memory to disk a node can write up to its memory size; a lower free-disk limit lets that write run out of space.',
   'rule.DX2.action': 'Raise disk_free_limit on {objects}',
-  'rule.DX3.title': 'Connections or queues are created and closed constantly',
+  'rule.DX3.title': 'Connections or queues are created constantly',
   'rule.DX3.what':
-    'The broker opens {connections} connections and declares {queues} queues per second.',
+    'The broker creates {rate} objects of kind {kind} per second.',
+  'rule.DX3.what.connection': 'The broker opens {rate} connections per second.',
+  'rule.DX3.what.queue': 'The broker creates {rate} queues per second.',
   'rule.DX3.dataSafety':
     'Yes. Nothing is lost, but the churn costs CPU and metadata writes on every node.',
   'rule.DX3.next':
@@ -53,7 +58,7 @@ export const messages: Readonly<Record<I18nKey, string>> = {
   'rule.DX3.action': 'Reuse connections on {objects}',
   'rule.F4.title': 'Messages are redelivered in a loop',
   'rule.F4.what':
-    'Queue redelivers {redeliver} messages per second out of {deliver} delivered.',
+    'Redeliveries make up {ratio} of the {deliverRate} messages per second this queue delivers.',
   'rule.F4.dataSafety':
     'Not known. Nothing is dropped yet, but a requeue loop can hold up every other message in the queue.',
   'rule.F4.next':
@@ -64,8 +69,12 @@ export const messages: Readonly<Record<I18nKey, string>> = {
   'rule.L3.title': 'Several policies match; only one applies',
   'rule.L3.what':
     'Policy {winner} applies; {losers} also match and are ignored.',
+  'rule.L3.what.tie':
+    'Policies {winner} and {losers} match with the same priority, so which one applies is not defined.',
   'rule.L3.dataSafety':
     'Not known. Keys set only in the ignored policies have no effect on this object.',
+  'rule.L3.dataSafety.keys':
+    'No. Keys {keys} set in an ignored policy have no effect, so this object runs without them.',
   'rule.L3.next':
     'Merge the keys into one policy, or change the patterns so the policies do not overlap.',
   'rule.L3.mechanism':
@@ -73,7 +82,7 @@ export const messages: Readonly<Record<I18nKey, string>> = {
   'rule.L3.action': 'Merge overlapping policies on {objects}',
   'rule.N1.title': 'One connection both publishes and consumes',
   'rule.N1.what':
-    'Connection has {publishers, plural, one {# publishing channel} other {# publishing channels}} and {consumers, plural, one {# consumer} other {# consumers}}.',
+    'Connection has {publishChannels, plural, one {# publishing channel} other {# publishing channels}} and {consumeChannels, plural, one {# consuming channel} other {# consuming channels}}.',
   'rule.N1.dataSafety':
     'Yes. Nothing is lost, but a memory alarm stalls the consumers along with the publishers.',
   'rule.N1.next': 'Open separate connections for publishing and for consuming.',
@@ -82,6 +91,8 @@ export const messages: Readonly<Record<I18nKey, string>> = {
   'rule.N1.action': 'Split publishing and consuming on {objects}',
   'rule.N2.title': 'Connection has no name',
   'rule.N2.what': 'A connection from user {user} sets no connection_name.',
+  'rule.N2.what.product':
+    'A connection from user {user}, client {clientProduct}, sets no connection_name.',
   'rule.N2.dataSafety':
     'Yes. Messages are not affected; the client is only harder to identify.',
   'rule.N2.next':
@@ -100,7 +111,10 @@ export const messages: Readonly<Record<I18nKey, string>> = {
   'rule.N3.action': 'Enable heartbeats on {objects}',
   'rule.Q3.title': 'An application connects with an administrator user',
   'rule.Q3.what':
-    'A connection uses user {user}, which is guest or has the administrator tag.',
+    'A connection uses user {user}, which is an administrator account ({reason}).',
+  'rule.Q3.what.administrator':
+    'A connection uses user {user}, which has the administrator tag.',
+  'rule.Q3.what.guest': 'A connection uses the default user guest.',
   'rule.Q3.dataSafety':
     'Yes. Messages are not affected, but this application can change or delete any object.',
   'rule.Q3.next':
@@ -111,7 +125,7 @@ export const messages: Readonly<Record<I18nKey, string>> = {
     'Give {objects} a service user without the administrator tag',
   'rule.R1.title': 'Messages are published without confirms',
   'rule.R1.what':
-    'A channel on connection {connection} publishes without publisher confirms.',
+    'A channel on connection {connection}, user {user}, published {publishCount, plural, one {# message} other {# messages}} without publisher confirms.',
   'rule.R1.dataSafety':
     'Not known. The publisher cannot tell whether the broker took each message.',
   'rule.R1.next':
@@ -122,24 +136,33 @@ export const messages: Readonly<Record<I18nKey, string>> = {
   'rule.T1.title': 'Durable data sits in a classic queue',
   'rule.T1.what':
     'This classic queue holds {messages, plural, one {# message} other {# messages}} and has {consumers, plural, one {# consumer} other {# consumers}}.',
+  'rule.T1.what.bare':
+    'This durable classic queue keeps its messages on a single node.',
   'rule.T1.dataSafety':
     'Not known. A classic queue lives on one node; if that node loses its disk, the messages are lost.',
   'rule.T1.next': 'Move this queue to a quorum queue through a migration.',
   'rule.T1.mechanism':
     'A classic queue keeps its data on a single node with no replica; a quorum queue copies every message to a majority before confirming it.',
   'rule.T1.action': 'Move {objects} to quorum queues',
-  'rule.T2.title': 'Unroutable messages are being dropped',
+  'rule.T2.title': 'Unroutable messages can be dropped',
   'rule.T2.what':
     '{count, plural, one {# unroutable message was} other {# unroutable messages were}} dropped since {since}.',
+  'rule.T2.what.at_risk':
+    'This exchange has no usable alternate exchange ({reason}); a message that matches no binding is dropped.',
+  'rule.T2.what.dropped_node':
+    'Node {node} alone dropped {count, plural, one {at least # unroutable message} other {at least # unroutable messages}} since {since}.',
   'rule.T2.dataSafety':
-    'No. Those messages are gone, and {exchanges} can drop more.',
+    'No. Those messages are gone, and this exchange can drop more.',
+  'rule.T2.dataSafety.at_risk':
+    'Not known. No drop is counted yet, but the next message that matches no binding is lost.',
   'rule.T2.next':
-    'Set an alternate exchange on these exchanges through a policy.',
+    'Set an alternate exchange on this exchange through a policy; the fanout exchange ocho.unroutable and its queue must exist first.',
   'rule.T2.mechanism':
     'An exchange stores nothing: with no matching binding and no alternate exchange, the broker discards the message and still confirms it.',
   'rule.T2.action': 'Add an alternate exchange to {objects}',
   'rule.T3.title': 'A full queue drops its oldest messages',
-  'rule.T3.what': 'Queue has {key} {value} with overflow {overflow}.',
+  'rule.T3.what':
+    'Queue has a length limit of {limit} {limitKind}, with overflow drop-head from {overflowLayer}.',
   'rule.T3.dataSafety':
     'No. When the queue is full, the broker deletes messages from its head to make room.',
   'rule.T3.next':
@@ -149,17 +172,23 @@ export const messages: Readonly<Record<I18nKey, string>> = {
   'rule.T3.action': 'Set overflow reject-publish on {objects}',
   'rule.T4.title': 'Poison messages can be dropped silently',
   'rule.T4.what':
-    'Quorum queue has no dead-letter exchange; its delivery limit is {limit}.',
+    'Quorum queue has no dead-letter exchange; its delivery limit is {limit}, from {limitLayer}.',
+  'rule.T4.what.loop':
+    'Quorum queue has no dead-letter exchange and no delivery limit.',
   'rule.T4.dataSafety':
-    'No. A message that reaches the delivery limit is dropped with nowhere to go; with no limit, a poison message is redelivered forever and blocks the queue.',
+    'No. A message that reaches the delivery limit is dropped with nowhere to go.',
+  'rule.T4.dataSafety.loop':
+    'Yes. Nothing is dropped, but a poison message is redelivered forever and blocks the queue.',
   'rule.T4.next':
-    'Set a dead-letter exchange with at-least-once dead-lettering on this queue through a policy.',
+    'Set a delivery limit, a dead-letter exchange, at-least-once dead-lettering and overflow reject-publish together through a policy.',
   'rule.T4.mechanism':
     'Since 4.0 quorum queues default to a delivery limit of 20; past the limit, a message with no dead-letter target is discarded.',
+  'rule.T4.mechanism.loop':
+    'On 3.13 a quorum queue has no delivery limit by default, so a message that always fails returns to the queue without end.',
   'rule.T4.action': 'Add a dead-letter exchange to {objects}',
   'rule.T5.title': 'Dead-lettering can lose messages',
   'rule.T5.what':
-    'Dead-letter strategy is {strategy} with overflow {overflow}.',
+    'Dead-letter strategy is {strategy} from {strategyLayer}, with overflow {overflow} from {overflowLayer}.',
   'rule.T5.dataSafety':
     'No. A dead-lettered message can be lost before it reaches the parking-lot.',
   'rule.T5.next':
@@ -168,13 +197,21 @@ export const messages: Readonly<Record<I18nKey, string>> = {
     'At-least-once dead-lettering needs overflow reject-publish; without it the broker silently falls back to at-most-once.',
   'rule.T5.action': 'Make dead-lettering at-least-once on {objects}',
   'rule.T9.title': 'Expired messages are deleted, not dead-lettered',
-  'rule.T9.what': 'Queue has {key} {value} ms and no dead-letter exchange.',
-  'rule.T9.dataSafety':
-    'No. Expired messages are deleted, and expires deletes the whole queue along with its messages.',
+  'rule.T9.what':
+    'Queue has message-ttl {ttlMs} ms from {layer} and no dead-letter exchange.',
+  'rule.T9.what.expires':
+    'Queue has expires {expiresMs} ms from {layer}; when it expires, the queue is deleted with its messages.',
+  'rule.T9.dataSafety': 'No. Expired messages are deleted.',
+  'rule.T9.dataSafety.expires':
+    'No. An expired queue is deleted with every message in it, and none of them are dead-lettered.',
   'rule.T9.next':
     'Add a dead-letter exchange through a policy, or remove the TTL.',
+  'rule.T9.next.expires':
+    'Remove expires from the policy or the queue arguments; a dead-letter exchange does not save an expired queue.',
   'rule.T9.mechanism':
-    'An expired message with no dead-letter exchange is discarded; expires removes an unused queue and everything in it without dead-lettering.',
+    'An expired message with no dead-letter exchange is discarded.',
+  'rule.T9.mechanism.expires':
+    'expires removes an unused queue and everything in it, without dead-lettering.',
   'rule.T9.action': 'Add a dead-letter exchange or remove the TTL on {objects}',
   'rule.VT1.title': 'Mirrored classic queue will stop being mirrored',
   'rule.VT1.what':
@@ -187,17 +224,16 @@ export const messages: Readonly<Record<I18nKey, string>> = {
   'rule.VT1.action': 'Migrate {objects} to quorum queues before upgrading',
   'rule.VT2.title': 'Upgrade will start dropping poison messages',
   'rule.VT2.what':
-    'Quorum queue has no dead-letter exchange; on {targetVersion} it gets a default delivery limit of {limit}.',
+    'Quorum queue has no dead-letter exchange; on {targetVersion} it gets a default delivery limit of {defaultLimit}.',
   'rule.VT2.dataSafety':
-    'No. After the upgrade, a message redelivered {limit} times is dropped.',
+    'No. After the upgrade, a message redelivered {defaultLimit} times is dropped.',
   'rule.VT2.next':
     'Set a dead-letter exchange with at-least-once dead-lettering before upgrading.',
   'rule.VT2.mechanism':
     'From 4.0 quorum queues have a default delivery limit; a queue that redelivered without end on 3.13 starts discarding messages instead.',
   'rule.VT2.action': 'Add a dead-letter exchange to {objects} before upgrading',
   'rule.VT3.title': 'Deprecated features are in use',
-  'rule.VT3.what':
-    'The broker reports these deprecated features in use: {features}.',
+  'rule.VT3.what': 'The broker reports deprecated feature {feature} in use.',
   'rule.VT3.dataSafety':
     'Yes. Nothing is lost now, but a later version can refuse or remove these features.',
   'rule.VT3.next':

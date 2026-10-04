@@ -4,10 +4,10 @@
     {
       "body": [
         {
-          "messages": 1,
+          "messages": 133,
           "name": "/",
-          "recv_oct": 5869,
-          "send_oct": 7184,
+          "recv_oct": 49616,
+          "send_oct": 49762,
           "description": "",
           "metadata": {
             "description": "",
@@ -16,7 +16,7 @@
           },
           "tags": [],
           "default_queue_type": "classic",
-          "messages_ready": 0,
+          "messages_ready": 132,
           "messages_unacknowledged": 1,
           "protected_from_deletion": false,
           "tracing": false,
@@ -24,23 +24,23 @@
             "rabbit@noprom": "running"
           },
           "message_stats": {
-            "ack": 35,
+            "ack": 107,
             "ack_details": {
               "rate": 0
             },
-            "confirm": 35,
+            "confirm": 242,
             "confirm_details": {
               "rate": 0
             },
-            "deliver": 35,
+            "deliver": 108,
             "deliver_details": {
               "rate": 0
             },
-            "deliver_get": 35,
+            "deliver_get": 280,
             "deliver_get_details": {
               "rate": 0
             },
-            "deliver_no_ack": 0,
+            "deliver_no_ack": 172,
             "deliver_no_ack_details": {
               "rate": 0
             },
@@ -60,7 +60,7 @@
             "get_no_ack_details": {
               "rate": 0
             },
-            "publish": 35,
+            "publish": 414,
             "publish_details": {
               "rate": 0
             },
@@ -118,7 +118,7 @@
           }
         }
       ],
-      "observedAt": "2026-10-04T06:16:55.614Z"
+      "observedAt": "2026-10-04T07:33:12.225Z"
     }
   ]
 }

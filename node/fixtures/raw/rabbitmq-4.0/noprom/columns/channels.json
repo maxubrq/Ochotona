@@ -3,9 +3,9 @@
   "pages": [
     {
       "body": {
-        "total_count": 2,
-        "item_count": 2,
-        "filtered_count": 2,
+        "total_count": 6,
+        "item_count": 6,
+        "filtered_count": 6,
         "page": 1,
         "page_size": 500,
         "page_count": 1,
@@ -13,11 +13,11 @@
           {
             "confirm": false,
             "connection_details": {
-              "name": "conn-f2430ffb45"
+              "name": "conn-dc4297a675"
             },
             "consumer_count": 1,
             "message_stats": [],
-            "name": "conn-7706e5b468",
+            "name": "conn-fc42bb0dd9",
             "number": 1,
             "prefetch_count": 20,
             "user": "ocho-admin",
@@ -26,16 +26,78 @@
           {
             "confirm": true,
             "connection_details": {
-              "name": "conn-bd38b0cbc7"
+              "name": "conn-8999101040"
             },
             "consumer_count": 0,
             "message_stats": {
-              "publish": 45,
+              "publish": 80,
               "publish_details": {
-                "rate": 2
+                "rate": 0
               }
             },
-            "name": "conn-7aa836f9ea",
+            "name": "conn-b95642e95f",
+            "number": 1,
+            "prefetch_count": 0,
+            "user": "ocho-admin",
+            "vhost": "/"
+          },
+          {
+            "confirm": false,
+            "connection_details": {
+              "name": "conn-64b139828f"
+            },
+            "consumer_count": 1,
+            "message_stats": [],
+            "name": "conn-214235d98a",
+            "number": 2,
+            "prefetch_count": 1,
+            "user": "ocho-admin",
+            "vhost": "/"
+          },
+          {
+            "confirm": true,
+            "connection_details": {
+              "name": "conn-afe59b0f23"
+            },
+            "consumer_count": 0,
+            "message_stats": {
+              "publish": 197,
+              "publish_details": {
+                "rate": 0
+              }
+            },
+            "name": "conn-b66213e504",
+            "number": 1,
+            "prefetch_count": 0,
+            "user": "ocho-admin",
+            "vhost": "/"
+          },
+          {
+            "confirm": false,
+            "connection_details": {
+              "name": "conn-034c6ea0dc"
+            },
+            "consumer_count": 1,
+            "message_stats": [],
+            "name": "conn-94e90d6395",
+            "number": 2,
+            "prefetch_count": 0,
+            "user": "ocho-admin",
+            "vhost": "/"
+          },
+          {
+            "confirm": false,
+            "connection_details": {
+              "name": "conn-0b402bd868"
+            },
+            "consumer_count": 0,
+            "message_stats": {
+              "publish": 197,
+              "publish_details": {
+                "rate": 0
+              }
+            },
+            "name": "conn-f32126cba9",
             "number": 1,
             "prefetch_count": 0,
             "user": "ocho-admin",
@@ -43,7 +105,7 @@
           }
         ]
       },
-      "observedAt": "2026-10-04T06:16:57.866Z"
+      "observedAt": "2026-10-04T07:33:14.525Z"
     }
   ]
 }

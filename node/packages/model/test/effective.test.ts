@@ -10,6 +10,7 @@ import {
   capabilitiesFor,
   hasUnsupportedPcre,
   known,
+  matchingPolicies,
   parseVersion,
   resolveEffective,
   unknown,
@@ -412,6 +413,39 @@ describe('tự kiểm với broker', () => {
       reason: {
         kind: 'model_mismatch',
         detail: 'policy: model=scan-dlx broker=catch-all',
+      },
+    });
+  });
+});
+
+describe('matchingPolicies', () => {
+  it('lists every match, highest priority first, then by name', () => {
+    const ps = [
+      pol('b', {}, { priority: 1 }),
+      pol('a', {}, { priority: 1 }),
+      pol('top', {}, { priority: 5 }),
+      pol('other-vhost', {}, { vhost: 'x', priority: 9 }),
+      pol('exchanges-only', {}, { applyTo: 'exchanges', priority: 9 }),
+      pol('no-match', {}, { pattern: '^zzz$', priority: 9 }),
+    ];
+    const r = matchingPolicies(q('orders', 'quorum'), ps);
+    expect(r.ok && r.policies.map((p) => p.ref.name)).toEqual([
+      'top',
+      'a',
+      'b',
+    ]);
+  });
+
+  it('refuses to answer when a candidate pattern is unsupported', () => {
+    const r = matchingPolicies(q('orders', 'classic'), [
+      pol('bad', {}, { pattern: '(?i)orders' }),
+    ]);
+    expect(r).toEqual({
+      ok: false,
+      reason: {
+        kind: 'regex_unsupported',
+        policy: 'bad',
+        pattern: '(?i)orders',
       },
     });
   });

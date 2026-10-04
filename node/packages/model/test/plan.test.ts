@@ -78,8 +78,23 @@ describe('planRead', () => {
     expect(planRead({ prometheus: false }).prometheus).toBe(false);
   });
 
-  it('ENDPOINT_IDS trùng khoá của RawResponses', () => {
+  it('ENDPOINT_IDS là các khoá bắt buộc của RawResponses', () => {
     expect(ENDPOINT_IDS).toHaveLength(16);
+    expect(ENDPOINT_IDS).not.toContain('users');
+  });
+
+  it('chỉ đọc /api/users khi được bật', () => {
+    expect(planRead().inventory.map((r) => r.id)).not.toContain('users');
+    const p = planRead({ users: true, scope: { vhosts: ['/'] } });
+    expect(p.inventory.filter((r) => r.id === 'users')).toEqual([
+      {
+        id: 'users',
+        segments: ['users'],
+        paginated: false,
+        columns: null,
+        query: {},
+      },
+    ]);
   });
 });
 

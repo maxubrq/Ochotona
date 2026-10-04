@@ -843,6 +843,27 @@
       "status": "active"
     },
     {
+      "code": "GC25",
+      "owner": "tool",
+      "kind": "assumption",
+      "meaning": "rabbitmqadmin v2 declares and updates policies with the syntax in fix-templates.json",
+      "status": "active"
+    },
+    {
+      "code": "GC26",
+      "owner": "tool",
+      "kind": "assumption",
+      "meaning": "/api/policies shows the ha-mode key in definition on 3.13",
+      "status": "active"
+    },
+    {
+      "code": "GC27",
+      "owner": "tool",
+      "kind": "assumption",
+      "meaning": "Channel consumer_count is present when management statistics are disabled",
+      "status": "active"
+    },
+    {
       "code": "H2",
       "owner": "spec-core",
       "kind": "spec-rule",

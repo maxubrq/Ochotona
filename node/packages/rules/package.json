@@ -1,17 +1,53 @@
 {
   "name": "@ochotona/rules",
   "version": "0.1.0",
-  "description": "",
+  "description": "22 luật của Ocho và bộ máy chạy chúng trên một Actual: kết quả có cấu trúc, ba việc làm trước, finding:1",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "scripts": {
     "build": "rollup -c ../../rollup.config.base.js",
-    "format": "prettier --check \"src/**/*.ts\"",
-    "format:fix": "prettier --write \"src/**/*.ts\""
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage --coverage.include=src/**",
+    "coverage-matrix": "vitest run test/coverage-matrix.test.ts",
+    "typecheck": "tsc --noEmit -p . && tsc -p tsconfig.check.json",
+    "format": "prettier --check \"src/**/*.ts\" \"test/**/*.ts\" \"fixtures/**/*.ts\"",
+    "format:fix": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" \"fixtures/**/*.ts\"",
+    "test:live": "vitest run test/live.test.ts",
+    "test:mutation": "stryker run"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "@ochotona/model": "workspace:*",
+    "@ochotona/spec": "workspace:*"
+  },
+  "devDependencies": {
+    "@ochotona/broker": "workspace:*",
+    "@stryker-mutator/core": "^10.0.0",
+    "@stryker-mutator/vitest-runner": "^10.0.0",
+    "@types/node": "^26.6.4",
+    "@vitest/coverage-v8": "^5.0.3",
+    "ajv": "^8",
+    "ajv-formats": "^3",
+    "fast-check": "^4.10.2",
+    "vitest": "^5.0.3"
+  },
+  "files": [
+    "dist",
+    "docs"
+  ],
+  "engines": {
+    "node": ">=20"
+  }
 }

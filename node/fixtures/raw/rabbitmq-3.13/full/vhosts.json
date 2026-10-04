@@ -10,25 +10,25 @@
           "default_queue_type": "undefined",
           "description": "",
           "message_stats": {
-            "ack": 17,
+            "ack": 93,
             "ack_details": {
-              "rate": 0
+              "rate": 3
             },
-            "confirm": 17,
+            "confirm": 211,
             "confirm_details": {
-              "rate": 0
+              "rate": 7
             },
-            "deliver": 17,
+            "deliver": 94,
             "deliver_details": {
-              "rate": 0
+              "rate": 3
             },
-            "deliver_get": 17,
+            "deliver_get": 247,
             "deliver_get_details": {
-              "rate": 0
+              "rate": 8
             },
-            "deliver_no_ack": 0,
+            "deliver_no_ack": 153,
             "deliver_no_ack_details": {
-              "rate": 0
+              "rate": 5
             },
             "drop_unroutable": 0,
             "drop_unroutable_details": {
@@ -46,9 +46,9 @@
             "get_no_ack_details": {
               "rate": 0
             },
-            "publish": 17,
+            "publish": 364,
             "publish_details": {
-              "rate": 0
+              "rate": 12
             },
             "redeliver": 0,
             "redeliver_details": {
@@ -59,15 +59,15 @@
               "rate": 0
             }
           },
-          "messages": 0,
+          "messages": 118,
           "messages_details": {
-            "rate": 0
+            "rate": 4.8
           },
-          "messages_ready": 0,
+          "messages_ready": 117,
           "messages_ready_details": {
-            "rate": 0
+            "rate": 4.8
           },
-          "messages_unacknowledged": 0,
+          "messages_unacknowledged": 1,
           "messages_unacknowledged_details": {
             "rate": 0
           },
@@ -76,13 +76,13 @@
             "tags": []
           },
           "name": "/",
-          "recv_oct": 3778,
+          "recv_oct": 43318,
           "recv_oct_details": {
-            "rate": 0
+            "rate": 1280.2
           },
-          "send_oct": 4414,
+          "send_oct": 43593,
           "send_oct_details": {
-            "rate": 0
+            "rate": 1275.4
           },
           "tags": [],
           "tracing": false
@@ -115,7 +115,7 @@
           "tracing": false
         }
       ],
-      "observedAt": "2026-10-04T06:15:47.701Z"
+      "observedAt": "2026-10-04T07:31:31.873Z"
     }
   ]
 }

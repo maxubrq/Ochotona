@@ -1,0 +1,20 @@
+{
+  "$schema": "../schemas/data/fix-templates.schema.json",
+  "$comment": "Command templates for fixes. {name} is replaced by the value in POSIX single quotes; the command never contains credentials or the broker URL.",
+  "templates": [
+    {
+      "id": "policy.declare",
+      "tool": "rabbitmqadmin",
+      "command": "rabbitmqadmin --vhost {vhost} policies declare --name {name} --pattern {pattern} --apply-to {applyTo} --priority {priority} --definition {definition}",
+      "params": [
+        "vhost",
+        "name",
+        "pattern",
+        "applyTo",
+        "priority",
+        "definition"
+      ],
+      "assumption": "GC25"
+    }
+  ]
+}

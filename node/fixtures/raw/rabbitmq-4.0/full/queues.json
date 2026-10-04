@@ -3,8 +3,8 @@
   "pages": [
     {
       "body": {
-        "filtered_count": 5,
-        "item_count": 5,
+        "filtered_count": 10,
+        "item_count": 10,
         "items": [
           {
             "arguments": {
@@ -46,9 +46,55 @@
             },
             "messages_unacknowledged_ram": 0,
             "name": "audit",
-            "node": "rabbit@host-2345948ab9",
+            "node": "rabbit@host-0538ca54d0",
             "policy": "audit-ttl",
-            "reductions": 10208,
+            "reductions": 9616,
+            "reductions_details": {
+              "rate": 0
+            },
+            "state": "running",
+            "storage_version": 2,
+            "type": "classic",
+            "vhost": "/"
+          },
+          {
+            "arguments": {
+              "x-queue-type": "classic"
+            },
+            "auto_delete": false,
+            "consumer_capacity": 0,
+            "consumer_utilisation": 0,
+            "consumers": 0,
+            "durable": true,
+            "effective_policy_definition": {},
+            "exclusive": false,
+            "memory": 21808,
+            "message_bytes": 0,
+            "message_bytes_paged_out": 0,
+            "message_bytes_persistent": 0,
+            "message_bytes_ram": 0,
+            "message_bytes_ready": 0,
+            "message_bytes_unacknowledged": 0,
+            "messages": 0,
+            "messages_details": {
+              "rate": 0
+            },
+            "messages_paged_out": 0,
+            "messages_persistent": 0,
+            "messages_ram": 0,
+            "messages_ready": 0,
+            "messages_ready_details": {
+              "rate": 0
+            },
+            "messages_ready_ram": 0,
+            "messages_unacknowledged": 0,
+            "messages_unacknowledged_details": {
+              "rate": 0
+            },
+            "messages_unacknowledged_ram": 0,
+            "name": "events.unrouted",
+            "node": "rabbit@host-0538ca54d0",
+            "reductions": 9473,
             "reductions_details": {
               "rate": 0
             },
@@ -92,9 +138,9 @@
               "rate": 0
             },
             "messages_unacknowledged_ram": 0,
-            "name": "events.unrouted",
-            "node": "rabbit@host-2345948ab9",
-            "reductions": 9222,
+            "name": "legacy",
+            "node": "rabbit@host-0538ca54d0",
+            "reductions": 10268,
             "reductions_details": {
               "rate": 0
             },
@@ -122,15 +168,15 @@
             "message_bytes_ready": 0,
             "message_bytes_unacknowledged": 0,
             "message_stats": {
-              "ack": 24,
+              "ack": 61,
               "ack_details": {
                 "rate": 2
               },
-              "deliver": 24,
+              "deliver": 61,
               "deliver_details": {
                 "rate": 2
               },
-              "deliver_get": 24,
+              "deliver_get": 61,
               "deliver_get_details": {
                 "rate": 2
               },
@@ -150,7 +196,7 @@
               "get_no_ack_details": {
                 "rate": 0
               },
-              "publish": 24,
+              "publish": 61,
               "publish_details": {
                 "rate": 2
               },
@@ -177,10 +223,10 @@
             },
             "messages_unacknowledged_ram": 0,
             "name": "ocho.traffic",
-            "node": "rabbit@host-2345948ab9",
-            "reductions": 39459,
+            "node": "rabbit@host-0538ca54d0",
+            "reductions": 88035,
             "reductions_details": {
-              "rate": 2733.8
+              "rate": 2737.6
             },
             "state": "running",
             "storage_version": 2,
@@ -203,9 +249,11 @@
               "max-length": 100000
             },
             "exclusive": false,
-            "leader": "rabbit@host-2345948ab9",
-            "members": ["rabbit@host-2345948ab9"],
-            "memory": 42588,
+            "leader": "rabbit@host-0538ca54d0",
+            "members": [
+              "rabbit@host-0538ca54d0"
+            ],
+            "memory": 29636,
             "message_bytes": 0,
             "message_bytes_dlx": 0,
             "message_bytes_persistent": 0,
@@ -231,16 +279,18 @@
               "rate": 0
             },
             "name": "orders.created",
-            "node": "rabbit@host-2345948ab9",
-            "online": ["rabbit@host-2345948ab9"],
+            "node": "rabbit@host-0538ca54d0",
+            "online": [
+              "rabbit@host-0538ca54d0"
+            ],
             "open_files": {
               "rabbit@full": 0
             },
             "policy": "orders-limit",
             "publishers": 0,
-            "reductions": 19259,
+            "reductions": 20696,
             "reductions_details": {
-              "rate": 69.8
+              "rate": 72.6
             },
             "state": "running",
             "type": "quorum",
@@ -260,9 +310,11 @@
               "max-length": 100000
             },
             "exclusive": false,
-            "leader": "rabbit@host-2345948ab9",
-            "members": ["rabbit@host-2345948ab9"],
-            "memory": 42508,
+            "leader": "rabbit@host-0538ca54d0",
+            "members": [
+              "rabbit@host-0538ca54d0"
+            ],
+            "memory": 29636,
             "message_bytes": 0,
             "message_bytes_dlx": 0,
             "message_bytes_persistent": 0,
@@ -288,28 +340,312 @@
               "rate": 0
             },
             "name": "orders.parking",
-            "node": "rabbit@host-2345948ab9",
-            "online": ["rabbit@host-2345948ab9"],
+            "node": "rabbit@host-0538ca54d0",
+            "online": [
+              "rabbit@host-0538ca54d0"
+            ],
             "open_files": {
               "rabbit@full": 0
             },
             "policy": "orders-limit",
             "publishers": 0,
-            "reductions": 18147,
+            "reductions": 19449,
             "reductions_details": {
-              "rate": 69.8
+              "rate": 71.2
             },
             "state": "running",
             "type": "quorum",
             "vhost": "payments"
+          },
+          {
+            "arguments": {
+              "x-dead-letter-exchange": "orders.dlx",
+              "x-dead-letter-strategy": "at-least-once",
+              "x-delivery-limit": 10,
+              "x-overflow": "reject-publish",
+              "x-queue-type": "quorum"
+            },
+            "auto_delete": false,
+            "consumer_capacity": 0,
+            "consumer_utilisation": 0,
+            "consumers": 0,
+            "delivery_limit": 10,
+            "durable": true,
+            "effective_policy_definition": {
+              "max-length": 100000
+            },
+            "exclusive": false,
+            "leader": "rabbit@host-0538ca54d0",
+            "members": [
+              "rabbit@host-0538ca54d0"
+            ],
+            "memory": 29716,
+            "message_bytes": 0,
+            "message_bytes_dlx": 0,
+            "message_bytes_persistent": 0,
+            "message_bytes_ram": 0,
+            "message_bytes_ready": 0,
+            "message_bytes_unacknowledged": 0,
+            "messages": 0,
+            "messages_details": {
+              "rate": 0
+            },
+            "messages_dlx": 0,
+            "messages_persistent": 0,
+            "messages_ram": 0,
+            "messages_ready": 0,
+            "messages_ready_details": {
+              "rate": 0
+            },
+            "messages_ready_high": 0,
+            "messages_ready_normal": 0,
+            "messages_ready_returned": 0,
+            "messages_unacknowledged": 0,
+            "messages_unacknowledged_details": {
+              "rate": 0
+            },
+            "name": "orders.safe",
+            "node": "rabbit@host-0538ca54d0",
+            "online": [
+              "rabbit@host-0538ca54d0"
+            ],
+            "open_files": {
+              "rabbit@full": 0
+            },
+            "policy": "orders-limit",
+            "publishers": 0,
+            "reductions": 20251,
+            "reductions_details": {
+              "rate": 71.2
+            },
+            "state": "running",
+            "type": "quorum",
+            "vhost": "payments"
+          },
+          {
+            "arguments": {
+              "x-queue-type": "classic"
+            },
+            "auto_delete": false,
+            "consumer_capacity": 0,
+            "consumer_utilisation": 0,
+            "consumers": 0,
+            "durable": true,
+            "effective_policy_definition": {
+              "max-length": 1000
+            },
+            "exclusive": false,
+            "memory": 16920,
+            "message_bytes": 0,
+            "message_bytes_paged_out": 0,
+            "message_bytes_persistent": 0,
+            "message_bytes_ram": 0,
+            "message_bytes_ready": 0,
+            "message_bytes_unacknowledged": 0,
+            "messages": 0,
+            "messages_details": {
+              "rate": 0
+            },
+            "messages_paged_out": 0,
+            "messages_persistent": 0,
+            "messages_ram": 0,
+            "messages_ready": 0,
+            "messages_ready_details": {
+              "rate": 0
+            },
+            "messages_ready_ram": 0,
+            "messages_unacknowledged": 0,
+            "messages_unacknowledged_details": {
+              "rate": 0
+            },
+            "messages_unacknowledged_ram": 0,
+            "name": "overlap",
+            "node": "rabbit@host-0538ca54d0",
+            "policy": "overlap-a",
+            "reductions": 9633,
+            "reductions_details": {
+              "rate": 0
+            },
+            "state": "running",
+            "storage_version": 2,
+            "type": "classic",
+            "vhost": "/"
+          },
+          {
+            "arguments": {
+              "x-queue-type": "classic"
+            },
+            "auto_delete": false,
+            "consumer_capacity": 0.00012614107941843095,
+            "consumer_utilisation": 0.00012614094676109455,
+            "consumers": 1,
+            "durable": true,
+            "effective_policy_definition": {},
+            "exclusive": false,
+            "memory": 164136,
+            "message_bytes": 1368,
+            "message_bytes_paged_out": 1332,
+            "message_bytes_persistent": 0,
+            "message_bytes_ram": 36,
+            "message_bytes_ready": 1356,
+            "message_bytes_unacknowledged": 12,
+            "message_stats": {
+              "ack": 32,
+              "ack_details": {
+                "rate": 1
+              },
+              "deliver": 33,
+              "deliver_details": {
+                "rate": 1
+              },
+              "deliver_get": 33,
+              "deliver_get_details": {
+                "rate": 1
+              },
+              "deliver_no_ack": 0,
+              "deliver_no_ack_details": {
+                "rate": 0
+              },
+              "get": 0,
+              "get_details": {
+                "rate": 0
+              },
+              "get_empty": 0,
+              "get_empty_details": {
+                "rate": 0
+              },
+              "get_no_ack": 0,
+              "get_no_ack_details": {
+                "rate": 0
+              },
+              "publish": 150,
+              "publish_details": {
+                "rate": 5
+              },
+              "redeliver": 0,
+              "redeliver_details": {
+                "rate": 0
+              }
+            },
+            "messages": 114,
+            "messages_details": {
+              "rate": 3.8
+            },
+            "messages_paged_out": 111,
+            "messages_persistent": 0,
+            "messages_ram": 3,
+            "messages_ready": 113,
+            "messages_ready_details": {
+              "rate": 3.8
+            },
+            "messages_ready_ram": 2,
+            "messages_unacknowledged": 1,
+            "messages_unacknowledged_details": {
+              "rate": 0
+            },
+            "messages_unacknowledged_ram": 1,
+            "name": "work.backlog",
+            "node": "rabbit@host-0538ca54d0",
+            "reductions": 86909,
+            "reductions_details": {
+              "rate": 2284.6
+            },
+            "state": "running",
+            "storage_version": 2,
+            "type": "classic",
+            "vhost": "/"
+          },
+          {
+            "arguments": {
+              "x-queue-type": "classic"
+            },
+            "auto_delete": false,
+            "consumer_capacity": 1,
+            "consumer_utilisation": 1,
+            "consumers": 1,
+            "durable": true,
+            "effective_policy_definition": {},
+            "exclusive": false,
+            "memory": 30072,
+            "message_bytes": 0,
+            "message_bytes_paged_out": 0,
+            "message_bytes_persistent": 0,
+            "message_bytes_ram": 0,
+            "message_bytes_ready": 0,
+            "message_bytes_unacknowledged": 0,
+            "message_stats": {
+              "ack": 0,
+              "ack_details": {
+                "rate": 0
+              },
+              "deliver": 0,
+              "deliver_details": {
+                "rate": 0
+              },
+              "deliver_get": 153,
+              "deliver_get_details": {
+                "rate": 5
+              },
+              "deliver_no_ack": 153,
+              "deliver_no_ack_details": {
+                "rate": 5
+              },
+              "get": 0,
+              "get_details": {
+                "rate": 0
+              },
+              "get_empty": 0,
+              "get_empty_details": {
+                "rate": 0
+              },
+              "get_no_ack": 0,
+              "get_no_ack_details": {
+                "rate": 0
+              },
+              "publish": 153,
+              "publish_details": {
+                "rate": 5
+              },
+              "redeliver": 0,
+              "redeliver_details": {
+                "rate": 0
+              }
+            },
+            "messages": 0,
+            "messages_details": {
+              "rate": 0
+            },
+            "messages_paged_out": 0,
+            "messages_persistent": 0,
+            "messages_ram": 0,
+            "messages_ready": 0,
+            "messages_ready_details": {
+              "rate": 0
+            },
+            "messages_ready_ram": 0,
+            "messages_unacknowledged": 0,
+            "messages_unacknowledged_details": {
+              "rate": 0
+            },
+            "messages_unacknowledged_ram": 0,
+            "name": "work.classic",
+            "node": "rabbit@host-0538ca54d0",
+            "reductions": 58054,
+            "reductions_details": {
+              "rate": 1455
+            },
+            "state": "running",
+            "storage_version": 2,
+            "type": "classic",
+            "vhost": "/"
           }
         ],
         "page": 1,
         "page_count": 1,
         "page_size": 500,
-        "total_count": 5
+        "total_count": 10
       },
-      "observedAt": "2026-10-04T06:16:48.130Z"
+      "observedAt": "2026-10-04T07:33:04.799Z"
     }
   ]
 }

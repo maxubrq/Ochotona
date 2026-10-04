@@ -14,7 +14,7 @@
           "disk_free_alarm": false,
           "proc_total": 1048576,
           "rates_mode": "basic",
-          "uptime": 23206,
+          "uptime": 42518,
           "run_queue": 1,
           "processors": 10,
           "exchange_types": [
@@ -79,7 +79,7 @@
             },
             {
               "name": "asn1",
-              "description": "The Erlang ASN1 compiler version ip-54a71808e5",
+              "description": "The Erlang ASN1 compiler version ip-68f5ce6958",
               "version": "5.3.4.3"
             },
             {
@@ -311,28 +311,32 @@
               "port": "15672"
             }
           ],
-          "log_files": ["<stdout>"],
-          "db_dir": "/var/lib/rabbitmq/mnesia/rabbit@host-07eba59225",
+          "log_files": [
+            "<stdout>"
+          ],
+          "db_dir": "/var/lib/rabbitmq/mnesia/rabbit@host-806edcefa2",
           "config_files": [
             "/etc/rabbitmq/conf.d/10-base.conf",
             "/etc/rabbitmq/conf.d/10-defaults.conf"
           ],
           "net_ticktime": 60,
-          "enabled_plugins": ["rabbitmq_management"],
+          "enabled_plugins": [
+            "rabbitmq_management"
+          ],
           "mem_calculation_strategy": "rss",
           "ra_open_file_metrics": {
             "ra_log_wal": 0,
             "ra_log_segment_writer": 0
           },
-          "name": "rabbit@host-07eba59225",
+          "name": "rabbit@host-806edcefa2",
           "type": "disc",
           "running": true,
           "being_drained": false,
-          "mem_used": 132763648,
+          "mem_used": 129490944,
           "mem_used_details": {
             "rate": 0
           },
-          "fd_used": 48,
+          "fd_used": 55,
           "fd_used_details": {
             "rate": 0
           },
@@ -340,23 +344,23 @@
           "sockets_used_details": {
             "rate": 0
           },
-          "proc_used": 454,
+          "proc_used": 523,
           "proc_used_details": {
             "rate": 0
           },
-          "disk_free": 1020376293376,
+          "disk_free": 1020067151872,
           "disk_free_details": {
             "rate": 0
           },
-          "gc_num": 8886,
+          "gc_num": 10915,
           "gc_num_details": {
             "rate": 0
           },
-          "gc_bytes_reclaimed": 304047504,
+          "gc_bytes_reclaimed": 324889200,
           "gc_bytes_reclaimed_details": {
             "rate": 0
           },
-          "context_switches": 120194,
+          "context_switches": 129212,
           "context_switches_details": {
             "rate": 0
           },
@@ -428,7 +432,7 @@
           "queue_index_read_count_details": {
             "rate": 0
           },
-          "connection_created": 3,
+          "connection_created": 9,
           "connection_created_details": {
             "rate": 0
           },
@@ -436,11 +440,11 @@
           "connection_closed_details": {
             "rate": 0
           },
-          "channel_created": 3,
+          "channel_created": 15,
           "channel_created_details": {
             "rate": 0
           },
-          "channel_closed": 1,
+          "channel_closed": 9,
           "channel_closed_details": {
             "rate": 0
           },
@@ -469,7 +473,7 @@
           }
         }
       ],
-      "observedAt": "2026-10-04T06:16:54.610Z"
+      "observedAt": "2026-10-04T07:33:11.266Z"
     }
   ]
 }

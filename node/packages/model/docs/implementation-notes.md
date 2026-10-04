@@ -15,6 +15,8 @@ Những chỗ mã nguồn khác hoặc thêm so với [spec](./spec.md), và lý
 | `parseTemplate`, `renderTemplate`, `matchTemplate`               | Xuất ra công khai                                                                              | `compiler` và `explain` cần dựng tên từ mẫu                                                                                                                                                                                 |
 | `RawResult`                                                      | Thêm `kind` (`network_error`), `note` (`http_error`), `reason` (`not_attempted`), đều tuỳ chọn | Thay đổi 2 của spec broker. `reasonOf` đổi `not_attempted` vì `capability` thành `endpoint_missing`, và ghi `note` vào thông báo lỗi                                                                                        |
 | `planRead`, `ReadPlan`, `EndpointRead`, `EndpointId` (`plan.ts`) | Xuất ra công khai; `planRead({ requires?, scope?, prometheus? })`                              | Thay đổi 3 của spec broker. `requires` là tập endpoint, vì gói rules chưa có để suy từ tập trường. `EndpointRead.splitByVhost` để broker tự đọc binding, consumer theo vhost khi có ≤ 20 vhost (số vhost chỉ biết lúc chạy) |
+| `Actual.users`, `RawResponses.users?`, `planRead({ users })`     | Bộ sưu tập user và tag, đọc `/api/users` chỉ khi `users: true`                                 | Thay đổi 7 của spec rules (Q3). User `monitoring` không đọc được endpoint này, nên CLI chỉ bật khi chạy bằng user quản trị. Không đọc thì `unknown: source_unavailable`. Ảnh chụp cũ không có trường này vẫn nạp được |
+| `matchingPolicies(obj, policies)`                                | Mọi policy khớp đối tượng, priority giảm dần rồi tên                                          | Thay đổi 7 của spec rules (L3)                                                                                                                                                                                              |
 | `package.json`                                                   | Thêm `exports` (`import` → `dist/index.esm.js`)                                                | Thiếu `exports` thì Node nạp `dist/index.js` (CJS) trong gói `"type": "module"` và hỏng khi gói khác import model                                                                                                           |
 
 ## Dữ liệu lấy từ `@ochotona/spec`
@@ -36,6 +38,8 @@ Theo thay đổi 1 đến 4 của [spec của gói spec](../../spec/docs/spec.md
 - **`http.stats`**: `sourcesOf` xét cả `message_stats` và `churn_rates`, cùng phép thử với broker (GC21).
 
 ## Sửa sau khi chạy trên broker thật
+
+- **Tốc độ của queue rảnh.** Khi thống kê bật, queue chưa có sự kiện nào thì `/api/queues` không có `message_stats`. Trước đây `publishRate`, `deliverRate`, `redeliverRate` thành `unknown: field_absent`, làm F4 và C2 ra `not_checked` trên mọi queue rảnh. Giờ vắng nghĩa là 0, như `publishCount` của channel; thống kê tắt thì vẫn là `source_unavailable`.
 
 Ma trận `SUT/` (3.13, 4.0, 4.2, 4.3 × 4 biến thể) cho thấy ba chỗ ingest sai khi thống kê management tắt. Cả ba có test trên bản ghi thật (`test/raw-fixtures.test.ts`) và test đơn vị (`test/stats-off.test.ts`).
 

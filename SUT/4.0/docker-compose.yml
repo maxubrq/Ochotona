@@ -114,3 +114,95 @@ services:
       --uri amqp://ocho-admin:ocho-admin@listonly:5672/%2F
       --queue ocho.traffic --producers 1 --consumers 1 --rate 2
       --confirm 10 --qos 20 --flag persistent --id listonly
+
+  full-legacy-traffic:
+    <<: *traffic
+    depends_on:
+      full:
+        condition: service_healthy
+    # Client kiểu cũ trên queue classic work.classic: publish không confirm (R1),
+    # consumer auto-ack (C1) chậm hơn producer nên queue có tồn (T1).
+    command: >-
+      --uri amqp://ocho-admin:ocho-admin@full:5672/%2F
+      --queue work.classic --predeclared --producers 1 --consumers 1
+      --rate 5 --consumer-rate 1 --autoack --id full-legacy
+
+  nostats-legacy-traffic:
+    <<: *traffic
+    depends_on:
+      nostats:
+        condition: service_healthy
+    # Client kiểu cũ trên queue classic work.classic: publish không confirm (R1),
+    # consumer auto-ack (C1) chậm hơn producer nên queue có tồn (T1).
+    command: >-
+      --uri amqp://ocho-admin:ocho-admin@nostats:5672/%2F
+      --queue work.classic --predeclared --producers 1 --consumers 1
+      --rate 5 --consumer-rate 1 --autoack --id nostats-legacy
+
+  noprom-legacy-traffic:
+    <<: *traffic
+    depends_on:
+      noprom:
+        condition: service_healthy
+    # Client kiểu cũ trên queue classic work.classic: publish không confirm (R1),
+    # consumer auto-ack (C1) chậm hơn producer nên queue có tồn (T1).
+    command: >-
+      --uri amqp://ocho-admin:ocho-admin@noprom:5672/%2F
+      --queue work.classic --predeclared --producers 1 --consumers 1
+      --rate 5 --consumer-rate 1 --autoack --id noprom-legacy
+
+  listonly-legacy-traffic:
+    <<: *traffic
+    depends_on:
+      listonly:
+        condition: service_healthy
+    # Client kiểu cũ trên queue classic work.classic: publish không confirm (R1),
+    # consumer auto-ack (C1) chậm hơn producer nên queue có tồn (T1).
+    command: >-
+      --uri amqp://ocho-admin:ocho-admin@listonly:5672/%2F
+      --queue work.classic --predeclared --producers 1 --consumers 1
+      --rate 5 --consumer-rate 1 --autoack --id listonly-legacy
+
+  full-backlog-traffic:
+    <<: *traffic
+    depends_on:
+      full:
+        condition: service_healthy
+    # Consumer ack thủ công, qos 1, chậm hơn producer: queue classic work.backlog có tồn (T1).
+    command: >-
+      --uri amqp://ocho-admin:ocho-admin@full:5672/%2F
+      --queue work.backlog --predeclared --producers 1 --consumers 1
+      --rate 5 --consumer-rate 1 --qos 1 --confirm 10 --id full-backlog
+
+  nostats-backlog-traffic:
+    <<: *traffic
+    depends_on:
+      nostats:
+        condition: service_healthy
+    # Consumer ack thủ công, qos 1, chậm hơn producer: queue classic work.backlog có tồn (T1).
+    command: >-
+      --uri amqp://ocho-admin:ocho-admin@nostats:5672/%2F
+      --queue work.backlog --predeclared --producers 1 --consumers 1
+      --rate 5 --consumer-rate 1 --qos 1 --confirm 10 --id nostats-backlog
+
+  noprom-backlog-traffic:
+    <<: *traffic
+    depends_on:
+      noprom:
+        condition: service_healthy
+    # Consumer ack thủ công, qos 1, chậm hơn producer: queue classic work.backlog có tồn (T1).
+    command: >-
+      --uri amqp://ocho-admin:ocho-admin@noprom:5672/%2F
+      --queue work.backlog --predeclared --producers 1 --consumers 1
+      --rate 5 --consumer-rate 1 --qos 1 --confirm 10 --id noprom-backlog
+
+  listonly-backlog-traffic:
+    <<: *traffic
+    depends_on:
+      listonly:
+        condition: service_healthy
+    # Consumer ack thủ công, qos 1, chậm hơn producer: queue classic work.backlog có tồn (T1).
+    command: >-
+      --uri amqp://ocho-admin:ocho-admin@listonly:5672/%2F
+      --queue work.backlog --predeclared --producers 1 --consumers 1
+      --rate 5 --consumer-rate 1 --qos 1 --confirm 10 --id listonly-backlog

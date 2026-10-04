@@ -4,10 +4,12 @@
     {
       "body": {
         "name": "ocho-doctor",
-        "tags": ["monitoring"],
+        "tags": [
+          "monitoring"
+        ],
         "is_internal_user": true
       },
-      "observedAt": "2026-10-04T06:17:55.690Z"
+      "observedAt": "2026-10-04T07:34:06.267Z"
     }
   ]
 }

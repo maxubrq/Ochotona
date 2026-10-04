@@ -24,6 +24,8 @@ export interface Actual {
   readonly channels: Observed<readonly Channel[]>;
   readonly consumers: Observed<readonly Consumer[]>;
   readonly whoami: Observed<Principal>;
+  /** User và tag; chỉ `known` khi kế hoạch đọc `/api/users`. */
+  readonly users: Observed<readonly Principal[]>;
   readonly anomalies: readonly ReadAnomaly[];
 }
 

@@ -48,6 +48,7 @@ export {
   EFFECTIVE_KEYS,
   canonicalArgKey,
   hasUnsupportedPcre,
+  matchingPolicies,
 } from './effective';
 export type { EffectiveResolution, EffectiveTarget } from './effective';
 

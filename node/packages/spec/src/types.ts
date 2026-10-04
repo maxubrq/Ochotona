@@ -45,6 +45,8 @@ export interface RuleMeta {
   /** `['lesson#9.3']` */
   readonly lessonRefs: readonly string[];
   readonly params: Readonly<Record<string, RuleParamType>>;
+  /** Ngưỡng số của luật; hiệu chỉnh ở đây, không sửa code luật. */
+  readonly thresholds?: Readonly<Record<string, number>>;
   readonly status: 'active' | 'experimental' | 'deprecated';
   /** Phiên bản gói đầu tiên có luật. */
   readonly since: string;
@@ -191,4 +193,13 @@ export interface SeverityDef {
   readonly level: Severity;
   readonly tier: 1 | 2 | 3 | 4 | 5;
   readonly label: Readonly<Record<Lang, string>>;
+}
+
+/** Khuôn lệnh sửa. `{name}` được thay bằng giá trị trong nháy đơn POSIX. */
+export interface FixTemplate {
+  readonly id: string;
+  readonly tool: 'rabbitmqadmin';
+  readonly command: string;
+  readonly params: readonly string[];
+  readonly assumption: AssumptionCode;
 }

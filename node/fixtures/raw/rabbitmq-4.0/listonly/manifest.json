@@ -1,11 +1,13 @@
 {
   "label": "rabbitmq-4.0",
   "variant": "listonly",
-  "recordedAt": "2026-10-04T06:17:00.922Z",
+  "recordedAt": "2026-10-04T07:33:17.585Z",
   "brokerVersion": "4.0.9",
   "nodes": 1,
   "ochoVersion": "0.1.0",
-  "userTags": ["monitoring"],
+  "userTags": [
+    "monitoring"
+  ],
   "sources": {
     "http.list": "ok",
     "http.stats": "unavailable",

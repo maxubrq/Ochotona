@@ -48,6 +48,11 @@ export interface RawResponses {
   prometheus: RawResult<string>;
   /** Overview đọc lại lúc cuối, để phát hiện page_shift. */
   totalsAtEnd: RawResult;
+  /**
+   * `/api/users`, chỉ đọc khi được bật trong kế hoạch (CLI chạy bằng user quản
+   * trị). Vắng nghĩa là không đọc.
+   */
+  users?: RawResult;
 }
 
 /** Cửa sổ mặc định của management. */

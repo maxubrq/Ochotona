@@ -6,9 +6,19 @@
         "management_version": "4.3.6",
         "rates_mode": "basic",
         "sample_retention_policies": {
-          "global": [600, 3600, 28800, 86400],
-          "basic": [600, 3600],
-          "detailed": [600]
+          "global": [
+            600,
+            3600,
+            28800,
+            86400
+          ],
+          "basic": [
+            600,
+            3600
+          ],
+          "detailed": [
+            600
+          ]
         },
         "exchange_types": [
           {
@@ -45,7 +55,7 @@
         "product_version": "4.3.6",
         "product_name": "RabbitMQ",
         "rabbitmq_version": "4.3.6",
-        "cluster_name": "rabbit@host-2f7d7946ea",
+        "cluster_name": "rabbit@host-fc45a14ecc",
         "cluster_tags": {},
         "node_tags": {},
         "erlang_version": "27.3.4.18",
@@ -58,19 +68,19 @@
         "require_definition_json_extension": false,
         "message_stats": {
           "get": 0,
-          "deliver": 23,
-          "confirm": 23,
-          "ack": 23,
-          "publish": 23,
-          "disk_reads": 0,
-          "disk_writes": 22,
+          "deliver": 94,
+          "confirm": 212,
+          "ack": 93,
+          "publish": 364,
+          "disk_reads": 31,
+          "disk_writes": 204,
           "get_empty": 0,
           "get_no_ack": 0,
-          "deliver_no_ack": 0,
+          "deliver_no_ack": 152,
           "redeliver": 0,
           "drop_unroutable": 0,
           "return_unroutable": 0,
-          "deliver_get": 23,
+          "deliver_get": 246,
           "get_empty_details": {
             "rate": 0
           },
@@ -118,10 +128,10 @@
           "connection_closed": 0,
           "queue_declared": 1,
           "queue_created": 1,
-          "connection_created": 3,
+          "connection_created": 9,
           "queue_deleted": 0,
-          "channel_created": 3,
-          "channel_closed": 1,
+          "channel_created": 15,
+          "channel_closed": 9,
           "queue_deleted_details": {
             "rate": 0
           },
@@ -145,9 +155,9 @@
           }
         },
         "queue_totals": {
-          "messages": 0,
-          "messages_ready": 0,
-          "messages_unacknowledged": 0,
+          "messages": 116,
+          "messages_ready": 115,
+          "messages_unacknowledged": 1,
           "messages_details": {
             "rate": 0
           },
@@ -159,30 +169,33 @@
           }
         },
         "object_totals": {
-          "channels": 2,
-          "consumers": 1,
+          "channels": 6,
+          "consumers": 3,
           "exchanges": 19,
-          "queues": 5,
-          "connections": 3
+          "queues": 10,
+          "connections": 9
         },
         "statistics_db_event_queue": 0,
-        "node": "rabbit@host-2f7d7946ea",
+        "node": "rabbit@host-fc45a14ecc",
         "listeners": [
           {
-            "node": "rabbit@host-2f7d7946ea",
+            "node": "rabbit@host-fc45a14ecc",
             "protocol": "amqp",
             "ip_address": "::",
             "port": 5672,
             "socket_opts": {
               "backlog": 128,
               "nodelay": true,
-              "linger": [true, 0],
+              "linger": [
+                true,
+                0
+              ],
               "exit_on_close": false
             },
             "tls": false
           },
           {
-            "node": "rabbit@host-2f7d7946ea",
+            "node": "rabbit@host-fc45a14ecc",
             "protocol": "clustering",
             "ip_address": "::",
             "port": 25672,
@@ -190,7 +203,7 @@
             "tls": false
           },
           {
-            "node": "rabbit@host-2f7d7946ea",
+            "node": "rabbit@host-fc45a14ecc",
             "protocol": "http",
             "ip_address": "::",
             "port": 15672,
@@ -203,7 +216,7 @@
             "tls": false
           },
           {
-            "node": "rabbit@host-2f7d7946ea",
+            "node": "rabbit@host-fc45a14ecc",
             "protocol": "http/prometheus",
             "ip_address": "::",
             "port": 15692,
@@ -220,7 +233,7 @@
         "contexts": [
           {
             "ssl_opts": [],
-            "node": "rabbit@host-2f7d7946ea",
+            "node": "rabbit@host-fc45a14ecc",
             "description": "RabbitMQ Management",
             "path": "/",
             "cowboy_opts": "[{sendfile,false}]",
@@ -228,7 +241,7 @@
           },
           {
             "ssl_opts": [],
-            "node": "rabbit@host-2f7d7946ea",
+            "node": "rabbit@host-fc45a14ecc",
             "description": "RabbitMQ Prometheus",
             "path": "/",
             "port": "15692",
@@ -237,7 +250,7 @@
           }
         ]
       },
-      "observedAt": "2026-10-04T06:17:54.487Z"
+      "observedAt": "2026-10-04T07:34:05.025Z"
     }
   ]
 }

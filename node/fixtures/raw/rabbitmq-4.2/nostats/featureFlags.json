@@ -99,7 +99,10 @@
           "stability": "stable",
           "require_level": "none",
           "experiment_level": "supported",
-          "callbacks": ["enable", "post_enable"],
+          "callbacks": [
+            "enable",
+            "post_enable"
+          ],
           "provided_by": "rabbit"
         },
         {
@@ -209,7 +212,9 @@
           "stability": "stable",
           "require_level": "none",
           "experiment_level": "supported",
-          "callbacks": ["enable"],
+          "callbacks": [
+            "enable"
+          ],
           "provided_by": "rabbit"
         },
         {
@@ -312,7 +317,7 @@
           "provided_by": "rabbit"
         }
       ],
-      "observedAt": "2026-10-04T06:13:46.215Z"
+      "observedAt": "2026-10-04T07:27:22.939Z"
     }
   ]
 }

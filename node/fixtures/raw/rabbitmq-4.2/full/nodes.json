@@ -14,7 +14,7 @@
           "disk_free_alarm": false,
           "proc_total": 1048576,
           "rates_mode": "basic",
-          "uptime": 38730,
+          "uptime": 34009,
           "run_queue": 1,
           "processors": 10,
           "exchange_types": [
@@ -29,6 +29,11 @@
               "enabled": true
             },
             {
+              "name": "fanout",
+              "description": "AMQP fanout exchange, as per the AMQP specification",
+              "enabled": true
+            },
+            {
               "name": "direct",
               "description": "AMQP direct exchange, as per the AMQP specification",
               "enabled": true
@@ -36,11 +41,6 @@
             {
               "name": "x-local-random",
               "description": "Picks one random local binding (queue) to route via (to).",
-              "enabled": true
-            },
-            {
-              "name": "fanout",
-              "description": "AMQP fanout exchange, as per the AMQP specification",
               "enabled": true
             }
           ],
@@ -79,7 +79,7 @@
             },
             {
               "name": "asn1",
-              "description": "The Erlang ASN1 compiler version ip-9b2e329e3b",
+              "description": "The Erlang ASN1 compiler version ip-ca8a0d9948",
               "version": "5.3.4.3"
             },
             {
@@ -323,14 +323,19 @@
               "cowboy_opts": "[{sendfile,false}]"
             }
           ],
-          "log_files": ["<stdout>"],
-          "db_dir": "/var/lib/rabbitmq/mnesia/rabbit@host-8c033ab46f",
+          "log_files": [
+            "<stdout>"
+          ],
+          "db_dir": "/var/lib/rabbitmq/mnesia/rabbit@host-9da5d9af88",
           "config_files": [
             "/etc/rabbitmq/conf.d/10-base.conf",
             "/etc/rabbitmq/conf.d/10-defaults.conf"
           ],
           "net_ticktime": 60,
-          "enabled_plugins": ["rabbitmq_management", "rabbitmq_prometheus"],
+          "enabled_plugins": [
+            "rabbitmq_management",
+            "rabbitmq_prometheus"
+          ],
           "mem_calculation_strategy": "rss",
           "ra_open_file_metrics": {
             "ra_log_wal": 0,
@@ -340,15 +345,15 @@
           "erlang_version": "27.3.4.18",
           "erlang_full_version": "Erlang/OTP 27 [erts-15.2.7.13] [source] [64-bit] [smp:10:10] [ds:10:10:10] [async-threads:1] [jit]",
           "crypto_lib_version": "OpenSSL 3.5.9 29 Sep 2026",
-          "name": "rabbit@host-8c033ab46f",
+          "name": "rabbit@host-9da5d9af88",
           "type": "disc",
           "running": true,
           "being_drained": false,
-          "mem_used": 170446848,
+          "mem_used": 180862976,
           "mem_used_details": {
-            "rate": -433356.8
+            "rate": 0
           },
-          "fd_used": 42,
+          "fd_used": 49,
           "fd_used_details": {
             "rate": 0
           },
@@ -356,25 +361,25 @@
           "sockets_used_details": {
             "rate": 0
           },
-          "proc_used": 458,
+          "proc_used": 527,
           "proc_used_details": {
             "rate": 0
           },
-          "disk_free": 1021033758720,
+          "disk_free": 1020067024896,
           "disk_free_details": {
             "rate": 0
           },
-          "gc_num": 9981,
+          "gc_num": 10904,
           "gc_num_details": {
-            "rate": 26.8
+            "rate": 0
           },
-          "gc_bytes_reclaimed": 429152800,
+          "gc_bytes_reclaimed": 430157640,
           "gc_bytes_reclaimed_details": {
-            "rate": 438036.8
+            "rate": 0
           },
-          "context_switches": 163869,
+          "context_switches": 165645,
           "context_switches_details": {
-            "rate": 217.2
+            "rate": 0
           },
           "io_read_count": 0,
           "io_read_count_details": {
@@ -444,7 +449,7 @@
           "queue_index_read_count_details": {
             "rate": 0
           },
-          "connection_created": 3,
+          "connection_created": 9,
           "connection_created_details": {
             "rate": 0
           },
@@ -452,11 +457,11 @@
           "connection_closed_details": {
             "rate": 0
           },
-          "channel_created": 3,
+          "channel_created": 15,
           "channel_created_details": {
             "rate": 0
           },
-          "channel_closed": 1,
+          "channel_closed": 9,
           "channel_closed_details": {
             "rate": 0
           },
@@ -485,7 +490,7 @@
           }
         }
       ],
-      "observedAt": "2026-10-04T06:13:42.065Z"
+      "observedAt": "2026-10-04T07:27:18.770Z"
     }
   ]
 }

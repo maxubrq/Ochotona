@@ -5,19 +5,42 @@
       "body": [
         {
           "arguments": {},
+          "ack_required": false,
+          "active": true,
+          "activity_status": "up",
+          "channel_details": {
+            "connection_name": "conn-dae6ad7b32",
+            "name": "conn-7840d13a49",
+            "node": "rabbit@host-2722ae6eab",
+            "number": 2,
+            "peer_host": "host-80fe813749",
+            "peer_port": 59314,
+            "user": "ocho-admin"
+          },
+          "consumer_tag": "amq.ctag-4vSvcxUR32q8Jc5Xjmvmng",
+          "consumer_timeout": 1800000,
+          "exclusive": false,
+          "prefetch_count": 0,
+          "queue": {
+            "name": "work.classic",
+            "vhost": "/"
+          }
+        },
+        {
+          "arguments": {},
           "ack_required": true,
           "active": true,
           "activity_status": "up",
           "channel_details": {
-            "connection_name": "conn-1b46e98381",
-            "name": "conn-2e9fbbfffe",
-            "node": "rabbit@host-e7fd815be9",
+            "connection_name": "conn-77d4b2f69c",
+            "name": "conn-1c1aee353b",
+            "node": "rabbit@host-2722ae6eab",
             "number": 1,
-            "peer_host": "host-41e194012d",
-            "peer_port": 41794,
+            "peer_host": "host-07c82b9373",
+            "peer_port": 56990,
             "user": "ocho-admin"
           },
-          "consumer_tag": "amq.ctag-uIYx5Gt_4rj8YalBFpO6pA",
+          "consumer_tag": "amq.ctag-ZDwx7QKI_ZRu7Ubj44_i_g",
           "consumer_timeout": 1800000,
           "exclusive": false,
           "prefetch_count": 20,
@@ -25,13 +48,36 @@
             "name": "ocho.traffic",
             "vhost": "/"
           }
+        },
+        {
+          "arguments": {},
+          "ack_required": true,
+          "active": true,
+          "activity_status": "up",
+          "channel_details": {
+            "connection_name": "conn-ca8ae46ce6",
+            "name": "conn-86a4045022",
+            "node": "rabbit@host-2722ae6eab",
+            "number": 2,
+            "peer_host": "host-76cc3e705d",
+            "peer_port": 40964,
+            "user": "ocho-admin"
+          },
+          "consumer_tag": "amq.ctag-MqMM6-s-KYw765o-8bdjig",
+          "consumer_timeout": 1800000,
+          "exclusive": false,
+          "prefetch_count": 1,
+          "queue": {
+            "name": "work.backlog",
+            "vhost": "/"
+          }
         }
       ],
-      "observedAt": "2026-10-04T06:18:01.163Z"
+      "observedAt": "2026-10-04T07:34:11.729Z"
     },
     {
       "body": [],
-      "observedAt": "2026-10-04T06:18:01.301Z"
+      "observedAt": "2026-10-04T07:34:11.871Z"
     }
   ]
 }

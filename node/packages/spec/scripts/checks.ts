@@ -19,6 +19,7 @@ export interface SpecData {
   blindSpots: Obj[];
   i18n: { en: Record<string, string>; vi: Record<string, string> };
   glossary: Obj[];
+  fixTemplates: Obj[];
 }
 
 /** File dữ liệu → schema của nó trong schemas/data/. */
@@ -33,6 +34,7 @@ export const DATA_FILES = {
   en: 'i18n/en.json',
   vi: 'i18n/vi.json',
   glossary: 'i18n/glossary.json',
+  fixTemplates: 'fix-templates.json',
 } as const;
 
 const SCHEMA_OF: Record<keyof typeof DATA_FILES, string> = {
@@ -46,6 +48,7 @@ const SCHEMA_OF: Record<keyof typeof DATA_FILES, string> = {
   en: 'i18n',
   vi: 'i18n',
   glossary: 'glossary',
+  fixTemplates: 'fix-templates',
 };
 
 export const CONTRACT_FILES = {
@@ -88,6 +91,7 @@ export function fromRaw(raw: Record<keyof typeof DATA_FILES, any>): SpecData {
     blindSpots: r.blindSpots.blindSpots,
     i18n: { en: r.en, vi: r.vi },
     glossary: r.glossary.terms,
+    fixTemplates: r.fixTemplates.templates,
   };
 }
 
@@ -191,6 +195,11 @@ const RULE_KEYS = [
   'action',
 ] as const;
 const DIAG_KEYS = ['message', 'next'] as const;
+/** Trường có thể có khoá theo biến thể: `rule.T2.what.dropped_node`. */
+const VARIANT_FIELDS = ['what', 'dataSafety', 'next', 'mechanism'] as const;
+const VARIANT_RE = new RegExp(
+  `^rule\\.([A-Z]+[0-9]+)\\.(${VARIANT_FIELDS.join('|')})\\.([a-z][a-z0-9_]*)$`,
+);
 const SAFETY_PREFIX: Record<string, readonly string[]> = {
   en: ['No. ', 'Yes. ', 'Not known. '],
   vi: ['Không. ', 'Có. ', 'Chưa biết. '],
@@ -370,6 +379,17 @@ export function crossCheck(d: SpecData): string[] {
     required.push(`reason.${k}`, `reason.${k}.unlock`);
   for (const x of d.exclusions) required.push(`exclusion.${x.id}`);
   const requiredSet = new Set(required);
+  // Khoá theo biến thể: tuỳ chọn, nhưng phải có ở cả hai ngôn ngữ và thuộc một luật.
+  const variantKeys = [
+    ...new Set([...Object.keys(d.i18n.en), ...Object.keys(d.i18n.vi)]),
+  ].filter((k) => {
+    const m = VARIANT_RE.exec(k);
+    return m !== null && ruleCodes.has(m[1]);
+  });
+  const variantSet = new Set(variantKeys);
+  for (const k of variantKeys)
+    for (const lang of ['en', 'vi'] as const)
+      if (!(k in d.i18n[lang])) err(`i18n/${lang}.json: missing variant ${k}`);
 
   const parsed: Record<
     string,
@@ -381,7 +401,7 @@ export function crossCheck(d: SpecData): string[] {
     parsed[lang] = new Map();
     for (const k of required) if (!(k in table)) err(`${f}: missing ${k}`);
     for (const [k, v] of Object.entries(table)) {
-      if (!requiredSet.has(k))
+      if (!requiredSet.has(k) && !variantSet.has(k))
         err(
           `${f}: ${k} does not belong to any rule, code, reason or exclusion`,
         );
@@ -418,10 +438,10 @@ export function crossCheck(d: SpecData): string[] {
       const len = [...v].length;
       if (k.endsWith('.title') && len > 60)
         err(`${f}: ${k}: title has ${len} characters, max 60`);
-      if (k.endsWith('.mechanism') && len > 200)
+      if (/\.mechanism(\.[a-z0-9_]+)?$/.test(k) && len > 200)
         err(`${f}: ${k}: mechanism has ${len} characters, max 200`);
       if (
-        k.endsWith('.dataSafety') &&
+        (k.endsWith('.dataSafety') || /\.dataSafety\.[a-z0-9_]+$/.test(k)) &&
         !SAFETY_PREFIX[lang].some((s) => v.startsWith(s))
       )
         err(
@@ -431,7 +451,7 @@ export function crossCheck(d: SpecData): string[] {
   }
   const keyOf = (m: ReturnType<typeof templateParams> | undefined) =>
     m ? [...m.keys()].sort().join(',') : '';
-  for (const k of required) {
+  for (const k of [...required, ...variantKeys]) {
     const en = parsed.en.get(k);
     const vi = parsed.vi.get(k);
     if (en && vi && keyOf(en) !== keyOf(vi))
@@ -439,7 +459,9 @@ export function crossCheck(d: SpecData): string[] {
         `i18n: ${k}: parameters differ between en {${keyOf(en)}} and vi {${keyOf(vi)}}`,
       );
   }
-  for (const k of required.filter((k) => k.endsWith('.dataSafety'))) {
+  for (const k of [...required, ...variantKeys].filter(
+    (k) => k.endsWith('.dataSafety') || /\.dataSafety\.[a-z0-9_]+$/.test(k),
+  )) {
     const en = d.i18n.en[k];
     const vi = d.i18n.vi[k];
     if (en === undefined || vi === undefined) continue;
@@ -452,7 +474,13 @@ export function crossCheck(d: SpecData): string[] {
     const declared = Object.keys(r.params).sort();
     for (const lang of ['en', 'vi'] as const) {
       const used = new Map<string, boolean>();
-      for (const k of RULE_KEYS) {
+      const ruleKeys = [
+        ...RULE_KEYS,
+        ...variantKeys
+          .filter((v) => v.startsWith(`rule.${r.code}.`))
+          .map((v) => v.slice(`rule.${r.code}.`.length)),
+      ];
+      for (const k of ruleKeys) {
         const m = parsed[lang].get(`rule.${r.code}.${k}`);
         if (!m) continue;
         for (const [name, { plural }] of m) {
@@ -476,6 +504,21 @@ export function crossCheck(d: SpecData): string[] {
             err(`${f}.action: parameter ${name} is not declared`);
       }
     }
+  }
+
+  // Khuôn lệnh sửa
+  for (const t of duplicates(d.fixTemplates.map((t) => t.id)))
+    err(`fix-templates.json: duplicate id ${t}`);
+  for (const t of d.fixTemplates) {
+    const w = `fix-templates.json ${t.id}`;
+    registered(w, t.assumption, ['assumption']);
+    const used = [...t.command.matchAll(/\{([a-zA-Z0-9]+)\}/g)].map(
+      (m: RegExpMatchArray) => m[1],
+    );
+    if ([...new Set(used)].sort().join() !== [...t.params].sort().join())
+      err(
+        `${w}: placeholders {${[...new Set(used)].sort()}} differ from params {${[...t.params].sort()}}`,
+      );
   }
 
   // Khoảng phiên bản

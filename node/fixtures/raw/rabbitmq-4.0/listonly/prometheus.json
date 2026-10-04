@@ -1,5 +1,5 @@
 {
   "status": "network_error",
-  "message": "ECONNRESET: read ECONNRESET",
+  "message": "UND_ERR_SOCKET: other side closed",
   "kind": "reset"
 }

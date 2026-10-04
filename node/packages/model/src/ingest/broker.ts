@@ -374,16 +374,7 @@ export function ingestWhoami(raw: RawResult): Observed<Principal> {
   if (isObs(page)) return page;
   const path = 'http:/api/whoami';
   const name = getPath(page.body, 'name');
-  const rawTags = getPath(page.body, 'tags');
-  // Bản cũ trả chuỗi cách bởi dấu phẩy, bản mới trả mảng.
-  const tags =
-    typeof rawTags === 'string'
-      ? rawTags.split(',').filter((t) => t !== '')
-      : Array.isArray(rawTags) && rawTags.every((t) => typeof t === 'string')
-        ? (rawTags as string[])
-        : rawTags === undefined
-          ? []
-          : null;
+  const tags = tagsOf(getPath(page.body, 'tags'));
   if (typeof name !== 'string' || tags === null) {
     return unknown(
       { kind: 'error', message: 'unexpected response body' },
@@ -395,6 +386,49 @@ export function ingestWhoami(raw: RawResult): Observed<Principal> {
     { name, tags },
     { source: 'http.list', path, observedAt: page.observedAt },
   );
+}
+
+/** `/api/users`; không đọc thì `unknown: source_unavailable`. */
+export function ingestUsers(
+  raw: RawResult | undefined,
+): Observed<readonly Principal[]> {
+  const path = 'http:/api/users';
+  if (raw === undefined)
+    return unknown({ kind: 'source_unavailable' }, 'http.list', path);
+  if (raw.status !== 'ok') return unknown(reasonOf(raw), 'http.list', path);
+  const out: Principal[] = [];
+  for (const page of raw.pages) {
+    if (!Array.isArray(page.body))
+      return unknown(
+        { kind: 'error', message: 'unexpected response body' },
+        'http.list',
+        path,
+      );
+    for (const it of page.body) {
+      const name = getPath(it, 'name');
+      const tags = tagsOf(getPath(it, 'tags'));
+      if (typeof name !== 'string' || tags === null)
+        return unknown(
+          { kind: 'error', message: 'unexpected response body' },
+          'http.list',
+          path,
+        );
+      out.push({ name, tags });
+    }
+  }
+  out.sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
+  const observedAt = raw.pages[raw.pages.length - 1]?.observedAt;
+  if (observedAt === undefined)
+    return unknown({ kind: 'error', message: 'no page' }, 'http.list', path);
+  return known(out, { source: 'http.list', path, observedAt });
+}
+
+/** Bản cũ trả chuỗi cách bởi dấu phẩy, bản mới trả mảng; vắng là không tag. */
+function tagsOf(raw: unknown): string[] | null {
+  if (typeof raw === 'string') return raw.split(',').filter((t) => t !== '');
+  if (Array.isArray(raw) && raw.every((t) => typeof t === 'string'))
+    return raw as string[];
+  return raw === undefined ? [] : null;
 }
 
 export function parseNode(it: unknown, fc: FieldCtx): ParseOutcome<Node> {

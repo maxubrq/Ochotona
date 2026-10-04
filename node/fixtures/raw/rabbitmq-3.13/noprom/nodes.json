@@ -14,7 +14,7 @@
           "disk_free_alarm": false,
           "proc_total": 1048576,
           "rates_mode": "basic",
-          "uptime": 29394,
+          "uptime": 48964,
           "run_queue": 1,
           "processors": 10,
           "exchange_types": [
@@ -69,7 +69,7 @@
             },
             {
               "name": "asn1",
-              "description": "The Erlang ASN1 compiler version ip-eeede266df",
+              "description": "The Erlang ASN1 compiler version ip-d6ada67f74",
               "version": "5.2.2.1"
             },
             {
@@ -301,52 +301,56 @@
               "port": "15672"
             }
           ],
-          "log_files": ["<stdout>"],
-          "db_dir": "/var/lib/rabbitmq/mnesia/rabbit@host-c7078712fb",
+          "log_files": [
+            "<stdout>"
+          ],
+          "db_dir": "/var/lib/rabbitmq/mnesia/rabbit@host-95b8f0bb81",
           "config_files": [
             "/etc/rabbitmq/conf.d/10-base.conf",
             "/etc/rabbitmq/conf.d/10-defaults.conf"
           ],
           "net_ticktime": 60,
-          "enabled_plugins": ["rabbitmq_management"],
+          "enabled_plugins": [
+            "rabbitmq_management"
+          ],
           "mem_calculation_strategy": "rss",
           "ra_open_file_metrics": {
             "ra_log_wal": 0,
             "ra_log_segment_writer": 0
           },
-          "name": "rabbit@host-c7078712fb",
+          "name": "rabbit@host-95b8f0bb81",
           "type": "disc",
           "running": true,
           "being_drained": false,
-          "mem_used": 171687936,
+          "mem_used": 172937216,
           "mem_used_details": {
             "rate": 0
           },
-          "fd_used": 49,
+          "fd_used": 56,
           "fd_used_details": {
             "rate": 0
           },
-          "sockets_used": 3,
+          "sockets_used": 9,
           "sockets_used_details": {
             "rate": 0
           },
-          "proc_used": 454,
+          "proc_used": 525,
           "proc_used_details": {
             "rate": 0
           },
-          "disk_free": 1020628799488,
+          "disk_free": 1020066639872,
           "disk_free_details": {
             "rate": 0
           },
-          "gc_num": 25922,
+          "gc_num": 28715,
           "gc_num_details": {
             "rate": 0
           },
-          "gc_bytes_reclaimed": 1199515808,
+          "gc_bytes_reclaimed": 1223216568,
           "gc_bytes_reclaimed_details": {
             "rate": 0
           },
-          "context_switches": 341092,
+          "context_switches": 349780,
           "context_switches_details": {
             "rate": 0
           },
@@ -358,35 +362,35 @@
           "io_read_bytes_details": {
             "rate": 0
           },
-          "io_read_avg_time": 0.043,
+          "io_read_avg_time": 0.01,
           "io_read_avg_time_details": {
             "rate": 0
           },
-          "io_write_count": 68,
+          "io_write_count": 169,
           "io_write_count_details": {
             "rate": 0
           },
-          "io_write_bytes": 8806,
+          "io_write_bytes": 59968,
           "io_write_bytes_details": {
             "rate": 0
           },
-          "io_write_avg_time": 0.2536764705882353,
+          "io_write_avg_time": 0.22410650887573966,
           "io_write_avg_time_details": {
             "rate": 0
           },
-          "io_sync_count": 68,
+          "io_sync_count": 169,
           "io_sync_count_details": {
             "rate": 0
           },
-          "io_sync_avg_time": 1.8984411764705882,
+          "io_sync_avg_time": 2.31791124260355,
           "io_sync_avg_time_details": {
             "rate": 0
           },
-          "io_seek_count": 1,
+          "io_seek_count": 2,
           "io_seek_count_details": {
             "rate": 0
           },
-          "io_seek_avg_time": 0.012,
+          "io_seek_avg_time": 0.0415,
           "io_seek_avg_time_details": {
             "rate": 0
           },
@@ -394,11 +398,11 @@
           "io_reopen_count_details": {
             "rate": 0
           },
-          "mnesia_ram_tx_count": 41,
+          "mnesia_ram_tx_count": 44,
           "mnesia_ram_tx_count_details": {
             "rate": 0
           },
-          "mnesia_disk_tx_count": 42,
+          "mnesia_disk_tx_count": 55,
           "mnesia_disk_tx_count_details": {
             "rate": 0
           },
@@ -418,7 +422,7 @@
           "queue_index_read_count_details": {
             "rate": 0
           },
-          "connection_created": 3,
+          "connection_created": 9,
           "connection_created_details": {
             "rate": 0
           },
@@ -426,11 +430,11 @@
           "connection_closed_details": {
             "rate": 0
           },
-          "channel_created": 3,
+          "channel_created": 15,
           "channel_created_details": {
             "rate": 0
           },
-          "channel_closed": 1,
+          "channel_closed": 9,
           "channel_closed_details": {
             "rate": 0
           },
@@ -459,7 +463,7 @@
           }
         }
       ],
-      "observedAt": "2026-10-04T06:15:54.316Z"
+      "observedAt": "2026-10-04T07:31:38.508Z"
     }
   ]
 }

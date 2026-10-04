@@ -4,10 +4,10 @@
     {
       "body": [
         {
-          "messages": 0,
+          "messages": 120,
           "name": "/",
-          "recv_oct": 9567,
-          "send_oct": 12032,
+          "recv_oct": 45239,
+          "send_oct": 45468,
           "description": "",
           "metadata": {
             "description": "",
@@ -16,33 +16,33 @@
           },
           "tags": [],
           "default_queue_type": "classic",
-          "messages_ready": 0,
-          "messages_unacknowledged": 0,
+          "messages_ready": 119,
+          "messages_unacknowledged": 1,
           "protected_from_deletion": false,
           "tracing": false,
           "cluster_state": {
             "rabbit@full": "running"
           },
           "message_stats": {
-            "ack": 64,
+            "ack": 96,
             "ack_details": {
-              "rate": 0
+              "rate": 3
             },
-            "confirm": 64,
+            "confirm": 218,
             "confirm_details": {
-              "rate": 0
+              "rate": 7
             },
-            "deliver": 64,
+            "deliver": 97,
             "deliver_details": {
-              "rate": 0
+              "rate": 3
             },
-            "deliver_get": 64,
+            "deliver_get": 256,
             "deliver_get_details": {
-              "rate": 0
+              "rate": 8
             },
-            "deliver_no_ack": 0,
+            "deliver_no_ack": 159,
             "deliver_no_ack_details": {
-              "rate": 0
+              "rate": 5
             },
             "drop_unroutable": 0,
             "drop_unroutable_details": {
@@ -60,9 +60,9 @@
             "get_no_ack_details": {
               "rate": 0
             },
-            "publish": 64,
+            "publish": 377,
             "publish_details": {
-              "rate": 0
+              "rate": 12
             },
             "redeliver": 0,
             "redeliver_details": {
@@ -74,19 +74,19 @@
             }
           },
           "recv_oct_details": {
-            "rate": 0
+            "rate": 1278.6
           },
           "send_oct_details": {
-            "rate": 0
+            "rate": 1275.4
           },
           "messages_details": {
-            "rate": 0
+            "rate": 3.8
           },
           "messages_unacknowledged_details": {
-            "rate": 0
+            "rate": -0.2
           },
           "messages_ready_details": {
-            "rate": 0
+            "rate": 4
           }
         },
         {
@@ -118,7 +118,7 @@
           }
         }
       ],
-      "observedAt": "2026-10-04T06:13:43.069Z"
+      "observedAt": "2026-10-04T07:27:19.706Z"
     }
   ]
 }

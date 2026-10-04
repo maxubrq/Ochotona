@@ -22,9 +22,29 @@
             "message-ttl": 86400000
           },
           "priority": 1
+        },
+        {
+          "vhost": "/",
+          "name": "overlap-b",
+          "pattern": "^overl",
+          "apply-to": "queues",
+          "definition": {
+            "dead-letter-exchange": "events.unrouted"
+          },
+          "priority": 1
+        },
+        {
+          "vhost": "/",
+          "name": "overlap-a",
+          "pattern": "^overlap$",
+          "apply-to": "queues",
+          "definition": {
+            "max-length": 1000
+          },
+          "priority": 2
         }
       ],
-      "observedAt": "2026-10-04T06:18:04.252Z"
+      "observedAt": "2026-10-04T07:34:14.838Z"
     }
   ]
 }

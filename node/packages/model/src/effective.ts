@@ -17,7 +17,7 @@ import {
   keys,
 } from '@ochotona/spec';
 import type { Capabilities } from './caps';
-import { type Observed, known, unknown } from './observed';
+import { type Observed, type UnknownReason, known, unknown } from './observed';
 import { compareStr, stableJson } from './ref';
 import {
   type ArgMap,
@@ -209,6 +209,43 @@ export function choosePolicy(
     };
   }
   return { ok: true, policy: best[0] };
+}
+
+/**
+ * Mọi policy khớp đối tượng (cùng vhost, applyTo, pattern), sắp theo priority
+ * giảm dần rồi tên. Phần tử đầu là policy broker áp, trừ khi hoà priority.
+ * Một ứng viên có pattern ngoài tập hỗ trợ thì không kết luận được.
+ * @example matchingPolicies({ ref: q.ref, queueType: 'quorum' }, policies)
+ */
+export function matchingPolicies(
+  obj: Pick<EffectiveTarget, 'ref' | 'queueType'>,
+  policies: readonly Policy[],
+):
+  | { readonly ok: true; readonly policies: readonly Policy[] }
+  | {
+      readonly ok: false;
+      readonly reason: Extract<UnknownReason, { kind: 'regex_unsupported' }>;
+    } {
+  const target: PolicyTarget = obj.queueType ?? 'exchange';
+  const out: Policy[] = [];
+  for (const p of policiesInVhost(policies, obj.ref.vhost)) {
+    if (!applyToMatches(p.applyTo, target)) continue;
+    const re = compilePolicyPattern(p.pattern);
+    if (re === null)
+      return {
+        ok: false,
+        reason: {
+          kind: 'regex_unsupported',
+          policy: p.ref.name,
+          pattern: p.pattern,
+        },
+      };
+    if (re.test(obj.ref.name)) out.push(p);
+  }
+  out.sort(
+    (a, b) => b.priority - a.priority || compareStr(a.ref.name, b.ref.name),
+  );
+  return { ok: true, policies: out };
 }
 
 export interface EffectiveResolution {

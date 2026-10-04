@@ -166,4 +166,24 @@ describe('prometheusUptime trong ảnh chụp', () => {
     const r = loadSnapshot(JSON.stringify(doc), DEFAULT_CAPABILITY_TABLE);
     expect(r.ok).toBe(true);
   });
+
+  it('lưu và nạp lại users; ảnh chụp cũ không có users thì users unknown', () => {
+    const withUsers = buildActual(
+      rawBroker({ users: okRaw([{ name: 'app', tags: ['administrator'] }]) }),
+      ctx(),
+    );
+    const r = loadSnapshot(
+      saveSnapshot(withUsers, opts(false)),
+      DEFAULT_CAPABILITY_TABLE,
+    );
+    expect(r.ok && r.value.users).toEqual(withUsers.users);
+
+    const doc = JSON.parse(saveSnapshot(withUsers, opts(false)));
+    delete doc.actual.users;
+    const old = loadSnapshot(JSON.stringify(doc), DEFAULT_CAPABILITY_TABLE);
+    expect(old.ok && old.value.users).toMatchObject({
+      state: 'unknown',
+      reason: { kind: 'source_unavailable' },
+    });
+  });
 });

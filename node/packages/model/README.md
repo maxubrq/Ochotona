@@ -51,7 +51,7 @@ flows.toleranceOf({ kind: 'queue', vhost: '/', name: 'orders' }); // 'strict' | 
 | ------------------ | ------------------------------------------------------------------------------------------------------ |
 | Dựng               | `buildActual`, `validateDesired`, `buildDesired`, `buildFlowMap`, `buildIndexes`                       |
 | Kế hoạch đọc       | `planRead`, `ENDPOINT_IDS` (cho `@ochotona/broker`)                                                    |
-| Giá trị hiệu lực   | `resolveEffective`                                                                                     |
+| Giá trị hiệu lực   | `resolveEffective`, `matchingPolicies`                                                                 |
 | Topology           | `topologyFromActual`, `normalizeTopology`, `diffTopology`                                              |
 | Ảnh chụp           | `saveSnapshot`, `loadSnapshot`                                                                         |
 | Bất biến           | `checkInvariants`                                                                                      |

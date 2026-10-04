@@ -2,8 +2,16 @@
   "status": "ok",
   "pages": [
     {
-      "body": [],
-      "observedAt": "2026-10-04T06:15:51.869Z"
+      "body": [
+        {
+          "name": "classic_queue_mirroring",
+          "desc": "",
+          "deprecation_phase": "permitted_by_default",
+          "doc_url": "https://blog.rabbitmq.com/posts/2021/08/4.0-deprecation-announcements/#removal-of-classic-queue-mirroring",
+          "provided_by": "rabbit"
+        }
+      ],
+      "observedAt": "2026-10-04T07:31:36.056Z"
     }
   ]
 }

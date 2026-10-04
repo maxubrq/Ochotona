@@ -317,6 +317,8 @@ export const actualBaseShape: Shape = obj({
     ),
   ),
   whoami: observed(obj({ name: str, tags: arr(str) })),
+  // Ảnh chụp cũ không có trường này.
+  'users?': observed(arr(obj({ name: str, tags: arr(str) }))),
   anomalies: arr(
     obj({
       kind: lit(

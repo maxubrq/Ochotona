@@ -93,3 +93,5 @@ Ghi fixture thô từ broker thật và kiểm giả định: xem [tools/README.
 
 - [docs/spec.md](docs/spec.md): spec đầy đủ (đích kết nối, các pha đọc, phát hiện nguồn, phân trang, kiểm soát tải, bảng lỗi và mã CX, Prometheus, bảo mật, test bắt buộc).
 - [docs/implementation-notes.md](docs/implementation-notes.md): chỗ mã khác spec, quyết định nhỏ, và phần định nghĩa hoàn thành còn thiếu.
+
+`/api/users` chỉ được đọc khi kế hoạch có (`planRead({ users: true })`, CLI bật khi chạy bằng user quản trị); khi đó `raw.users` có mặt trong kết quả.

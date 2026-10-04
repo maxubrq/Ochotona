@@ -113,7 +113,7 @@ export const SPLIT_VHOST_LIMIT = 20;
 
 /** Ba nhóm của pha kiểm kê; nhóm sau chỉ bắt đầu khi nhóm trước xong. */
 const GROUPS: readonly (readonly EndpointId[])[] = [
-  ['vhosts', 'policies', 'operatorPolicies', 'deprecatedUsed'],
+  ['vhosts', 'users', 'policies', 'operatorPolicies', 'deprecatedUsed'],
   ['exchanges', 'queues', 'bindings'],
   ['connections', 'channels', 'consumers'],
 ];
@@ -498,6 +498,8 @@ export function createReader(
         channels: inv('channels'),
         consumers: inv('consumers'),
         totalsAtEnd: toRaw(end),
+        // Chỉ có khi kế hoạch đọc /api/users (CLI chạy bằng user quản trị).
+        ...(results.has('users') ? { users: inv('users') } : {}),
       };
       return {
         status: 'complete',

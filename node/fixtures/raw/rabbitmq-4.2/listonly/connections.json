@@ -3,34 +3,70 @@
   "pages": [
     {
       "body": {
-        "total_count": 3,
-        "item_count": 3,
-        "filtered_count": 3,
+        "total_count": 9,
+        "item_count": 9,
+        "filtered_count": 9,
         "page": 1,
         "page_size": 500,
         "page_count": 1,
         "items": [
           {
-            "name": "conn-803acd5cc9",
+            "name": "conn-dddbbbc55f",
             "vhost": "/",
             "user": "ocho-admin",
-            "node": "rabbit@host-77da5cf129"
+            "node": "rabbit@host-86065ba188"
           },
           {
-            "name": "conn-b96e83bff6",
+            "name": "conn-84115b13c8",
             "vhost": "/",
             "user": "ocho-admin",
-            "node": "rabbit@host-77da5cf129"
+            "node": "rabbit@host-86065ba188"
           },
           {
-            "name": "conn-623693f53a",
+            "name": "conn-84011ebbf7",
             "vhost": "/",
             "user": "ocho-admin",
-            "node": "rabbit@host-77da5cf129"
+            "node": "rabbit@host-86065ba188"
+          },
+          {
+            "name": "conn-9695b55187",
+            "vhost": "/",
+            "user": "ocho-admin",
+            "node": "rabbit@host-86065ba188"
+          },
+          {
+            "name": "conn-5f28b316e4",
+            "vhost": "/",
+            "user": "ocho-admin",
+            "node": "rabbit@host-86065ba188"
+          },
+          {
+            "name": "conn-659be8dd79",
+            "vhost": "/",
+            "user": "ocho-admin",
+            "node": "rabbit@host-86065ba188"
+          },
+          {
+            "name": "conn-8ba9d09108",
+            "vhost": "/",
+            "user": "ocho-admin",
+            "node": "rabbit@host-86065ba188"
+          },
+          {
+            "name": "conn-29eff83589",
+            "vhost": "/",
+            "user": "ocho-admin",
+            "node": "rabbit@host-86065ba188"
+          },
+          {
+            "name": "conn-203d13f768",
+            "vhost": "/",
+            "user": "ocho-admin",
+            "node": "rabbit@host-86065ba188"
           }
         ]
       },
-      "observedAt": "2026-10-04T06:13:55.849Z"
+      "observedAt": "2026-10-04T07:27:32.532Z"
     }
   ]
 }

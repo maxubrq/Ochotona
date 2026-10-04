@@ -9,7 +9,7 @@ import type {
 import type { CapabilityTable } from './caps';
 import { baseOf, deriveActual } from './derive';
 import { type Violation, checkInvariants } from './invariants';
-import type { Observed } from './observed';
+import { type Observed, unknown } from './observed';
 import { type ObjectRef, sha256Hex } from './ref';
 import { actualBaseShape, bool, instant, obj, str } from './snapshot-shape';
 import { type Instant, type Result, err, ok } from './units';
@@ -175,6 +175,9 @@ export function loadSnapshot(
   const d = doc as { takenAt: Instant; actual: ActualBase };
   const base: ActualBase = {
     ...d.actual,
+    users:
+      d.actual.users ??
+      unknown({ kind: 'source_unavailable' }, 'http.list', 'http:/api/users'),
     meta: { ...d.actual.meta, fromSnapshot: { takenAt: d.takenAt, file } },
   };
   const actual = deriveActual(base, caps);

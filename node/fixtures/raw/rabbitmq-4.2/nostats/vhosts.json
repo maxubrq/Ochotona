@@ -13,8 +13,8 @@
           },
           "tags": [],
           "default_queue_type": "classic",
-          "protected_from_deletion": false,
           "tracing": false,
+          "protected_from_deletion": false,
           "cluster_state": {
             "rabbit@nostats": "running"
           }
@@ -29,14 +29,14 @@
           },
           "tags": [],
           "default_queue_type": "quorum",
-          "protected_from_deletion": false,
           "tracing": false,
+          "protected_from_deletion": false,
           "cluster_state": {
             "rabbit@nostats": "running"
           }
         }
       ],
-      "observedAt": "2026-10-04T06:13:47.209Z"
+      "observedAt": "2026-10-04T07:27:23.865Z"
     }
   ]
 }

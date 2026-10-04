@@ -4,10 +4,10 @@
     {
       "body": [
         {
-          "messages": 0,
+          "messages": 116,
           "name": "/",
-          "recv_oct": 4516,
-          "send_oct": 5407,
+          "recv_oct": 43709,
+          "send_oct": 43886,
           "description": "",
           "metadata": {
             "description": "",
@@ -16,31 +16,31 @@
           },
           "tags": [],
           "default_queue_type": "classic",
-          "messages_ready": 0,
-          "messages_unacknowledged": 0,
-          "protected_from_deletion": false,
+          "messages_ready": 115,
+          "messages_unacknowledged": 1,
           "tracing": false,
+          "protected_from_deletion": false,
           "cluster_state": {
             "rabbit@full": "running"
           },
           "message_stats": {
-            "ack": 23,
+            "ack": 93,
             "ack_details": {
               "rate": 0
             },
-            "confirm": 23,
+            "confirm": 212,
             "confirm_details": {
               "rate": 0
             },
-            "deliver": 23,
+            "deliver": 94,
             "deliver_details": {
               "rate": 0
             },
-            "deliver_get": 23,
+            "deliver_get": 246,
             "deliver_get_details": {
               "rate": 0
             },
-            "deliver_no_ack": 0,
+            "deliver_no_ack": 152,
             "deliver_no_ack_details": {
               "rate": 0
             },
@@ -60,7 +60,7 @@
             "get_no_ack_details": {
               "rate": 0
             },
-            "publish": 23,
+            "publish": 364,
             "publish_details": {
               "rate": 0
             },
@@ -102,8 +102,8 @@
           "default_queue_type": "quorum",
           "messages_ready": 0,
           "messages_unacknowledged": 0,
-          "protected_from_deletion": false,
           "tracing": false,
+          "protected_from_deletion": false,
           "cluster_state": {
             "rabbit@full": "running"
           },
@@ -118,7 +118,7 @@
           }
         }
       ],
-      "observedAt": "2026-10-04T06:17:52.561Z"
+      "observedAt": "2026-10-04T07:34:03.081Z"
     }
   ]
 }

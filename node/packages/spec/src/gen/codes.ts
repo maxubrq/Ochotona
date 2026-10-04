@@ -123,6 +123,9 @@ export type Code =
   | 'GC17'
   | 'GC18'
   | 'GC19'
+  | 'GC25'
+  | 'GC26'
+  | 'GC27'
   | 'H2'
   | 'I1'
   | 'I6'
@@ -257,7 +260,10 @@ export type AssumptionCode =
   | 'GC16'
   | 'GC17'
   | 'GC18'
-  | 'GC19';
+  | 'GC19'
+  | 'GC25'
+  | 'GC26'
+  | 'GC27';
 export type LessonErrorCode =
   | 'LE1'
   | 'LE2'
@@ -1129,6 +1135,29 @@ export const CODES = [
     owner: 'tool',
     kind: 'assumption',
     meaning: 'Intl.PluralRules has en and vi data in Node 20 and browsers',
+    status: 'active',
+  },
+  {
+    code: 'GC25',
+    owner: 'tool',
+    kind: 'assumption',
+    meaning:
+      'rabbitmqadmin v2 declares and updates policies with the syntax in fix-templates.json',
+    status: 'active',
+  },
+  {
+    code: 'GC26',
+    owner: 'tool',
+    kind: 'assumption',
+    meaning: '/api/policies shows the ha-mode key in definition on 3.13',
+    status: 'active',
+  },
+  {
+    code: 'GC27',
+    owner: 'tool',
+    kind: 'assumption',
+    meaning:
+      'Channel consumer_count is present when management statistics are disabled',
     status: 'active',
   },
   {

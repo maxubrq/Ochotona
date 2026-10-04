@@ -1,7 +1,7 @@
-# TYPE telemetry_scrape_duration_seconds summary
-# HELP telemetry_scrape_duration_seconds Scrape duration
 # TYPE telemetry_scrape_size_bytes summary
 # HELP telemetry_scrape_size_bytes Scrape size, not encoded
+# TYPE telemetry_scrape_duration_seconds summary
+# HELP telemetry_scrape_duration_seconds Scrape duration
 # TYPE erlang_vm_dist_recv_bytes gauge
 # HELP erlang_vm_dist_recv_bytes Number of bytes received by the socket.
 # TYPE erlang_vm_dist_recv_cnt gauge
@@ -54,52 +54,52 @@
 # HELP erlang_vm_dist_node_queue_size_bytes The number of bytes in the output distribution queue. This queue sits between the Erlang code and the port driver.
 # TYPE erlang_vm_memory_atom_bytes gauge
 # HELP erlang_vm_memory_atom_bytes The total amount of memory currently allocated for atoms. This memory is part of the memory presented as system memory.
-erlang_vm_memory_atom_bytes{usage="used"} 1053175
-erlang_vm_memory_atom_bytes{usage="free"} 28442
+erlang_vm_memory_atom_bytes{usage="used"} 1053303
+erlang_vm_memory_atom_bytes{usage="free"} 28314
 # TYPE erlang_vm_memory_bytes gauge
 # HELP erlang_vm_memory_bytes The total amount of memory currently allocated. This is the same as the sum of the memory size for processes and system.
-erlang_vm_memory_bytes{kind="system"} 49000306
-erlang_vm_memory_bytes{kind="processes"} 17142856
+erlang_vm_memory_bytes{kind="system"} 49231698
+erlang_vm_memory_bytes{kind="processes"} 18928240
 # TYPE erlang_vm_memory_dets_tables gauge
 # HELP erlang_vm_memory_dets_tables Erlang VM DETS Tables count.
 erlang_vm_memory_dets_tables 6
 # TYPE erlang_vm_memory_ets_tables gauge
 # HELP erlang_vm_memory_ets_tables Erlang VM ETS Tables count.
-erlang_vm_memory_ets_tables 192
+erlang_vm_memory_ets_tables 194
 # TYPE erlang_vm_memory_processes_bytes gauge
 # HELP erlang_vm_memory_processes_bytes The total amount of memory currently allocated for the Erlang processes.
-erlang_vm_memory_processes_bytes{usage="used"} 17085552
-erlang_vm_memory_processes_bytes{usage="free"} 57304
+erlang_vm_memory_processes_bytes{usage="used"} 18920968
+erlang_vm_memory_processes_bytes{usage="free"} 7272
 # TYPE erlang_vm_memory_system_bytes gauge
 # HELP erlang_vm_memory_system_bytes The total amount of memory currently allocated for the emulator that is not directly related to any Erlang process. Memory presented as processes is not included in this memory.
 erlang_vm_memory_system_bytes{usage="atom"} 1081617
-erlang_vm_memory_system_bytes{usage="binary"} 291192
-erlang_vm_memory_system_bytes{usage="code"} 19907720
-erlang_vm_memory_system_bytes{usage="ets"} 3669312
-erlang_vm_memory_system_bytes{usage="other"} 24050465
+erlang_vm_memory_system_bytes{usage="binary"} 312784
+erlang_vm_memory_system_bytes{usage="code"} 19907512
+erlang_vm_memory_system_bytes{usage="ets"} 3842920
+erlang_vm_memory_system_bytes{usage="other"} 24086865
 # TYPE erlang_vm_msacc_aux_seconds_total counter
 # HELP erlang_vm_msacc_aux_seconds_total Total time in seconds spent handling auxiliary jobs.
 erlang_vm_msacc_aux_seconds_total{type="aux",id="1"} 0.0
-erlang_vm_msacc_aux_seconds_total{type="scheduler",id="2"} 0.0
+erlang_vm_msacc_aux_seconds_total{type="scheduler",id="1"} 0.0
 erlang_vm_msacc_aux_seconds_total{type="scheduler",id="3"} 0.0
 erlang_vm_msacc_aux_seconds_total{type="scheduler",id="4"} 0.0
 erlang_vm_msacc_aux_seconds_total{type="scheduler",id="5"} 0.0
-erlang_vm_msacc_aux_seconds_total{type="poll",id="0"} 0.0
-erlang_vm_msacc_aux_seconds_total{type="dirty_io_scheduler",id="5"} 0.0
 erlang_vm_msacc_aux_seconds_total{type="scheduler",id="6"} 0.0
+erlang_vm_msacc_aux_seconds_total{type="scheduler",id="7"} 0.0
+erlang_vm_msacc_aux_seconds_total{type="scheduler",id="8"} 0.0
+erlang_vm_msacc_aux_seconds_total{type="poll",id="0"} 0.0
+erlang_vm_msacc_aux_seconds_total{type="scheduler",id="9"} 0.0
 erlang_vm_msacc_aux_seconds_total{type="dirty_io_scheduler",id="10"} 0.0
+erlang_vm_msacc_aux_seconds_total{type="scheduler",id="10"} 0.0
 erlang_vm_msacc_aux_seconds_total{type="dirty_io_scheduler",id="9"} 0.0
 erlang_vm_msacc_aux_seconds_total{type="dirty_io_scheduler",id="8"} 0.0
-erlang_vm_msacc_aux_seconds_total{type="scheduler",id="9"} 0.0
-erlang_vm_msacc_aux_seconds_total{type="scheduler",id="10"} 0.0
-erlang_vm_msacc_aux_seconds_total{type="scheduler",id="8"} 0.0
 erlang_vm_msacc_aux_seconds_total{type="dirty_io_scheduler",id="7"} 0.0
 erlang_vm_msacc_aux_seconds_total{type="dirty_io_scheduler",id="6"} 0.0
-erlang_vm_msacc_aux_seconds_total{type="scheduler",id="7"} 0.0
+erlang_vm_msacc_aux_seconds_total{type="dirty_io_scheduler",id="5"} 0.0
 erlang_vm_msacc_aux_seconds_total{type="dirty_io_scheduler",id="4"} 0.0
+erlang_vm_msacc_aux_seconds_total{type="dirty_io_scheduler",id="1"} 0.0
 erlang_vm_msacc_aux_seconds_total{type="dirty_io_scheduler",id="3"} 0.0
 erlang_vm_msacc_aux_seconds_total{type="dirty_io_scheduler",id="2"} 0.0
-erlang_vm_msacc_aux_seconds_total{type="dirty_io_scheduler",id="1"} 0.0
 erlang_vm_msacc_aux_seconds_total{type="dirty_cpu_scheduler",id="10"} 0.0
 erlang_vm_msacc_aux_seconds_total{type="dirty_cpu_scheduler",id="9"} 0.0
 erlang_vm_msacc_aux_seconds_total{type="dirty_cpu_scheduler",id="8"} 0.0
@@ -111,30 +111,30 @@ erlang_vm_msacc_aux_seconds_total{type="dirty_cpu_scheduler",id="3"} 0.0
 erlang_vm_msacc_aux_seconds_total{type="dirty_cpu_scheduler",id="2"} 0.0
 erlang_vm_msacc_aux_seconds_total{type="dirty_cpu_scheduler",id="1"} 0.0
 erlang_vm_msacc_aux_seconds_total{type="async",id="0"} 0.0
-erlang_vm_msacc_aux_seconds_total{type="scheduler",id="1"} 0.0
+erlang_vm_msacc_aux_seconds_total{type="scheduler",id="2"} 0.0
 # TYPE erlang_vm_msacc_check_io_seconds_total counter
 # HELP erlang_vm_msacc_check_io_seconds_total Total time in seconds spent checking for new I/O events.
 erlang_vm_msacc_check_io_seconds_total{type="aux",id="1"} 0.0
-erlang_vm_msacc_check_io_seconds_total{type="scheduler",id="2"} 0.0
+erlang_vm_msacc_check_io_seconds_total{type="scheduler",id="1"} 0.0
 erlang_vm_msacc_check_io_seconds_total{type="scheduler",id="3"} 0.0
 erlang_vm_msacc_check_io_seconds_total{type="scheduler",id="4"} 0.0
 erlang_vm_msacc_check_io_seconds_total{type="scheduler",id="5"} 0.0
-erlang_vm_msacc_check_io_seconds_total{type="poll",id="0"} 0.0
-erlang_vm_msacc_check_io_seconds_total{type="dirty_io_scheduler",id="5"} 0.0
 erlang_vm_msacc_check_io_seconds_total{type="scheduler",id="6"} 0.0
+erlang_vm_msacc_check_io_seconds_total{type="scheduler",id="7"} 0.0
+erlang_vm_msacc_check_io_seconds_total{type="scheduler",id="8"} 0.0
+erlang_vm_msacc_check_io_seconds_total{type="poll",id="0"} 0.0
+erlang_vm_msacc_check_io_seconds_total{type="scheduler",id="9"} 0.0
 erlang_vm_msacc_check_io_seconds_total{type="dirty_io_scheduler",id="10"} 0.0
+erlang_vm_msacc_check_io_seconds_total{type="scheduler",id="10"} 0.0
 erlang_vm_msacc_check_io_seconds_total{type="dirty_io_scheduler",id="9"} 0.0
 erlang_vm_msacc_check_io_seconds_total{type="dirty_io_scheduler",id="8"} 0.0
-erlang_vm_msacc_check_io_seconds_total{type="scheduler",id="9"} 0.0
-erlang_vm_msacc_check_io_seconds_total{type="scheduler",id="10"} 0.0
-erlang_vm_msacc_check_io_seconds_total{type="scheduler",id="8"} 0.0
 erlang_vm_msacc_check_io_seconds_total{type="dirty_io_scheduler",id="7"} 0.0
 erlang_vm_msacc_check_io_seconds_total{type="dirty_io_scheduler",id="6"} 0.0
-erlang_vm_msacc_check_io_seconds_total{type="scheduler",id="7"} 0.0
+erlang_vm_msacc_check_io_seconds_total{type="dirty_io_scheduler",id="5"} 0.0
 erlang_vm_msacc_check_io_seconds_total{type="dirty_io_scheduler",id="4"} 0.0
+erlang_vm_msacc_check_io_seconds_total{type="dirty_io_scheduler",id="1"} 0.0
 erlang_vm_msacc_check_io_seconds_total{type="dirty_io_scheduler",id="3"} 0.0
 erlang_vm_msacc_check_io_seconds_total{type="dirty_io_scheduler",id="2"} 0.0
-erlang_vm_msacc_check_io_seconds_total{type="dirty_io_scheduler",id="1"} 0.0
 erlang_vm_msacc_check_io_seconds_total{type="dirty_cpu_scheduler",id="10"} 0.0
 erlang_vm_msacc_check_io_seconds_total{type="dirty_cpu_scheduler",id="9"} 0.0
 erlang_vm_msacc_check_io_seconds_total{type="dirty_cpu_scheduler",id="8"} 0.0
@@ -146,30 +146,30 @@ erlang_vm_msacc_check_io_seconds_total{type="dirty_cpu_scheduler",id="3"} 0.0
 erlang_vm_msacc_check_io_seconds_total{type="dirty_cpu_scheduler",id="2"} 0.0
 erlang_vm_msacc_check_io_seconds_total{type="dirty_cpu_scheduler",id="1"} 0.0
 erlang_vm_msacc_check_io_seconds_total{type="async",id="0"} 0.0
-erlang_vm_msacc_check_io_seconds_total{type="scheduler",id="1"} 0.0
+erlang_vm_msacc_check_io_seconds_total{type="scheduler",id="2"} 0.0
 # TYPE erlang_vm_msacc_emulator_seconds_total counter
 # HELP erlang_vm_msacc_emulator_seconds_total Total time in seconds spent executing Erlang processes.
 erlang_vm_msacc_emulator_seconds_total{type="aux",id="1"} 0.0
-erlang_vm_msacc_emulator_seconds_total{type="scheduler",id="2"} 0.0
+erlang_vm_msacc_emulator_seconds_total{type="scheduler",id="1"} 0.0
 erlang_vm_msacc_emulator_seconds_total{type="scheduler",id="3"} 0.0
 erlang_vm_msacc_emulator_seconds_total{type="scheduler",id="4"} 0.0
 erlang_vm_msacc_emulator_seconds_total{type="scheduler",id="5"} 0.0
-erlang_vm_msacc_emulator_seconds_total{type="poll",id="0"} 0.0
-erlang_vm_msacc_emulator_seconds_total{type="dirty_io_scheduler",id="5"} 0.0
 erlang_vm_msacc_emulator_seconds_total{type="scheduler",id="6"} 0.0
+erlang_vm_msacc_emulator_seconds_total{type="scheduler",id="7"} 0.0
+erlang_vm_msacc_emulator_seconds_total{type="scheduler",id="8"} 0.0
+erlang_vm_msacc_emulator_seconds_total{type="poll",id="0"} 0.0
+erlang_vm_msacc_emulator_seconds_total{type="scheduler",id="9"} 0.0
 erlang_vm_msacc_emulator_seconds_total{type="dirty_io_scheduler",id="10"} 0.0
+erlang_vm_msacc_emulator_seconds_total{type="scheduler",id="10"} 0.0
 erlang_vm_msacc_emulator_seconds_total{type="dirty_io_scheduler",id="9"} 0.0
 erlang_vm_msacc_emulator_seconds_total{type="dirty_io_scheduler",id="8"} 0.0
-erlang_vm_msacc_emulator_seconds_total{type="scheduler",id="9"} 0.0
-erlang_vm_msacc_emulator_seconds_total{type="scheduler",id="10"} 0.0
-erlang_vm_msacc_emulator_seconds_total{type="scheduler",id="8"} 0.0
 erlang_vm_msacc_emulator_seconds_total{type="dirty_io_scheduler",id="7"} 0.0
 erlang_vm_msacc_emulator_seconds_total{type="dirty_io_scheduler",id="6"} 0.0
-erlang_vm_msacc_emulator_seconds_total{type="scheduler",id="7"} 0.0
+erlang_vm_msacc_emulator_seconds_total{type="dirty_io_scheduler",id="5"} 0.0
 erlang_vm_msacc_emulator_seconds_total{type="dirty_io_scheduler",id="4"} 0.0
+erlang_vm_msacc_emulator_seconds_total{type="dirty_io_scheduler",id="1"} 0.0
 erlang_vm_msacc_emulator_seconds_total{type="dirty_io_scheduler",id="3"} 0.0
 erlang_vm_msacc_emulator_seconds_total{type="dirty_io_scheduler",id="2"} 0.0
-erlang_vm_msacc_emulator_seconds_total{type="dirty_io_scheduler",id="1"} 0.0
 erlang_vm_msacc_emulator_seconds_total{type="dirty_cpu_scheduler",id="10"} 0.0
 erlang_vm_msacc_emulator_seconds_total{type="dirty_cpu_scheduler",id="9"} 0.0
 erlang_vm_msacc_emulator_seconds_total{type="dirty_cpu_scheduler",id="8"} 0.0
@@ -181,30 +181,30 @@ erlang_vm_msacc_emulator_seconds_total{type="dirty_cpu_scheduler",id="3"} 0.0
 erlang_vm_msacc_emulator_seconds_total{type="dirty_cpu_scheduler",id="2"} 0.0
 erlang_vm_msacc_emulator_seconds_total{type="dirty_cpu_scheduler",id="1"} 0.0
 erlang_vm_msacc_emulator_seconds_total{type="async",id="0"} 0.0
-erlang_vm_msacc_emulator_seconds_total{type="scheduler",id="1"} 0.0
+erlang_vm_msacc_emulator_seconds_total{type="scheduler",id="2"} 0.0
 # TYPE erlang_vm_msacc_gc_seconds_total counter
 # HELP erlang_vm_msacc_gc_seconds_total Total time in seconds spent doing garbage collection. When extra states are enabled this is the time spent doing non-fullsweep garbage collections.
 erlang_vm_msacc_gc_seconds_total{type="aux",id="1"} 0.0
-erlang_vm_msacc_gc_seconds_total{type="scheduler",id="2"} 0.0
+erlang_vm_msacc_gc_seconds_total{type="scheduler",id="1"} 0.0
 erlang_vm_msacc_gc_seconds_total{type="scheduler",id="3"} 0.0
 erlang_vm_msacc_gc_seconds_total{type="scheduler",id="4"} 0.0
 erlang_vm_msacc_gc_seconds_total{type="scheduler",id="5"} 0.0
-erlang_vm_msacc_gc_seconds_total{type="poll",id="0"} 0.0
-erlang_vm_msacc_gc_seconds_total{type="dirty_io_scheduler",id="5"} 0.0
 erlang_vm_msacc_gc_seconds_total{type="scheduler",id="6"} 0.0
+erlang_vm_msacc_gc_seconds_total{type="scheduler",id="7"} 0.0
+erlang_vm_msacc_gc_seconds_total{type="scheduler",id="8"} 0.0
+erlang_vm_msacc_gc_seconds_total{type="poll",id="0"} 0.0
+erlang_vm_msacc_gc_seconds_total{type="scheduler",id="9"} 0.0
 erlang_vm_msacc_gc_seconds_total{type="dirty_io_scheduler",id="10"} 0.0
+erlang_vm_msacc_gc_seconds_total{type="scheduler",id="10"} 0.0
 erlang_vm_msacc_gc_seconds_total{type="dirty_io_scheduler",id="9"} 0.0
 erlang_vm_msacc_gc_seconds_total{type="dirty_io_scheduler",id="8"} 0.0
-erlang_vm_msacc_gc_seconds_total{type="scheduler",id="9"} 0.0
-erlang_vm_msacc_gc_seconds_total{type="scheduler",id="10"} 0.0
-erlang_vm_msacc_gc_seconds_total{type="scheduler",id="8"} 0.0
 erlang_vm_msacc_gc_seconds_total{type="dirty_io_scheduler",id="7"} 0.0
 erlang_vm_msacc_gc_seconds_total{type="dirty_io_scheduler",id="6"} 0.0
-erlang_vm_msacc_gc_seconds_total{type="scheduler",id="7"} 0.0
+erlang_vm_msacc_gc_seconds_total{type="dirty_io_scheduler",id="5"} 0.0
 erlang_vm_msacc_gc_seconds_total{type="dirty_io_scheduler",id="4"} 0.0
+erlang_vm_msacc_gc_seconds_total{type="dirty_io_scheduler",id="1"} 0.0
 erlang_vm_msacc_gc_seconds_total{type="dirty_io_scheduler",id="3"} 0.0
 erlang_vm_msacc_gc_seconds_total{type="dirty_io_scheduler",id="2"} 0.0
-erlang_vm_msacc_gc_seconds_total{type="dirty_io_scheduler",id="1"} 0.0
 erlang_vm_msacc_gc_seconds_total{type="dirty_cpu_scheduler",id="10"} 0.0
 erlang_vm_msacc_gc_seconds_total{type="dirty_cpu_scheduler",id="9"} 0.0
 erlang_vm_msacc_gc_seconds_total{type="dirty_cpu_scheduler",id="8"} 0.0
@@ -216,30 +216,30 @@ erlang_vm_msacc_gc_seconds_total{type="dirty_cpu_scheduler",id="3"} 0.0
 erlang_vm_msacc_gc_seconds_total{type="dirty_cpu_scheduler",id="2"} 0.0
 erlang_vm_msacc_gc_seconds_total{type="dirty_cpu_scheduler",id="1"} 0.0
 erlang_vm_msacc_gc_seconds_total{type="async",id="0"} 0.0
-erlang_vm_msacc_gc_seconds_total{type="scheduler",id="1"} 0.0
+erlang_vm_msacc_gc_seconds_total{type="scheduler",id="2"} 0.0
 # TYPE erlang_vm_msacc_other_seconds_total counter
 # HELP erlang_vm_msacc_other_seconds_total Total time in seconds spent doing unaccounted things.
 erlang_vm_msacc_other_seconds_total{type="aux",id="1"} 0.0
-erlang_vm_msacc_other_seconds_total{type="scheduler",id="2"} 0.0
+erlang_vm_msacc_other_seconds_total{type="scheduler",id="1"} 0.0
 erlang_vm_msacc_other_seconds_total{type="scheduler",id="3"} 0.0
 erlang_vm_msacc_other_seconds_total{type="scheduler",id="4"} 0.0
 erlang_vm_msacc_other_seconds_total{type="scheduler",id="5"} 0.0
-erlang_vm_msacc_other_seconds_total{type="poll",id="0"} 0.0
-erlang_vm_msacc_other_seconds_total{type="dirty_io_scheduler",id="5"} 0.0
 erlang_vm_msacc_other_seconds_total{type="scheduler",id="6"} 0.0
+erlang_vm_msacc_other_seconds_total{type="scheduler",id="7"} 0.0
+erlang_vm_msacc_other_seconds_total{type="scheduler",id="8"} 0.0
+erlang_vm_msacc_other_seconds_total{type="poll",id="0"} 0.0
+erlang_vm_msacc_other_seconds_total{type="scheduler",id="9"} 0.0
 erlang_vm_msacc_other_seconds_total{type="dirty_io_scheduler",id="10"} 0.0
+erlang_vm_msacc_other_seconds_total{type="scheduler",id="10"} 0.0
 erlang_vm_msacc_other_seconds_total{type="dirty_io_scheduler",id="9"} 0.0
 erlang_vm_msacc_other_seconds_total{type="dirty_io_scheduler",id="8"} 0.0
-erlang_vm_msacc_other_seconds_total{type="scheduler",id="9"} 0.0
-erlang_vm_msacc_other_seconds_total{type="scheduler",id="10"} 0.0
-erlang_vm_msacc_other_seconds_total{type="scheduler",id="8"} 0.0
 erlang_vm_msacc_other_seconds_total{type="dirty_io_scheduler",id="7"} 0.0
 erlang_vm_msacc_other_seconds_total{type="dirty_io_scheduler",id="6"} 0.0
-erlang_vm_msacc_other_seconds_total{type="scheduler",id="7"} 0.0
+erlang_vm_msacc_other_seconds_total{type="dirty_io_scheduler",id="5"} 0.0
 erlang_vm_msacc_other_seconds_total{type="dirty_io_scheduler",id="4"} 0.0
+erlang_vm_msacc_other_seconds_total{type="dirty_io_scheduler",id="1"} 0.0
 erlang_vm_msacc_other_seconds_total{type="dirty_io_scheduler",id="3"} 0.0
 erlang_vm_msacc_other_seconds_total{type="dirty_io_scheduler",id="2"} 0.0
-erlang_vm_msacc_other_seconds_total{type="dirty_io_scheduler",id="1"} 0.0
 erlang_vm_msacc_other_seconds_total{type="dirty_cpu_scheduler",id="10"} 0.0
 erlang_vm_msacc_other_seconds_total{type="dirty_cpu_scheduler",id="9"} 0.0
 erlang_vm_msacc_other_seconds_total{type="dirty_cpu_scheduler",id="8"} 0.0
@@ -251,30 +251,30 @@ erlang_vm_msacc_other_seconds_total{type="dirty_cpu_scheduler",id="3"} 0.0
 erlang_vm_msacc_other_seconds_total{type="dirty_cpu_scheduler",id="2"} 0.0
 erlang_vm_msacc_other_seconds_total{type="dirty_cpu_scheduler",id="1"} 0.0
 erlang_vm_msacc_other_seconds_total{type="async",id="0"} 0.0
-erlang_vm_msacc_other_seconds_total{type="scheduler",id="1"} 0.0
+erlang_vm_msacc_other_seconds_total{type="scheduler",id="2"} 0.0
 # TYPE erlang_vm_msacc_port_seconds_total counter
 # HELP erlang_vm_msacc_port_seconds_total Total time in seconds spent executing ports.
 erlang_vm_msacc_port_seconds_total{type="aux",id="1"} 0.0
-erlang_vm_msacc_port_seconds_total{type="scheduler",id="2"} 0.0
+erlang_vm_msacc_port_seconds_total{type="scheduler",id="1"} 0.0
 erlang_vm_msacc_port_seconds_total{type="scheduler",id="3"} 0.0
 erlang_vm_msacc_port_seconds_total{type="scheduler",id="4"} 0.0
 erlang_vm_msacc_port_seconds_total{type="scheduler",id="5"} 0.0
-erlang_vm_msacc_port_seconds_total{type="poll",id="0"} 0.0
-erlang_vm_msacc_port_seconds_total{type="dirty_io_scheduler",id="5"} 0.0
 erlang_vm_msacc_port_seconds_total{type="scheduler",id="6"} 0.0
+erlang_vm_msacc_port_seconds_total{type="scheduler",id="7"} 0.0
+erlang_vm_msacc_port_seconds_total{type="scheduler",id="8"} 0.0
+erlang_vm_msacc_port_seconds_total{type="poll",id="0"} 0.0
+erlang_vm_msacc_port_seconds_total{type="scheduler",id="9"} 0.0
 erlang_vm_msacc_port_seconds_total{type="dirty_io_scheduler",id="10"} 0.0
+erlang_vm_msacc_port_seconds_total{type="scheduler",id="10"} 0.0
 erlang_vm_msacc_port_seconds_total{type="dirty_io_scheduler",id="9"} 0.0
 erlang_vm_msacc_port_seconds_total{type="dirty_io_scheduler",id="8"} 0.0
-erlang_vm_msacc_port_seconds_total{type="scheduler",id="9"} 0.0
-erlang_vm_msacc_port_seconds_total{type="scheduler",id="10"} 0.0
-erlang_vm_msacc_port_seconds_total{type="scheduler",id="8"} 0.0
 erlang_vm_msacc_port_seconds_total{type="dirty_io_scheduler",id="7"} 0.0
 erlang_vm_msacc_port_seconds_total{type="dirty_io_scheduler",id="6"} 0.0
-erlang_vm_msacc_port_seconds_total{type="scheduler",id="7"} 0.0
+erlang_vm_msacc_port_seconds_total{type="dirty_io_scheduler",id="5"} 0.0
 erlang_vm_msacc_port_seconds_total{type="dirty_io_scheduler",id="4"} 0.0
+erlang_vm_msacc_port_seconds_total{type="dirty_io_scheduler",id="1"} 0.0
 erlang_vm_msacc_port_seconds_total{type="dirty_io_scheduler",id="3"} 0.0
 erlang_vm_msacc_port_seconds_total{type="dirty_io_scheduler",id="2"} 0.0
-erlang_vm_msacc_port_seconds_total{type="dirty_io_scheduler",id="1"} 0.0
 erlang_vm_msacc_port_seconds_total{type="dirty_cpu_scheduler",id="10"} 0.0
 erlang_vm_msacc_port_seconds_total{type="dirty_cpu_scheduler",id="9"} 0.0
 erlang_vm_msacc_port_seconds_total{type="dirty_cpu_scheduler",id="8"} 0.0
@@ -286,30 +286,30 @@ erlang_vm_msacc_port_seconds_total{type="dirty_cpu_scheduler",id="3"} 0.0
 erlang_vm_msacc_port_seconds_total{type="dirty_cpu_scheduler",id="2"} 0.0
 erlang_vm_msacc_port_seconds_total{type="dirty_cpu_scheduler",id="1"} 0.0
 erlang_vm_msacc_port_seconds_total{type="async",id="0"} 0.0
-erlang_vm_msacc_port_seconds_total{type="scheduler",id="1"} 0.0
+erlang_vm_msacc_port_seconds_total{type="scheduler",id="2"} 0.0
 # TYPE erlang_vm_msacc_sleep_seconds_total counter
 # HELP erlang_vm_msacc_sleep_seconds_total Total time in seconds spent sleeping.
 erlang_vm_msacc_sleep_seconds_total{type="aux",id="1"} 0.0
-erlang_vm_msacc_sleep_seconds_total{type="scheduler",id="2"} 0.0
+erlang_vm_msacc_sleep_seconds_total{type="scheduler",id="1"} 0.0
 erlang_vm_msacc_sleep_seconds_total{type="scheduler",id="3"} 0.0
 erlang_vm_msacc_sleep_seconds_total{type="scheduler",id="4"} 0.0
 erlang_vm_msacc_sleep_seconds_total{type="scheduler",id="5"} 0.0
-erlang_vm_msacc_sleep_seconds_total{type="poll",id="0"} 0.0
-erlang_vm_msacc_sleep_seconds_total{type="dirty_io_scheduler",id="5"} 0.0
 erlang_vm_msacc_sleep_seconds_total{type="scheduler",id="6"} 0.0
+erlang_vm_msacc_sleep_seconds_total{type="scheduler",id="7"} 0.0
+erlang_vm_msacc_sleep_seconds_total{type="scheduler",id="8"} 0.0
+erlang_vm_msacc_sleep_seconds_total{type="poll",id="0"} 0.0
+erlang_vm_msacc_sleep_seconds_total{type="scheduler",id="9"} 0.0
 erlang_vm_msacc_sleep_seconds_total{type="dirty_io_scheduler",id="10"} 0.0
+erlang_vm_msacc_sleep_seconds_total{type="scheduler",id="10"} 0.0
 erlang_vm_msacc_sleep_seconds_total{type="dirty_io_scheduler",id="9"} 0.0
 erlang_vm_msacc_sleep_seconds_total{type="dirty_io_scheduler",id="8"} 0.0
-erlang_vm_msacc_sleep_seconds_total{type="scheduler",id="9"} 0.0
-erlang_vm_msacc_sleep_seconds_total{type="scheduler",id="10"} 0.0
-erlang_vm_msacc_sleep_seconds_total{type="scheduler",id="8"} 0.0
 erlang_vm_msacc_sleep_seconds_total{type="dirty_io_scheduler",id="7"} 0.0
 erlang_vm_msacc_sleep_seconds_total{type="dirty_io_scheduler",id="6"} 0.0
-erlang_vm_msacc_sleep_seconds_total{type="scheduler",id="7"} 0.0
+erlang_vm_msacc_sleep_seconds_total{type="dirty_io_scheduler",id="5"} 0.0
 erlang_vm_msacc_sleep_seconds_total{type="dirty_io_scheduler",id="4"} 0.0
+erlang_vm_msacc_sleep_seconds_total{type="dirty_io_scheduler",id="1"} 0.0
 erlang_vm_msacc_sleep_seconds_total{type="dirty_io_scheduler",id="3"} 0.0
 erlang_vm_msacc_sleep_seconds_total{type="dirty_io_scheduler",id="2"} 0.0
-erlang_vm_msacc_sleep_seconds_total{type="dirty_io_scheduler",id="1"} 0.0
 erlang_vm_msacc_sleep_seconds_total{type="dirty_cpu_scheduler",id="10"} 0.0
 erlang_vm_msacc_sleep_seconds_total{type="dirty_cpu_scheduler",id="9"} 0.0
 erlang_vm_msacc_sleep_seconds_total{type="dirty_cpu_scheduler",id="8"} 0.0
@@ -321,30 +321,30 @@ erlang_vm_msacc_sleep_seconds_total{type="dirty_cpu_scheduler",id="3"} 0.0
 erlang_vm_msacc_sleep_seconds_total{type="dirty_cpu_scheduler",id="2"} 0.0
 erlang_vm_msacc_sleep_seconds_total{type="dirty_cpu_scheduler",id="1"} 0.0
 erlang_vm_msacc_sleep_seconds_total{type="async",id="0"} 0.0
-erlang_vm_msacc_sleep_seconds_total{type="scheduler",id="1"} 0.0
+erlang_vm_msacc_sleep_seconds_total{type="scheduler",id="2"} 0.0
 # TYPE erlang_vm_msacc_alloc_seconds_total counter
 # HELP erlang_vm_msacc_alloc_seconds_total Total time in seconds spent managing memory. Without extra states this time is spread out over all other states.
 erlang_vm_msacc_alloc_seconds_total{type="aux",id="1"} 0.0
-erlang_vm_msacc_alloc_seconds_total{type="scheduler",id="2"} 0.0
+erlang_vm_msacc_alloc_seconds_total{type="scheduler",id="1"} 0.0
 erlang_vm_msacc_alloc_seconds_total{type="scheduler",id="3"} 0.0
 erlang_vm_msacc_alloc_seconds_total{type="scheduler",id="4"} 0.0
 erlang_vm_msacc_alloc_seconds_total{type="scheduler",id="5"} 0.0
-erlang_vm_msacc_alloc_seconds_total{type="poll",id="0"} 0.0
-erlang_vm_msacc_alloc_seconds_total{type="dirty_io_scheduler",id="5"} 0.0
 erlang_vm_msacc_alloc_seconds_total{type="scheduler",id="6"} 0.0
+erlang_vm_msacc_alloc_seconds_total{type="scheduler",id="7"} 0.0
+erlang_vm_msacc_alloc_seconds_total{type="scheduler",id="8"} 0.0
+erlang_vm_msacc_alloc_seconds_total{type="poll",id="0"} 0.0
+erlang_vm_msacc_alloc_seconds_total{type="scheduler",id="9"} 0.0
 erlang_vm_msacc_alloc_seconds_total{type="dirty_io_scheduler",id="10"} 0.0
+erlang_vm_msacc_alloc_seconds_total{type="scheduler",id="10"} 0.0
 erlang_vm_msacc_alloc_seconds_total{type="dirty_io_scheduler",id="9"} 0.0
 erlang_vm_msacc_alloc_seconds_total{type="dirty_io_scheduler",id="8"} 0.0
-erlang_vm_msacc_alloc_seconds_total{type="scheduler",id="9"} 0.0
-erlang_vm_msacc_alloc_seconds_total{type="scheduler",id="10"} 0.0
-erlang_vm_msacc_alloc_seconds_total{type="scheduler",id="8"} 0.0
 erlang_vm_msacc_alloc_seconds_total{type="dirty_io_scheduler",id="7"} 0.0
 erlang_vm_msacc_alloc_seconds_total{type="dirty_io_scheduler",id="6"} 0.0
-erlang_vm_msacc_alloc_seconds_total{type="scheduler",id="7"} 0.0
+erlang_vm_msacc_alloc_seconds_total{type="dirty_io_scheduler",id="5"} 0.0
 erlang_vm_msacc_alloc_seconds_total{type="dirty_io_scheduler",id="4"} 0.0
+erlang_vm_msacc_alloc_seconds_total{type="dirty_io_scheduler",id="1"} 0.0
 erlang_vm_msacc_alloc_seconds_total{type="dirty_io_scheduler",id="3"} 0.0
 erlang_vm_msacc_alloc_seconds_total{type="dirty_io_scheduler",id="2"} 0.0
-erlang_vm_msacc_alloc_seconds_total{type="dirty_io_scheduler",id="1"} 0.0
 erlang_vm_msacc_alloc_seconds_total{type="dirty_cpu_scheduler",id="10"} 0.0
 erlang_vm_msacc_alloc_seconds_total{type="dirty_cpu_scheduler",id="9"} 0.0
 erlang_vm_msacc_alloc_seconds_total{type="dirty_cpu_scheduler",id="8"} 0.0
@@ -356,30 +356,30 @@ erlang_vm_msacc_alloc_seconds_total{type="dirty_cpu_scheduler",id="3"} 0.0
 erlang_vm_msacc_alloc_seconds_total{type="dirty_cpu_scheduler",id="2"} 0.0
 erlang_vm_msacc_alloc_seconds_total{type="dirty_cpu_scheduler",id="1"} 0.0
 erlang_vm_msacc_alloc_seconds_total{type="async",id="0"} 0.0
-erlang_vm_msacc_alloc_seconds_total{type="scheduler",id="1"} 0.0
+erlang_vm_msacc_alloc_seconds_total{type="scheduler",id="2"} 0.0
 # TYPE erlang_vm_msacc_bif_seconds_total counter
 # HELP erlang_vm_msacc_bif_seconds_total Total time in seconds spent in BIFs. Without extra states this time is part of the 'emulator' state.
 erlang_vm_msacc_bif_seconds_total{type="aux",id="1"} 0.0
-erlang_vm_msacc_bif_seconds_total{type="scheduler",id="2"} 0.0
+erlang_vm_msacc_bif_seconds_total{type="scheduler",id="1"} 0.0
 erlang_vm_msacc_bif_seconds_total{type="scheduler",id="3"} 0.0
 erlang_vm_msacc_bif_seconds_total{type="scheduler",id="4"} 0.0
 erlang_vm_msacc_bif_seconds_total{type="scheduler",id="5"} 0.0
-erlang_vm_msacc_bif_seconds_total{type="poll",id="0"} 0.0
-erlang_vm_msacc_bif_seconds_total{type="dirty_io_scheduler",id="5"} 0.0
 erlang_vm_msacc_bif_seconds_total{type="scheduler",id="6"} 0.0
+erlang_vm_msacc_bif_seconds_total{type="scheduler",id="7"} 0.0
+erlang_vm_msacc_bif_seconds_total{type="scheduler",id="8"} 0.0
+erlang_vm_msacc_bif_seconds_total{type="poll",id="0"} 0.0
+erlang_vm_msacc_bif_seconds_total{type="scheduler",id="9"} 0.0
 erlang_vm_msacc_bif_seconds_total{type="dirty_io_scheduler",id="10"} 0.0
+erlang_vm_msacc_bif_seconds_total{type="scheduler",id="10"} 0.0
 erlang_vm_msacc_bif_seconds_total{type="dirty_io_scheduler",id="9"} 0.0
 erlang_vm_msacc_bif_seconds_total{type="dirty_io_scheduler",id="8"} 0.0
-erlang_vm_msacc_bif_seconds_total{type="scheduler",id="9"} 0.0
-erlang_vm_msacc_bif_seconds_total{type="scheduler",id="10"} 0.0
-erlang_vm_msacc_bif_seconds_total{type="scheduler",id="8"} 0.0
 erlang_vm_msacc_bif_seconds_total{type="dirty_io_scheduler",id="7"} 0.0
 erlang_vm_msacc_bif_seconds_total{type="dirty_io_scheduler",id="6"} 0.0
-erlang_vm_msacc_bif_seconds_total{type="scheduler",id="7"} 0.0
+erlang_vm_msacc_bif_seconds_total{type="dirty_io_scheduler",id="5"} 0.0
 erlang_vm_msacc_bif_seconds_total{type="dirty_io_scheduler",id="4"} 0.0
+erlang_vm_msacc_bif_seconds_total{type="dirty_io_scheduler",id="1"} 0.0
 erlang_vm_msacc_bif_seconds_total{type="dirty_io_scheduler",id="3"} 0.0
 erlang_vm_msacc_bif_seconds_total{type="dirty_io_scheduler",id="2"} 0.0
-erlang_vm_msacc_bif_seconds_total{type="dirty_io_scheduler",id="1"} 0.0
 erlang_vm_msacc_bif_seconds_total{type="dirty_cpu_scheduler",id="10"} 0.0
 erlang_vm_msacc_bif_seconds_total{type="dirty_cpu_scheduler",id="9"} 0.0
 erlang_vm_msacc_bif_seconds_total{type="dirty_cpu_scheduler",id="8"} 0.0
@@ -391,30 +391,30 @@ erlang_vm_msacc_bif_seconds_total{type="dirty_cpu_scheduler",id="3"} 0.0
 erlang_vm_msacc_bif_seconds_total{type="dirty_cpu_scheduler",id="2"} 0.0
 erlang_vm_msacc_bif_seconds_total{type="dirty_cpu_scheduler",id="1"} 0.0
 erlang_vm_msacc_bif_seconds_total{type="async",id="0"} 0.0
-erlang_vm_msacc_bif_seconds_total{type="scheduler",id="1"} 0.0
+erlang_vm_msacc_bif_seconds_total{type="scheduler",id="2"} 0.0
 # TYPE erlang_vm_msacc_busy_wait_seconds_total counter
 # HELP erlang_vm_msacc_busy_wait_seconds_total Total time in seconds spent busy waiting. Without extra states this time is part of the 'other' state.
 erlang_vm_msacc_busy_wait_seconds_total{type="aux",id="1"} 0.0
-erlang_vm_msacc_busy_wait_seconds_total{type="scheduler",id="2"} 0.0
+erlang_vm_msacc_busy_wait_seconds_total{type="scheduler",id="1"} 0.0
 erlang_vm_msacc_busy_wait_seconds_total{type="scheduler",id="3"} 0.0
 erlang_vm_msacc_busy_wait_seconds_total{type="scheduler",id="4"} 0.0
 erlang_vm_msacc_busy_wait_seconds_total{type="scheduler",id="5"} 0.0
-erlang_vm_msacc_busy_wait_seconds_total{type="poll",id="0"} 0.0
-erlang_vm_msacc_busy_wait_seconds_total{type="dirty_io_scheduler",id="5"} 0.0
 erlang_vm_msacc_busy_wait_seconds_total{type="scheduler",id="6"} 0.0
+erlang_vm_msacc_busy_wait_seconds_total{type="scheduler",id="7"} 0.0
+erlang_vm_msacc_busy_wait_seconds_total{type="scheduler",id="8"} 0.0
+erlang_vm_msacc_busy_wait_seconds_total{type="poll",id="0"} 0.0
+erlang_vm_msacc_busy_wait_seconds_total{type="scheduler",id="9"} 0.0
 erlang_vm_msacc_busy_wait_seconds_total{type="dirty_io_scheduler",id="10"} 0.0
+erlang_vm_msacc_busy_wait_seconds_total{type="scheduler",id="10"} 0.0
 erlang_vm_msacc_busy_wait_seconds_total{type="dirty_io_scheduler",id="9"} 0.0
 erlang_vm_msacc_busy_wait_seconds_total{type="dirty_io_scheduler",id="8"} 0.0
-erlang_vm_msacc_busy_wait_seconds_total{type="scheduler",id="9"} 0.0
-erlang_vm_msacc_busy_wait_seconds_total{type="scheduler",id="10"} 0.0
-erlang_vm_msacc_busy_wait_seconds_total{type="scheduler",id="8"} 0.0
 erlang_vm_msacc_busy_wait_seconds_total{type="dirty_io_scheduler",id="7"} 0.0
 erlang_vm_msacc_busy_wait_seconds_total{type="dirty_io_scheduler",id="6"} 0.0
-erlang_vm_msacc_busy_wait_seconds_total{type="scheduler",id="7"} 0.0
+erlang_vm_msacc_busy_wait_seconds_total{type="dirty_io_scheduler",id="5"} 0.0
 erlang_vm_msacc_busy_wait_seconds_total{type="dirty_io_scheduler",id="4"} 0.0
+erlang_vm_msacc_busy_wait_seconds_total{type="dirty_io_scheduler",id="1"} 0.0
 erlang_vm_msacc_busy_wait_seconds_total{type="dirty_io_scheduler",id="3"} 0.0
 erlang_vm_msacc_busy_wait_seconds_total{type="dirty_io_scheduler",id="2"} 0.0
-erlang_vm_msacc_busy_wait_seconds_total{type="dirty_io_scheduler",id="1"} 0.0
 erlang_vm_msacc_busy_wait_seconds_total{type="dirty_cpu_scheduler",id="10"} 0.0
 erlang_vm_msacc_busy_wait_seconds_total{type="dirty_cpu_scheduler",id="9"} 0.0
 erlang_vm_msacc_busy_wait_seconds_total{type="dirty_cpu_scheduler",id="8"} 0.0
@@ -426,30 +426,30 @@ erlang_vm_msacc_busy_wait_seconds_total{type="dirty_cpu_scheduler",id="3"} 0.0
 erlang_vm_msacc_busy_wait_seconds_total{type="dirty_cpu_scheduler",id="2"} 0.0
 erlang_vm_msacc_busy_wait_seconds_total{type="dirty_cpu_scheduler",id="1"} 0.0
 erlang_vm_msacc_busy_wait_seconds_total{type="async",id="0"} 0.0
-erlang_vm_msacc_busy_wait_seconds_total{type="scheduler",id="1"} 0.0
+erlang_vm_msacc_busy_wait_seconds_total{type="scheduler",id="2"} 0.0
 # TYPE erlang_vm_msacc_ets_seconds_total counter
 # HELP erlang_vm_msacc_ets_seconds_total Total time in seconds spent executing ETS BIFs. Without extra states this time is part of the 'emulator' state.
 erlang_vm_msacc_ets_seconds_total{type="aux",id="1"} 0.0
-erlang_vm_msacc_ets_seconds_total{type="scheduler",id="2"} 0.0
+erlang_vm_msacc_ets_seconds_total{type="scheduler",id="1"} 0.0
 erlang_vm_msacc_ets_seconds_total{type="scheduler",id="3"} 0.0
 erlang_vm_msacc_ets_seconds_total{type="scheduler",id="4"} 0.0
 erlang_vm_msacc_ets_seconds_total{type="scheduler",id="5"} 0.0
-erlang_vm_msacc_ets_seconds_total{type="poll",id="0"} 0.0
-erlang_vm_msacc_ets_seconds_total{type="dirty_io_scheduler",id="5"} 0.0
 erlang_vm_msacc_ets_seconds_total{type="scheduler",id="6"} 0.0
+erlang_vm_msacc_ets_seconds_total{type="scheduler",id="7"} 0.0
+erlang_vm_msacc_ets_seconds_total{type="scheduler",id="8"} 0.0
+erlang_vm_msacc_ets_seconds_total{type="poll",id="0"} 0.0
+erlang_vm_msacc_ets_seconds_total{type="scheduler",id="9"} 0.0
 erlang_vm_msacc_ets_seconds_total{type="dirty_io_scheduler",id="10"} 0.0
+erlang_vm_msacc_ets_seconds_total{type="scheduler",id="10"} 0.0
 erlang_vm_msacc_ets_seconds_total{type="dirty_io_scheduler",id="9"} 0.0
 erlang_vm_msacc_ets_seconds_total{type="dirty_io_scheduler",id="8"} 0.0
-erlang_vm_msacc_ets_seconds_total{type="scheduler",id="9"} 0.0
-erlang_vm_msacc_ets_seconds_total{type="scheduler",id="10"} 0.0
-erlang_vm_msacc_ets_seconds_total{type="scheduler",id="8"} 0.0
 erlang_vm_msacc_ets_seconds_total{type="dirty_io_scheduler",id="7"} 0.0
 erlang_vm_msacc_ets_seconds_total{type="dirty_io_scheduler",id="6"} 0.0
-erlang_vm_msacc_ets_seconds_total{type="scheduler",id="7"} 0.0
+erlang_vm_msacc_ets_seconds_total{type="dirty_io_scheduler",id="5"} 0.0
 erlang_vm_msacc_ets_seconds_total{type="dirty_io_scheduler",id="4"} 0.0
+erlang_vm_msacc_ets_seconds_total{type="dirty_io_scheduler",id="1"} 0.0
 erlang_vm_msacc_ets_seconds_total{type="dirty_io_scheduler",id="3"} 0.0
 erlang_vm_msacc_ets_seconds_total{type="dirty_io_scheduler",id="2"} 0.0
-erlang_vm_msacc_ets_seconds_total{type="dirty_io_scheduler",id="1"} 0.0
 erlang_vm_msacc_ets_seconds_total{type="dirty_cpu_scheduler",id="10"} 0.0
 erlang_vm_msacc_ets_seconds_total{type="dirty_cpu_scheduler",id="9"} 0.0
 erlang_vm_msacc_ets_seconds_total{type="dirty_cpu_scheduler",id="8"} 0.0
@@ -461,30 +461,30 @@ erlang_vm_msacc_ets_seconds_total{type="dirty_cpu_scheduler",id="3"} 0.0
 erlang_vm_msacc_ets_seconds_total{type="dirty_cpu_scheduler",id="2"} 0.0
 erlang_vm_msacc_ets_seconds_total{type="dirty_cpu_scheduler",id="1"} 0.0
 erlang_vm_msacc_ets_seconds_total{type="async",id="0"} 0.0
-erlang_vm_msacc_ets_seconds_total{type="scheduler",id="1"} 0.0
+erlang_vm_msacc_ets_seconds_total{type="scheduler",id="2"} 0.0
 # TYPE erlang_vm_msacc_gc_full_seconds_total counter
 # HELP erlang_vm_msacc_gc_full_seconds_total Total time in seconds spent doing fullsweep garbage collection. Without extra states this time is part of the 'gc' state.
 erlang_vm_msacc_gc_full_seconds_total{type="aux",id="1"} 0.0
-erlang_vm_msacc_gc_full_seconds_total{type="scheduler",id="2"} 0.0
+erlang_vm_msacc_gc_full_seconds_total{type="scheduler",id="1"} 0.0
 erlang_vm_msacc_gc_full_seconds_total{type="scheduler",id="3"} 0.0
 erlang_vm_msacc_gc_full_seconds_total{type="scheduler",id="4"} 0.0
 erlang_vm_msacc_gc_full_seconds_total{type="scheduler",id="5"} 0.0
-erlang_vm_msacc_gc_full_seconds_total{type="poll",id="0"} 0.0
-erlang_vm_msacc_gc_full_seconds_total{type="dirty_io_scheduler",id="5"} 0.0
 erlang_vm_msacc_gc_full_seconds_total{type="scheduler",id="6"} 0.0
+erlang_vm_msacc_gc_full_seconds_total{type="scheduler",id="7"} 0.0
+erlang_vm_msacc_gc_full_seconds_total{type="scheduler",id="8"} 0.0
+erlang_vm_msacc_gc_full_seconds_total{type="poll",id="0"} 0.0
+erlang_vm_msacc_gc_full_seconds_total{type="scheduler",id="9"} 0.0
 erlang_vm_msacc_gc_full_seconds_total{type="dirty_io_scheduler",id="10"} 0.0
+erlang_vm_msacc_gc_full_seconds_total{type="scheduler",id="10"} 0.0
 erlang_vm_msacc_gc_full_seconds_total{type="dirty_io_scheduler",id="9"} 0.0
 erlang_vm_msacc_gc_full_seconds_total{type="dirty_io_scheduler",id="8"} 0.0
-erlang_vm_msacc_gc_full_seconds_total{type="scheduler",id="9"} 0.0
-erlang_vm_msacc_gc_full_seconds_total{type="scheduler",id="10"} 0.0
-erlang_vm_msacc_gc_full_seconds_total{type="scheduler",id="8"} 0.0
 erlang_vm_msacc_gc_full_seconds_total{type="dirty_io_scheduler",id="7"} 0.0
 erlang_vm_msacc_gc_full_seconds_total{type="dirty_io_scheduler",id="6"} 0.0
-erlang_vm_msacc_gc_full_seconds_total{type="scheduler",id="7"} 0.0
+erlang_vm_msacc_gc_full_seconds_total{type="dirty_io_scheduler",id="5"} 0.0
 erlang_vm_msacc_gc_full_seconds_total{type="dirty_io_scheduler",id="4"} 0.0
+erlang_vm_msacc_gc_full_seconds_total{type="dirty_io_scheduler",id="1"} 0.0
 erlang_vm_msacc_gc_full_seconds_total{type="dirty_io_scheduler",id="3"} 0.0
 erlang_vm_msacc_gc_full_seconds_total{type="dirty_io_scheduler",id="2"} 0.0
-erlang_vm_msacc_gc_full_seconds_total{type="dirty_io_scheduler",id="1"} 0.0
 erlang_vm_msacc_gc_full_seconds_total{type="dirty_cpu_scheduler",id="10"} 0.0
 erlang_vm_msacc_gc_full_seconds_total{type="dirty_cpu_scheduler",id="9"} 0.0
 erlang_vm_msacc_gc_full_seconds_total{type="dirty_cpu_scheduler",id="8"} 0.0
@@ -496,30 +496,30 @@ erlang_vm_msacc_gc_full_seconds_total{type="dirty_cpu_scheduler",id="3"} 0.0
 erlang_vm_msacc_gc_full_seconds_total{type="dirty_cpu_scheduler",id="2"} 0.0
 erlang_vm_msacc_gc_full_seconds_total{type="dirty_cpu_scheduler",id="1"} 0.0
 erlang_vm_msacc_gc_full_seconds_total{type="async",id="0"} 0.0
-erlang_vm_msacc_gc_full_seconds_total{type="scheduler",id="1"} 0.0
+erlang_vm_msacc_gc_full_seconds_total{type="scheduler",id="2"} 0.0
 # TYPE erlang_vm_msacc_nif_seconds_total counter
 # HELP erlang_vm_msacc_nif_seconds_total Total time in seconds spent in NIFs. Without extra states this time is part of the 'emulator' state.
 erlang_vm_msacc_nif_seconds_total{type="aux",id="1"} 0.0
-erlang_vm_msacc_nif_seconds_total{type="scheduler",id="2"} 0.0
+erlang_vm_msacc_nif_seconds_total{type="scheduler",id="1"} 0.0
 erlang_vm_msacc_nif_seconds_total{type="scheduler",id="3"} 0.0
 erlang_vm_msacc_nif_seconds_total{type="scheduler",id="4"} 0.0
 erlang_vm_msacc_nif_seconds_total{type="scheduler",id="5"} 0.0
-erlang_vm_msacc_nif_seconds_total{type="poll",id="0"} 0.0
-erlang_vm_msacc_nif_seconds_total{type="dirty_io_scheduler",id="5"} 0.0
 erlang_vm_msacc_nif_seconds_total{type="scheduler",id="6"} 0.0
+erlang_vm_msacc_nif_seconds_total{type="scheduler",id="7"} 0.0
+erlang_vm_msacc_nif_seconds_total{type="scheduler",id="8"} 0.0
+erlang_vm_msacc_nif_seconds_total{type="poll",id="0"} 0.0
+erlang_vm_msacc_nif_seconds_total{type="scheduler",id="9"} 0.0
 erlang_vm_msacc_nif_seconds_total{type="dirty_io_scheduler",id="10"} 0.0
+erlang_vm_msacc_nif_seconds_total{type="scheduler",id="10"} 0.0
 erlang_vm_msacc_nif_seconds_total{type="dirty_io_scheduler",id="9"} 0.0
 erlang_vm_msacc_nif_seconds_total{type="dirty_io_scheduler",id="8"} 0.0
-erlang_vm_msacc_nif_seconds_total{type="scheduler",id="9"} 0.0
-erlang_vm_msacc_nif_seconds_total{type="scheduler",id="10"} 0.0
-erlang_vm_msacc_nif_seconds_total{type="scheduler",id="8"} 0.0
 erlang_vm_msacc_nif_seconds_total{type="dirty_io_scheduler",id="7"} 0.0
 erlang_vm_msacc_nif_seconds_total{type="dirty_io_scheduler",id="6"} 0.0
-erlang_vm_msacc_nif_seconds_total{type="scheduler",id="7"} 0.0
+erlang_vm_msacc_nif_seconds_total{type="dirty_io_scheduler",id="5"} 0.0
 erlang_vm_msacc_nif_seconds_total{type="dirty_io_scheduler",id="4"} 0.0
+erlang_vm_msacc_nif_seconds_total{type="dirty_io_scheduler",id="1"} 0.0
 erlang_vm_msacc_nif_seconds_total{type="dirty_io_scheduler",id="3"} 0.0
 erlang_vm_msacc_nif_seconds_total{type="dirty_io_scheduler",id="2"} 0.0
-erlang_vm_msacc_nif_seconds_total{type="dirty_io_scheduler",id="1"} 0.0
 erlang_vm_msacc_nif_seconds_total{type="dirty_cpu_scheduler",id="10"} 0.0
 erlang_vm_msacc_nif_seconds_total{type="dirty_cpu_scheduler",id="9"} 0.0
 erlang_vm_msacc_nif_seconds_total{type="dirty_cpu_scheduler",id="8"} 0.0
@@ -531,30 +531,30 @@ erlang_vm_msacc_nif_seconds_total{type="dirty_cpu_scheduler",id="3"} 0.0
 erlang_vm_msacc_nif_seconds_total{type="dirty_cpu_scheduler",id="2"} 0.0
 erlang_vm_msacc_nif_seconds_total{type="dirty_cpu_scheduler",id="1"} 0.0
 erlang_vm_msacc_nif_seconds_total{type="async",id="0"} 0.0
-erlang_vm_msacc_nif_seconds_total{type="scheduler",id="1"} 0.0
+erlang_vm_msacc_nif_seconds_total{type="scheduler",id="2"} 0.0
 # TYPE erlang_vm_msacc_send_seconds_total counter
 # HELP erlang_vm_msacc_send_seconds_total Total time in seconds spent sending messages (processes only). Without extra states this time is part of the 'emulator' state.
 erlang_vm_msacc_send_seconds_total{type="aux",id="1"} 0.0
-erlang_vm_msacc_send_seconds_total{type="scheduler",id="2"} 0.0
+erlang_vm_msacc_send_seconds_total{type="scheduler",id="1"} 0.0
 erlang_vm_msacc_send_seconds_total{type="scheduler",id="3"} 0.0
 erlang_vm_msacc_send_seconds_total{type="scheduler",id="4"} 0.0
 erlang_vm_msacc_send_seconds_total{type="scheduler",id="5"} 0.0
-erlang_vm_msacc_send_seconds_total{type="poll",id="0"} 0.0
-erlang_vm_msacc_send_seconds_total{type="dirty_io_scheduler",id="5"} 0.0
 erlang_vm_msacc_send_seconds_total{type="scheduler",id="6"} 0.0
+erlang_vm_msacc_send_seconds_total{type="scheduler",id="7"} 0.0
+erlang_vm_msacc_send_seconds_total{type="scheduler",id="8"} 0.0
+erlang_vm_msacc_send_seconds_total{type="poll",id="0"} 0.0
+erlang_vm_msacc_send_seconds_total{type="scheduler",id="9"} 0.0
 erlang_vm_msacc_send_seconds_total{type="dirty_io_scheduler",id="10"} 0.0
+erlang_vm_msacc_send_seconds_total{type="scheduler",id="10"} 0.0
 erlang_vm_msacc_send_seconds_total{type="dirty_io_scheduler",id="9"} 0.0
 erlang_vm_msacc_send_seconds_total{type="dirty_io_scheduler",id="8"} 0.0
-erlang_vm_msacc_send_seconds_total{type="scheduler",id="9"} 0.0
-erlang_vm_msacc_send_seconds_total{type="scheduler",id="10"} 0.0
-erlang_vm_msacc_send_seconds_total{type="scheduler",id="8"} 0.0
 erlang_vm_msacc_send_seconds_total{type="dirty_io_scheduler",id="7"} 0.0
 erlang_vm_msacc_send_seconds_total{type="dirty_io_scheduler",id="6"} 0.0
-erlang_vm_msacc_send_seconds_total{type="scheduler",id="7"} 0.0
+erlang_vm_msacc_send_seconds_total{type="dirty_io_scheduler",id="5"} 0.0
 erlang_vm_msacc_send_seconds_total{type="dirty_io_scheduler",id="4"} 0.0
+erlang_vm_msacc_send_seconds_total{type="dirty_io_scheduler",id="1"} 0.0
 erlang_vm_msacc_send_seconds_total{type="dirty_io_scheduler",id="3"} 0.0
 erlang_vm_msacc_send_seconds_total{type="dirty_io_scheduler",id="2"} 0.0
-erlang_vm_msacc_send_seconds_total{type="dirty_io_scheduler",id="1"} 0.0
 erlang_vm_msacc_send_seconds_total{type="dirty_cpu_scheduler",id="10"} 0.0
 erlang_vm_msacc_send_seconds_total{type="dirty_cpu_scheduler",id="9"} 0.0
 erlang_vm_msacc_send_seconds_total{type="dirty_cpu_scheduler",id="8"} 0.0
@@ -566,30 +566,30 @@ erlang_vm_msacc_send_seconds_total{type="dirty_cpu_scheduler",id="3"} 0.0
 erlang_vm_msacc_send_seconds_total{type="dirty_cpu_scheduler",id="2"} 0.0
 erlang_vm_msacc_send_seconds_total{type="dirty_cpu_scheduler",id="1"} 0.0
 erlang_vm_msacc_send_seconds_total{type="async",id="0"} 0.0
-erlang_vm_msacc_send_seconds_total{type="scheduler",id="1"} 0.0
+erlang_vm_msacc_send_seconds_total{type="scheduler",id="2"} 0.0
 # TYPE erlang_vm_msacc_timers_seconds_total counter
 # HELP erlang_vm_msacc_timers_seconds_total Total time in seconds spent managing timers. Without extra states this time is part of the 'other' state.
 erlang_vm_msacc_timers_seconds_total{type="aux",id="1"} 0.0
-erlang_vm_msacc_timers_seconds_total{type="scheduler",id="2"} 0.0
+erlang_vm_msacc_timers_seconds_total{type="scheduler",id="1"} 0.0
 erlang_vm_msacc_timers_seconds_total{type="scheduler",id="3"} 0.0
 erlang_vm_msacc_timers_seconds_total{type="scheduler",id="4"} 0.0
 erlang_vm_msacc_timers_seconds_total{type="scheduler",id="5"} 0.0
-erlang_vm_msacc_timers_seconds_total{type="poll",id="0"} 0.0
-erlang_vm_msacc_timers_seconds_total{type="dirty_io_scheduler",id="5"} 0.0
 erlang_vm_msacc_timers_seconds_total{type="scheduler",id="6"} 0.0
+erlang_vm_msacc_timers_seconds_total{type="scheduler",id="7"} 0.0
+erlang_vm_msacc_timers_seconds_total{type="scheduler",id="8"} 0.0
+erlang_vm_msacc_timers_seconds_total{type="poll",id="0"} 0.0
+erlang_vm_msacc_timers_seconds_total{type="scheduler",id="9"} 0.0
 erlang_vm_msacc_timers_seconds_total{type="dirty_io_scheduler",id="10"} 0.0
+erlang_vm_msacc_timers_seconds_total{type="scheduler",id="10"} 0.0
 erlang_vm_msacc_timers_seconds_total{type="dirty_io_scheduler",id="9"} 0.0
 erlang_vm_msacc_timers_seconds_total{type="dirty_io_scheduler",id="8"} 0.0
-erlang_vm_msacc_timers_seconds_total{type="scheduler",id="9"} 0.0
-erlang_vm_msacc_timers_seconds_total{type="scheduler",id="10"} 0.0
-erlang_vm_msacc_timers_seconds_total{type="scheduler",id="8"} 0.0
 erlang_vm_msacc_timers_seconds_total{type="dirty_io_scheduler",id="7"} 0.0
 erlang_vm_msacc_timers_seconds_total{type="dirty_io_scheduler",id="6"} 0.0
-erlang_vm_msacc_timers_seconds_total{type="scheduler",id="7"} 0.0
+erlang_vm_msacc_timers_seconds_total{type="dirty_io_scheduler",id="5"} 0.0
 erlang_vm_msacc_timers_seconds_total{type="dirty_io_scheduler",id="4"} 0.0
+erlang_vm_msacc_timers_seconds_total{type="dirty_io_scheduler",id="1"} 0.0
 erlang_vm_msacc_timers_seconds_total{type="dirty_io_scheduler",id="3"} 0.0
 erlang_vm_msacc_timers_seconds_total{type="dirty_io_scheduler",id="2"} 0.0
-erlang_vm_msacc_timers_seconds_total{type="dirty_io_scheduler",id="1"} 0.0
 erlang_vm_msacc_timers_seconds_total{type="dirty_cpu_scheduler",id="10"} 0.0
 erlang_vm_msacc_timers_seconds_total{type="dirty_cpu_scheduler",id="9"} 0.0
 erlang_vm_msacc_timers_seconds_total{type="dirty_cpu_scheduler",id="8"} 0.0
@@ -601,16 +601,16 @@ erlang_vm_msacc_timers_seconds_total{type="dirty_cpu_scheduler",id="3"} 0.0
 erlang_vm_msacc_timers_seconds_total{type="dirty_cpu_scheduler",id="2"} 0.0
 erlang_vm_msacc_timers_seconds_total{type="dirty_cpu_scheduler",id="1"} 0.0
 erlang_vm_msacc_timers_seconds_total{type="async",id="0"} 0.0
-erlang_vm_msacc_timers_seconds_total{type="scheduler",id="1"} 0.0
+erlang_vm_msacc_timers_seconds_total{type="scheduler",id="2"} 0.0
 # TYPE erlang_vm_statistics_bytes_output_total counter
 # HELP erlang_vm_statistics_bytes_output_total Total number of bytes output to ports.
-erlang_vm_statistics_bytes_output_total 99699
+erlang_vm_statistics_bytes_output_total 155200
 # TYPE erlang_vm_statistics_bytes_received_total counter
 # HELP erlang_vm_statistics_bytes_received_total Total number of bytes received through ports.
-erlang_vm_statistics_bytes_received_total 19290
+erlang_vm_statistics_bytes_received_total 62402
 # TYPE erlang_vm_statistics_context_switches_total counter
 # HELP erlang_vm_statistics_context_switches_total Total number of context switches since the system started.
-erlang_vm_statistics_context_switches_total 134558
+erlang_vm_statistics_context_switches_total 143720
 # TYPE erlang_vm_statistics_dirty_cpu_run_queue_length gauge
 # HELP erlang_vm_statistics_dirty_cpu_run_queue_length Length of the dirty CPU run-queue.
 erlang_vm_statistics_dirty_cpu_run_queue_length 0
@@ -619,25 +619,25 @@ erlang_vm_statistics_dirty_cpu_run_queue_length 0
 erlang_vm_statistics_dirty_io_run_queue_length 0
 # TYPE erlang_vm_statistics_garbage_collection_number_of_gcs_total counter
 # HELP erlang_vm_statistics_garbage_collection_number_of_gcs_total Garbage collection: number of GCs.
-erlang_vm_statistics_garbage_collection_number_of_gcs_total 9518
+erlang_vm_statistics_garbage_collection_number_of_gcs_total 11497
 # TYPE erlang_vm_statistics_garbage_collection_bytes_reclaimed_total counter
 # HELP erlang_vm_statistics_garbage_collection_bytes_reclaimed_total Garbage collection: bytes reclaimed.
-erlang_vm_statistics_garbage_collection_bytes_reclaimed_total 382278864
+erlang_vm_statistics_garbage_collection_bytes_reclaimed_total 401868544
 # TYPE erlang_vm_statistics_garbage_collection_words_reclaimed_total counter
 # HELP erlang_vm_statistics_garbage_collection_words_reclaimed_total Garbage collection: words reclaimed.
-erlang_vm_statistics_garbage_collection_words_reclaimed_total 47784858
+erlang_vm_statistics_garbage_collection_words_reclaimed_total 50233568
 # TYPE erlang_vm_statistics_reductions_total counter
 # HELP erlang_vm_statistics_reductions_total Total reductions.
-erlang_vm_statistics_reductions_total 43635476
+erlang_vm_statistics_reductions_total 45060108
 # TYPE erlang_vm_statistics_run_queues_length gauge
 # HELP erlang_vm_statistics_run_queues_length Length of normal run-queues.
 erlang_vm_statistics_run_queues_length 0
 # TYPE erlang_vm_statistics_runtime_seconds_total counter
 # HELP erlang_vm_statistics_runtime_seconds_total The sum of the runtime for all threads in the Erlang runtime system. Can be greater than wall clock time.
-erlang_vm_statistics_runtime_seconds_total 1615
+erlang_vm_statistics_runtime_seconds_total 1822
 # TYPE erlang_vm_statistics_wallclock_time_seconds_total counter
 # HELP erlang_vm_statistics_wallclock_time_seconds_total Information about wall clock. Same as erlang_vm_statistics_runtime_seconds except that real time is measured.
-erlang_vm_statistics_wallclock_time_seconds_total 19250
+erlang_vm_statistics_wallclock_time_seconds_total 39399
 # TYPE erlang_vm_dirty_cpu_schedulers gauge
 # HELP erlang_vm_dirty_cpu_schedulers The number of scheduler dirty CPU scheduler threads used by the emulator.
 erlang_vm_dirty_cpu_schedulers 10
@@ -661,13 +661,13 @@ erlang_vm_logical_processors_available 10
 erlang_vm_logical_processors_online 10
 # TYPE erlang_vm_ports gauge
 # HELP erlang_vm_ports The number of ports currently existing at the local node.
-erlang_vm_ports 16
+erlang_vm_ports 22
 # TYPE erlang_vm_port_limit gauge
 # HELP erlang_vm_port_limit The maximum number of simultaneously existing ports at the local node.
 erlang_vm_port_limit 65536
 # TYPE erlang_vm_processes gauge
 # HELP erlang_vm_processes The number of processes currently existing at the local node.
-erlang_vm_processes 467
+erlang_vm_processes 537
 # TYPE erlang_vm_process_limit gauge
 # HELP erlang_vm_process_limit The maximum number of simultaneously existing processes at the local node.
 erlang_vm_process_limit 1048576
@@ -694,7 +694,7 @@ erlang_vm_time_correction 1
 erlang_vm_wordsize_bytes 8
 # TYPE erlang_vm_atoms gauge
 # HELP erlang_vm_atoms The number of atom currently existing at the local node.
-erlang_vm_atoms 32116
+erlang_vm_atoms 32121
 # TYPE erlang_vm_atom_limit gauge
 # HELP erlang_vm_atom_limit The maximum number of simultaneously existing atom at the local node.
 erlang_vm_atom_limit 5000000
@@ -846,8 +846,8 @@ erlang_vm_allocators{alloc="sl_alloc",instance_no="4",kind="sbcs",usage="blocks"
 erlang_vm_allocators{alloc="sl_alloc",instance_no="4",kind="sbcs",usage="blocks_size"} 0
 erlang_vm_allocators{alloc="sl_alloc",instance_no="5",kind="mbcs",usage="carriers"} 1
 erlang_vm_allocators{alloc="sl_alloc",instance_no="5",kind="mbcs",usage="carriers_size"} 32768
-erlang_vm_allocators{alloc="sl_alloc",instance_no="5",kind="mbcs",usage="blocks"} 2
-erlang_vm_allocators{alloc="sl_alloc",instance_no="5",kind="mbcs",usage="blocks_size"} 360
+erlang_vm_allocators{alloc="sl_alloc",instance_no="5",kind="mbcs",usage="blocks"} 0
+erlang_vm_allocators{alloc="sl_alloc",instance_no="5",kind="mbcs",usage="blocks_size"} 0
 erlang_vm_allocators{alloc="sl_alloc",instance_no="5",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="sl_alloc",instance_no="5",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="sl_alloc",instance_no="5",kind="mbcs_pool",usage="blocks"} 0
@@ -906,8 +906,8 @@ erlang_vm_allocators{alloc="sl_alloc",instance_no="9",kind="sbcs",usage="blocks"
 erlang_vm_allocators{alloc="sl_alloc",instance_no="9",kind="sbcs",usage="blocks_size"} 0
 erlang_vm_allocators{alloc="sl_alloc",instance_no="10",kind="mbcs",usage="carriers"} 1
 erlang_vm_allocators{alloc="sl_alloc",instance_no="10",kind="mbcs",usage="carriers_size"} 32768
-erlang_vm_allocators{alloc="sl_alloc",instance_no="10",kind="mbcs",usage="blocks"} 0
-erlang_vm_allocators{alloc="sl_alloc",instance_no="10",kind="mbcs",usage="blocks_size"} 0
+erlang_vm_allocators{alloc="sl_alloc",instance_no="10",kind="mbcs",usage="blocks"} 2
+erlang_vm_allocators{alloc="sl_alloc",instance_no="10",kind="mbcs",usage="blocks_size"} 360
 erlang_vm_allocators{alloc="sl_alloc",instance_no="10",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="sl_alloc",instance_no="10",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="sl_alloc",instance_no="10",kind="mbcs_pool",usage="blocks"} 0
@@ -918,16 +918,16 @@ erlang_vm_allocators{alloc="sl_alloc",instance_no="10",kind="sbcs",usage="blocks
 erlang_vm_allocators{alloc="sl_alloc",instance_no="10",kind="sbcs",usage="blocks_size"} 0
 erlang_vm_allocators{alloc="std_alloc",instance_no="0",kind="mbcs",usage="carriers"} 2
 erlang_vm_allocators{alloc="std_alloc",instance_no="0",kind="mbcs",usage="carriers_size"} 294912
-erlang_vm_allocators{alloc="std_alloc",instance_no="0",kind="mbcs",usage="blocks"} 34
-erlang_vm_allocators{alloc="std_alloc",instance_no="0",kind="mbcs",usage="blocks_size"} 135776
+erlang_vm_allocators{alloc="std_alloc",instance_no="0",kind="mbcs",usage="blocks"} 35
+erlang_vm_allocators{alloc="std_alloc",instance_no="0",kind="mbcs",usage="blocks_size"} 135944
 erlang_vm_allocators{alloc="std_alloc",instance_no="0",kind="sbcs",usage="carriers"} 0
 erlang_vm_allocators{alloc="std_alloc",instance_no="0",kind="sbcs",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="std_alloc",instance_no="0",kind="sbcs",usage="blocks"} 0
 erlang_vm_allocators{alloc="std_alloc",instance_no="0",kind="sbcs",usage="blocks_size"} 0
 erlang_vm_allocators{alloc="std_alloc",instance_no="1",kind="mbcs",usage="carriers"} 2
 erlang_vm_allocators{alloc="std_alloc",instance_no="1",kind="mbcs",usage="carriers_size"} 294912
-erlang_vm_allocators{alloc="std_alloc",instance_no="1",kind="mbcs",usage="blocks"} 180
-erlang_vm_allocators{alloc="std_alloc",instance_no="1",kind="mbcs",usage="blocks_size"} 68008
+erlang_vm_allocators{alloc="std_alloc",instance_no="1",kind="mbcs",usage="blocks"} 280
+erlang_vm_allocators{alloc="std_alloc",instance_no="1",kind="mbcs",usage="blocks_size"} 120256
 erlang_vm_allocators{alloc="std_alloc",instance_no="1",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="std_alloc",instance_no="1",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="std_alloc",instance_no="1",kind="mbcs_pool",usage="blocks"} 0
@@ -936,10 +936,10 @@ erlang_vm_allocators{alloc="std_alloc",instance_no="1",kind="sbcs",usage="carrie
 erlang_vm_allocators{alloc="std_alloc",instance_no="1",kind="sbcs",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="std_alloc",instance_no="1",kind="sbcs",usage="blocks"} 0
 erlang_vm_allocators{alloc="std_alloc",instance_no="1",kind="sbcs",usage="blocks_size"} 0
-erlang_vm_allocators{alloc="std_alloc",instance_no="2",kind="mbcs",usage="carriers"} 3
-erlang_vm_allocators{alloc="std_alloc",instance_no="2",kind="mbcs",usage="carriers_size"} 1343488
-erlang_vm_allocators{alloc="std_alloc",instance_no="2",kind="mbcs",usage="blocks"} 657
-erlang_vm_allocators{alloc="std_alloc",instance_no="2",kind="mbcs",usage="blocks_size"} 421592
+erlang_vm_allocators{alloc="std_alloc",instance_no="2",kind="mbcs",usage="carriers"} 2
+erlang_vm_allocators{alloc="std_alloc",instance_no="2",kind="mbcs",usage="carriers_size"} 294912
+erlang_vm_allocators{alloc="std_alloc",instance_no="2",kind="mbcs",usage="blocks"} 240
+erlang_vm_allocators{alloc="std_alloc",instance_no="2",kind="mbcs",usage="blocks_size"} 121440
 erlang_vm_allocators{alloc="std_alloc",instance_no="2",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="std_alloc",instance_no="2",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="std_alloc",instance_no="2",kind="mbcs_pool",usage="blocks"} 0
@@ -948,10 +948,10 @@ erlang_vm_allocators{alloc="std_alloc",instance_no="2",kind="sbcs",usage="carrie
 erlang_vm_allocators{alloc="std_alloc",instance_no="2",kind="sbcs",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="std_alloc",instance_no="2",kind="sbcs",usage="blocks"} 0
 erlang_vm_allocators{alloc="std_alloc",instance_no="2",kind="sbcs",usage="blocks_size"} 0
-erlang_vm_allocators{alloc="std_alloc",instance_no="3",kind="mbcs",usage="carriers"} 4
-erlang_vm_allocators{alloc="std_alloc",instance_no="3",kind="mbcs",usage="carriers_size"} 3440640
-erlang_vm_allocators{alloc="std_alloc",instance_no="3",kind="mbcs",usage="blocks"} 1884
-erlang_vm_allocators{alloc="std_alloc",instance_no="3",kind="mbcs",usage="blocks_size"} 1363136
+erlang_vm_allocators{alloc="std_alloc",instance_no="3",kind="mbcs",usage="carriers"} 3
+erlang_vm_allocators{alloc="std_alloc",instance_no="3",kind="mbcs",usage="carriers_size"} 1343488
+erlang_vm_allocators{alloc="std_alloc",instance_no="3",kind="mbcs",usage="blocks"} 601
+erlang_vm_allocators{alloc="std_alloc",instance_no="3",kind="mbcs",usage="blocks_size"} 348872
 erlang_vm_allocators{alloc="std_alloc",instance_no="3",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="std_alloc",instance_no="3",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="std_alloc",instance_no="3",kind="mbcs_pool",usage="blocks"} 0
@@ -960,10 +960,10 @@ erlang_vm_allocators{alloc="std_alloc",instance_no="3",kind="sbcs",usage="carrie
 erlang_vm_allocators{alloc="std_alloc",instance_no="3",kind="sbcs",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="std_alloc",instance_no="3",kind="sbcs",usage="blocks"} 0
 erlang_vm_allocators{alloc="std_alloc",instance_no="3",kind="sbcs",usage="blocks_size"} 0
-erlang_vm_allocators{alloc="std_alloc",instance_no="4",kind="mbcs",usage="carriers"} 2
-erlang_vm_allocators{alloc="std_alloc",instance_no="4",kind="mbcs",usage="carriers_size"} 294912
-erlang_vm_allocators{alloc="std_alloc",instance_no="4",kind="mbcs",usage="blocks"} 250
-erlang_vm_allocators{alloc="std_alloc",instance_no="4",kind="mbcs",usage="blocks_size"} 125184
+erlang_vm_allocators{alloc="std_alloc",instance_no="4",kind="mbcs",usage="carriers"} 4
+erlang_vm_allocators{alloc="std_alloc",instance_no="4",kind="mbcs",usage="carriers_size"} 3440640
+erlang_vm_allocators{alloc="std_alloc",instance_no="4",kind="mbcs",usage="blocks"} 1727
+erlang_vm_allocators{alloc="std_alloc",instance_no="4",kind="mbcs",usage="blocks_size"} 1287880
 erlang_vm_allocators{alloc="std_alloc",instance_no="4",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="std_alloc",instance_no="4",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="std_alloc",instance_no="4",kind="mbcs_pool",usage="blocks"} 0
@@ -974,8 +974,8 @@ erlang_vm_allocators{alloc="std_alloc",instance_no="4",kind="sbcs",usage="blocks
 erlang_vm_allocators{alloc="std_alloc",instance_no="4",kind="sbcs",usage="blocks_size"} 0
 erlang_vm_allocators{alloc="std_alloc",instance_no="5",kind="mbcs",usage="carriers"} 2
 erlang_vm_allocators{alloc="std_alloc",instance_no="5",kind="mbcs",usage="carriers_size"} 294912
-erlang_vm_allocators{alloc="std_alloc",instance_no="5",kind="mbcs",usage="blocks"} 371
-erlang_vm_allocators{alloc="std_alloc",instance_no="5",kind="mbcs",usage="blocks_size"} 92640
+erlang_vm_allocators{alloc="std_alloc",instance_no="5",kind="mbcs",usage="blocks"} 29
+erlang_vm_allocators{alloc="std_alloc",instance_no="5",kind="mbcs",usage="blocks_size"} 5792
 erlang_vm_allocators{alloc="std_alloc",instance_no="5",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="std_alloc",instance_no="5",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="std_alloc",instance_no="5",kind="mbcs_pool",usage="blocks"} 0
@@ -984,10 +984,10 @@ erlang_vm_allocators{alloc="std_alloc",instance_no="5",kind="sbcs",usage="carrie
 erlang_vm_allocators{alloc="std_alloc",instance_no="5",kind="sbcs",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="std_alloc",instance_no="5",kind="sbcs",usage="blocks"} 0
 erlang_vm_allocators{alloc="std_alloc",instance_no="5",kind="sbcs",usage="blocks_size"} 0
-erlang_vm_allocators{alloc="std_alloc",instance_no="6",kind="mbcs",usage="carriers"} 1
-erlang_vm_allocators{alloc="std_alloc",instance_no="6",kind="mbcs",usage="carriers_size"} 32768
-erlang_vm_allocators{alloc="std_alloc",instance_no="6",kind="mbcs",usage="blocks"} 6
-erlang_vm_allocators{alloc="std_alloc",instance_no="6",kind="mbcs",usage="blocks_size"} 1192
+erlang_vm_allocators{alloc="std_alloc",instance_no="6",kind="mbcs",usage="carriers"} 2
+erlang_vm_allocators{alloc="std_alloc",instance_no="6",kind="mbcs",usage="carriers_size"} 294912
+erlang_vm_allocators{alloc="std_alloc",instance_no="6",kind="mbcs",usage="blocks"} 283
+erlang_vm_allocators{alloc="std_alloc",instance_no="6",kind="mbcs",usage="blocks_size"} 132856
 erlang_vm_allocators{alloc="std_alloc",instance_no="6",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="std_alloc",instance_no="6",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="std_alloc",instance_no="6",kind="mbcs_pool",usage="blocks"} 0
@@ -1010,8 +1010,8 @@ erlang_vm_allocators{alloc="std_alloc",instance_no="7",kind="sbcs",usage="blocks
 erlang_vm_allocators{alloc="std_alloc",instance_no="7",kind="sbcs",usage="blocks_size"} 0
 erlang_vm_allocators{alloc="std_alloc",instance_no="8",kind="mbcs",usage="carriers"} 1
 erlang_vm_allocators{alloc="std_alloc",instance_no="8",kind="mbcs",usage="carriers_size"} 32768
-erlang_vm_allocators{alloc="std_alloc",instance_no="8",kind="mbcs",usage="blocks"} 1
-erlang_vm_allocators{alloc="std_alloc",instance_no="8",kind="mbcs",usage="blocks_size"} 64
+erlang_vm_allocators{alloc="std_alloc",instance_no="8",kind="mbcs",usage="blocks"} 0
+erlang_vm_allocators{alloc="std_alloc",instance_no="8",kind="mbcs",usage="blocks_size"} 0
 erlang_vm_allocators{alloc="std_alloc",instance_no="8",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="std_alloc",instance_no="8",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="std_alloc",instance_no="8",kind="mbcs_pool",usage="blocks"} 0
@@ -1032,10 +1032,10 @@ erlang_vm_allocators{alloc="std_alloc",instance_no="9",kind="sbcs",usage="carrie
 erlang_vm_allocators{alloc="std_alloc",instance_no="9",kind="sbcs",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="std_alloc",instance_no="9",kind="sbcs",usage="blocks"} 0
 erlang_vm_allocators{alloc="std_alloc",instance_no="9",kind="sbcs",usage="blocks_size"} 0
-erlang_vm_allocators{alloc="std_alloc",instance_no="10",kind="mbcs",usage="carriers"} 1
-erlang_vm_allocators{alloc="std_alloc",instance_no="10",kind="mbcs",usage="carriers_size"} 32768
-erlang_vm_allocators{alloc="std_alloc",instance_no="10",kind="mbcs",usage="blocks"} 0
-erlang_vm_allocators{alloc="std_alloc",instance_no="10",kind="mbcs",usage="blocks_size"} 0
+erlang_vm_allocators{alloc="std_alloc",instance_no="10",kind="mbcs",usage="carriers"} 2
+erlang_vm_allocators{alloc="std_alloc",instance_no="10",kind="mbcs",usage="carriers_size"} 294912
+erlang_vm_allocators{alloc="std_alloc",instance_no="10",kind="mbcs",usage="blocks"} 302
+erlang_vm_allocators{alloc="std_alloc",instance_no="10",kind="mbcs",usage="blocks_size"} 77496
 erlang_vm_allocators{alloc="std_alloc",instance_no="10",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="std_alloc",instance_no="10",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="std_alloc",instance_no="10",kind="mbcs_pool",usage="blocks"} 0
@@ -1052,10 +1052,10 @@ erlang_vm_allocators{alloc="ll_alloc",instance_no="0",kind="sbcs",usage="carrier
 erlang_vm_allocators{alloc="ll_alloc",instance_no="0",kind="sbcs",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="ll_alloc",instance_no="0",kind="sbcs",usage="blocks"} 0
 erlang_vm_allocators{alloc="ll_alloc",instance_no="0",kind="sbcs",usage="blocks_size"} 0
-erlang_vm_allocators{alloc="ll_alloc",instance_no="1",kind="mbcs",usage="carriers"} 1
-erlang_vm_allocators{alloc="ll_alloc",instance_no="1",kind="mbcs",usage="carriers_size"} 524288
-erlang_vm_allocators{alloc="ll_alloc",instance_no="1",kind="mbcs",usage="blocks"} 1393
-erlang_vm_allocators{alloc="ll_alloc",instance_no="1",kind="mbcs",usage="blocks_size"} 423632
+erlang_vm_allocators{alloc="ll_alloc",instance_no="1",kind="mbcs",usage="carriers"} 4
+erlang_vm_allocators{alloc="ll_alloc",instance_no="1",kind="mbcs",usage="carriers_size"} 3932160
+erlang_vm_allocators{alloc="ll_alloc",instance_no="1",kind="mbcs",usage="blocks"} 18210
+erlang_vm_allocators{alloc="ll_alloc",instance_no="1",kind="mbcs",usage="blocks_size"} 2813128
 erlang_vm_allocators{alloc="ll_alloc",instance_no="1",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="ll_alloc",instance_no="1",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="ll_alloc",instance_no="1",kind="mbcs_pool",usage="blocks"} 0
@@ -1064,10 +1064,10 @@ erlang_vm_allocators{alloc="ll_alloc",instance_no="1",kind="sbcs",usage="carrier
 erlang_vm_allocators{alloc="ll_alloc",instance_no="1",kind="sbcs",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="ll_alloc",instance_no="1",kind="sbcs",usage="blocks"} 0
 erlang_vm_allocators{alloc="ll_alloc",instance_no="1",kind="sbcs",usage="blocks_size"} 0
-erlang_vm_allocators{alloc="ll_alloc",instance_no="2",kind="mbcs",usage="carriers"} 1
-erlang_vm_allocators{alloc="ll_alloc",instance_no="2",kind="mbcs",usage="carriers_size"} 524288
-erlang_vm_allocators{alloc="ll_alloc",instance_no="2",kind="mbcs",usage="blocks"} 2482
-erlang_vm_allocators{alloc="ll_alloc",instance_no="2",kind="mbcs",usage="blocks_size"} 413784
+erlang_vm_allocators{alloc="ll_alloc",instance_no="2",kind="mbcs",usage="carriers"} 4
+erlang_vm_allocators{alloc="ll_alloc",instance_no="2",kind="mbcs",usage="carriers_size"} 3932160
+erlang_vm_allocators{alloc="ll_alloc",instance_no="2",kind="mbcs",usage="blocks"} 10539
+erlang_vm_allocators{alloc="ll_alloc",instance_no="2",kind="mbcs",usage="blocks_size"} 1839848
 erlang_vm_allocators{alloc="ll_alloc",instance_no="2",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="ll_alloc",instance_no="2",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="ll_alloc",instance_no="2",kind="mbcs_pool",usage="blocks"} 0
@@ -1076,10 +1076,10 @@ erlang_vm_allocators{alloc="ll_alloc",instance_no="2",kind="sbcs",usage="carrier
 erlang_vm_allocators{alloc="ll_alloc",instance_no="2",kind="sbcs",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="ll_alloc",instance_no="2",kind="sbcs",usage="blocks"} 0
 erlang_vm_allocators{alloc="ll_alloc",instance_no="2",kind="sbcs",usage="blocks_size"} 0
-erlang_vm_allocators{alloc="ll_alloc",instance_no="3",kind="mbcs",usage="carriers"} 3
-erlang_vm_allocators{alloc="ll_alloc",instance_no="3",kind="mbcs",usage="carriers_size"} 2097152
-erlang_vm_allocators{alloc="ll_alloc",instance_no="3",kind="mbcs",usage="blocks"} 11455
-erlang_vm_allocators{alloc="ll_alloc",instance_no="3",kind="mbcs",usage="blocks_size"} 1949744
+erlang_vm_allocators{alloc="ll_alloc",instance_no="3",kind="mbcs",usage="carriers"} 1
+erlang_vm_allocators{alloc="ll_alloc",instance_no="3",kind="mbcs",usage="carriers_size"} 524288
+erlang_vm_allocators{alloc="ll_alloc",instance_no="3",kind="mbcs",usage="blocks"} 728
+erlang_vm_allocators{alloc="ll_alloc",instance_no="3",kind="mbcs",usage="blocks_size"} 120816
 erlang_vm_allocators{alloc="ll_alloc",instance_no="3",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="ll_alloc",instance_no="3",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="ll_alloc",instance_no="3",kind="mbcs_pool",usage="blocks"} 0
@@ -1088,10 +1088,10 @@ erlang_vm_allocators{alloc="ll_alloc",instance_no="3",kind="sbcs",usage="carrier
 erlang_vm_allocators{alloc="ll_alloc",instance_no="3",kind="sbcs",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="ll_alloc",instance_no="3",kind="sbcs",usage="blocks"} 0
 erlang_vm_allocators{alloc="ll_alloc",instance_no="3",kind="sbcs",usage="blocks_size"} 0
-erlang_vm_allocators{alloc="ll_alloc",instance_no="4",kind="mbcs",usage="carriers"} 4
-erlang_vm_allocators{alloc="ll_alloc",instance_no="4",kind="mbcs",usage="carriers_size"} 3932160
-erlang_vm_allocators{alloc="ll_alloc",instance_no="4",kind="mbcs",usage="blocks"} 15377
-erlang_vm_allocators{alloc="ll_alloc",instance_no="4",kind="mbcs",usage="blocks_size"} 2392680
+erlang_vm_allocators{alloc="ll_alloc",instance_no="4",kind="mbcs",usage="carriers"} 1
+erlang_vm_allocators{alloc="ll_alloc",instance_no="4",kind="mbcs",usage="carriers_size"} 524288
+erlang_vm_allocators{alloc="ll_alloc",instance_no="4",kind="mbcs",usage="blocks"} 972
+erlang_vm_allocators{alloc="ll_alloc",instance_no="4",kind="mbcs",usage="blocks_size"} 236816
 erlang_vm_allocators{alloc="ll_alloc",instance_no="4",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="ll_alloc",instance_no="4",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="ll_alloc",instance_no="4",kind="mbcs_pool",usage="blocks"} 0
@@ -1100,10 +1100,10 @@ erlang_vm_allocators{alloc="ll_alloc",instance_no="4",kind="sbcs",usage="carrier
 erlang_vm_allocators{alloc="ll_alloc",instance_no="4",kind="sbcs",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="ll_alloc",instance_no="4",kind="sbcs",usage="blocks"} 0
 erlang_vm_allocators{alloc="ll_alloc",instance_no="4",kind="sbcs",usage="blocks_size"} 0
-erlang_vm_allocators{alloc="ll_alloc",instance_no="5",kind="mbcs",usage="carriers"} 4
-erlang_vm_allocators{alloc="ll_alloc",instance_no="5",kind="mbcs",usage="carriers_size"} 3932160
-erlang_vm_allocators{alloc="ll_alloc",instance_no="5",kind="mbcs",usage="blocks"} 16483
-erlang_vm_allocators{alloc="ll_alloc",instance_no="5",kind="mbcs",usage="blocks_size"} 2294472
+erlang_vm_allocators{alloc="ll_alloc",instance_no="5",kind="mbcs",usage="carriers"} 1
+erlang_vm_allocators{alloc="ll_alloc",instance_no="5",kind="mbcs",usage="carriers_size"} 524288
+erlang_vm_allocators{alloc="ll_alloc",instance_no="5",kind="mbcs",usage="blocks"} 1231
+erlang_vm_allocators{alloc="ll_alloc",instance_no="5",kind="mbcs",usage="blocks_size"} 92544
 erlang_vm_allocators{alloc="ll_alloc",instance_no="5",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="ll_alloc",instance_no="5",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="ll_alloc",instance_no="5",kind="mbcs_pool",usage="blocks"} 0
@@ -1114,8 +1114,8 @@ erlang_vm_allocators{alloc="ll_alloc",instance_no="5",kind="sbcs",usage="blocks"
 erlang_vm_allocators{alloc="ll_alloc",instance_no="5",kind="sbcs",usage="blocks_size"} 0
 erlang_vm_allocators{alloc="ll_alloc",instance_no="6",kind="mbcs",usage="carriers"} 1
 erlang_vm_allocators{alloc="ll_alloc",instance_no="6",kind="mbcs",usage="carriers_size"} 524288
-erlang_vm_allocators{alloc="ll_alloc",instance_no="6",kind="mbcs",usage="blocks"} 2364
-erlang_vm_allocators{alloc="ll_alloc",instance_no="6",kind="mbcs",usage="blocks_size"} 178344
+erlang_vm_allocators{alloc="ll_alloc",instance_no="6",kind="mbcs",usage="blocks"} 3090
+erlang_vm_allocators{alloc="ll_alloc",instance_no="6",kind="mbcs",usage="blocks_size"} 521864
 erlang_vm_allocators{alloc="ll_alloc",instance_no="6",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="ll_alloc",instance_no="6",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="ll_alloc",instance_no="6",kind="mbcs_pool",usage="blocks"} 0
@@ -1138,8 +1138,8 @@ erlang_vm_allocators{alloc="ll_alloc",instance_no="7",kind="sbcs",usage="blocks"
 erlang_vm_allocators{alloc="ll_alloc",instance_no="7",kind="sbcs",usage="blocks_size"} 0
 erlang_vm_allocators{alloc="ll_alloc",instance_no="8",kind="mbcs",usage="carriers"} 1
 erlang_vm_allocators{alloc="ll_alloc",instance_no="8",kind="mbcs",usage="carriers_size"} 524288
-erlang_vm_allocators{alloc="ll_alloc",instance_no="8",kind="mbcs",usage="blocks"} 0
-erlang_vm_allocators{alloc="ll_alloc",instance_no="8",kind="mbcs",usage="blocks_size"} 0
+erlang_vm_allocators{alloc="ll_alloc",instance_no="8",kind="mbcs",usage="blocks"} 284
+erlang_vm_allocators{alloc="ll_alloc",instance_no="8",kind="mbcs",usage="blocks_size"} 18176
 erlang_vm_allocators{alloc="ll_alloc",instance_no="8",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="ll_alloc",instance_no="8",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="ll_alloc",instance_no="8",kind="mbcs_pool",usage="blocks"} 0
@@ -1160,10 +1160,10 @@ erlang_vm_allocators{alloc="ll_alloc",instance_no="9",kind="sbcs",usage="carrier
 erlang_vm_allocators{alloc="ll_alloc",instance_no="9",kind="sbcs",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="ll_alloc",instance_no="9",kind="sbcs",usage="blocks"} 0
 erlang_vm_allocators{alloc="ll_alloc",instance_no="9",kind="sbcs",usage="blocks_size"} 0
-erlang_vm_allocators{alloc="ll_alloc",instance_no="10",kind="mbcs",usage="carriers"} 1
-erlang_vm_allocators{alloc="ll_alloc",instance_no="10",kind="mbcs",usage="carriers_size"} 524288
-erlang_vm_allocators{alloc="ll_alloc",instance_no="10",kind="mbcs",usage="blocks"} 0
-erlang_vm_allocators{alloc="ll_alloc",instance_no="10",kind="mbcs",usage="blocks_size"} 0
+erlang_vm_allocators{alloc="ll_alloc",instance_no="10",kind="mbcs",usage="carriers"} 4
+erlang_vm_allocators{alloc="ll_alloc",instance_no="10",kind="mbcs",usage="carriers_size"} 3932160
+erlang_vm_allocators{alloc="ll_alloc",instance_no="10",kind="mbcs",usage="blocks"} 14506
+erlang_vm_allocators{alloc="ll_alloc",instance_no="10",kind="mbcs",usage="blocks_size"} 2011568
 erlang_vm_allocators{alloc="ll_alloc",instance_no="10",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="ll_alloc",instance_no="10",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="ll_alloc",instance_no="10",kind="mbcs_pool",usage="blocks"} 0
@@ -1180,10 +1180,10 @@ erlang_vm_allocators{alloc="eheap_alloc",instance_no="0",kind="sbcs",usage="carr
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="0",kind="sbcs",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="0",kind="sbcs",usage="blocks"} 0
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="0",kind="sbcs",usage="blocks_size"} 0
-erlang_vm_allocators{alloc="eheap_alloc",instance_no="1",kind="mbcs",usage="carriers"} 5
-erlang_vm_allocators{alloc="eheap_alloc",instance_no="1",kind="mbcs",usage="carriers_size"} 2228224
-erlang_vm_allocators{alloc="eheap_alloc",instance_no="1",kind="mbcs",usage="blocks"} 223
-erlang_vm_allocators{alloc="eheap_alloc",instance_no="1",kind="mbcs",usage="blocks_size"} 1378904
+erlang_vm_allocators{alloc="eheap_alloc",instance_no="1",kind="mbcs",usage="carriers"} 3
+erlang_vm_allocators{alloc="eheap_alloc",instance_no="1",kind="mbcs",usage="carriers_size"} 1179648
+erlang_vm_allocators{alloc="eheap_alloc",instance_no="1",kind="mbcs",usage="blocks"} 147
+erlang_vm_allocators{alloc="eheap_alloc",instance_no="1",kind="mbcs",usage="blocks_size"} 736360
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="1",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="1",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="1",kind="mbcs_pool",usage="blocks"} 0
@@ -1192,10 +1192,10 @@ erlang_vm_allocators{alloc="eheap_alloc",instance_no="1",kind="sbcs",usage="carr
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="1",kind="sbcs",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="1",kind="sbcs",usage="blocks"} 0
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="1",kind="sbcs",usage="blocks_size"} 0
-erlang_vm_allocators{alloc="eheap_alloc",instance_no="2",kind="mbcs",usage="carriers"} 3
-erlang_vm_allocators{alloc="eheap_alloc",instance_no="2",kind="mbcs",usage="carriers_size"} 917504
-erlang_vm_allocators{alloc="eheap_alloc",instance_no="2",kind="mbcs",usage="blocks"} 98
-erlang_vm_allocators{alloc="eheap_alloc",instance_no="2",kind="mbcs",usage="blocks_size"} 719216
+erlang_vm_allocators{alloc="eheap_alloc",instance_no="2",kind="mbcs",usage="carriers"} 8
+erlang_vm_allocators{alloc="eheap_alloc",instance_no="2",kind="mbcs",usage="carriers_size"} 3538944
+erlang_vm_allocators{alloc="eheap_alloc",instance_no="2",kind="mbcs",usage="blocks"} 297
+erlang_vm_allocators{alloc="eheap_alloc",instance_no="2",kind="mbcs",usage="blocks_size"} 2771728
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="2",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="2",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="2",kind="mbcs_pool",usage="blocks"} 0
@@ -1206,20 +1206,20 @@ erlang_vm_allocators{alloc="eheap_alloc",instance_no="2",kind="sbcs",usage="bloc
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="2",kind="sbcs",usage="blocks_size"} 0
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="3",kind="mbcs",usage="carriers"} 4
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="3",kind="mbcs",usage="carriers_size"} 1441792
-erlang_vm_allocators{alloc="eheap_alloc",instance_no="3",kind="mbcs",usage="blocks"} 279
-erlang_vm_allocators{alloc="eheap_alloc",instance_no="3",kind="mbcs",usage="blocks_size"} 1084664
+erlang_vm_allocators{alloc="eheap_alloc",instance_no="3",kind="mbcs",usage="blocks"} 156
+erlang_vm_allocators{alloc="eheap_alloc",instance_no="3",kind="mbcs",usage="blocks_size"} 861056
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="3",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="3",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="3",kind="mbcs_pool",usage="blocks"} 0
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="3",kind="mbcs_pool",usage="blocks_size"} 0
-erlang_vm_allocators{alloc="eheap_alloc",instance_no="3",kind="sbcs",usage="carriers"} 1
-erlang_vm_allocators{alloc="eheap_alloc",instance_no="3",kind="sbcs",usage="carriers_size"} 602112
-erlang_vm_allocators{alloc="eheap_alloc",instance_no="3",kind="sbcs",usage="blocks"} 1
-erlang_vm_allocators{alloc="eheap_alloc",instance_no="3",kind="sbcs",usage="blocks_size"} 600912
-erlang_vm_allocators{alloc="eheap_alloc",instance_no="4",kind="mbcs",usage="carriers"} 1
-erlang_vm_allocators{alloc="eheap_alloc",instance_no="4",kind="mbcs",usage="carriers_size"} 131072
-erlang_vm_allocators{alloc="eheap_alloc",instance_no="4",kind="mbcs",usage="blocks"} 19
-erlang_vm_allocators{alloc="eheap_alloc",instance_no="4",kind="mbcs",usage="blocks_size"} 22336
+erlang_vm_allocators{alloc="eheap_alloc",instance_no="3",kind="sbcs",usage="carriers"} 0
+erlang_vm_allocators{alloc="eheap_alloc",instance_no="3",kind="sbcs",usage="carriers_size"} 0
+erlang_vm_allocators{alloc="eheap_alloc",instance_no="3",kind="sbcs",usage="blocks"} 0
+erlang_vm_allocators{alloc="eheap_alloc",instance_no="3",kind="sbcs",usage="blocks_size"} 0
+erlang_vm_allocators{alloc="eheap_alloc",instance_no="4",kind="mbcs",usage="carriers"} 2
+erlang_vm_allocators{alloc="eheap_alloc",instance_no="4",kind="mbcs",usage="carriers_size"} 393216
+erlang_vm_allocators{alloc="eheap_alloc",instance_no="4",kind="mbcs",usage="blocks"} 34
+erlang_vm_allocators{alloc="eheap_alloc",instance_no="4",kind="mbcs",usage="blocks_size"} 231072
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="4",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="4",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="4",kind="mbcs_pool",usage="blocks"} 0
@@ -1228,22 +1228,22 @@ erlang_vm_allocators{alloc="eheap_alloc",instance_no="4",kind="sbcs",usage="carr
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="4",kind="sbcs",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="4",kind="sbcs",usage="blocks"} 0
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="4",kind="sbcs",usage="blocks_size"} 0
-erlang_vm_allocators{alloc="eheap_alloc",instance_no="5",kind="mbcs",usage="carriers"} 1
-erlang_vm_allocators{alloc="eheap_alloc",instance_no="5",kind="mbcs",usage="carriers_size"} 131072
-erlang_vm_allocators{alloc="eheap_alloc",instance_no="5",kind="mbcs",usage="blocks"} 17
-erlang_vm_allocators{alloc="eheap_alloc",instance_no="5",kind="mbcs",usage="blocks_size"} 23376
+erlang_vm_allocators{alloc="eheap_alloc",instance_no="5",kind="mbcs",usage="carriers"} 2
+erlang_vm_allocators{alloc="eheap_alloc",instance_no="5",kind="mbcs",usage="carriers_size"} 655360
+erlang_vm_allocators{alloc="eheap_alloc",instance_no="5",kind="mbcs",usage="blocks"} 155
+erlang_vm_allocators{alloc="eheap_alloc",instance_no="5",kind="mbcs",usage="blocks_size"} 383768
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="5",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="5",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="5",kind="mbcs_pool",usage="blocks"} 0
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="5",kind="mbcs_pool",usage="blocks_size"} 0
-erlang_vm_allocators{alloc="eheap_alloc",instance_no="5",kind="sbcs",usage="carriers"} 0
-erlang_vm_allocators{alloc="eheap_alloc",instance_no="5",kind="sbcs",usage="carriers_size"} 0
-erlang_vm_allocators{alloc="eheap_alloc",instance_no="5",kind="sbcs",usage="blocks"} 0
-erlang_vm_allocators{alloc="eheap_alloc",instance_no="5",kind="sbcs",usage="blocks_size"} 0
+erlang_vm_allocators{alloc="eheap_alloc",instance_no="5",kind="sbcs",usage="carriers"} 1
+erlang_vm_allocators{alloc="eheap_alloc",instance_no="5",kind="sbcs",usage="carriers_size"} 602112
+erlang_vm_allocators{alloc="eheap_alloc",instance_no="5",kind="sbcs",usage="blocks"} 1
+erlang_vm_allocators{alloc="eheap_alloc",instance_no="5",kind="sbcs",usage="blocks_size"} 600912
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="6",kind="mbcs",usage="carriers"} 1
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="6",kind="mbcs",usage="carriers_size"} 131072
-erlang_vm_allocators{alloc="eheap_alloc",instance_no="6",kind="mbcs",usage="blocks"} 3
-erlang_vm_allocators{alloc="eheap_alloc",instance_no="6",kind="mbcs",usage="blocks_size"} 10960
+erlang_vm_allocators{alloc="eheap_alloc",instance_no="6",kind="mbcs",usage="blocks"} 9
+erlang_vm_allocators{alloc="eheap_alloc",instance_no="6",kind="mbcs",usage="blocks_size"} 12584
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="6",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="6",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="6",kind="mbcs_pool",usage="blocks"} 0
@@ -1254,8 +1254,8 @@ erlang_vm_allocators{alloc="eheap_alloc",instance_no="6",kind="sbcs",usage="bloc
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="6",kind="sbcs",usage="blocks_size"} 0
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="7",kind="mbcs",usage="carriers"} 1
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="7",kind="mbcs",usage="carriers_size"} 131072
-erlang_vm_allocators{alloc="eheap_alloc",instance_no="7",kind="mbcs",usage="blocks"} 4
-erlang_vm_allocators{alloc="eheap_alloc",instance_no="7",kind="mbcs",usage="blocks_size"} 13480
+erlang_vm_allocators{alloc="eheap_alloc",instance_no="7",kind="mbcs",usage="blocks"} 3
+erlang_vm_allocators{alloc="eheap_alloc",instance_no="7",kind="mbcs",usage="blocks_size"} 10424
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="7",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="7",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="7",kind="mbcs_pool",usage="blocks"} 0
@@ -1266,8 +1266,8 @@ erlang_vm_allocators{alloc="eheap_alloc",instance_no="7",kind="sbcs",usage="bloc
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="7",kind="sbcs",usage="blocks_size"} 0
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="8",kind="mbcs",usage="carriers"} 1
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="8",kind="mbcs",usage="carriers_size"} 131072
-erlang_vm_allocators{alloc="eheap_alloc",instance_no="8",kind="mbcs",usage="blocks"} 4
-erlang_vm_allocators{alloc="eheap_alloc",instance_no="8",kind="mbcs",usage="blocks_size"} 13632
+erlang_vm_allocators{alloc="eheap_alloc",instance_no="8",kind="mbcs",usage="blocks"} 3
+erlang_vm_allocators{alloc="eheap_alloc",instance_no="8",kind="mbcs",usage="blocks_size"} 10576
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="8",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="8",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="8",kind="mbcs_pool",usage="blocks"} 0
@@ -1278,8 +1278,8 @@ erlang_vm_allocators{alloc="eheap_alloc",instance_no="8",kind="sbcs",usage="bloc
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="8",kind="sbcs",usage="blocks_size"} 0
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="9",kind="mbcs",usage="carriers"} 1
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="9",kind="mbcs",usage="carriers_size"} 131072
-erlang_vm_allocators{alloc="eheap_alloc",instance_no="9",kind="mbcs",usage="blocks"} 2
-erlang_vm_allocators{alloc="eheap_alloc",instance_no="9",kind="mbcs",usage="blocks_size"} 7368
+erlang_vm_allocators{alloc="eheap_alloc",instance_no="9",kind="mbcs",usage="blocks"} 1
+erlang_vm_allocators{alloc="eheap_alloc",instance_no="9",kind="mbcs",usage="blocks_size"} 4296
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="9",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="9",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="9",kind="mbcs_pool",usage="blocks"} 0
@@ -1290,8 +1290,8 @@ erlang_vm_allocators{alloc="eheap_alloc",instance_no="9",kind="sbcs",usage="bloc
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="9",kind="sbcs",usage="blocks_size"} 0
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="10",kind="mbcs",usage="carriers"} 1
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="10",kind="mbcs",usage="carriers_size"} 131072
-erlang_vm_allocators{alloc="eheap_alloc",instance_no="10",kind="mbcs",usage="blocks"} 2
-erlang_vm_allocators{alloc="eheap_alloc",instance_no="10",kind="mbcs",usage="blocks_size"} 7504
+erlang_vm_allocators{alloc="eheap_alloc",instance_no="10",kind="mbcs",usage="blocks"} 15
+erlang_vm_allocators{alloc="eheap_alloc",instance_no="10",kind="mbcs",usage="blocks_size"} 18720
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="10",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="10",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="eheap_alloc",instance_no="10",kind="mbcs_pool",usage="blocks"} 0
@@ -1308,10 +1308,10 @@ erlang_vm_allocators{alloc="ets_alloc",instance_no="0",kind="sbcs",usage="carrie
 erlang_vm_allocators{alloc="ets_alloc",instance_no="0",kind="sbcs",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="ets_alloc",instance_no="0",kind="sbcs",usage="blocks"} 0
 erlang_vm_allocators{alloc="ets_alloc",instance_no="0",kind="sbcs",usage="blocks_size"} 0
-erlang_vm_allocators{alloc="ets_alloc",instance_no="1",kind="mbcs",usage="carriers"} 2
-erlang_vm_allocators{alloc="ets_alloc",instance_no="1",kind="mbcs",usage="carriers_size"} 294912
-erlang_vm_allocators{alloc="ets_alloc",instance_no="1",kind="mbcs",usage="blocks"} 234
-erlang_vm_allocators{alloc="ets_alloc",instance_no="1",kind="mbcs",usage="blocks_size"} 200984
+erlang_vm_allocators{alloc="ets_alloc",instance_no="1",kind="mbcs",usage="carriers"} 3
+erlang_vm_allocators{alloc="ets_alloc",instance_no="1",kind="mbcs",usage="carriers_size"} 1343488
+erlang_vm_allocators{alloc="ets_alloc",instance_no="1",kind="mbcs",usage="blocks"} 962
+erlang_vm_allocators{alloc="ets_alloc",instance_no="1",kind="mbcs",usage="blocks_size"} 915768
 erlang_vm_allocators{alloc="ets_alloc",instance_no="1",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="ets_alloc",instance_no="1",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="ets_alloc",instance_no="1",kind="mbcs_pool",usage="blocks"} 0
@@ -1320,10 +1320,10 @@ erlang_vm_allocators{alloc="ets_alloc",instance_no="1",kind="sbcs",usage="carrie
 erlang_vm_allocators{alloc="ets_alloc",instance_no="1",kind="sbcs",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="ets_alloc",instance_no="1",kind="sbcs",usage="blocks"} 0
 erlang_vm_allocators{alloc="ets_alloc",instance_no="1",kind="sbcs",usage="blocks_size"} 0
-erlang_vm_allocators{alloc="ets_alloc",instance_no="2",kind="mbcs",usage="carriers"} 2
-erlang_vm_allocators{alloc="ets_alloc",instance_no="2",kind="mbcs",usage="carriers_size"} 294912
-erlang_vm_allocators{alloc="ets_alloc",instance_no="2",kind="mbcs",usage="blocks"} 239
-erlang_vm_allocators{alloc="ets_alloc",instance_no="2",kind="mbcs",usage="blocks_size"} 199000
+erlang_vm_allocators{alloc="ets_alloc",instance_no="2",kind="mbcs",usage="carriers"} 3
+erlang_vm_allocators{alloc="ets_alloc",instance_no="2",kind="mbcs",usage="carriers_size"} 1343488
+erlang_vm_allocators{alloc="ets_alloc",instance_no="2",kind="mbcs",usage="blocks"} 602
+erlang_vm_allocators{alloc="ets_alloc",instance_no="2",kind="mbcs",usage="blocks_size"} 512128
 erlang_vm_allocators{alloc="ets_alloc",instance_no="2",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="ets_alloc",instance_no="2",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="ets_alloc",instance_no="2",kind="mbcs_pool",usage="blocks"} 0
@@ -1334,8 +1334,8 @@ erlang_vm_allocators{alloc="ets_alloc",instance_no="2",kind="sbcs",usage="blocks
 erlang_vm_allocators{alloc="ets_alloc",instance_no="2",kind="sbcs",usage="blocks_size"} 0
 erlang_vm_allocators{alloc="ets_alloc",instance_no="3",kind="mbcs",usage="carriers"} 3
 erlang_vm_allocators{alloc="ets_alloc",instance_no="3",kind="mbcs",usage="carriers_size"} 1343488
-erlang_vm_allocators{alloc="ets_alloc",instance_no="3",kind="mbcs",usage="blocks"} 841
-erlang_vm_allocators{alloc="ets_alloc",instance_no="3",kind="mbcs",usage="blocks_size"} 1069760
+erlang_vm_allocators{alloc="ets_alloc",instance_no="3",kind="mbcs",usage="blocks"} 365
+erlang_vm_allocators{alloc="ets_alloc",instance_no="3",kind="mbcs",usage="blocks_size"} 372952
 erlang_vm_allocators{alloc="ets_alloc",instance_no="3",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="ets_alloc",instance_no="3",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="ets_alloc",instance_no="3",kind="mbcs_pool",usage="blocks"} 0
@@ -1346,8 +1346,8 @@ erlang_vm_allocators{alloc="ets_alloc",instance_no="3",kind="sbcs",usage="blocks
 erlang_vm_allocators{alloc="ets_alloc",instance_no="3",kind="sbcs",usage="blocks_size"} 0
 erlang_vm_allocators{alloc="ets_alloc",instance_no="4",kind="mbcs",usage="carriers"} 3
 erlang_vm_allocators{alloc="ets_alloc",instance_no="4",kind="mbcs",usage="carriers_size"} 1343488
-erlang_vm_allocators{alloc="ets_alloc",instance_no="4",kind="mbcs",usage="blocks"} 820
-erlang_vm_allocators{alloc="ets_alloc",instance_no="4",kind="mbcs",usage="blocks_size"} 640424
+erlang_vm_allocators{alloc="ets_alloc",instance_no="4",kind="mbcs",usage="blocks"} 228
+erlang_vm_allocators{alloc="ets_alloc",instance_no="4",kind="mbcs",usage="blocks_size"} 538992
 erlang_vm_allocators{alloc="ets_alloc",instance_no="4",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="ets_alloc",instance_no="4",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="ets_alloc",instance_no="4",kind="mbcs_pool",usage="blocks"} 0
@@ -1357,9 +1357,9 @@ erlang_vm_allocators{alloc="ets_alloc",instance_no="4",kind="sbcs",usage="carrie
 erlang_vm_allocators{alloc="ets_alloc",instance_no="4",kind="sbcs",usage="blocks"} 0
 erlang_vm_allocators{alloc="ets_alloc",instance_no="4",kind="sbcs",usage="blocks_size"} 0
 erlang_vm_allocators{alloc="ets_alloc",instance_no="5",kind="mbcs",usage="carriers"} 2
-erlang_vm_allocators{alloc="ets_alloc",instance_no="5",kind="mbcs",usage="carriers_size"} 1081344
-erlang_vm_allocators{alloc="ets_alloc",instance_no="5",kind="mbcs",usage="blocks"} 536
-erlang_vm_allocators{alloc="ets_alloc",instance_no="5",kind="mbcs",usage="blocks_size"} 503008
+erlang_vm_allocators{alloc="ets_alloc",instance_no="5",kind="mbcs",usage="carriers_size"} 294912
+erlang_vm_allocators{alloc="ets_alloc",instance_no="5",kind="mbcs",usage="blocks"} 72
+erlang_vm_allocators{alloc="ets_alloc",instance_no="5",kind="mbcs",usage="blocks_size"} 55880
 erlang_vm_allocators{alloc="ets_alloc",instance_no="5",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="ets_alloc",instance_no="5",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="ets_alloc",instance_no="5",kind="mbcs_pool",usage="blocks"} 0
@@ -1368,10 +1368,10 @@ erlang_vm_allocators{alloc="ets_alloc",instance_no="5",kind="sbcs",usage="carrie
 erlang_vm_allocators{alloc="ets_alloc",instance_no="5",kind="sbcs",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="ets_alloc",instance_no="5",kind="sbcs",usage="blocks"} 0
 erlang_vm_allocators{alloc="ets_alloc",instance_no="5",kind="sbcs",usage="blocks_size"} 0
-erlang_vm_allocators{alloc="ets_alloc",instance_no="6",kind="mbcs",usage="carriers"} 1
-erlang_vm_allocators{alloc="ets_alloc",instance_no="6",kind="mbcs",usage="carriers_size"} 32768
-erlang_vm_allocators{alloc="ets_alloc",instance_no="6",kind="mbcs",usage="blocks"} 9
-erlang_vm_allocators{alloc="ets_alloc",instance_no="6",kind="mbcs",usage="blocks_size"} 12968
+erlang_vm_allocators{alloc="ets_alloc",instance_no="6",kind="mbcs",usage="carriers"} 2
+erlang_vm_allocators{alloc="ets_alloc",instance_no="6",kind="mbcs",usage="carriers_size"} 294912
+erlang_vm_allocators{alloc="ets_alloc",instance_no="6",kind="mbcs",usage="blocks"} 267
+erlang_vm_allocators{alloc="ets_alloc",instance_no="6",kind="mbcs",usage="blocks_size"} 227952
 erlang_vm_allocators{alloc="ets_alloc",instance_no="6",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="ets_alloc",instance_no="6",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="ets_alloc",instance_no="6",kind="mbcs_pool",usage="blocks"} 0
@@ -1416,10 +1416,10 @@ erlang_vm_allocators{alloc="ets_alloc",instance_no="9",kind="sbcs",usage="carrie
 erlang_vm_allocators{alloc="ets_alloc",instance_no="9",kind="sbcs",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="ets_alloc",instance_no="9",kind="sbcs",usage="blocks"} 0
 erlang_vm_allocators{alloc="ets_alloc",instance_no="9",kind="sbcs",usage="blocks_size"} 0
-erlang_vm_allocators{alloc="ets_alloc",instance_no="10",kind="mbcs",usage="carriers"} 1
-erlang_vm_allocators{alloc="ets_alloc",instance_no="10",kind="mbcs",usage="carriers_size"} 32768
-erlang_vm_allocators{alloc="ets_alloc",instance_no="10",kind="mbcs",usage="blocks"} 0
-erlang_vm_allocators{alloc="ets_alloc",instance_no="10",kind="mbcs",usage="blocks_size"} 0
+erlang_vm_allocators{alloc="ets_alloc",instance_no="10",kind="mbcs",usage="carriers"} 2
+erlang_vm_allocators{alloc="ets_alloc",instance_no="10",kind="mbcs",usage="carriers_size"} 294912
+erlang_vm_allocators{alloc="ets_alloc",instance_no="10",kind="mbcs",usage="blocks"} 457
+erlang_vm_allocators{alloc="ets_alloc",instance_no="10",kind="mbcs",usage="blocks_size"} 176080
 erlang_vm_allocators{alloc="ets_alloc",instance_no="10",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="ets_alloc",instance_no="10",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="ets_alloc",instance_no="10",kind="mbcs_pool",usage="blocks"} 0
@@ -1438,8 +1438,8 @@ erlang_vm_allocators{alloc="fix_alloc",instance_no="0",kind="sbcs",usage="blocks
 erlang_vm_allocators{alloc="fix_alloc",instance_no="0",kind="sbcs",usage="blocks_size"} 0
 erlang_vm_allocators{alloc="fix_alloc",instance_no="1",kind="mbcs",usage="carriers"} 2
 erlang_vm_allocators{alloc="fix_alloc",instance_no="1",kind="mbcs",usage="carriers_size"} 294912
-erlang_vm_allocators{alloc="fix_alloc",instance_no="1",kind="mbcs",usage="blocks"} 404
-erlang_vm_allocators{alloc="fix_alloc",instance_no="1",kind="mbcs",usage="blocks_size"} 101216
+erlang_vm_allocators{alloc="fix_alloc",instance_no="1",kind="mbcs",usage="blocks"} 315
+erlang_vm_allocators{alloc="fix_alloc",instance_no="1",kind="mbcs",usage="blocks_size"} 81144
 erlang_vm_allocators{alloc="fix_alloc",instance_no="1",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="fix_alloc",instance_no="1",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="fix_alloc",instance_no="1",kind="mbcs_pool",usage="blocks"} 0
@@ -1448,22 +1448,22 @@ erlang_vm_allocators{alloc="fix_alloc",instance_no="1",kind="sbcs",usage="carrie
 erlang_vm_allocators{alloc="fix_alloc",instance_no="1",kind="sbcs",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="fix_alloc",instance_no="1",kind="sbcs",usage="blocks"} 0
 erlang_vm_allocators{alloc="fix_alloc",instance_no="1",kind="sbcs",usage="blocks_size"} 0
-erlang_vm_allocators{alloc="fix_alloc",instance_no="2",kind="mbcs",usage="carriers"} 2
-erlang_vm_allocators{alloc="fix_alloc",instance_no="2",kind="mbcs",usage="carriers_size"} 294912
-erlang_vm_allocators{alloc="fix_alloc",instance_no="2",kind="mbcs",usage="blocks"} 227
-erlang_vm_allocators{alloc="fix_alloc",instance_no="2",kind="mbcs",usage="blocks_size"} 55592
-erlang_vm_allocators{alloc="fix_alloc",instance_no="2",kind="mbcs_pool",usage="carriers"} 0
-erlang_vm_allocators{alloc="fix_alloc",instance_no="2",kind="mbcs_pool",usage="carriers_size"} 0
-erlang_vm_allocators{alloc="fix_alloc",instance_no="2",kind="mbcs_pool",usage="blocks"} 0
-erlang_vm_allocators{alloc="fix_alloc",instance_no="2",kind="mbcs_pool",usage="blocks_size"} 0
+erlang_vm_allocators{alloc="fix_alloc",instance_no="2",kind="mbcs",usage="carriers"} 1
+erlang_vm_allocators{alloc="fix_alloc",instance_no="2",kind="mbcs",usage="carriers_size"} 32768
+erlang_vm_allocators{alloc="fix_alloc",instance_no="2",kind="mbcs",usage="blocks"} 60
+erlang_vm_allocators{alloc="fix_alloc",instance_no="2",kind="mbcs",usage="blocks_size"} 11776
+erlang_vm_allocators{alloc="fix_alloc",instance_no="2",kind="mbcs_pool",usage="carriers"} 1
+erlang_vm_allocators{alloc="fix_alloc",instance_no="2",kind="mbcs_pool",usage="carriers_size"} 262144
+erlang_vm_allocators{alloc="fix_alloc",instance_no="2",kind="mbcs_pool",usage="blocks"} 572
+erlang_vm_allocators{alloc="fix_alloc",instance_no="2",kind="mbcs_pool",usage="blocks_size"} 145856
 erlang_vm_allocators{alloc="fix_alloc",instance_no="2",kind="sbcs",usage="carriers"} 0
 erlang_vm_allocators{alloc="fix_alloc",instance_no="2",kind="sbcs",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="fix_alloc",instance_no="2",kind="sbcs",usage="blocks"} 0
 erlang_vm_allocators{alloc="fix_alloc",instance_no="2",kind="sbcs",usage="blocks_size"} 0
 erlang_vm_allocators{alloc="fix_alloc",instance_no="3",kind="mbcs",usage="carriers"} 2
 erlang_vm_allocators{alloc="fix_alloc",instance_no="3",kind="mbcs",usage="carriers_size"} 294912
-erlang_vm_allocators{alloc="fix_alloc",instance_no="3",kind="mbcs",usage="blocks"} 671
-erlang_vm_allocators{alloc="fix_alloc",instance_no="3",kind="mbcs",usage="blocks_size"} 175976
+erlang_vm_allocators{alloc="fix_alloc",instance_no="3",kind="mbcs",usage="blocks"} 354
+erlang_vm_allocators{alloc="fix_alloc",instance_no="3",kind="mbcs",usage="blocks_size"} 82696
 erlang_vm_allocators{alloc="fix_alloc",instance_no="3",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="fix_alloc",instance_no="3",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="fix_alloc",instance_no="3",kind="mbcs_pool",usage="blocks"} 0
@@ -1472,22 +1472,22 @@ erlang_vm_allocators{alloc="fix_alloc",instance_no="3",kind="sbcs",usage="carrie
 erlang_vm_allocators{alloc="fix_alloc",instance_no="3",kind="sbcs",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="fix_alloc",instance_no="3",kind="sbcs",usage="blocks"} 0
 erlang_vm_allocators{alloc="fix_alloc",instance_no="3",kind="sbcs",usage="blocks_size"} 0
-erlang_vm_allocators{alloc="fix_alloc",instance_no="4",kind="mbcs",usage="carriers"} 1
-erlang_vm_allocators{alloc="fix_alloc",instance_no="4",kind="mbcs",usage="carriers_size"} 32768
-erlang_vm_allocators{alloc="fix_alloc",instance_no="4",kind="mbcs",usage="blocks"} 125
-erlang_vm_allocators{alloc="fix_alloc",instance_no="4",kind="mbcs",usage="blocks_size"} 31336
-erlang_vm_allocators{alloc="fix_alloc",instance_no="4",kind="mbcs_pool",usage="carriers"} 2
-erlang_vm_allocators{alloc="fix_alloc",instance_no="4",kind="mbcs_pool",usage="carriers_size"} 1310720
-erlang_vm_allocators{alloc="fix_alloc",instance_no="4",kind="mbcs_pool",usage="blocks"} 68
-erlang_vm_allocators{alloc="fix_alloc",instance_no="4",kind="mbcs_pool",usage="blocks_size"} 21888
+erlang_vm_allocators{alloc="fix_alloc",instance_no="4",kind="mbcs",usage="carriers"} 2
+erlang_vm_allocators{alloc="fix_alloc",instance_no="4",kind="mbcs",usage="carriers_size"} 294912
+erlang_vm_allocators{alloc="fix_alloc",instance_no="4",kind="mbcs",usage="blocks"} 214
+erlang_vm_allocators{alloc="fix_alloc",instance_no="4",kind="mbcs",usage="blocks_size"} 51656
+erlang_vm_allocators{alloc="fix_alloc",instance_no="4",kind="mbcs_pool",usage="carriers"} 0
+erlang_vm_allocators{alloc="fix_alloc",instance_no="4",kind="mbcs_pool",usage="carriers_size"} 0
+erlang_vm_allocators{alloc="fix_alloc",instance_no="4",kind="mbcs_pool",usage="blocks"} 0
+erlang_vm_allocators{alloc="fix_alloc",instance_no="4",kind="mbcs_pool",usage="blocks_size"} 0
 erlang_vm_allocators{alloc="fix_alloc",instance_no="4",kind="sbcs",usage="carriers"} 0
 erlang_vm_allocators{alloc="fix_alloc",instance_no="4",kind="sbcs",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="fix_alloc",instance_no="4",kind="sbcs",usage="blocks"} 0
 erlang_vm_allocators{alloc="fix_alloc",instance_no="4",kind="sbcs",usage="blocks_size"} 0
-erlang_vm_allocators{alloc="fix_alloc",instance_no="5",kind="mbcs",usage="carriers"} 2
-erlang_vm_allocators{alloc="fix_alloc",instance_no="5",kind="mbcs",usage="carriers_size"} 294912
-erlang_vm_allocators{alloc="fix_alloc",instance_no="5",kind="mbcs",usage="blocks"} 504
-erlang_vm_allocators{alloc="fix_alloc",instance_no="5",kind="mbcs",usage="blocks_size"} 128824
+erlang_vm_allocators{alloc="fix_alloc",instance_no="5",kind="mbcs",usage="carriers"} 1
+erlang_vm_allocators{alloc="fix_alloc",instance_no="5",kind="mbcs",usage="carriers_size"} 32768
+erlang_vm_allocators{alloc="fix_alloc",instance_no="5",kind="mbcs",usage="blocks"} 64
+erlang_vm_allocators{alloc="fix_alloc",instance_no="5",kind="mbcs",usage="blocks_size"} 14952
 erlang_vm_allocators{alloc="fix_alloc",instance_no="5",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="fix_alloc",instance_no="5",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="fix_alloc",instance_no="5",kind="mbcs_pool",usage="blocks"} 0
@@ -1496,10 +1496,10 @@ erlang_vm_allocators{alloc="fix_alloc",instance_no="5",kind="sbcs",usage="carrie
 erlang_vm_allocators{alloc="fix_alloc",instance_no="5",kind="sbcs",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="fix_alloc",instance_no="5",kind="sbcs",usage="blocks"} 0
 erlang_vm_allocators{alloc="fix_alloc",instance_no="5",kind="sbcs",usage="blocks_size"} 0
-erlang_vm_allocators{alloc="fix_alloc",instance_no="6",kind="mbcs",usage="carriers"} 1
-erlang_vm_allocators{alloc="fix_alloc",instance_no="6",kind="mbcs",usage="carriers_size"} 32768
-erlang_vm_allocators{alloc="fix_alloc",instance_no="6",kind="mbcs",usage="blocks"} 6
-erlang_vm_allocators{alloc="fix_alloc",instance_no="6",kind="mbcs",usage="blocks_size"} 2480
+erlang_vm_allocators{alloc="fix_alloc",instance_no="6",kind="mbcs",usage="carriers"} 2
+erlang_vm_allocators{alloc="fix_alloc",instance_no="6",kind="mbcs",usage="carriers_size"} 294912
+erlang_vm_allocators{alloc="fix_alloc",instance_no="6",kind="mbcs",usage="blocks"} 249
+erlang_vm_allocators{alloc="fix_alloc",instance_no="6",kind="mbcs",usage="blocks_size"} 65976
 erlang_vm_allocators{alloc="fix_alloc",instance_no="6",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="fix_alloc",instance_no="6",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="fix_alloc",instance_no="6",kind="mbcs_pool",usage="blocks"} 0
@@ -1544,10 +1544,10 @@ erlang_vm_allocators{alloc="fix_alloc",instance_no="9",kind="sbcs",usage="carrie
 erlang_vm_allocators{alloc="fix_alloc",instance_no="9",kind="sbcs",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="fix_alloc",instance_no="9",kind="sbcs",usage="blocks"} 0
 erlang_vm_allocators{alloc="fix_alloc",instance_no="9",kind="sbcs",usage="blocks_size"} 0
-erlang_vm_allocators{alloc="fix_alloc",instance_no="10",kind="mbcs",usage="carriers"} 1
-erlang_vm_allocators{alloc="fix_alloc",instance_no="10",kind="mbcs",usage="carriers_size"} 32768
-erlang_vm_allocators{alloc="fix_alloc",instance_no="10",kind="mbcs",usage="blocks"} 0
-erlang_vm_allocators{alloc="fix_alloc",instance_no="10",kind="mbcs",usage="blocks_size"} 0
+erlang_vm_allocators{alloc="fix_alloc",instance_no="10",kind="mbcs",usage="carriers"} 2
+erlang_vm_allocators{alloc="fix_alloc",instance_no="10",kind="mbcs",usage="carriers_size"} 294912
+erlang_vm_allocators{alloc="fix_alloc",instance_no="10",kind="mbcs",usage="blocks"} 302
+erlang_vm_allocators{alloc="fix_alloc",instance_no="10",kind="mbcs",usage="blocks_size"} 81384
 erlang_vm_allocators{alloc="fix_alloc",instance_no="10",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="fix_alloc",instance_no="10",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="fix_alloc",instance_no="10",kind="mbcs_pool",usage="blocks"} 0
@@ -1558,24 +1558,24 @@ erlang_vm_allocators{alloc="fix_alloc",instance_no="10",kind="sbcs",usage="block
 erlang_vm_allocators{alloc="fix_alloc",instance_no="10",kind="sbcs",usage="blocks_size"} 0
 erlang_vm_allocators{alloc="literal_alloc",instance_no="0",kind="mbcs",usage="carriers"} 5
 erlang_vm_allocators{alloc="literal_alloc",instance_no="0",kind="mbcs",usage="carriers_size"} 10928128
-erlang_vm_allocators{alloc="literal_alloc",instance_no="0",kind="mbcs",usage="blocks"} 1089
-erlang_vm_allocators{alloc="literal_alloc",instance_no="0",kind="mbcs",usage="blocks_size"} 8824144
+erlang_vm_allocators{alloc="literal_alloc",instance_no="0",kind="mbcs",usage="blocks"} 1091
+erlang_vm_allocators{alloc="literal_alloc",instance_no="0",kind="mbcs",usage="blocks_size"} 8824384
 erlang_vm_allocators{alloc="literal_alloc",instance_no="0",kind="sbcs",usage="carriers"} 0
 erlang_vm_allocators{alloc="literal_alloc",instance_no="0",kind="sbcs",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="literal_alloc",instance_no="0",kind="sbcs",usage="blocks"} 0
 erlang_vm_allocators{alloc="literal_alloc",instance_no="0",kind="sbcs",usage="blocks_size"} 0
 erlang_vm_allocators{alloc="binary_alloc",instance_no="0",kind="mbcs",usage="carriers"} 2
 erlang_vm_allocators{alloc="binary_alloc",instance_no="0",kind="mbcs",usage="carriers_size"} 294912
-erlang_vm_allocators{alloc="binary_alloc",instance_no="0",kind="mbcs",usage="blocks"} 32
-erlang_vm_allocators{alloc="binary_alloc",instance_no="0",kind="mbcs",usage="blocks_size"} 190336
+erlang_vm_allocators{alloc="binary_alloc",instance_no="0",kind="mbcs",usage="blocks"} 43
+erlang_vm_allocators{alloc="binary_alloc",instance_no="0",kind="mbcs",usage="blocks_size"} 191992
 erlang_vm_allocators{alloc="binary_alloc",instance_no="0",kind="sbcs",usage="carriers"} 0
 erlang_vm_allocators{alloc="binary_alloc",instance_no="0",kind="sbcs",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="binary_alloc",instance_no="0",kind="sbcs",usage="blocks"} 0
 erlang_vm_allocators{alloc="binary_alloc",instance_no="0",kind="sbcs",usage="blocks_size"} 0
 erlang_vm_allocators{alloc="binary_alloc",instance_no="1",kind="mbcs",usage="carriers"} 2
 erlang_vm_allocators{alloc="binary_alloc",instance_no="1",kind="mbcs",usage="carriers_size"} 294912
-erlang_vm_allocators{alloc="binary_alloc",instance_no="1",kind="mbcs",usage="blocks"} 410
-erlang_vm_allocators{alloc="binary_alloc",instance_no="1",kind="mbcs",usage="blocks_size"} 52416
+erlang_vm_allocators{alloc="binary_alloc",instance_no="1",kind="mbcs",usage="blocks"} 66
+erlang_vm_allocators{alloc="binary_alloc",instance_no="1",kind="mbcs",usage="blocks_size"} 16264
 erlang_vm_allocators{alloc="binary_alloc",instance_no="1",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="binary_alloc",instance_no="1",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="binary_alloc",instance_no="1",kind="mbcs_pool",usage="blocks"} 0
@@ -1586,8 +1586,8 @@ erlang_vm_allocators{alloc="binary_alloc",instance_no="1",kind="sbcs",usage="blo
 erlang_vm_allocators{alloc="binary_alloc",instance_no="1",kind="sbcs",usage="blocks_size"} 0
 erlang_vm_allocators{alloc="binary_alloc",instance_no="2",kind="mbcs",usage="carriers"} 2
 erlang_vm_allocators{alloc="binary_alloc",instance_no="2",kind="mbcs",usage="carriers_size"} 294912
-erlang_vm_allocators{alloc="binary_alloc",instance_no="2",kind="mbcs",usage="blocks"} 70
-erlang_vm_allocators{alloc="binary_alloc",instance_no="2",kind="mbcs",usage="blocks_size"} 31712
+erlang_vm_allocators{alloc="binary_alloc",instance_no="2",kind="mbcs",usage="blocks"} 136
+erlang_vm_allocators{alloc="binary_alloc",instance_no="2",kind="mbcs",usage="blocks_size"} 35248
 erlang_vm_allocators{alloc="binary_alloc",instance_no="2",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="binary_alloc",instance_no="2",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="binary_alloc",instance_no="2",kind="mbcs_pool",usage="blocks"} 0
@@ -1598,8 +1598,8 @@ erlang_vm_allocators{alloc="binary_alloc",instance_no="2",kind="sbcs",usage="blo
 erlang_vm_allocators{alloc="binary_alloc",instance_no="2",kind="sbcs",usage="blocks_size"} 0
 erlang_vm_allocators{alloc="binary_alloc",instance_no="3",kind="mbcs",usage="carriers"} 2
 erlang_vm_allocators{alloc="binary_alloc",instance_no="3",kind="mbcs",usage="carriers_size"} 294912
-erlang_vm_allocators{alloc="binary_alloc",instance_no="3",kind="mbcs",usage="blocks"} 82
-erlang_vm_allocators{alloc="binary_alloc",instance_no="3",kind="mbcs",usage="blocks_size"} 45144
+erlang_vm_allocators{alloc="binary_alloc",instance_no="3",kind="mbcs",usage="blocks"} 401
+erlang_vm_allocators{alloc="binary_alloc",instance_no="3",kind="mbcs",usage="blocks_size"} 53720
 erlang_vm_allocators{alloc="binary_alloc",instance_no="3",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="binary_alloc",instance_no="3",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="binary_alloc",instance_no="3",kind="mbcs_pool",usage="blocks"} 0
@@ -1608,10 +1608,10 @@ erlang_vm_allocators{alloc="binary_alloc",instance_no="3",kind="sbcs",usage="car
 erlang_vm_allocators{alloc="binary_alloc",instance_no="3",kind="sbcs",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="binary_alloc",instance_no="3",kind="sbcs",usage="blocks"} 0
 erlang_vm_allocators{alloc="binary_alloc",instance_no="3",kind="sbcs",usage="blocks_size"} 0
-erlang_vm_allocators{alloc="binary_alloc",instance_no="4",kind="mbcs",usage="carriers"} 1
-erlang_vm_allocators{alloc="binary_alloc",instance_no="4",kind="mbcs",usage="carriers_size"} 32768
-erlang_vm_allocators{alloc="binary_alloc",instance_no="4",kind="mbcs",usage="blocks"} 2
-erlang_vm_allocators{alloc="binary_alloc",instance_no="4",kind="mbcs",usage="blocks_size"} 288
+erlang_vm_allocators{alloc="binary_alloc",instance_no="4",kind="mbcs",usage="carriers"} 2
+erlang_vm_allocators{alloc="binary_alloc",instance_no="4",kind="mbcs",usage="carriers_size"} 294912
+erlang_vm_allocators{alloc="binary_alloc",instance_no="4",kind="mbcs",usage="blocks"} 28
+erlang_vm_allocators{alloc="binary_alloc",instance_no="4",kind="mbcs",usage="blocks_size"} 30648
 erlang_vm_allocators{alloc="binary_alloc",instance_no="4",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="binary_alloc",instance_no="4",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="binary_alloc",instance_no="4",kind="mbcs_pool",usage="blocks"} 0
@@ -1622,8 +1622,8 @@ erlang_vm_allocators{alloc="binary_alloc",instance_no="4",kind="sbcs",usage="blo
 erlang_vm_allocators{alloc="binary_alloc",instance_no="4",kind="sbcs",usage="blocks_size"} 0
 erlang_vm_allocators{alloc="binary_alloc",instance_no="5",kind="mbcs",usage="carriers"} 1
 erlang_vm_allocators{alloc="binary_alloc",instance_no="5",kind="mbcs",usage="carriers_size"} 32768
-erlang_vm_allocators{alloc="binary_alloc",instance_no="5",kind="mbcs",usage="blocks"} 49
-erlang_vm_allocators{alloc="binary_alloc",instance_no="5",kind="mbcs",usage="blocks_size"} 13312
+erlang_vm_allocators{alloc="binary_alloc",instance_no="5",kind="mbcs",usage="blocks"} 24
+erlang_vm_allocators{alloc="binary_alloc",instance_no="5",kind="mbcs",usage="blocks_size"} 11504
 erlang_vm_allocators{alloc="binary_alloc",instance_no="5",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="binary_alloc",instance_no="5",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="binary_alloc",instance_no="5",kind="mbcs_pool",usage="blocks"} 0
@@ -1632,10 +1632,10 @@ erlang_vm_allocators{alloc="binary_alloc",instance_no="5",kind="sbcs",usage="car
 erlang_vm_allocators{alloc="binary_alloc",instance_no="5",kind="sbcs",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="binary_alloc",instance_no="5",kind="sbcs",usage="blocks"} 0
 erlang_vm_allocators{alloc="binary_alloc",instance_no="5",kind="sbcs",usage="blocks_size"} 0
-erlang_vm_allocators{alloc="binary_alloc",instance_no="6",kind="mbcs",usage="carriers"} 1
-erlang_vm_allocators{alloc="binary_alloc",instance_no="6",kind="mbcs",usage="carriers_size"} 32768
-erlang_vm_allocators{alloc="binary_alloc",instance_no="6",kind="mbcs",usage="blocks"} 0
-erlang_vm_allocators{alloc="binary_alloc",instance_no="6",kind="mbcs",usage="blocks_size"} 0
+erlang_vm_allocators{alloc="binary_alloc",instance_no="6",kind="mbcs",usage="carriers"} 2
+erlang_vm_allocators{alloc="binary_alloc",instance_no="6",kind="mbcs",usage="carriers_size"} 294912
+erlang_vm_allocators{alloc="binary_alloc",instance_no="6",kind="mbcs",usage="blocks"} 15
+erlang_vm_allocators{alloc="binary_alloc",instance_no="6",kind="mbcs",usage="blocks_size"} 12032
 erlang_vm_allocators{alloc="binary_alloc",instance_no="6",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="binary_alloc",instance_no="6",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="binary_alloc",instance_no="6",kind="mbcs_pool",usage="blocks"} 0
@@ -1682,8 +1682,8 @@ erlang_vm_allocators{alloc="binary_alloc",instance_no="9",kind="sbcs",usage="blo
 erlang_vm_allocators{alloc="binary_alloc",instance_no="9",kind="sbcs",usage="blocks_size"} 0
 erlang_vm_allocators{alloc="binary_alloc",instance_no="10",kind="mbcs",usage="carriers"} 1
 erlang_vm_allocators{alloc="binary_alloc",instance_no="10",kind="mbcs",usage="carriers_size"} 32768
-erlang_vm_allocators{alloc="binary_alloc",instance_no="10",kind="mbcs",usage="blocks"} 0
-erlang_vm_allocators{alloc="binary_alloc",instance_no="10",kind="mbcs",usage="blocks_size"} 0
+erlang_vm_allocators{alloc="binary_alloc",instance_no="10",kind="mbcs",usage="blocks"} 6
+erlang_vm_allocators{alloc="binary_alloc",instance_no="10",kind="mbcs",usage="blocks_size"} 2696
 erlang_vm_allocators{alloc="binary_alloc",instance_no="10",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="binary_alloc",instance_no="10",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="binary_alloc",instance_no="10",kind="mbcs_pool",usage="blocks"} 0
@@ -1702,8 +1702,8 @@ erlang_vm_allocators{alloc="driver_alloc",instance_no="0",kind="sbcs",usage="blo
 erlang_vm_allocators{alloc="driver_alloc",instance_no="0",kind="sbcs",usage="blocks_size"} 0
 erlang_vm_allocators{alloc="driver_alloc",instance_no="1",kind="mbcs",usage="carriers"} 1
 erlang_vm_allocators{alloc="driver_alloc",instance_no="1",kind="mbcs",usage="carriers_size"} 32768
-erlang_vm_allocators{alloc="driver_alloc",instance_no="1",kind="mbcs",usage="blocks"} 15
-erlang_vm_allocators{alloc="driver_alloc",instance_no="1",kind="mbcs",usage="blocks_size"} 6064
+erlang_vm_allocators{alloc="driver_alloc",instance_no="1",kind="mbcs",usage="blocks"} 23
+erlang_vm_allocators{alloc="driver_alloc",instance_no="1",kind="mbcs",usage="blocks_size"} 5408
 erlang_vm_allocators{alloc="driver_alloc",instance_no="1",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="driver_alloc",instance_no="1",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="driver_alloc",instance_no="1",kind="mbcs_pool",usage="blocks"} 0
@@ -1714,8 +1714,8 @@ erlang_vm_allocators{alloc="driver_alloc",instance_no="1",kind="sbcs",usage="blo
 erlang_vm_allocators{alloc="driver_alloc",instance_no="1",kind="sbcs",usage="blocks_size"} 0
 erlang_vm_allocators{alloc="driver_alloc",instance_no="2",kind="mbcs",usage="carriers"} 1
 erlang_vm_allocators{alloc="driver_alloc",instance_no="2",kind="mbcs",usage="carriers_size"} 32768
-erlang_vm_allocators{alloc="driver_alloc",instance_no="2",kind="mbcs",usage="blocks"} 15
-erlang_vm_allocators{alloc="driver_alloc",instance_no="2",kind="mbcs",usage="blocks_size"} 3656
+erlang_vm_allocators{alloc="driver_alloc",instance_no="2",kind="mbcs",usage="blocks"} 73
+erlang_vm_allocators{alloc="driver_alloc",instance_no="2",kind="mbcs",usage="blocks_size"} 29656
 erlang_vm_allocators{alloc="driver_alloc",instance_no="2",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="driver_alloc",instance_no="2",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="driver_alloc",instance_no="2",kind="mbcs_pool",usage="blocks"} 0
@@ -1726,8 +1726,8 @@ erlang_vm_allocators{alloc="driver_alloc",instance_no="2",kind="sbcs",usage="blo
 erlang_vm_allocators{alloc="driver_alloc",instance_no="2",kind="sbcs",usage="blocks_size"} 0
 erlang_vm_allocators{alloc="driver_alloc",instance_no="3",kind="mbcs",usage="carriers"} 1
 erlang_vm_allocators{alloc="driver_alloc",instance_no="3",kind="mbcs",usage="carriers_size"} 32768
-erlang_vm_allocators{alloc="driver_alloc",instance_no="3",kind="mbcs",usage="blocks"} 41
-erlang_vm_allocators{alloc="driver_alloc",instance_no="3",kind="mbcs",usage="blocks_size"} 13024
+erlang_vm_allocators{alloc="driver_alloc",instance_no="3",kind="mbcs",usage="blocks"} 14
+erlang_vm_allocators{alloc="driver_alloc",instance_no="3",kind="mbcs",usage="blocks_size"} 5144
 erlang_vm_allocators{alloc="driver_alloc",instance_no="3",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="driver_alloc",instance_no="3",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="driver_alloc",instance_no="3",kind="mbcs_pool",usage="blocks"} 0
@@ -1738,8 +1738,8 @@ erlang_vm_allocators{alloc="driver_alloc",instance_no="3",kind="sbcs",usage="blo
 erlang_vm_allocators{alloc="driver_alloc",instance_no="3",kind="sbcs",usage="blocks_size"} 0
 erlang_vm_allocators{alloc="driver_alloc",instance_no="4",kind="mbcs",usage="carriers"} 1
 erlang_vm_allocators{alloc="driver_alloc",instance_no="4",kind="mbcs",usage="carriers_size"} 32768
-erlang_vm_allocators{alloc="driver_alloc",instance_no="4",kind="mbcs",usage="blocks"} 0
-erlang_vm_allocators{alloc="driver_alloc",instance_no="4",kind="mbcs",usage="blocks_size"} 0
+erlang_vm_allocators{alloc="driver_alloc",instance_no="4",kind="mbcs",usage="blocks"} 4
+erlang_vm_allocators{alloc="driver_alloc",instance_no="4",kind="mbcs",usage="blocks_size"} 1240
 erlang_vm_allocators{alloc="driver_alloc",instance_no="4",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="driver_alloc",instance_no="4",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="driver_alloc",instance_no="4",kind="mbcs_pool",usage="blocks"} 0
@@ -1750,8 +1750,8 @@ erlang_vm_allocators{alloc="driver_alloc",instance_no="4",kind="sbcs",usage="blo
 erlang_vm_allocators{alloc="driver_alloc",instance_no="4",kind="sbcs",usage="blocks_size"} 0
 erlang_vm_allocators{alloc="driver_alloc",instance_no="5",kind="mbcs",usage="carriers"} 1
 erlang_vm_allocators{alloc="driver_alloc",instance_no="5",kind="mbcs",usage="carriers_size"} 32768
-erlang_vm_allocators{alloc="driver_alloc",instance_no="5",kind="mbcs",usage="blocks"} 28
-erlang_vm_allocators{alloc="driver_alloc",instance_no="5",kind="mbcs",usage="blocks_size"} 8976
+erlang_vm_allocators{alloc="driver_alloc",instance_no="5",kind="mbcs",usage="blocks"} 3
+erlang_vm_allocators{alloc="driver_alloc",instance_no="5",kind="mbcs",usage="blocks_size"} 520
 erlang_vm_allocators{alloc="driver_alloc",instance_no="5",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="driver_alloc",instance_no="5",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="driver_alloc",instance_no="5",kind="mbcs_pool",usage="blocks"} 0
@@ -1762,8 +1762,8 @@ erlang_vm_allocators{alloc="driver_alloc",instance_no="5",kind="sbcs",usage="blo
 erlang_vm_allocators{alloc="driver_alloc",instance_no="5",kind="sbcs",usage="blocks_size"} 0
 erlang_vm_allocators{alloc="driver_alloc",instance_no="6",kind="mbcs",usage="carriers"} 1
 erlang_vm_allocators{alloc="driver_alloc",instance_no="6",kind="mbcs",usage="carriers_size"} 32768
-erlang_vm_allocators{alloc="driver_alloc",instance_no="6",kind="mbcs",usage="blocks"} 13
-erlang_vm_allocators{alloc="driver_alloc",instance_no="6",kind="mbcs",usage="blocks_size"} 3304
+erlang_vm_allocators{alloc="driver_alloc",instance_no="6",kind="mbcs",usage="blocks"} 3
+erlang_vm_allocators{alloc="driver_alloc",instance_no="6",kind="mbcs",usage="blocks_size"} 1120
 erlang_vm_allocators{alloc="driver_alloc",instance_no="6",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="driver_alloc",instance_no="6",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="driver_alloc",instance_no="6",kind="mbcs_pool",usage="blocks"} 0
@@ -1810,8 +1810,8 @@ erlang_vm_allocators{alloc="driver_alloc",instance_no="9",kind="sbcs",usage="blo
 erlang_vm_allocators{alloc="driver_alloc",instance_no="9",kind="sbcs",usage="blocks_size"} 0
 erlang_vm_allocators{alloc="driver_alloc",instance_no="10",kind="mbcs",usage="carriers"} 1
 erlang_vm_allocators{alloc="driver_alloc",instance_no="10",kind="mbcs",usage="carriers_size"} 32768
-erlang_vm_allocators{alloc="driver_alloc",instance_no="10",kind="mbcs",usage="blocks"} 0
-erlang_vm_allocators{alloc="driver_alloc",instance_no="10",kind="mbcs",usage="blocks_size"} 0
+erlang_vm_allocators{alloc="driver_alloc",instance_no="10",kind="mbcs",usage="blocks"} 11
+erlang_vm_allocators{alloc="driver_alloc",instance_no="10",kind="mbcs",usage="blocks_size"} 2472
 erlang_vm_allocators{alloc="driver_alloc",instance_no="10",kind="mbcs_pool",usage="carriers"} 0
 erlang_vm_allocators{alloc="driver_alloc",instance_no="10",kind="mbcs_pool",usage="carriers_size"} 0
 erlang_vm_allocators{alloc="driver_alloc",instance_no="10",kind="mbcs_pool",usage="blocks"} 0
@@ -1822,16 +1822,16 @@ erlang_vm_allocators{alloc="driver_alloc",instance_no="10",kind="sbcs",usage="bl
 erlang_vm_allocators{alloc="driver_alloc",instance_no="10",kind="sbcs",usage="blocks_size"} 0
 # TYPE rabbitmq_connections_opened_total counter
 # HELP rabbitmq_connections_opened_total Total number of connections opened
-rabbitmq_connections_opened_total 3
+rabbitmq_connections_opened_total 9
 # TYPE rabbitmq_connections_closed_total counter
 # HELP rabbitmq_connections_closed_total Total number of connections closed or terminated
 rabbitmq_connections_closed_total 0
 # TYPE rabbitmq_channels_opened_total counter
 # HELP rabbitmq_channels_opened_total Total number of channels opened
-rabbitmq_channels_opened_total 3
+rabbitmq_channels_opened_total 15
 # TYPE rabbitmq_channels_closed_total counter
 # HELP rabbitmq_channels_closed_total Total number of channels closed
-rabbitmq_channels_closed_total 1
+rabbitmq_channels_closed_total 9
 # TYPE rabbitmq_queues_declared_total counter
 # HELP rabbitmq_queues_declared_total Total number of queues declared
 rabbitmq_queues_declared_total 1
@@ -1843,25 +1843,25 @@ rabbitmq_queues_created_total 1
 rabbitmq_queues_deleted_total 0
 # TYPE rabbitmq_process_open_fds gauge
 # HELP rabbitmq_process_open_fds Open file descriptors
-rabbitmq_process_open_fds 42
+rabbitmq_process_open_fds 49
 # TYPE rabbitmq_process_resident_memory_bytes gauge
 # HELP rabbitmq_process_resident_memory_bytes Memory used in bytes
-rabbitmq_process_resident_memory_bytes 167862272
+rabbitmq_process_resident_memory_bytes 157982720
 # TYPE rabbitmq_disk_space_available_bytes gauge
 # HELP rabbitmq_disk_space_available_bytes Disk space available in bytes
-rabbitmq_disk_space_available_bytes 1020106047488
+rabbitmq_disk_space_available_bytes 1020066824192
 # TYPE rabbitmq_erlang_processes_used gauge
 # HELP rabbitmq_erlang_processes_used Erlang processes used
-rabbitmq_erlang_processes_used 462
+rabbitmq_erlang_processes_used 532
 # TYPE rabbitmq_erlang_gc_runs_total counter
 # HELP rabbitmq_erlang_gc_runs_total Total number of Erlang garbage collector runs
-rabbitmq_erlang_gc_runs_total 9319
+rabbitmq_erlang_gc_runs_total 11288
 # TYPE rabbitmq_erlang_gc_reclaimed_bytes_total counter
 # HELP rabbitmq_erlang_gc_reclaimed_bytes_total Total number of bytes of memory reclaimed by Erlang garbage collector
-rabbitmq_erlang_gc_reclaimed_bytes_total 378148304
+rabbitmq_erlang_gc_reclaimed_bytes_total 397587000
 # TYPE rabbitmq_erlang_scheduler_context_switches_total counter
 # HELP rabbitmq_erlang_scheduler_context_switches_total Total number of Erlang scheduler context switches
-rabbitmq_erlang_scheduler_context_switches_total 132902
+rabbitmq_erlang_scheduler_context_switches_total 142032
 # TYPE rabbitmq_process_max_fds gauge
 # HELP rabbitmq_process_max_fds Open file descriptors limit
 rabbitmq_process_max_fds 1048576
@@ -1882,7 +1882,7 @@ rabbitmq_erlang_scheduler_run_queue 1
 rabbitmq_erlang_net_ticktime_seconds 60
 # TYPE rabbitmq_erlang_uptime_seconds gauge
 # HELP rabbitmq_erlang_uptime_seconds Node uptime
-rabbitmq_erlang_uptime_seconds 18.665
+rabbitmq_erlang_uptime_seconds 38.941
 # TYPE rabbitmq_io_read_ops_total counter
 # HELP rabbitmq_io_read_ops_total Total number of I/O read operations
 rabbitmq_io_read_ops_total 0
@@ -1937,50 +1937,50 @@ rabbitmq_io_seek_time_seconds_total 0.0
 # TYPE rabbitmq_auth_attempts_total counter
 # HELP rabbitmq_auth_attempts_total Total number of authentication attempts
 rabbitmq_auth_attempts_total{protocol="http"} 4
-rabbitmq_auth_attempts_total{protocol="amqp091"} 3
+rabbitmq_auth_attempts_total{protocol="amqp091"} 9
 # TYPE rabbitmq_auth_attempts_succeeded_total counter
 # HELP rabbitmq_auth_attempts_succeeded_total Total number of successful authentication attempts
 rabbitmq_auth_attempts_succeeded_total{protocol="http"} 4
-rabbitmq_auth_attempts_succeeded_total{protocol="amqp091"} 3
+rabbitmq_auth_attempts_succeeded_total{protocol="amqp091"} 9
 # TYPE rabbitmq_auth_attempts_failed_total counter
 # HELP rabbitmq_auth_attempts_failed_total Total number of failed authentication attempts
 rabbitmq_auth_attempts_failed_total{protocol="http"} 0
 rabbitmq_auth_attempts_failed_total{protocol="amqp091"} 0
 # TYPE rabbitmq_queue_messages_ready gauge
 # HELP rabbitmq_queue_messages_ready Messages ready to be delivered to consumers
-rabbitmq_queue_messages_ready 0
+rabbitmq_queue_messages_ready 119
 # TYPE rabbitmq_queue_messages_unacked gauge
 # HELP rabbitmq_queue_messages_unacked Messages delivered to consumers but not yet acknowledged
-rabbitmq_queue_messages_unacked 0
+rabbitmq_queue_messages_unacked 1
 # TYPE rabbitmq_queue_messages gauge
 # HELP rabbitmq_queue_messages Sum of ready and unacknowledged messages - total queue depth
-rabbitmq_queue_messages 0
+rabbitmq_queue_messages 120
 # TYPE rabbitmq_queue_process_reductions_total counter
 # HELP rabbitmq_queue_process_reductions_total Total number of queue process reductions
-rabbitmq_queue_process_reductions_total 93475
+rabbitmq_queue_process_reductions_total 338356
 # TYPE rabbitmq_queue_consumers gauge
 # HELP rabbitmq_queue_consumers Consumers on a queue
-rabbitmq_queue_consumers 1
+rabbitmq_queue_consumers 3
 # TYPE rabbitmq_queue_consumer_capacity gauge
 # HELP rabbitmq_queue_consumer_capacity Consumer capacity
 # TYPE rabbitmq_queue_consumer_utilisation gauge
 # HELP rabbitmq_queue_consumer_utilisation Same as consumer capacity
-rabbitmq_queue_consumer_utilisation 1.0
+rabbitmq_queue_consumer_utilisation 2.0000921426591067
 # TYPE rabbitmq_queue_process_memory_bytes gauge
 # HELP rabbitmq_queue_process_memory_bytes Memory in bytes used by the Erlang queue process
-rabbitmq_queue_process_memory_bytes 135376
+rabbitmq_queue_process_memory_bytes 707892
 # TYPE rabbitmq_queue_messages_ram gauge
 # HELP rabbitmq_queue_messages_ram Ready and unacknowledged messages stored in memory
-rabbitmq_queue_messages_ram 0
+rabbitmq_queue_messages_ram 3
 # TYPE rabbitmq_queue_messages_ram_bytes gauge
 # HELP rabbitmq_queue_messages_ram_bytes Size of ready and unacknowledged messages stored in memory
-rabbitmq_queue_messages_ram_bytes 0
+rabbitmq_queue_messages_ram_bytes 36
 # TYPE rabbitmq_queue_messages_ready_ram gauge
 # HELP rabbitmq_queue_messages_ready_ram Ready messages stored in memory
-rabbitmq_queue_messages_ready_ram 0
+rabbitmq_queue_messages_ready_ram 2
 # TYPE rabbitmq_queue_messages_unacked_ram gauge
 # HELP rabbitmq_queue_messages_unacked_ram Unacknowledged messages stored in memory
-rabbitmq_queue_messages_unacked_ram 0
+rabbitmq_queue_messages_unacked_ram 1
 # TYPE rabbitmq_queue_messages_persistent gauge
 # HELP rabbitmq_queue_messages_persistent Persistent messages
 rabbitmq_queue_messages_persistent 0
@@ -1988,27 +1988,27 @@ rabbitmq_queue_messages_persistent 0
 # HELP rabbitmq_queue_messages_persistent_bytes Size in bytes of persistent messages
 # TYPE rabbitmq_queue_messages_bytes gauge
 # HELP rabbitmq_queue_messages_bytes Size in bytes of ready and unacknowledged messages
-rabbitmq_queue_messages_bytes 0
+rabbitmq_queue_messages_bytes 1440
 # TYPE rabbitmq_queue_messages_ready_bytes gauge
 # HELP rabbitmq_queue_messages_ready_bytes Size in bytes of ready messages
-rabbitmq_queue_messages_ready_bytes 0
+rabbitmq_queue_messages_ready_bytes 1428
 # TYPE rabbitmq_queue_messages_unacked_bytes gauge
 # HELP rabbitmq_queue_messages_unacked_bytes Size in bytes of all unacknowledged messages
-rabbitmq_queue_messages_unacked_bytes 0
+rabbitmq_queue_messages_unacked_bytes 12
 # TYPE rabbitmq_queue_head_message_timestamp gauge
 # HELP rabbitmq_queue_head_message_timestamp Timestamp of the first message in the queue, if any
 # TYPE rabbitmq_queue_disk_reads_total counter
 # HELP rabbitmq_queue_disk_reads_total Total number of times queue read messages from disk
-rabbitmq_queue_disk_reads_total 0
+rabbitmq_queue_disk_reads_total 31
 # TYPE rabbitmq_queue_disk_writes_total counter
 # HELP rabbitmq_queue_disk_writes_total Total number of times queue wrote messages to disk
-rabbitmq_queue_disk_writes_total 22
+rabbitmq_queue_disk_writes_total 209
 # TYPE rabbitmq_stream_segments counter
 # HELP rabbitmq_stream_segments Total number of stream segment files
 rabbitmq_stream_segments 0
 # TYPE rabbitmq_channel_consumers gauge
 # HELP rabbitmq_channel_consumers Consumers on a channel
-rabbitmq_channel_consumers 1
+rabbitmq_channel_consumers 3
 # TYPE rabbitmq_channel_messages_unacked gauge
 # HELP rabbitmq_channel_messages_unacked Delivered but not yet acknowledged messages
 rabbitmq_channel_messages_unacked 0
@@ -2023,16 +2023,16 @@ rabbitmq_channel_messages_uncommitted 0
 rabbitmq_channel_acks_uncommitted 0
 # TYPE rabbitmq_consumer_prefetch gauge
 # HELP rabbitmq_consumer_prefetch Limit of unacknowledged messages for each consumer
-rabbitmq_consumer_prefetch 20
+rabbitmq_consumer_prefetch 21
 # TYPE rabbitmq_channel_prefetch gauge
 # HELP rabbitmq_channel_prefetch Deprecated and will be removed in a future version
 rabbitmq_channel_prefetch 0
 # TYPE rabbitmq_channel_messages_published_total counter
 # HELP rabbitmq_channel_messages_published_total Total number of messages published into an exchange on a channel
-rabbitmq_channel_messages_published_total 24
+rabbitmq_channel_messages_published_total 373
 # TYPE rabbitmq_channel_messages_confirmed_total counter
 # HELP rabbitmq_channel_messages_confirmed_total Total number of messages published into an exchange and confirmed on the channel
-rabbitmq_channel_messages_confirmed_total 24
+rabbitmq_channel_messages_confirmed_total 217
 # TYPE rabbitmq_channel_messages_unroutable_returned_total counter
 # HELP rabbitmq_channel_messages_unroutable_returned_total Total number of messages published as mandatory into an exchange and returned to the publisher as unroutable
 rabbitmq_channel_messages_unroutable_returned_total 0
@@ -2041,7 +2041,7 @@ rabbitmq_channel_messages_unroutable_returned_total 0
 rabbitmq_channel_messages_unroutable_dropped_total 0
 # TYPE rabbitmq_channel_process_reductions_total counter
 # HELP rabbitmq_channel_process_reductions_total Total number of channel process reductions
-rabbitmq_channel_process_reductions_total 27756
+rabbitmq_channel_process_reductions_total 288711
 # TYPE rabbitmq_channel_get_ack_total counter
 # HELP rabbitmq_channel_get_ack_total Total number of messages fetched with basic.get in manual acknowledgement mode
 rabbitmq_channel_get_ack_total 0
@@ -2050,51 +2050,51 @@ rabbitmq_channel_get_ack_total 0
 rabbitmq_channel_get_total 0
 # TYPE rabbitmq_channel_messages_delivered_ack_total counter
 # HELP rabbitmq_channel_messages_delivered_ack_total Total number of messages delivered to consumers in manual acknowledgement mode
-rabbitmq_channel_messages_delivered_ack_total 24
+rabbitmq_channel_messages_delivered_ack_total 96
 # TYPE rabbitmq_channel_messages_delivered_total counter
 # HELP rabbitmq_channel_messages_delivered_total Total number of messages delivered to consumers in automatic acknowledgement mode
-rabbitmq_channel_messages_delivered_total 0
+rabbitmq_channel_messages_delivered_total 156
 # TYPE rabbitmq_channel_messages_redelivered_total counter
 # HELP rabbitmq_channel_messages_redelivered_total Total number of messages redelivered to consumers
 rabbitmq_channel_messages_redelivered_total 0
 # TYPE rabbitmq_channel_messages_acked_total counter
 # HELP rabbitmq_channel_messages_acked_total Total number of messages acknowledged by consumers
-rabbitmq_channel_messages_acked_total 24
+rabbitmq_channel_messages_acked_total 95
 # TYPE rabbitmq_channel_get_empty_total counter
 # HELP rabbitmq_channel_get_empty_total Total number of times basic.get operations fetched no message
 rabbitmq_channel_get_empty_total 0
 # TYPE rabbitmq_connection_incoming_bytes_total counter
 # HELP rabbitmq_connection_incoming_bytes_total Total number of bytes received on a connection
-rabbitmq_connection_incoming_bytes_total 4762
+rabbitmq_connection_incoming_bytes_total 44481
 # TYPE rabbitmq_connection_outgoing_bytes_total counter
 # HELP rabbitmq_connection_outgoing_bytes_total Total number of bytes sent on a connection
-rabbitmq_connection_outgoing_bytes_total 5729
+rabbitmq_connection_outgoing_bytes_total 44452
 # TYPE rabbitmq_connection_process_reductions_total counter
 # HELP rabbitmq_connection_process_reductions_total Total number of connection process reductions
-rabbitmq_connection_process_reductions_total 72109
+rabbitmq_connection_process_reductions_total 386239
 # TYPE rabbitmq_stream_consumer_max_offset_lag gauge
 # HELP rabbitmq_stream_consumer_max_offset_lag Highest consumer offset lag
 # TYPE rabbitmq_connection_incoming_packets_total counter
 # HELP rabbitmq_connection_incoming_packets_total Total number of packets received on a connection
-rabbitmq_connection_incoming_packets_total 78
+rabbitmq_connection_incoming_packets_total 561
 # TYPE rabbitmq_connection_outgoing_packets_total counter
 # HELP rabbitmq_connection_outgoing_packets_total Total number of packets sent on a connection
-rabbitmq_connection_outgoing_packets_total 68
+rabbitmq_connection_outgoing_packets_total 537
 # TYPE rabbitmq_connection_pending_packets gauge
 # HELP rabbitmq_connection_pending_packets Number of packets waiting to be sent on a connection
 rabbitmq_connection_pending_packets 0
 # TYPE rabbitmq_connection_channels gauge
 # HELP rabbitmq_connection_channels Channels on a connection
-rabbitmq_connection_channels 2
+rabbitmq_connection_channels 6
 # TYPE rabbitmq_queue_messages_published_total counter
 # HELP rabbitmq_queue_messages_published_total Total number of messages published into a queue through an exchange on a channel
-rabbitmq_queue_messages_published_total 24
+rabbitmq_queue_messages_published_total 373
 # TYPE rabbitmq_exchange_messages_published_total counter
 # HELP rabbitmq_exchange_messages_published_total Total number of messages published into an exchange
-rabbitmq_exchange_messages_published_total 24
+rabbitmq_exchange_messages_published_total 373
 # TYPE rabbitmq_exchange_messages_confirmed_total counter
 # HELP rabbitmq_exchange_messages_confirmed_total Total number of messages published into an exchange and confirmed
-rabbitmq_exchange_messages_confirmed_total 24
+rabbitmq_exchange_messages_confirmed_total 217
 # TYPE rabbitmq_exchange_messages_unroutable_returned_total counter
 # HELP rabbitmq_exchange_messages_unroutable_returned_total Total number of messages published as mandatory into an exchange and returned to the publisher as unroutable
 rabbitmq_exchange_messages_unroutable_returned_total 0
@@ -2109,47 +2109,47 @@ rabbitmq_queue_get_ack_total 0
 rabbitmq_queue_get_total 0
 # TYPE rabbitmq_queue_messages_delivered_ack_total counter
 # HELP rabbitmq_queue_messages_delivered_ack_total Total number of messages delivered from a queue to consumers in manual acknowledgement mode
-rabbitmq_queue_messages_delivered_ack_total 24
+rabbitmq_queue_messages_delivered_ack_total 96
 # TYPE rabbitmq_queue_messages_delivered_total counter
 # HELP rabbitmq_queue_messages_delivered_total Total number of messages delivered from a queue to consumers in automatic acknowledgement mode
-rabbitmq_queue_messages_delivered_total 0
+rabbitmq_queue_messages_delivered_total 156
 # TYPE rabbitmq_queue_messages_redelivered_total counter
 # HELP rabbitmq_queue_messages_redelivered_total Total number of messages redelivered from a queue to consumers
 rabbitmq_queue_messages_redelivered_total 0
 # TYPE rabbitmq_queue_messages_acked_total counter
 # HELP rabbitmq_queue_messages_acked_total Total number of messages acknowledged by consumers on a queue
-rabbitmq_queue_messages_acked_total 24
+rabbitmq_queue_messages_acked_total 95
 # TYPE rabbitmq_queue_get_empty_total counter
 # HELP rabbitmq_queue_get_empty_total Total number of times basic.get operations fetched no message on a queue
 rabbitmq_queue_get_empty_total 0
 # TYPE rabbitmq_queue_exchange_messages_published_total counter
 # HELP rabbitmq_queue_exchange_messages_published_total Total number of messages published into a queue through an exchange
-rabbitmq_queue_exchange_messages_published_total 24
+rabbitmq_queue_exchange_messages_published_total 373
 # TYPE rabbitmq_connections gauge
 # HELP rabbitmq_connections Connections currently open
-rabbitmq_connections 3
+rabbitmq_connections 9
 # TYPE rabbitmq_channels gauge
 # HELP rabbitmq_channels Channels currently open
-rabbitmq_channels 2
+rabbitmq_channels 6
 # TYPE rabbitmq_consumers gauge
 # HELP rabbitmq_consumers Consumers currently connected
-rabbitmq_consumers 1
+rabbitmq_consumers 3
 # TYPE rabbitmq_queues gauge
 # HELP rabbitmq_queues Queues available
-rabbitmq_queues 5
+rabbitmq_queues 10
 # TYPE rabbitmq_build_info untyped
 # HELP rabbitmq_build_info RabbitMQ & Erlang/OTP version info
-rabbitmq_build_info{rabbitmq_version="4.3.6",prometheus_plugin_version="4.3.6",prometheus_client_version="6.1.1",erlang_version="ip-fdb2115aaa"} 1
+rabbitmq_build_info{rabbitmq_version="4.3.6",prometheus_plugin_version="4.3.6",prometheus_client_version="6.1.1",erlang_version="ip-0763db8c13"} 1
 # TYPE rabbitmq_identity_info untyped
 # HELP rabbitmq_identity_info RabbitMQ node & cluster identity info
-rabbitmq_identity_info{rabbitmq_node="rabbit@host-2f7d7946ea",rabbitmq_cluster="rabbit@host-2f7d7946ea",rabbitmq_cluster_permanent_id="rabbitmq-cluster-id-G1KzAFh5PG1vCih1PXcWAA",rabbitmq_endpoint="aggregated"} 1
+rabbitmq_identity_info{rabbitmq_node="rabbit@host-fc45a14ecc",rabbitmq_cluster="rabbit@host-fc45a14ecc",rabbitmq_cluster_permanent_id="rabbitmq-cluster-id-prfLqNFhMFjjYqEnvGWB3A",rabbitmq_endpoint="aggregated"} 1
 # TYPE rabbitmq_global_consumers gauge
 # HELP rabbitmq_global_consumers Current number of consumers
-rabbitmq_global_consumers{protocol="amqp091"} 1.0
+rabbitmq_global_consumers{protocol="amqp091"} 3.0
 rabbitmq_global_consumers{protocol="amqp10"} 0.0
 # TYPE rabbitmq_global_messages_acknowledged_total counter
 # HELP rabbitmq_global_messages_acknowledged_total Total number of messages acknowledged by consumers
-rabbitmq_global_messages_acknowledged_total{protocol="amqp091",queue_type="rabbit_classic_queue"} 24.0
+rabbitmq_global_messages_acknowledged_total{protocol="amqp091",queue_type="rabbit_classic_queue"} 95.0
 rabbitmq_global_messages_acknowledged_total{protocol="amqp091",queue_type="rabbit_quorum_queue"} 0.0
 rabbitmq_global_messages_acknowledged_total{protocol="amqp091",queue_type="rabbit_stream_queue"} 0.0
 rabbitmq_global_messages_acknowledged_total{protocol="amqp091",queue_type="rabbit_volatile_queue"} 0.0
@@ -2159,7 +2159,7 @@ rabbitmq_global_messages_acknowledged_total{protocol="amqp10",queue_type="rabbit
 rabbitmq_global_messages_acknowledged_total{protocol="amqp10",queue_type="rabbit_volatile_queue"} 0.0
 # TYPE rabbitmq_global_messages_confirmed_total counter
 # HELP rabbitmq_global_messages_confirmed_total Total number of messages confirmed to publishers
-rabbitmq_global_messages_confirmed_total{protocol="amqp091"} 24.0
+rabbitmq_global_messages_confirmed_total{protocol="amqp091"} 217.0
 rabbitmq_global_messages_confirmed_total{protocol="amqp10"} 0.0
 # TYPE rabbitmq_global_messages_dead_lettered_confirmed_total counter
 # HELP rabbitmq_global_messages_dead_lettered_confirmed_total Total number of messages dead-lettered and confirmed by target queues
@@ -2192,7 +2192,7 @@ rabbitmq_global_messages_dead_lettered_rejected_total{queue_type="rabbit_quorum_
 rabbitmq_global_messages_dead_lettered_rejected_total{queue_type="rabbit_quorum_queue",dead_letter_strategy="disabled"} 0.0
 # TYPE rabbitmq_global_messages_delivered_consume_auto_ack_total counter
 # HELP rabbitmq_global_messages_delivered_consume_auto_ack_total Total number of messages delivered to consumers using basic.consume with automatic acknowledgment
-rabbitmq_global_messages_delivered_consume_auto_ack_total{protocol="amqp091",queue_type="rabbit_classic_queue"} 0.0
+rabbitmq_global_messages_delivered_consume_auto_ack_total{protocol="amqp091",queue_type="rabbit_classic_queue"} 156.0
 rabbitmq_global_messages_delivered_consume_auto_ack_total{protocol="amqp091",queue_type="rabbit_quorum_queue"} 0.0
 rabbitmq_global_messages_delivered_consume_auto_ack_total{protocol="amqp091",queue_type="rabbit_stream_queue"} 0.0
 rabbitmq_global_messages_delivered_consume_auto_ack_total{protocol="amqp091",queue_type="rabbit_volatile_queue"} 0.0
@@ -2202,7 +2202,7 @@ rabbitmq_global_messages_delivered_consume_auto_ack_total{protocol="amqp10",queu
 rabbitmq_global_messages_delivered_consume_auto_ack_total{protocol="amqp10",queue_type="rabbit_volatile_queue"} 0.0
 # TYPE rabbitmq_global_messages_delivered_consume_manual_ack_total counter
 # HELP rabbitmq_global_messages_delivered_consume_manual_ack_total Total number of messages delivered to consumers using basic.consume with manual acknowledgment
-rabbitmq_global_messages_delivered_consume_manual_ack_total{protocol="amqp091",queue_type="rabbit_classic_queue"} 24.0
+rabbitmq_global_messages_delivered_consume_manual_ack_total{protocol="amqp091",queue_type="rabbit_classic_queue"} 96.0
 rabbitmq_global_messages_delivered_consume_manual_ack_total{protocol="amqp091",queue_type="rabbit_quorum_queue"} 0.0
 rabbitmq_global_messages_delivered_consume_manual_ack_total{protocol="amqp091",queue_type="rabbit_stream_queue"} 0.0
 rabbitmq_global_messages_delivered_consume_manual_ack_total{protocol="amqp091",queue_type="rabbit_volatile_queue"} 0.0
@@ -2232,7 +2232,7 @@ rabbitmq_global_messages_delivered_get_manual_ack_total{protocol="amqp10",queue_
 rabbitmq_global_messages_delivered_get_manual_ack_total{protocol="amqp10",queue_type="rabbit_volatile_queue"} 0.0
 # TYPE rabbitmq_global_messages_delivered_total counter
 # HELP rabbitmq_global_messages_delivered_total Total number of messages delivered to consumers
-rabbitmq_global_messages_delivered_total{protocol="amqp091",queue_type="rabbit_classic_queue"} 24.0
+rabbitmq_global_messages_delivered_total{protocol="amqp091",queue_type="rabbit_classic_queue"} 252.0
 rabbitmq_global_messages_delivered_total{protocol="amqp091",queue_type="rabbit_quorum_queue"} 0.0
 rabbitmq_global_messages_delivered_total{protocol="amqp091",queue_type="rabbit_stream_queue"} 0.0
 rabbitmq_global_messages_delivered_total{protocol="amqp091",queue_type="rabbit_volatile_queue"} 0.0
@@ -2252,11 +2252,11 @@ rabbitmq_global_messages_get_empty_total{protocol="amqp10",queue_type="rabbit_st
 rabbitmq_global_messages_get_empty_total{protocol="amqp10",queue_type="rabbit_volatile_queue"} 0.0
 # TYPE rabbitmq_global_messages_received_confirm_total counter
 # HELP rabbitmq_global_messages_received_confirm_total Total number of messages received from publishers expecting confirmations
-rabbitmq_global_messages_received_confirm_total{protocol="amqp091"} 24.0
+rabbitmq_global_messages_received_confirm_total{protocol="amqp091"} 217.0
 rabbitmq_global_messages_received_confirm_total{protocol="amqp10"} 0.0
 # TYPE rabbitmq_global_messages_received_total counter
 # HELP rabbitmq_global_messages_received_total Total number of messages received from publishers
-rabbitmq_global_messages_received_total{protocol="amqp091"} 24.0
+rabbitmq_global_messages_received_total{protocol="amqp091"} 373.0
 rabbitmq_global_messages_received_total{protocol="amqp10"} 0.0
 # TYPE rabbitmq_global_messages_redelivered_total counter
 # HELP rabbitmq_global_messages_redelivered_total Total number of messages redelivered to consumers
@@ -2270,7 +2270,7 @@ rabbitmq_global_messages_redelivered_total{protocol="amqp10",queue_type="rabbit_
 rabbitmq_global_messages_redelivered_total{protocol="amqp10",queue_type="rabbit_volatile_queue"} 0.0
 # TYPE rabbitmq_global_messages_routed_total counter
 # HELP rabbitmq_global_messages_routed_total Total number of messages routed to queues or streams
-rabbitmq_global_messages_routed_total{protocol="amqp091"} 24.0
+rabbitmq_global_messages_routed_total{protocol="amqp091"} 373.0
 rabbitmq_global_messages_routed_total{protocol="amqp10"} 0.0
 # TYPE rabbitmq_global_messages_unroutable_dropped_total counter
 # HELP rabbitmq_global_messages_unroutable_dropped_total Total number of messages published as non-mandatory into an exchange and dropped as unroutable
@@ -2282,21 +2282,21 @@ rabbitmq_global_messages_unroutable_returned_total{protocol="amqp091"} 0.0
 rabbitmq_global_messages_unroutable_returned_total{protocol="amqp10"} 0.0
 # TYPE rabbitmq_global_publishers gauge
 # HELP rabbitmq_global_publishers Current number of publishers
-rabbitmq_global_publishers{protocol="amqp091"} 1.0
+rabbitmq_global_publishers{protocol="amqp091"} 3.0
 rabbitmq_global_publishers{protocol="amqp10"} 0.0
 # TYPE rabbitmq_message_size_bytes histogram
 # HELP rabbitmq_message_size_bytes Size of messages received from publishers
-rabbitmq_message_size_bytes_bucket{protocol="amqp091",le="100"} 24
-rabbitmq_message_size_bytes_bucket{protocol="amqp091",le="1000"} 24
-rabbitmq_message_size_bytes_bucket{protocol="amqp091",le="10000"} 24
-rabbitmq_message_size_bytes_bucket{protocol="amqp091",le="100000"} 24
-rabbitmq_message_size_bytes_bucket{protocol="amqp091",le="1000000"} 24
-rabbitmq_message_size_bytes_bucket{protocol="amqp091",le="10000000"} 24
-rabbitmq_message_size_bytes_bucket{protocol="amqp091",le="50000000"} 24
-rabbitmq_message_size_bytes_bucket{protocol="amqp091",le="100000000"} 24
-rabbitmq_message_size_bytes_bucket{protocol="amqp091",le="+Inf"} 24
-rabbitmq_message_size_bytes_count{protocol="amqp091"} 24
-rabbitmq_message_size_bytes_sum{protocol="amqp091"} 288
+rabbitmq_message_size_bytes_bucket{protocol="amqp091",le="100"} 373
+rabbitmq_message_size_bytes_bucket{protocol="amqp091",le="1000"} 373
+rabbitmq_message_size_bytes_bucket{protocol="amqp091",le="10000"} 373
+rabbitmq_message_size_bytes_bucket{protocol="amqp091",le="100000"} 373
+rabbitmq_message_size_bytes_bucket{protocol="amqp091",le="1000000"} 373
+rabbitmq_message_size_bytes_bucket{protocol="amqp091",le="10000000"} 373
+rabbitmq_message_size_bytes_bucket{protocol="amqp091",le="50000000"} 373
+rabbitmq_message_size_bytes_bucket{protocol="amqp091",le="100000000"} 373
+rabbitmq_message_size_bytes_bucket{protocol="amqp091",le="+Inf"} 373
+rabbitmq_message_size_bytes_count{protocol="amqp091"} 373
+rabbitmq_message_size_bytes_sum{protocol="amqp091"} 4476
 rabbitmq_message_size_bytes_bucket{protocol="amqp10",le="100"} 0
 rabbitmq_message_size_bytes_bucket{protocol="amqp10",le="1000"} 0
 rabbitmq_message_size_bytes_bucket{protocol="amqp10",le="10000"} 0
@@ -2316,13 +2316,13 @@ rabbitmq_raft_segments{module="ra_log_segment_writer",ra_system="coordination"} 
 rabbitmq_raft_forced_gcs{module="rabbit_khepri",ra_system="coordination"} 1.0
 # TYPE rabbitmq_raft_commit_index counter
 # HELP rabbitmq_raft_commit_index The current commit index.
-rabbitmq_raft_commit_index{module="rabbit_khepri",ra_system="coordination"} 97.0
+rabbitmq_raft_commit_index{module="rabbit_khepri",ra_system="coordination"} 114.0
 # TYPE rabbitmq_raft_wal_files counter
 # HELP rabbitmq_raft_wal_files Number of write-ahead log files created
 rabbitmq_raft_wal_files{module="ra_log_wal",ra_system="coordination"} 1.0
 # TYPE rabbitmq_raft_commands counter
 # HELP rabbitmq_raft_commands Total number of commands received by a leader
-rabbitmq_raft_commands{module="rabbit_khepri",ra_system="coordination"} 97.0
+rabbitmq_raft_commands{module="rabbit_khepri",ra_system="coordination"} 114.0
 # TYPE rabbitmq_raft_term_and_voted_for_updates counter
 # HELP rabbitmq_raft_term_and_voted_for_updates Total number of updates of term and voted for
 rabbitmq_raft_term_and_voted_for_updates{module="rabbit_khepri",ra_system="coordination"} 2.0
@@ -2343,10 +2343,10 @@ rabbitmq_raft_read_segment{module="rabbit_khepri",ra_system="coordination"} 0.0
 rabbitmq_raft_major_compactions{module="rabbit_khepri",ra_system="coordination"} 0.0
 # TYPE rabbitmq_raft_last_written_index counter
 # HELP rabbitmq_raft_last_written_index The last fully written and fsynced index of the log.
-rabbitmq_raft_last_written_index{module="rabbit_khepri",ra_system="coordination"} 97.0
+rabbitmq_raft_last_written_index{module="rabbit_khepri",ra_system="coordination"} 114.0
 # TYPE rabbitmq_raft_read_ops counter
 # HELP rabbitmq_raft_read_ops Total number of read ops
-rabbitmq_raft_read_ops{module="rabbit_khepri",ra_system="coordination"} 90.0
+rabbitmq_raft_read_ops{module="rabbit_khepri",ra_system="coordination"} 102.0
 # TYPE rabbitmq_raft_term counter
 # HELP rabbitmq_raft_term The current term.
 rabbitmq_raft_term{module="rabbit_khepri",ra_system="coordination"} 1.0
@@ -2355,10 +2355,10 @@ rabbitmq_raft_term{module="rabbit_khepri",ra_system="coordination"} 1.0
 rabbitmq_raft_snapshot_bytes_written{module="rabbit_khepri",ra_system="coordination"} 0.0
 # TYPE rabbitmq_raft_command_flushes counter
 # HELP rabbitmq_raft_command_flushes Total number of low priority command batches written
-rabbitmq_raft_command_flushes{module="rabbit_khepri",ra_system="coordination"} 16.0
+rabbitmq_raft_command_flushes{module="rabbit_khepri",ra_system="coordination"} 22.0
 # TYPE rabbitmq_raft_commit_latency_seconds gauge
 # HELP rabbitmq_raft_commit_latency_seconds Approximate time taken from an entry being written to the log until it is committed.
-rabbitmq_raft_commit_latency_seconds{module="rabbit_khepri",ra_system="coordination"} 0.001
+rabbitmq_raft_commit_latency_seconds{module="rabbit_khepri",ra_system="coordination"} 0.003
 # TYPE rabbitmq_raft_local_queries counter
 # HELP rabbitmq_raft_local_queries Total number of local queries
 rabbitmq_raft_local_queries{module="rabbit_khepri",ra_system="coordination"} 0.0
@@ -2373,20 +2373,20 @@ rabbitmq_raft_msgs_sent{module="rabbit_khepri",ra_system="coordination"} 0.0
 rabbitmq_raft_aer_replies_success{module="rabbit_khepri",ra_system="coordination"} 0.0
 # TYPE rabbitmq_raft_write_ops counter
 # HELP rabbitmq_raft_write_ops Total number of write ops
-rabbitmq_raft_write_ops{module="rabbit_khepri",ra_system="coordination"} 98.0
+rabbitmq_raft_write_ops{module="rabbit_khepri",ra_system="coordination"} 115.0
 # TYPE rabbitmq_raft_checkpoint_bytes_written counter
 # HELP rabbitmq_raft_checkpoint_bytes_written Number of checkpoint bytes written
 rabbitmq_raft_checkpoint_bytes_written{module="rabbit_khepri",ra_system="coordination"} 0.0
 # TYPE rabbitmq_raft_read_mem_table counter
 # HELP rabbitmq_raft_read_mem_table Total number of reads from mem tables
-rabbitmq_raft_read_mem_table{module="rabbit_khepri",ra_system="coordination"} 97.0
+rabbitmq_raft_read_mem_table{module="rabbit_khepri",ra_system="coordination"} 114.0
 # TYPE rabbitmq_raft_read_cache counter
 # HELP rabbitmq_raft_read_cache Unused. Total number of cache reads
 rabbitmq_raft_read_cache{module="rabbit_khepri",ra_system="coordination"} 0.0
 # TYPE rabbitmq_raft_bytes_written counter
 # HELP rabbitmq_raft_bytes_written Number of bytes written
 rabbitmq_raft_bytes_written{module="ra_log_segment_writer",ra_system="coordination"} 0.0
-rabbitmq_raft_bytes_written{module="ra_log_wal",ra_system="coordination"} 145147.0
+rabbitmq_raft_bytes_written{module="ra_log_wal",ra_system="coordination"} 182683.0
 # TYPE rabbitmq_raft_open_segments gauge
 # HELP rabbitmq_raft_open_segments Number of open segments
 rabbitmq_raft_open_segments{module="rabbit_khepri",ra_system="coordination"} 0.0
@@ -2395,10 +2395,10 @@ rabbitmq_raft_open_segments{module="rabbit_khepri",ra_system="coordination"} 0.0
 rabbitmq_raft_snapshots_written{module="rabbit_khepri",ra_system="coordination"} 0.0
 # TYPE rabbitmq_raft_last_applied gauge
 # HELP rabbitmq_raft_last_applied The last applied index. Can go backwards if a ra server is restarted.
-rabbitmq_raft_last_applied{module="rabbit_khepri",ra_system="coordination"} 97.0
+rabbitmq_raft_last_applied{module="rabbit_khepri",ra_system="coordination"} 114.0
 # TYPE rabbitmq_raft_max_file_size gauge
 # HELP rabbitmq_raft_max_file_size Maximum WAL file size in bytes
-rabbitmq_raft_max_file_size{module="ra_log_wal",ra_system="coordination"} 57142625.0
+rabbitmq_raft_max_file_size{module="ra_log_wal",ra_system="coordination"} 56206225.0
 # TYPE rabbitmq_raft_invalid_reply_mode_commands counter
 # HELP rabbitmq_raft_invalid_reply_mode_commands Total number of commands received with an invalid reply-mode
 rabbitmq_raft_invalid_reply_mode_commands{module="rabbit_khepri",ra_system="coordination"} 0.0
@@ -2416,7 +2416,7 @@ rabbitmq_raft_send_msg_effects_sent{module="rabbit_khepri",ra_system="coordinati
 rabbitmq_raft_write_resends{module="rabbit_khepri",ra_system="coordination"} 0.0
 # TYPE rabbitmq_raft_last_index counter
 # HELP rabbitmq_raft_last_index The last index of the log.
-rabbitmq_raft_last_index{module="rabbit_khepri",ra_system="coordination"} 97.0
+rabbitmq_raft_last_index{module="rabbit_khepri",ra_system="coordination"} 114.0
 # TYPE rabbitmq_raft_entries counter
 # HELP rabbitmq_raft_entries Number of entries written
 rabbitmq_raft_entries{module="ra_log_segment_writer",ra_system="coordination"} 0.0
@@ -2437,7 +2437,7 @@ rabbitmq_raft_dropped_sends{module="rabbit_khepri",ra_system="coordination"} 0.0
 rabbitmq_raft_effective_machine_version{module="rabbit_khepri",ra_system="coordination"} 3.0
 # TYPE rabbitmq_raft_batches counter
 # HELP rabbitmq_raft_batches Number of batches written
-rabbitmq_raft_batches{module="ra_log_wal",ra_system="coordination"} 92.0
+rabbitmq_raft_batches{module="ra_log_wal",ra_system="coordination"} 104.0
 # TYPE rabbitmq_raft_release_cursors counter
 # HELP rabbitmq_raft_release_cursors Total number of updates of the release cursor
 rabbitmq_raft_release_cursors{module="rabbit_khepri",ra_system="coordination"} 0.0
@@ -2467,7 +2467,7 @@ rabbitmq_raft_mem_tables{module="ra_log_segment_writer",ra_system="coordination"
 rabbitmq_raft_minor_compactions{module="rabbit_khepri",ra_system="coordination"} 0.0
 # TYPE rabbitmq_raft_current_file_size gauge
 # HELP rabbitmq_raft_current_file_size Current WAL file size in bytes
-rabbitmq_raft_current_file_size{module="ra_log_wal",ra_system="coordination"} 145147.0
+rabbitmq_raft_current_file_size{module="ra_log_wal",ra_system="coordination"} 182683.0
 # TYPE rabbitmq_raft_fetch_term counter
 # HELP rabbitmq_raft_fetch_term Total number of terms fetched
 rabbitmq_raft_fetch_term{module="rabbit_khepri",ra_system="coordination"} 0.0
@@ -2485,7 +2485,7 @@ rabbitmq_raft_consistent_queries{module="rabbit_khepri",ra_system="coordination"
 rabbitmq_raft_checkpoints_promoted{module="rabbit_khepri",ra_system="coordination"} 0.0
 # TYPE rabbitmq_raft_writes counter
 # HELP rabbitmq_raft_writes Number of entries written
-rabbitmq_raft_writes{module="ra_log_wal",ra_system="coordination"} 98.0
+rabbitmq_raft_writes{module="ra_log_wal",ra_system="coordination"} 115.0
 # TYPE rabbitmq_raft_aer_received_follower counter
 # HELP rabbitmq_raft_aer_received_follower Total number of append entries received by a follower
 rabbitmq_raft_aer_received_follower{module="rabbit_khepri",ra_system="coordination"} 0.0
@@ -2509,5 +2509,5 @@ rabbitmq_alarms_memory_used_watermark 0
 rabbitmq_unreachable_cluster_peers_count 0
 # TYPE process_start_time_seconds gauge
 # HELP process_start_time_seconds Start time of the process since unix epoch in seconds.
-process_start_time_seconds 1791094652
+process_start_time_seconds 1791099202
 

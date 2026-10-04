@@ -58,7 +58,7 @@ describe.skipIf(!built)('dist', () => {
       for (const s of specs)
         expect(s, `${relative(DIST, f)} imports ${s}`).toMatch(/^\.\.?\//);
       expect(code, relative(DIST, f)).not.toMatch(
-        /\bprocess\.|\bBuffer\b|node:/,
+        /\bprocess\.|\bBuffer\b|["'`]node:/,
       );
     }
   });
@@ -77,7 +77,7 @@ describe.skipIf(!built)('dist', () => {
       'Dead-letter có thể làm mất message',
     );
     expect(m['i18n/vi.js'].default['rule.T2.title']).toBe(
-      'Message không định tuyến được đang bị bỏ',
+      'Message không định tuyến được có thể bị bỏ',
     );
   });
 

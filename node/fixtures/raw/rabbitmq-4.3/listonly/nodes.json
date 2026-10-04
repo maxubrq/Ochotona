@@ -4,13 +4,13 @@
     {
       "body": [
         {
-          "name": "rabbit@host-ae623cc7ef",
+          "name": "rabbit@host-465072a9bd",
           "type": "disc",
           "running": true,
           "being_drained": false
         }
       ],
-      "observedAt": "2026-10-04T06:18:03.306Z"
+      "observedAt": "2026-10-04T07:34:13.886Z"
     }
   ]
 }

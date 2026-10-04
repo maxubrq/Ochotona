@@ -3,8 +3,8 @@
   "pages": [
     {
       "body": {
-        "filtered_count": 5,
-        "item_count": 5,
+        "filtered_count": 10,
+        "item_count": 10,
         "items": [
           {
             "arguments": {
@@ -16,7 +16,7 @@
             "durable": true,
             "exclusive": false,
             "name": "audit",
-            "node": "rabbit@host-04f9ebcd4b",
+            "node": "rabbit@host-4b9ff5f74d",
             "policy": "audit-ttl",
             "type": "classic",
             "vhost": "/"
@@ -29,7 +29,20 @@
             "durable": true,
             "exclusive": false,
             "name": "events.unrouted",
-            "node": "rabbit@host-04f9ebcd4b",
+            "node": "rabbit@host-4b9ff5f74d",
+            "type": "classic",
+            "vhost": "/"
+          },
+          {
+            "arguments": {
+              "x-queue-type": "classic"
+            },
+            "auto_delete": false,
+            "durable": true,
+            "exclusive": false,
+            "name": "legacy",
+            "node": "rabbit@host-4b9ff5f74d",
+            "policy": "legacy-ha",
             "type": "classic",
             "vhost": "/"
           },
@@ -39,7 +52,7 @@
             "durable": true,
             "exclusive": false,
             "name": "ocho.traffic",
-            "node": "rabbit@host-04f9ebcd4b",
+            "node": "rabbit@host-4b9ff5f74d",
             "type": "classic",
             "vhost": "/"
           },
@@ -52,9 +65,11 @@
             "auto_delete": false,
             "durable": true,
             "exclusive": false,
-            "members": ["rabbit@host-04f9ebcd4b"],
+            "members": [
+              "rabbit@host-4b9ff5f74d"
+            ],
             "name": "orders.created",
-            "node": "rabbit@host-04f9ebcd4b",
+            "node": "rabbit@host-4b9ff5f74d",
             "policy": "orders-limit",
             "type": "quorum",
             "vhost": "payments"
@@ -66,20 +81,79 @@
             "auto_delete": false,
             "durable": true,
             "exclusive": false,
-            "members": ["rabbit@host-04f9ebcd4b"],
+            "members": [
+              "rabbit@host-4b9ff5f74d"
+            ],
             "name": "orders.parking",
-            "node": "rabbit@host-04f9ebcd4b",
+            "node": "rabbit@host-4b9ff5f74d",
             "policy": "orders-limit",
             "type": "quorum",
             "vhost": "payments"
+          },
+          {
+            "arguments": {
+              "x-dead-letter-exchange": "orders.dlx",
+              "x-dead-letter-strategy": "at-least-once",
+              "x-delivery-limit": 10,
+              "x-overflow": "reject-publish",
+              "x-queue-type": "quorum"
+            },
+            "auto_delete": false,
+            "durable": true,
+            "exclusive": false,
+            "members": [
+              "rabbit@host-4b9ff5f74d"
+            ],
+            "name": "orders.safe",
+            "node": "rabbit@host-4b9ff5f74d",
+            "policy": "orders-limit",
+            "type": "quorum",
+            "vhost": "payments"
+          },
+          {
+            "arguments": {
+              "x-queue-type": "classic"
+            },
+            "auto_delete": false,
+            "durable": true,
+            "exclusive": false,
+            "name": "overlap",
+            "node": "rabbit@host-4b9ff5f74d",
+            "policy": "overlap-a",
+            "type": "classic",
+            "vhost": "/"
+          },
+          {
+            "arguments": {
+              "x-queue-type": "classic"
+            },
+            "auto_delete": false,
+            "durable": true,
+            "exclusive": false,
+            "name": "work.backlog",
+            "node": "rabbit@host-4b9ff5f74d",
+            "type": "classic",
+            "vhost": "/"
+          },
+          {
+            "arguments": {
+              "x-queue-type": "classic"
+            },
+            "auto_delete": false,
+            "durable": true,
+            "exclusive": false,
+            "name": "work.classic",
+            "node": "rabbit@host-4b9ff5f74d",
+            "type": "classic",
+            "vhost": "/"
           }
         ],
         "page": 1,
         "page_count": 1,
         "page_size": 500,
-        "total_count": 5
+        "total_count": 10
       },
-      "observedAt": "2026-10-04T06:15:53.871Z"
+      "observedAt": "2026-10-04T07:31:38.065Z"
     }
   ]
 }

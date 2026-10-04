@@ -36,6 +36,8 @@ export {
   keyByCanonical,
   exclusions,
   exclusionsFor,
+  fixTemplates,
+  fixTemplate,
   codes,
   codeEntry,
   blindSpots,
@@ -44,5 +46,5 @@ export {
   schemas,
   docsUrl,
 } from './lookup';
-export { format, registerMessages } from './format';
+export { format, hasMessage, registerMessages } from './format';
 export type { Messages } from './format';

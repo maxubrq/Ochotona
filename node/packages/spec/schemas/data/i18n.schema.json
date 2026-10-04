@@ -4,11 +4,19 @@
   "type": "object",
   "additionalProperties": false,
   "properties": {
-    "$schema": { "type": "string" },
-    "$comment": { "type": "string" }
+    "$schema": {
+      "type": "string"
+    },
+    "$comment": {
+      "type": "string"
+    }
   },
   "patternProperties": {
     "^rule\\.[A-Z]{1,4}[0-9]{1,2}\\.(title|what|dataSafety|next|mechanism|action)$": {
+      "type": "string",
+      "minLength": 1
+    },
+    "^rule\\.[A-Z]{1,4}[0-9]{1,2}\\.(what|dataSafety|next|mechanism)\\.[a-z][a-z0-9_]*$": {
       "type": "string",
       "minLength": 1
     },
@@ -16,8 +24,16 @@
       "type": "string",
       "minLength": 1
     },
-    "^reason\\.[a-z_]+$": { "type": "string", "minLength": 1 },
-    "^reason\\.[a-z_]+\\.unlock$": { "type": "string" },
-    "^exclusion\\.EX[0-9]+$": { "type": "string", "minLength": 1 }
+    "^reason\\.[a-z_]+$": {
+      "type": "string",
+      "minLength": 1
+    },
+    "^reason\\.[a-z_]+\\.unlock$": {
+      "type": "string"
+    },
+    "^exclusion\\.EX[0-9]+$": {
+      "type": "string",
+      "minLength": 1
+    }
   }
 }

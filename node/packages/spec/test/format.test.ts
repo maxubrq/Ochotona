@@ -35,18 +35,24 @@ describe('format', () => {
   });
 
   it('handles several plurals in one template', () => {
-    expect(format('en', 'rule.N1.what', { publishers: 1, consumers: 2 })).toBe(
-      'Connection has 1 publishing channel and 2 consumers.',
-    );
+    expect(
+      format('en', 'rule.N1.what', { publishChannels: 1, consumeChannels: 2 }),
+    ).toBe('Connection has 1 publishing channel and 2 consuming channels.');
   });
 
   it('throws on a missing parameter and ignores extra ones', () => {
     expect(() =>
       format('en', 'rule.T5.what', { strategy: 'at-most-once' }),
-    ).toThrow(/needs parameter overflow/);
+    ).toThrow(/needs parameter strategyLayer/);
     expect(
-      format('en', 'rule.T5.what', { strategy: 'a', overflow: 'b', extra: 1 }),
-    ).toBe('Dead-letter strategy is a with overflow b.');
+      format('en', 'rule.T5.what', {
+        strategy: 'a',
+        strategyLayer: 'x',
+        overflow: 'b',
+        overflowLayer: 'y',
+        extra: 1,
+      }),
+    ).toBe('Dead-letter strategy is a from x, with overflow b from y.');
   });
 
   it('throws when a plural parameter is not a number', () => {
@@ -61,7 +67,7 @@ describe('format', () => {
     delete partial['rule.T2.title'];
     registerMessages('vi', partial as Messages);
     expect(format('vi', 'rule.T2.title', {})).toBe(
-      'Unroutable messages are being dropped',
+      'Unroutable messages can be dropped',
     );
     expect(warn).toHaveBeenCalledOnce();
   });

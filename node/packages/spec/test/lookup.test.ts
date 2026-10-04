@@ -14,6 +14,7 @@ import {
   docsUrl,
   exclusionsFor,
   exitCodes,
+  fixTemplate,
   keyByArgument,
   keyByCanonical,
   keyByPolicy,
@@ -206,5 +207,19 @@ describe('docsUrl', () => {
     expect(
       docsUrl('lesson', 'T2', { toolVersion: '0.1.0', specVersion: '0.4' }),
     ).toMatch(/lesson\.md#t2$/);
+  });
+});
+
+describe('fixTemplate', () => {
+  it('returns the policy template and throws on an unknown id', () => {
+    expect(fixTemplate('policy.declare').params).toContain('definition');
+    expect(() => fixTemplate('nope')).toThrow(/unknown fix template/);
+  });
+});
+
+describe('thresholds', () => {
+  it('live in rules.json', () => {
+    expect(rule('DX1').thresholds).toEqual({ ready: 1_000_000 });
+    expect(rule('F4').thresholds).toEqual({ minDeliverRate: 1, ratio: 0.5 });
   });
 });

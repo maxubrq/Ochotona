@@ -9,6 +9,7 @@ import type { CapabilityTable } from './caps';
 import { deriveActual } from './derive';
 import {
   ingestBroker,
+  ingestUsers,
   ingestWhoami,
   parseNode,
   parseVhost,
@@ -248,6 +249,7 @@ function ingestBase(raw: RawResponses, ctx: BuildContext): ActualBase {
     channels: channels.list,
     consumers: consumers.list,
     whoami: ingestWhoami(raw.whoami),
+    users: ingestUsers(raw.users),
     anomalies,
   };
 }

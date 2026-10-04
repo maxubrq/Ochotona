@@ -43,6 +43,14 @@ function pluralOf(lang: Lang, n: number): string {
 }
 
 /**
+ * Khoá có trong bảng tiếng Anh, bảng gốc của mọi ngôn ngữ. Dùng để chọn khoá
+ * theo biến thể (`rule.T2.what.dropped_node`) trước khi lùi về khoá gốc.
+ */
+export function hasMessage(key: string): key is I18nKey {
+  return tables.en?.[key as I18nKey] !== undefined;
+}
+
+/**
  * Điền khuôn câu `key` của `lang` bằng `params`. Khoá vắng trong ngôn ngữ đã
  * chọn thì dùng tiếng Anh. Tham số thiếu thì ném lỗi; tham số thừa bị bỏ qua.
  * `fmtNumber` định dạng `#` trong cấu trúc số nhiều.

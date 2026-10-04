@@ -3,9 +3,9 @@
   "pages": [
     {
       "body": {
-        "total_count": 2,
-        "item_count": 2,
-        "filtered_count": 2,
+        "total_count": 6,
+        "item_count": 6,
+        "filtered_count": 6,
         "page": 1,
         "page_size": 500,
         "page_count": 1,
@@ -13,12 +13,45 @@
           {
             "confirm": false,
             "connection_details": {
-              "name": "conn-08ec848fb9"
+              "name": "conn-3ae75ecb4a"
             },
             "consumer_count": 1,
             "global_prefetch_count": 0,
             "message_stats": [],
-            "name": "conn-3039cbcd8a",
+            "name": "conn-87925fa05b",
+            "number": 2,
+            "prefetch_count": 1,
+            "user": "ocho-admin",
+            "vhost": "/"
+          },
+          {
+            "confirm": true,
+            "connection_details": {
+              "name": "conn-356b459330"
+            },
+            "consumer_count": 0,
+            "global_prefetch_count": 0,
+            "message_stats": {
+              "publish": 150,
+              "publish_details": {
+                "rate": 0
+              }
+            },
+            "name": "conn-4ed549f6f0",
+            "number": 1,
+            "prefetch_count": 0,
+            "user": "ocho-admin",
+            "vhost": "/"
+          },
+          {
+            "confirm": false,
+            "connection_details": {
+              "name": "conn-a6494b1d42"
+            },
+            "consumer_count": 1,
+            "global_prefetch_count": 0,
+            "message_stats": [],
+            "name": "conn-058be1f2d6",
             "number": 1,
             "prefetch_count": 20,
             "user": "ocho-admin",
@@ -27,17 +60,50 @@
           {
             "confirm": true,
             "connection_details": {
-              "name": "conn-ca4dddd673"
+              "name": "conn-ba512e958e"
             },
             "consumer_count": 0,
             "global_prefetch_count": 0,
             "message_stats": {
-              "publish": 27,
+              "publish": 61,
               "publish_details": {
                 "rate": 0
               }
             },
-            "name": "conn-567d04e187",
+            "name": "conn-3bb361ca26",
+            "number": 1,
+            "prefetch_count": 0,
+            "user": "ocho-admin",
+            "vhost": "/"
+          },
+          {
+            "confirm": false,
+            "connection_details": {
+              "name": "conn-59945cd190"
+            },
+            "consumer_count": 1,
+            "global_prefetch_count": 0,
+            "message_stats": [],
+            "name": "conn-a8d568a3ae",
+            "number": 2,
+            "prefetch_count": 0,
+            "user": "ocho-admin",
+            "vhost": "/"
+          },
+          {
+            "confirm": false,
+            "connection_details": {
+              "name": "conn-61c80d6f3c"
+            },
+            "consumer_count": 0,
+            "global_prefetch_count": 0,
+            "message_stats": {
+              "publish": 153,
+              "publish_details": {
+                "rate": 0
+              }
+            },
+            "name": "conn-0bb366c774",
             "number": 1,
             "prefetch_count": 0,
             "user": "ocho-admin",
@@ -45,7 +111,7 @@
           }
         ]
       },
-      "observedAt": "2026-10-04T06:15:49.977Z"
+      "observedAt": "2026-10-04T07:31:34.163Z"
     }
   ]
 }

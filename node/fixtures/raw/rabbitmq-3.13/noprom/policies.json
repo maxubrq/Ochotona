@@ -4,6 +4,16 @@
     {
       "body": [
         {
+          "vhost": "/",
+          "name": "legacy-ha",
+          "pattern": "^legacy$",
+          "apply-to": "queues",
+          "definition": {
+            "ha-mode": "all"
+          },
+          "priority": 0
+        },
+        {
           "vhost": "payments",
           "name": "orders-limit",
           "pattern": "^orders\\.",
@@ -22,9 +32,29 @@
             "message-ttl": 86400000
           },
           "priority": 1
+        },
+        {
+          "vhost": "/",
+          "name": "overlap-b",
+          "pattern": "^overl",
+          "apply-to": "queues",
+          "definition": {
+            "dead-letter-exchange": "events.unrouted"
+          },
+          "priority": 1
+        },
+        {
+          "vhost": "/",
+          "name": "overlap-a",
+          "pattern": "^overlap$",
+          "apply-to": "queues",
+          "definition": {
+            "max-length": 1000
+          },
+          "priority": 2
         }
       ],
-      "observedAt": "2026-10-04T06:15:55.297Z"
+      "observedAt": "2026-10-04T07:31:39.499Z"
     }
   ]
 }

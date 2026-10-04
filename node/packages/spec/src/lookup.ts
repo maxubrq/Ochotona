@@ -4,6 +4,7 @@ import { BLIND_SPOTS } from './gen/blind-spots';
 import { CAPABILITY_RANGES } from './gen/capabilities';
 import { CODES } from './gen/codes';
 import { EXCLUSIONS } from './gen/exclusions';
+import { FIX_TEMPLATES } from './gen/fix-templates';
 import { KEYS } from './gen/keys';
 import { type RuleCode, RULES } from './gen/rules';
 import { SCHEMAS } from './gen/schemas';
@@ -20,6 +21,7 @@ import type {
   CapabilityRange,
   CodeEntry,
   Exclusion,
+  FixTemplate,
   KeyDef,
   QueueType,
   RuleMeta,
@@ -141,6 +143,20 @@ export function exclusionsFor(
   scope: 'topology' | 'rules',
 ): readonly Exclusion[] {
   return exclusions.filter((x) => x.kind === kind && x.scopes.includes(scope));
+}
+
+// --------------------------------------------------------------- khuôn lệnh sửa
+
+export const fixTemplates: readonly FixTemplate[] = FIX_TEMPLATES;
+
+/**
+ * Khuôn lệnh sửa theo id. Ném lỗi khi không có: id là hằng trong code luật.
+ * @example fixTemplate('policy.declare').params // ['vhost', 'name', …]
+ */
+export function fixTemplate(id: string): FixTemplate {
+  const t = fixTemplates.find((x) => x.id === id);
+  if (!t) throw new Error(`@ochotona/spec: unknown fix template ${id}`);
+  return t;
 }
 
 // --------------------------------------------------------------- mã, mức

@@ -3,9 +3,9 @@
   "pages": [
     {
       "body": {
-        "total_count": 2,
-        "item_count": 2,
-        "filtered_count": 2,
+        "total_count": 6,
+        "item_count": 6,
+        "filtered_count": 6,
         "page": 1,
         "page_size": 500,
         "page_count": 1,
@@ -14,9 +14,9 @@
             "acks_uncommitted": 0,
             "confirm": false,
             "connection_details": {
-              "name": "conn-0784eebf17",
-              "peer_host": "host-3c48d35857",
-              "peer_port": 35022
+              "name": "conn-7224cf6565",
+              "peer_host": "host-13e1234d45",
+              "peer_port": 43370
             },
             "consumer_count": 1,
             "garbage_collection": {
@@ -24,20 +24,20 @@
               "max_heap_size": 0,
               "min_bin_vheap_size": 1727361,
               "min_heap_size": 233,
-              "minor_gcs": 9
+              "minor_gcs": 33
             },
             "message_stats": {
-              "ack": 24,
+              "ack": 61,
               "ack_details": {
-                "rate": 2
+                "rate": 0
               },
-              "deliver": 24,
+              "deliver": 61,
               "deliver_details": {
-                "rate": 2
+                "rate": 0
               },
-              "deliver_get": 24,
+              "deliver_get": 61,
               "deliver_get_details": {
-                "rate": 2
+                "rate": 0
               },
               "deliver_no_ack": 0,
               "deliver_no_ack_details": {
@@ -63,14 +63,14 @@
             "messages_unacknowledged": 0,
             "messages_uncommitted": 0,
             "messages_unconfirmed": 0,
-            "name": "conn-1132463f9c",
-            "node": "rabbit@host-2345948ab9",
+            "name": "conn-2994a0e5c3",
+            "node": "rabbit@host-0538ca54d0",
             "number": 1,
             "pending_raft_commands": 0,
             "prefetch_count": 20,
-            "reductions": 10834,
+            "reductions": 24119,
             "reductions_details": {
-              "rate": 735.6
+              "rate": 0
             },
             "state": "running",
             "transactional": false,
@@ -82,9 +82,9 @@
             "acks_uncommitted": 0,
             "confirm": true,
             "connection_details": {
-              "name": "conn-87fbbb21b4",
-              "peer_host": "host-3c48d35857",
-              "peer_port": 35036
+              "name": "conn-2572a12a0d",
+              "peer_host": "host-13e1234d45",
+              "peer_port": 43374
             },
             "consumer_count": 0,
             "garbage_collection": {
@@ -92,20 +92,20 @@
               "max_heap_size": 0,
               "min_bin_vheap_size": 1727361,
               "min_heap_size": 233,
-              "minor_gcs": 21
+              "minor_gcs": 63
             },
             "message_stats": {
-              "confirm": 24,
+              "confirm": 61,
               "confirm_details": {
-                "rate": 2
+                "rate": 0
               },
               "drop_unroutable": 0,
               "drop_unroutable_details": {
                 "rate": 0
               },
-              "publish": 24,
+              "publish": 61,
               "publish_details": {
-                "rate": 2
+                "rate": 0
               },
               "return_unroutable": 0,
               "return_unroutable_details": {
@@ -115,14 +115,254 @@
             "messages_unacknowledged": 0,
             "messages_uncommitted": 0,
             "messages_unconfirmed": 0,
-            "name": "conn-77da9c3916",
-            "node": "rabbit@host-2345948ab9",
+            "name": "conn-b0f4e137ba",
+            "node": "rabbit@host-0538ca54d0",
             "number": 1,
             "pending_raft_commands": 0,
             "prefetch_count": 0,
-            "reductions": 19305,
+            "reductions": 45292,
             "reductions_details": {
-              "rate": 1471.4
+              "rate": 0
+            },
+            "state": "running",
+            "transactional": false,
+            "user": "ocho-admin",
+            "user_who_performed_action": "ocho-admin",
+            "vhost": "/"
+          },
+          {
+            "acks_uncommitted": 0,
+            "confirm": false,
+            "connection_details": {
+              "name": "conn-67ea6e20ae",
+              "peer_host": "host-e5084dd047",
+              "peer_port": 36856
+            },
+            "consumer_count": 1,
+            "garbage_collection": {
+              "fullsweep_after": 65535,
+              "max_heap_size": 0,
+              "min_bin_vheap_size": 1727361,
+              "min_heap_size": 233,
+              "minor_gcs": 19
+            },
+            "message_stats": {
+              "ack": 32,
+              "ack_details": {
+                "rate": 0
+              },
+              "deliver": 33,
+              "deliver_details": {
+                "rate": 0
+              },
+              "deliver_get": 33,
+              "deliver_get_details": {
+                "rate": 0
+              },
+              "deliver_no_ack": 0,
+              "deliver_no_ack_details": {
+                "rate": 0
+              },
+              "get": 0,
+              "get_details": {
+                "rate": 0
+              },
+              "get_empty": 0,
+              "get_empty_details": {
+                "rate": 0
+              },
+              "get_no_ack": 0,
+              "get_no_ack_details": {
+                "rate": 0
+              },
+              "redeliver": 0,
+              "redeliver_details": {
+                "rate": 0
+              }
+            },
+            "messages_unacknowledged": 1,
+            "messages_uncommitted": 0,
+            "messages_unconfirmed": 0,
+            "name": "conn-eecfbffe6c",
+            "node": "rabbit@host-0538ca54d0",
+            "number": 2,
+            "pending_raft_commands": 0,
+            "prefetch_count": 1,
+            "reductions": 15489,
+            "reductions_details": {
+              "rate": 0
+            },
+            "state": "running",
+            "transactional": false,
+            "user": "ocho-admin",
+            "user_who_performed_action": "ocho-admin",
+            "vhost": "/"
+          },
+          {
+            "acks_uncommitted": 0,
+            "confirm": true,
+            "connection_details": {
+              "name": "conn-019813447c",
+              "peer_host": "host-e5084dd047",
+              "peer_port": 36870
+            },
+            "consumer_count": 0,
+            "garbage_collection": {
+              "fullsweep_after": 65535,
+              "max_heap_size": 0,
+              "min_bin_vheap_size": 1727361,
+              "min_heap_size": 233,
+              "minor_gcs": 88
+            },
+            "message_stats": {
+              "confirm": 150,
+              "confirm_details": {
+                "rate": 0
+              },
+              "drop_unroutable": 0,
+              "drop_unroutable_details": {
+                "rate": 0
+              },
+              "publish": 150,
+              "publish_details": {
+                "rate": 0
+              },
+              "return_unroutable": 0,
+              "return_unroutable_details": {
+                "rate": 0
+              }
+            },
+            "messages_unacknowledged": 0,
+            "messages_uncommitted": 0,
+            "messages_unconfirmed": 0,
+            "name": "conn-334e954b2f",
+            "node": "rabbit@host-0538ca54d0",
+            "number": 1,
+            "pending_raft_commands": 0,
+            "prefetch_count": 0,
+            "reductions": 103477,
+            "reductions_details": {
+              "rate": 0
+            },
+            "state": "running",
+            "transactional": false,
+            "user": "ocho-admin",
+            "user_who_performed_action": "ocho-admin",
+            "vhost": "/"
+          },
+          {
+            "acks_uncommitted": 0,
+            "confirm": false,
+            "connection_details": {
+              "name": "conn-723d71dd67",
+              "peer_host": "host-7cae099c42",
+              "peer_port": 43462
+            },
+            "consumer_count": 1,
+            "garbage_collection": {
+              "fullsweep_after": 65535,
+              "max_heap_size": 0,
+              "min_bin_vheap_size": 1727361,
+              "min_heap_size": 233,
+              "minor_gcs": 50
+            },
+            "message_stats": {
+              "ack": 0,
+              "ack_details": {
+                "rate": 0
+              },
+              "deliver": 0,
+              "deliver_details": {
+                "rate": 0
+              },
+              "deliver_get": 153,
+              "deliver_get_details": {
+                "rate": 0
+              },
+              "deliver_no_ack": 153,
+              "deliver_no_ack_details": {
+                "rate": 0
+              },
+              "get": 0,
+              "get_details": {
+                "rate": 0
+              },
+              "get_empty": 0,
+              "get_empty_details": {
+                "rate": 0
+              },
+              "get_no_ack": 0,
+              "get_no_ack_details": {
+                "rate": 0
+              },
+              "redeliver": 0,
+              "redeliver_details": {
+                "rate": 0
+              }
+            },
+            "messages_unacknowledged": 0,
+            "messages_uncommitted": 0,
+            "messages_unconfirmed": 0,
+            "name": "conn-c0eec9c412",
+            "node": "rabbit@host-0538ca54d0",
+            "number": 2,
+            "pending_raft_commands": 0,
+            "prefetch_count": 0,
+            "reductions": 33002,
+            "reductions_details": {
+              "rate": 0
+            },
+            "state": "running",
+            "transactional": false,
+            "user": "ocho-admin",
+            "user_who_performed_action": "ocho-admin",
+            "vhost": "/"
+          },
+          {
+            "acks_uncommitted": 0,
+            "confirm": false,
+            "connection_details": {
+              "name": "conn-07875532dd",
+              "peer_host": "host-7cae099c42",
+              "peer_port": 43476
+            },
+            "consumer_count": 0,
+            "garbage_collection": {
+              "fullsweep_after": 65535,
+              "max_heap_size": 0,
+              "min_bin_vheap_size": 1727361,
+              "min_heap_size": 233,
+              "minor_gcs": 27
+            },
+            "message_stats": {
+              "confirm": 0,
+              "confirm_details": {
+                "rate": 0
+              },
+              "drop_unroutable": 0,
+              "drop_unroutable_details": {
+                "rate": 0
+              },
+              "publish": 153,
+              "publish_details": {
+                "rate": 0
+              },
+              "return_unroutable": 0,
+              "return_unroutable_details": {
+                "rate": 0
+              }
+            },
+            "messages_unacknowledged": 0,
+            "messages_uncommitted": 0,
+            "messages_unconfirmed": 0,
+            "name": "conn-a8ddf3a43a",
+            "node": "rabbit@host-0538ca54d0",
+            "number": 1,
+            "pending_raft_commands": 0,
+            "prefetch_count": 0,
+            "reductions": 77368,
+            "reductions_details": {
+              "rate": 0
             },
             "state": "running",
             "transactional": false,
@@ -132,7 +372,7 @@
           }
         ]
       },
-      "observedAt": "2026-10-04T06:16:48.982Z"
+      "observedAt": "2026-10-04T07:33:05.654Z"
     }
   ]
 }

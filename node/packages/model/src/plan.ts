@@ -52,6 +52,11 @@ export interface PlanOptions {
   readonly scope?: { readonly vhosts: readonly string[] | 'all' };
   /** Mặc định `true`. */
   readonly prometheus?: boolean;
+  /**
+   * Đọc `/api/users` (tag của mọi user, cho Q3). Mặc định `false`; CLI chỉ bật
+   * khi chạy bằng user quản trị, vì user `monitoring` không đọc được endpoint này.
+   */
+  readonly users?: boolean;
 }
 
 const SORTED = { sort: 'name', sort_reverse: 'false' } as const;
@@ -144,6 +149,8 @@ function inventoryRead(id: EndpointId, vhost: string | null): EndpointRead {
   switch (id) {
     case 'vhosts':
       return simple('vhosts', 'vhosts');
+    case 'users':
+      return simple('users', 'users');
     case 'deprecatedUsed':
       return {
         ...simple('deprecatedUsed', 'deprecated-features', 'used'),
@@ -195,6 +202,7 @@ function inventoryRead(id: EndpointId, vhost: string | null): EndpointRead {
 
 const INVENTORY_ORDER: readonly EndpointId[] = [
   'vhosts',
+  'users',
   'policies',
   'operatorPolicies',
   'deprecatedUsed',
@@ -207,7 +215,7 @@ const INVENTORY_ORDER: readonly EndpointId[] = [
 ];
 
 /** Endpoint không có dạng theo vhost; luôn đọc một lần cho cả cluster. */
-const CLUSTER_WIDE = new Set<EndpointId>(['vhosts', 'deprecatedUsed']);
+const CLUSTER_WIDE = new Set<EndpointId>(['vhosts', 'users', 'deprecatedUsed']);
 
 /**
  * Kế hoạch đọc cho `@ochotona/broker`: endpoint, cột và tham số truy vấn.
@@ -218,6 +226,7 @@ export function planRead(opts: PlanOptions = {}): ReadPlan {
   const scope = opts.scope ?? { vhosts: 'all' };
   const inventory: EndpointRead[] = [];
   for (const id of INVENTORY_ORDER) {
+    if (id === 'users' && opts.users !== true) continue;
     if (requires !== 'all' && !requires.has(id)) continue;
     if (scope.vhosts === 'all' || CLUSTER_WIDE.has(id)) {
       inventory.push(inventoryRead(id, null));

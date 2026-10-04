@@ -103,6 +103,12 @@ import type { BlindSpot } from '../types';
 export const BLIND_SPOTS = ${lit(d.blindSpots)} as const satisfies readonly BlindSpot[];
 `;
 
+  files['fix-templates.ts'] = `${HEADER}
+import type { FixTemplate } from '../types';
+
+export const FIX_TEMPLATES = ${lit(d.fixTemplates)} as const satisfies readonly FixTemplate[];
+`;
+
   files['i18n-keys.ts'] = `${HEADER}
 export type I18nKey = ${union(en)};
 `;

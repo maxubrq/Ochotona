@@ -16,6 +16,7 @@ import { type Observed, known, unknown } from '../observed';
 import { argsKey } from '../ref';
 import {
   type Instant,
+  type Rate,
   type Seconds,
   instantFromMs,
   isPlainObject,
@@ -23,6 +24,7 @@ import {
 import { type ParseOutcome, malformed } from './collect';
 import {
   type FieldCtx,
+  RATE_WINDOW_SECONDS,
   asArgMap,
   asBool,
   asCount,
@@ -151,29 +153,26 @@ export function parseQueue(
       consumers: field(it, 'consumers', 'http.list', fc, asCount),
       ready: field(it, 'messages_ready', 'http.stats', fc, asCount),
       unacked: field(it, 'messages_unacknowledged', 'http.stats', fc, asCount),
-      publishRate: field(
-        it,
-        'message_stats.publish_details.rate',
-        'http.stats',
-        fc,
-        asRate,
-      ),
-      deliverRate: field(
-        it,
-        'message_stats.deliver_get_details.rate',
-        'http.stats',
-        fc,
-        asRate,
-      ),
-      redeliverRate: field(
-        it,
-        'message_stats.redeliver_details.rate',
-        'http.stats',
-        fc,
-        asRate,
-      ),
+      publishRate: idleRate(it, 'message_stats.publish_details.rate', fc),
+      deliverRate: idleRate(it, 'message_stats.deliver_get_details.rate', fc),
+      redeliverRate: idleRate(it, 'message_stats.redeliver_details.rate', fc),
     },
   };
+}
+
+/**
+ * Tốc độ của queue. Khi thống kê bật, queue chưa có sự kiện nào thì API không
+ * có `message_stats` (hoặc không có mục đó): vắng nghĩa là 0, như
+ * `publishCount` của channel. Thống kê tắt thì vẫn là `source_unavailable`.
+ */
+function idleRate(it: unknown, apiPath: string, fc: FieldCtx): Observed<Rate> {
+  const o = field(it, apiPath, 'http.stats', fc, asRate);
+  if (o.state === 'unknown' && o.reason.kind === 'field_absent')
+    return known(
+      { perSecond: 0, windowSeconds: RATE_WINDOW_SECONDS },
+      { source: 'http.stats', path: o.path, observedAt: fc.observedAt },
+    );
+  return o;
 }
 
 export function parseBinding(it0: unknown): ParseOutcome<Binding> | null {

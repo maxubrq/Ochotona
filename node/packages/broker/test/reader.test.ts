@@ -164,6 +164,20 @@ describe('identify và read trên broker giả', () => {
       expect(actual.queues.value).toHaveLength(1);
   });
 
+  it('/api/users chỉ đọc khi kế hoạch bật', async () => {
+    const m = await mock({
+      ...brokerRoutes(),
+      '/api/users': { json: [{ name: 'app', tags: ['administrator'] }] },
+    });
+    const r = reader({ url: m.url });
+    const off = await r.read(planRead(), await identifyOk(r, planRead()), fast);
+    expect(off.status === 'complete' && 'users' in off.raw).toBe(false);
+    expect(m.requests.some((x) => x.path === '/api/users')).toBe(false);
+    const plan = planRead({ users: true });
+    const on = await r.read(plan, await identifyOk(r, plan), fast);
+    expect(on.status === 'complete' && on.raw.users?.status).toBe('ok');
+  });
+
   it('thứ tự các pha và nhóm kiểm kê', async () => {
     const m = await mock(brokerRoutes());
     const r = reader({ url: m.url });

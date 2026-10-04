@@ -10,23 +10,23 @@
           "default_queue_type": "undefined",
           "description": "",
           "message_stats": {
-            "ack": 36,
+            "ack": 111,
             "ack_details": {
               "rate": 0
             },
-            "confirm": 36,
+            "confirm": 250,
             "confirm_details": {
               "rate": 0
             },
-            "deliver": 36,
+            "deliver": 112,
             "deliver_details": {
               "rate": 0
             },
-            "deliver_get": 36,
+            "deliver_get": 290,
             "deliver_get_details": {
               "rate": 0
             },
-            "deliver_no_ack": 0,
+            "deliver_no_ack": 178,
             "deliver_no_ack_details": {
               "rate": 0
             },
@@ -46,7 +46,7 @@
             "get_no_ack_details": {
               "rate": 0
             },
-            "publish": 36,
+            "publish": 428,
             "publish_details": {
               "rate": 0
             },
@@ -59,11 +59,11 @@
               "rate": 0
             }
           },
-          "messages": 1,
+          "messages": 138,
           "messages_details": {
             "rate": 0
           },
-          "messages_ready": 0,
+          "messages_ready": 137,
           "messages_ready_details": {
             "rate": 0
           },
@@ -76,11 +76,11 @@
             "tags": []
           },
           "name": "/",
-          "recv_oct": 6115,
+          "recv_oct": 50561,
           "recv_oct_details": {
             "rate": 0
           },
-          "send_oct": 7479,
+          "send_oct": 50976,
           "send_oct_details": {
             "rate": 0
           },
@@ -115,7 +115,7 @@
           "tracing": false
         }
       ],
-      "observedAt": "2026-10-04T06:15:55.297Z"
+      "observedAt": "2026-10-04T07:31:39.500Z"
     }
   ]
 }

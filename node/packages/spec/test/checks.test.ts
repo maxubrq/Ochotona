@@ -135,6 +135,24 @@ const broken: [string, (d: SpecData) => void, RegExp][] = [
     /en\.json: missing diag\.CX3\.next/,
   ],
   [
+    'variant text in one language only',
+    (d) => (d.i18n.en['rule.T2.what.extra'] = 'Dropped {count} since {since}.'),
+    /vi\.json: missing variant rule\.T2\.what\.extra/,
+  ],
+  [
+    'variant uses an undeclared param',
+    (d) => {
+      d.i18n.en['rule.T4.what.loop'] = 'No limit {nope}.';
+      d.i18n.vi['rule.T4.what.loop'] = 'Không giới hạn {nope}.';
+    },
+    /differ from rules\.json params/,
+  ],
+  [
+    'fix template placeholder not declared',
+    (d) => (d.fixTemplates[0].command = d.fixTemplates[0].command + ' {extra}'),
+    /placeholders .* differ from params/,
+  ],
+  [
     'orphan text key',
     (d) => (d.i18n.en['rule.ZZ9.title'] = 'x'),
     /does not belong/,
