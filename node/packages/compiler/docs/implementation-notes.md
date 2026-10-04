@@ -1,0 +1,96 @@
+# Ghi chú hiện thực v0.1
+
+Những chỗ mã nguồn khác hoặc thêm so với [spec](./spec.md), và lý do. Khi spec và mã khác nhau mà không có dòng ở đây, đó là lỗi.
+
+## Bổ sung so với spec
+
+| Chỗ                                      | Thay đổi                                                                                                                                                                     | Lý do                                                                                                                                                                     |
+| ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `PositionMap`                            | Giao diện `get(path)`, `nearest(path)`; tra trên cây cú pháp khi được hỏi                                                                                                    | Chỉ chẩn đoán mới cần vị trí; ghi trước cho mọi nút của file 10.000 queue tốn vài trăm mili-giây                                                                          |
+| `YamlDiag`                               | `{ code, severity, path, params, pos }`                                                                                                                                      | Vị trí của YP, YW biết ngay từ mã nguồn; `path` có khi xác định được (YP5, YW1, YW2)                                                                                      |
+| Tuỳ chọn parse                           | `uniqueKeys: false`; khoá trùng (YP2) do `readOchoYaml` phát hiện bằng Set                                                                                                   | Kiểm `uniqueKeys` của thư viện là O(n²) trên một map, chiếm hơn một giây với 10.000 luồng                                                                                 |
+| `writeOchoYaml`                          | Tuỳ chọn `keep: ('services' \| 'waivers')[]`: lấy nguyên mục đó từ `base`                                                                                                    | `Desired.waivers` chỉ có waiver còn hiệu lực; sinh lại từ `Desired` sẽ xoá waiver đã hết hạn, trái với "không đụng tới" của bảng hợp nhất                                 |
+| `loadOchoYaml(text, now, file?)`         | Tham số `file` cho chẩn đoán                                                                                                                                                 | Mặc định `ocho.yaml`                                                                                                                                                      |
+| `formatJson`, `messageOf`, `severityOf`  | Xuất ra                                                                                                                                                                      | Dạng JSON của mục định vị chẩn đoán; mức của mã (Y10, YW là cảnh báo)                                                                                                     |
+| `formatGnu`                              | Cần nạp văn bản trước (`import '@ochotona/spec/i18n/en'`)                                                                                                                    | Như `@ochotona/rules`: compiler không kéo văn bản vào bundle                                                                                                              |
+| `inferFlows(t, actual?)`                 | `actual` tuỳ chọn, cho tốc độ; không có thì `rate: null`                                                                                                                     | Chữ ký của spec chỉ nhận `Topology`, nhưng `FlowCandidate.rate` cần `Actual`                                                                                              |
+| `UnmanagedReason`                        | Thêm `unsupported_exchange_type` (exchange của plugin, ví dụ `x-delayed-message`) và `no_queue_bindings` (exchange không có binding nào)                                     | Spec nói "thứ gì không thành luồng được thì được liệt kê kèm lý do" nhưng bảng chỉ có hai lý do                                                                           |
+| `ExistingFile`                           | `{ text, file? }` thay cho `{ text, desired }`                                                                                                                               | Phiên tự đọc file cũ để trả IM2 kèm chẩn đoán đã định vị; file có lỗi thì không có `desired`                                                                              |
+| `Question`, `Answer`                     | Thêm dạng `family_members` (`add` \| `skip`)                                                                                                                                 | Thay đổi 5 của spec; spec chưa cho hình dạng                                                                                                                              |
+| `AnswerError`                            | `{ code: 'unknown_question' \| 'wrong_kind' \| 'invalid_param' \| 'invalid_value', id, detail }`                                                                             | Spec chưa cho hình dạng                                                                                                                                                   |
+| `ImportError`                            | IM1 là `RoundTripError`; IM2 là `{ reason: 'invalid_file', diagnostics }`; thêm `{ code: 'incomplete', remaining }` khi gọi `result()` lúc còn câu hỏi                       | `incomplete` là lỗi của CLI, không phải của người dùng, nên không có mã trong `codes.json`                                                                                |
+| `ImportSession.phase`                    | `'families' \| 'tolerance' \| 'done'`                                                                                                                                        | Để CLI in tiến độ                                                                                                                                                         |
+| `ImportResult`                           | `summary` có thêm `newFlows`, `newFamilies`, `membersAdded`, `vanishedFlows`, `defaulted`; `changes` (diff topology khi import lại); `warnings` (`broker_below_min_version`) | Mục "thay đổi in ra" và dòng `broker.min_version` của bảng hợp nhất                                                                                                       |
+| `roundTrip(desired, actual, now, opts?)` | Nhận tuỳ chọn ghi; thành công trả `{ text }`                                                                                                                                 | Bước 7 so từng byte nên phải ghi với đúng header, chú thích và file cũ đã dùng; văn bản đã qua tự kiểm chính là thứ CLI ghi ra                                            |
+| `defaultSchemaUrl(toolVersion)`          | URL schema cho dòng đầu file                                                                                                                                                 | Dựng từ khuôn `docs.spec` của gói spec: cùng kho, cùng thẻ, đường dẫn `node/packages/spec/schemas/contracts/ocho-yaml-0.1.json`. Khuôn còn `<org>` chờ tên tổ chức GitHub |
+| `formatChange(change)`                   | Một dòng cho mỗi thay đổi topology                                                                                                                                           | Dạng `+ queue billing.ledger`, `~ queue orders: arguments.x-max-length 1000 → 5000` của spec                                                                              |
+| `import.consequence.<dạng>`              | Bốn khoá văn bản trong gói spec (`binding`, `fanout`, `direct`, `family`)                                                                                                    | `consequence` cần khoá i18n; spec chưa đặt tên                                                                                                                            |
+
+## Quyết định nhỏ spec chưa nói
+
+**Ghi YAML.**
+
+- **Quy tắc trích dẫn mở rộng.** Ngoài danh sách của spec, chuỗi cũng vào nháy kép khi kết thúc bằng `:`, chứa `,` `[` `]` `{` `}` ở bất kỳ đâu (cắt chuỗi trơn trong kiểu flow), là `<<` hoặc `=` (merge key, value key của YAML 1.1). Mẫu tên như `request_{p1}_q` vì vậy luôn có nháy.
+- **Ký tự phải thoát.** C0, DEL, C1, U+2028, U+2029, BOM, U+FFFE, U+FFFF (ngoài tập in được của YAML) và surrogate lẻ viết `\uXXXX`. Unicode khác ghi nguyên văn.
+- **Số nguyên ngoài `Number.MAX_SAFE_INTEGER`** (argument của broker) ghi dạng mũ (`1.152921504606847e+18`): đọc lại đúng giá trị và không bị YP5. Property test tìm ra ca này.
+- **Lớp topology bỏ giá trị bằng mặc định của model**: `auto_delete: false`, `internal: false`, `arguments: {}`, `destination_type: queue`, `routing_key: ""`. `vhost`, `name`, `type`, `durable` luôn ghi, như ví dụ ở tab v0.1. Lý do: phần tử vừa một dòng 120 ký tự, và file của broker 10.000 queue giảm từ 5,2 MB (sát ngưỡng YP6) xuống 4 MB.
+- **Lớp topology kết xuất thẳng thành văn bản** (`yaml/emit.ts`), không qua cây `Document`. Lớp này luôn sinh lại nên không cần giữ chú thích; tự kiểm vòng tròn vẫn đọc lại bằng `readOchoYaml`.
+- **`flow` trong topology** chỉ ghi cho queue, exchange thuộc đúng một luồng.
+- **Mục rỗng.** `families`, `flows` luôn ghi (`{}` khi rỗng); `services`, `waivers` chỉ khi khác rỗng.
+- **Danh sách và map ngắn** của lớp ngữ nghĩa (`groups`, `members`, `broker`, `object` của waiver) ghi kiểu flow khi vừa 120 ký tự. Ngoặc có đệm (`[ a, b ]`), theo mặc định của thư viện `yaml`.
+- **Header.** Sau ba dòng đầu có một dòng trống. Chú thích cấp document của người dùng giữ ngay sau header.
+
+**Chú thích khi import lại.**
+
+- **Đề xuất chưa duyệt** nằm ngay dưới khoá `families` khi map có phần tử; khi `families: {}` thì nằm ngay trên khoá.
+- **Chú thích của người dùng** ngay trên khoá `topology` và ở cuối file được giữ; chú thích bên trong lớp topology mất khi sinh lại.
+- **Thành viên mất** gộp thành một chú thích trên `members`: `# ocho: not found in broker at <now>: pdf`.
+- **Queue mới khớp family tĩnh ở chế độ không tương tác** không được thêm; chú thích `# ocho: new queues match this family: <queue>` để người duyệt thấy.
+- **File cũ không parse được** khi gọi thẳng `writeOchoYaml`: bỏ qua `base`. Phiên import không tới được chỗ này vì đã dừng ở IM2.
+
+**Suy luận.**
+
+- **Tên family và luồng của đề xuất được chấp nhận**: `<exchange>/<mẫu routing key>` (ví dụ `scan.request/request_{engine_id}`), thêm `@<vhost>` khi không ở `/`. Theo ví dụ câu hỏi ở tab v0.1; ví dụ `ocho.yaml` ở cùng tab đặt tên bằng tên exchange, sẽ va khi một exchange có nhiều family.
+- **Lưới cuối cho va tên** (`~2`, `~3`…): sau hai bậc của spec, tên vẫn có thể trùng khi tên exchange chứa `/` hoặc trùng tên luồng khác; import lại cũng dùng lưới này khi luồng mới trùng tên luồng cũ.
+- **Exchange dựng sẵn `amq.*`** bị bỏ khỏi topology (EX2) nhưng binding của chúng vẫn sinh luồng; loại lấy theo tên.
+- **Chữ ký của family** dùng tên policy có priority cao nhất khớp queue theo topology; hoà priority hoặc regex ngoài tập hỗ trợ thì là `?`. Exchange của family phải là `direct` hoặc `topic`.
+- **`FamilyProposal.id`**: 12 ký tự hex đầu của SHA-256 trên `stableJson([vhost, exchange, queueTemplate])`.
+- **Import lại, ứng viên phủ một phần**: luồng mới chỉ gồm các queue chưa được luồng nào nhận. Phủ tính theo bộ (vhost, exchange, routing key, queue), như Y13.
+- **Family `registry` nhiều tham số**: mỗi queue khớp mẫu điền đúng các giá trị tách được vào mẫu routing key.
+
+**Khác.**
+
+- **Mặc định của file mới**: `spec` là `major.minor` của `SPEC_VERSION` (`"0.4"`); `broker.min_version` là `major.minor` của broker, không biết thì `BROKER_SUPPORT.minSupported`.
+- **YW2** áp cho `durable`, `auto_delete` của queue và exchange, `internal` của exchange.
+- **Vị trí** là của giá trị: Y1 trỏ vào giá trị của khoá lạ. Map, seq kiểu block kết thúc ở ký tự cuối, không ở đầu dòng sau.
+- **Thứ tự câu hỏi dung sai**: luồng không có tốc độ đứng sau mọi luồng có tốc độ.
+- **Khoá `__proto__`.** Tên luồng, family và khoá argument gán bằng `Object.defineProperty`; gán thường đổi prototype thay vì thêm khoá. Property test tìm ra ca khoá argument.
+
+## Phát hiện ở gói khác
+
+- **`@ochotona/model`, `buildDesired`**: `flows[name] = …`, `families[name] = …`, `services[name] = …` với `name` là `__proto__` đổi prototype của object thay vì thêm khoá, nên luồng đó biến mất khỏi `Desired`. Compiler không sửa model; tự kiểm vòng tròn sẽ báo IM1 bước 6 nếu gặp.
+
+## Tình trạng so với định nghĩa hoàn thành
+
+| Mục                                                        | Tình trạng                                                                                                                                                                                                                                                                                                                                |
+| ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Mọi test ở bảng                                            | Có: `read`, `quote` (fast-check, `yaml` và `js-yaml`), `write`, `merge` (mỗi dòng bảng hợp nhất, file cũ có lỗi), `infer-flows`, `infer-families`, `session`, `roundtrip` (10.000 ca), `locate` (snapshot hai thứ tiếng), `perf`                                                                                                          |
+| Phủ nhánh ≥ 95% cho `write.ts`, `families.ts`, `merge.ts`  | Có: 98%, 97%, 100%                                                                                                                                                                                                                                                                                                                        |
+| Ba fixture import qua `createImportSession` và `roundTrip` | Có: bốn bản ghi thật `fixtures/raw/rabbitmq-*/full`, cả tương tác và không tương tác, import lại cho đúng file cũ. Bản ghi thật không có family nào, nên fixture có family là broker tổng hợp (`scanBroker`)                                                                                                                              |
+| Mã YP, YW, IM trong `codes.json`, đủ hai thứ tiếng         | Có, cùng kiểm chéo của `pnpm codegen`                                                                                                                                                                                                                                                                                                     |
+| Phụ thuộc lúc chạy chỉ `spec`, `model`, `yaml`             | Có; `js-yaml`, `fast-check` chỉ ở dev                                                                                                                                                                                                                                                                                                     |
+| Hiệu năng ≤ 2 giây                                         | Sát ngưỡng. Trên máy phát triển, trung vị ba lần là khoảng 1,85 giây trong vitest (1,7 giây với bản build chạy bằng node); lần đầu khoảng 2,0 giây. Khoảng 0,85 giây là parser của thư viện `yaml` đọc file 4 MB ở bước 3 của tự kiểm, không cắt được mà không đổi định dạng file. Test hiệu năng chạy riêng sau bộ chính và lấy trung vị |
+
+## Mutation testing (Stryker)
+
+`pnpm test:mutation` chạy Stryker trên bốn file dễ sai mà test vẫn xanh: `yaml/scalar.ts`, `infer/families.ts`, `import/merge.ts`, `yaml/write.ts`. Ngưỡng 85% (như `@ochotona/rules`); hiện 99,6% (918 mutant bị giết), khoảng 12 phút.
+
+- **Runner `command`**, như rules: mỗi mutant chạy `vitest run --config vitest.stryker.config.ts` trong tiến trình riêng. Cấu hình đó bỏ test hiệu năng và hạ property test vòng tròn còn 200 ca qua `OCHO_PROPERTY_RUNS`; test chéo thư viện của quy tắc trích dẫn giữ đủ ca.
+- **Lượt đầu 79,5%**, `scalar.ts` chỉ 64%. Mutant sống chỉ ra: regex số chồng nhau (bỏ một regex test vẫn xanh), test thiếu chuỗi gần giống phải viết trơn (`a0x1F`, `nullx`, `1:20b`), thiếu ranh giới đúng 120/121 ký tự, thiếu test giữ thứ tự `families`, `services` của người dùng, thiếu test queue không thuộc luồng nào (mutant ghi `flow: undefined` mà tự kiểm vòng tròn không bắt vì `normalizeTopology` bỏ `flow`), và hai test có đầu vào sai (bị loại vì lý do khác lý do đang kiểm). Mã thừa đã gỡ: bộ ghi số nguyên của thư viện (không còn dùng từ khi topology kết xuất riêng), nhánh "giữ nút cũ khi bằng nhau" (cho cùng kết quả với nhánh dựng lại), các kiểm phòng thủ không thể xảy ra.
+- **Mutant tương đương** được đánh dấu `// Stryker disable … : <lý do>` ngay tại chỗ: cache của `formatString`, các kiểm `< MIN_MEMBERS` chỉ để bớt việc, tuỳ chọn trùng mặc định của thư viện `yaml`, `kind` trong khoá sắp khi cả danh sách cùng loại.
+- **Bốn mutant còn sống** đều ở nhánh hợp nhất của `write.ts` (đường dẫn, thụt lề của phần tử danh sách, kiểm `isNode` trong `stripOcho`): kiểu flow của nút con lúc đó đã theo nút cũ, và giá trị trong cây luôn là nút, nên kết quả không đổi.
+
+**Giả định.**
+
+- **GC28** đúng với thư viện `yaml` 2.9: test giữ chú thích xanh khi thêm, sửa, xoá phần tử qua cây `Document`.
+- **GC29** yếu hơn spec giả định. `js-yaml` 4 đọc boolean theo YAML 1.2 (`yes`, `on` là chuỗi) và bỏ số lục thập phân, nên nó không đại diện cho PyYAML. Tập chuỗi mơ hồ của compiler lấy theo bảng resolver của PyYAML (boolean, null, số có gạch dưới, `0b`, số 0 đầu, lục thập phân, timestamp); test chéo thư viện vẫn chạy với `js-yaml` như spec yêu cầu, và một danh sách tường minh kiểm từng dạng mơ hồ.

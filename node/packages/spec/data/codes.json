@@ -892,6 +892,20 @@
       "status": "active"
     },
     {
+      "code": "IM1",
+      "owner": "tool",
+      "kind": "diagnostic",
+      "meaning": "Import round-trip self-check failed",
+      "status": "active"
+    },
+    {
+      "code": "IM2",
+      "owner": "tool",
+      "kind": "diagnostic",
+      "meaning": "Existing ocho.yaml cannot be merged on re-import",
+      "status": "active"
+    },
+    {
       "code": "INV1",
       "owner": "tool",
       "kind": "model-invariant",
@@ -1451,6 +1465,62 @@
       "owner": "tool",
       "kind": "diagnostic",
       "meaning": "broker.min_version does not parse",
+      "status": "active"
+    },
+    {
+      "code": "YP1",
+      "owner": "tool",
+      "kind": "diagnostic",
+      "meaning": "YAML syntax error in ocho.yaml",
+      "status": "active"
+    },
+    {
+      "code": "YP2",
+      "owner": "tool",
+      "kind": "diagnostic",
+      "meaning": "Duplicate key in a YAML map",
+      "status": "active"
+    },
+    {
+      "code": "YP3",
+      "owner": "tool",
+      "kind": "diagnostic",
+      "meaning": "ocho.yaml has more than one YAML document",
+      "status": "active"
+    },
+    {
+      "code": "YP4",
+      "owner": "tool",
+      "kind": "diagnostic",
+      "meaning": "Anchor, alias, tag or merge key in ocho.yaml",
+      "status": "active"
+    },
+    {
+      "code": "YP5",
+      "owner": "tool",
+      "kind": "diagnostic",
+      "meaning": "Integer outside the safe integer range",
+      "status": "active"
+    },
+    {
+      "code": "YP6",
+      "owner": "tool",
+      "kind": "diagnostic",
+      "meaning": "ocho.yaml is larger than 5 MB",
+      "status": "active"
+    },
+    {
+      "code": "YW1",
+      "owner": "tool",
+      "kind": "diagnostic",
+      "meaning": "Integer with a leading zero reads differently in YAML 1.1",
+      "status": "active"
+    },
+    {
+      "code": "YW2",
+      "owner": "tool",
+      "kind": "diagnostic",
+      "meaning": "YAML 1.1 boolean word where a boolean is expected",
       "status": "active"
     }
   ]

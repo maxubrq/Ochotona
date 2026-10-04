@@ -34,6 +34,10 @@
     "^exclusion\\.EX[0-9]+$": {
       "type": "string",
       "minLength": 1
+    },
+    "^import\\.consequence\\.(binding|direct|family|fanout)$": {
+      "type": "string",
+      "minLength": 1
     }
   }
 }

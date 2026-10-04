@@ -156,12 +156,15 @@ export const TOOL_PREFIXES = [
   'DX',
   'EX',
   'GC',
+  'IM',
   'INV',
   'LE',
   'OC',
   'SNAP',
   'VT',
   'Y',
+  'YP',
+  'YW',
 ];
 export const CORE_PREFIXES = [
   'A',
@@ -195,6 +198,13 @@ const RULE_KEYS = [
   'action',
 ] as const;
 const DIAG_KEYS = ['message', 'next'] as const;
+/** Văn bản của phiên import: một dòng hệ quả của `strict` cho mỗi dạng đích. */
+export const IMPORT_KEYS = [
+  'import.consequence.binding',
+  'import.consequence.direct',
+  'import.consequence.family',
+  'import.consequence.fanout',
+] as const;
 /** Trường có thể có khoá theo biến thể: `rule.T2.what.dropped_node`. */
 const VARIANT_FIELDS = ['what', 'dataSafety', 'next', 'mechanism'] as const;
 const VARIANT_RE = new RegExp(
@@ -378,6 +388,7 @@ export function crossCheck(d: SpecData): string[] {
   for (const k of d.spec.reasonKinds)
     required.push(`reason.${k}`, `reason.${k}.unlock`);
   for (const x of d.exclusions) required.push(`exclusion.${x.id}`);
+  required.push(...IMPORT_KEYS);
   const requiredSet = new Set(required);
   // Khoá theo biến thể: tuỳ chọn, nhưng phải có ở cả hai ngôn ngữ và thuộc một luật.
   const variantKeys = [
@@ -403,7 +414,7 @@ export function crossCheck(d: SpecData): string[] {
     for (const [k, v] of Object.entries(table)) {
       if (!requiredSet.has(k) && !variantSet.has(k))
         err(
-          `${f}: ${k} does not belong to any rule, code, reason or exclusion`,
+          `${f}: ${k} does not belong to any rule, code, reason, exclusion or import text`,
         );
       if (v === '' && !k.endsWith('.unlock')) err(`${f}: ${k} is empty`);
       const p = parseTemplate(v);

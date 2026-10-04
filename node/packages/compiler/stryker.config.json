@@ -1,0 +1,23 @@
+{
+  "$schema": "./node_modules/@stryker-mutator/core/schema/stryker-schema.json",
+  "$comment": "Mutation testing cho phần dễ sai âm thầm: quy tắc trích dẫn, suy họ topology, hợp nhất khi import lại, chọn mục và chú thích khi ghi. Runner command như @ochotona/rules (vitest-runner 10 không bật được mutant trong worker của vitest 5).",
+  "testRunner": "command",
+  "mutate": [
+    "src/yaml/scalar.ts",
+    "src/infer/families.ts",
+    "src/import/merge.ts",
+    "src/yaml/write.ts"
+  ],
+  "thresholds": {
+    "high": 90,
+    "low": 85,
+    "break": 85
+  },
+  "reporters": ["clear-text", "progress", "json"],
+  "tempDirName": ".stryker-tmp",
+  "concurrency": 6,
+  "commandRunner": {
+    "command": "node ../../node_modules/vitest/vitest.mjs run --config vitest.stryker.config.ts"
+  },
+  "coverageAnalysis": "off"
+}

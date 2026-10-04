@@ -130,6 +130,8 @@ export type Code =
   | 'I1'
   | 'I6'
   | 'I7'
+  | 'IM1'
+  | 'IM2'
   | 'INV1'
   | 'INV2'
   | 'INV3'
@@ -209,7 +211,15 @@ export type Code =
   | 'Y11'
   | 'Y12'
   | 'Y13'
-  | 'Y14';
+  | 'Y14'
+  | 'YP1'
+  | 'YP2'
+  | 'YP3'
+  | 'YP4'
+  | 'YP5'
+  | 'YP6'
+  | 'YW1'
+  | 'YW2';
 export type DiagCode =
   | 'CX1'
   | 'CX2'
@@ -221,6 +231,8 @@ export type DiagCode =
   | 'CX8'
   | 'CX9'
   | 'CX10'
+  | 'IM1'
+  | 'IM2'
   | 'OC1'
   | 'SNAP1'
   | 'SNAP2'
@@ -238,7 +250,15 @@ export type DiagCode =
   | 'Y11'
   | 'Y12'
   | 'Y13'
-  | 'Y14';
+  | 'Y14'
+  | 'YP1'
+  | 'YP2'
+  | 'YP3'
+  | 'YP4'
+  | 'YP5'
+  | 'YP6'
+  | 'YW1'
+  | 'YW2';
 export type ExclusionCode =
   'EX1' | 'EX2' | 'EX3' | 'EX4' | 'EX5' | 'EX6' | 'EX7' | 'EX8' | 'EX9';
 export type AssumptionCode =
@@ -1190,6 +1210,20 @@ export const CODES = [
     status: 'active',
   },
   {
+    code: 'IM1',
+    owner: 'tool',
+    kind: 'diagnostic',
+    meaning: 'Import round-trip self-check failed',
+    status: 'active',
+  },
+  {
+    code: 'IM2',
+    owner: 'tool',
+    kind: 'diagnostic',
+    meaning: 'Existing ocho.yaml cannot be merged on re-import',
+    status: 'active',
+  },
+  {
     code: 'INV1',
     owner: 'tool',
     kind: 'model-invariant',
@@ -1759,6 +1793,62 @@ export const CODES = [
     owner: 'tool',
     kind: 'diagnostic',
     meaning: 'broker.min_version does not parse',
+    status: 'active',
+  },
+  {
+    code: 'YP1',
+    owner: 'tool',
+    kind: 'diagnostic',
+    meaning: 'YAML syntax error in ocho.yaml',
+    status: 'active',
+  },
+  {
+    code: 'YP2',
+    owner: 'tool',
+    kind: 'diagnostic',
+    meaning: 'Duplicate key in a YAML map',
+    status: 'active',
+  },
+  {
+    code: 'YP3',
+    owner: 'tool',
+    kind: 'diagnostic',
+    meaning: 'ocho.yaml has more than one YAML document',
+    status: 'active',
+  },
+  {
+    code: 'YP4',
+    owner: 'tool',
+    kind: 'diagnostic',
+    meaning: 'Anchor, alias, tag or merge key in ocho.yaml',
+    status: 'active',
+  },
+  {
+    code: 'YP5',
+    owner: 'tool',
+    kind: 'diagnostic',
+    meaning: 'Integer outside the safe integer range',
+    status: 'active',
+  },
+  {
+    code: 'YP6',
+    owner: 'tool',
+    kind: 'diagnostic',
+    meaning: 'ocho.yaml is larger than 5 MB',
+    status: 'active',
+  },
+  {
+    code: 'YW1',
+    owner: 'tool',
+    kind: 'diagnostic',
+    meaning: 'Integer with a leading zero reads differently in YAML 1.1',
+    status: 'active',
+  },
+  {
+    code: 'YW2',
+    owner: 'tool',
+    kind: 'diagnostic',
+    meaning: 'YAML 1.1 boolean word where a boolean is expected',
     status: 'active',
   },
 ] as const satisfies readonly CodeEntry[];

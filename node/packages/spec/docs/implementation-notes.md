@@ -17,6 +17,8 @@ Những chỗ mã nguồn khác hoặc thêm so với [spec](./spec.md), và lý
 | `exclusion.<MÃ>`                                  | Một câu cho mỗi loại trừ, cả hai thứ tiếng                                                           | Spec nói có văn bản nhưng chưa có trong bảng khoá                                                                                                  |
 | `AssumptionCode`                                  | GC1 đến GC19                                                                                         | Spec ví dụ tới GC17, nhưng chính spec thêm GC18, GC19                                                                                              |
 | `SeverityDef`, `QueueType`, `FixKind`, `SourceId` | Kiểu phụ xuất ra                                                                                     | Đặt tên cho kiểu đã có trong các interface của spec                                                                                                |
+| Mã YP1 đến YP6, YW1, YW2, IM1, IM2                | Đăng ký trong `codes.json`, văn bản hai thứ tiếng; tiền tố YP, YW, IM vào danh sách tiền tố công cụ  | Thay đổi 1 của [spec compiler](../../compiler/docs/spec.md)                                                                                        |
+| `import.consequence.<dạng>`                       | Bốn khoá văn bản bắt buộc (`binding`, `direct`, `family`, `fanout`), có trong schema i18n và kiểm chéo | `consequence` của câu hỏi dung sai trong phiên import trỏ tới văn bản i18n; spec compiler chưa đặt tên khoá                                       |
 
 ## Quyết định nhỏ spec chưa nói
 

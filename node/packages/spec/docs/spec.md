@@ -178,10 +178,11 @@ Mọi câu mà người dùng đọc về một luật, một mã chẩn đoán 
 | `rule.<MÃ>.next` | Làm gì tiếp | Đúng một bước, thể mệnh lệnh |
 | `rule.<MÃ>.mechanism` | Cơ chế | Một câu, ≤ 200 ký tự |
 | `rule.<MÃ>.action` | Dòng trong "ba việc làm trước" | Thể mệnh lệnh, có `{objects}` |
-| `diag.<MÃ>.message` | Mã chẩn đoán (Y, SNAP, CX, OC) | Như `what` |
+| `diag.<MÃ>.message` | Mã chẩn đoán (Y, YP, YW, IM, SNAP, CX, OC) | Như `what` |
 | `diag.<MÃ>.next` | Cách sửa | Như `next` |
 | `reason.<kind>` | Vì sao `unknown` | Ví dụ "management statistics are disabled" |
 | `reason.<kind>.unlock` | Cách mở khoá luật bị `not_checked` | Bỏ trống được khi không có cách |
+| `import.consequence.<dạng>` | Một dòng hệ quả của `strict` trong câu hỏi dung sai của `import` (`binding`, `fanout`, `direct`, `family`) | Một câu |
 
 **Khuôn câu.** Tham số `{tên}`, và đúng một cấu trúc ICU là số nhiều: `{count, plural, one {# message} other {# messages}}`, với `#` là số đã định dạng. Không dùng `select`, không lồng. Không có ký tự `{` hay `}` theo nghĩa đen; test chặn. Số, thời điểm và danh sách được bề mặt định dạng theo locale; khuôn câu chỉ nhận giá trị thô.
 
@@ -445,6 +446,8 @@ export interface CodeEntry {
 | EX | công cụ | loại trừ hệ thống | EX9 |
 | GC | công cụ | giả định của công cụ | GC10 |
 | Y | công cụ | chẩn đoán `ocho.yaml` | Y4 |
+| YP, YW | công cụ | lỗi, cảnh báo cú pháp `ocho.yaml` (compiler) | YP4, YW2 |
+| IM | công cụ | lỗi của `import` (compiler) | IM1 |
 | SNAP | công cụ | chẩn đoán ảnh chụp | SNAP2 |
 | CX | công cụ | chẩn đoán kết nối | CX3 |
 | OC | công cụ | cảnh báo về chính cách dùng Ocho | OC1 |
