@@ -1,6 +1,6 @@
 {
-  "name": "@ochotona/compiler",
-  "version": "1.0.0",
+  "name": "@ochotona/broker",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
