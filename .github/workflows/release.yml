@@ -35,7 +35,7 @@ concurrency:
 jobs:
   release-please:
     if: github.event_name == 'push'
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 10
     permissions:
       contents: write
@@ -59,7 +59,7 @@ jobs:
   target:
     needs: release-please
     if: always() && (github.event_name == 'workflow_dispatch' || needs.release-please.outputs.created == 'true')
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 5
     permissions:
       contents: read
@@ -98,7 +98,7 @@ jobs:
   publish:
     needs: [target, build, build-tui]
     if: always() && needs.target.result == 'success' && needs.build.result != 'cancelled' && needs.build-tui.result != 'cancelled'
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 10
     permissions:
       contents: write # đính kèm file vào release
