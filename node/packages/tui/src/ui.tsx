@@ -340,8 +340,22 @@ export function Form(props: {
     return () => setTyping(false);
   }, [active, setTyping]);
 
+  // Giá trị không đổi thì trả state cũ để React bỏ qua lần render.
   const set = (name: string, v: string | boolean) =>
-    setValues((old) => ({ ...old, [name]: v }));
+    setValues((old) => (old[name] === v ? old : { ...old, [name]: v }));
+
+  // TextInput, PasswordInput của @inkjs/ui gọi `onChange` trong một effect phụ
+  // thuộc vào chính hàm đó: một arrow mới mỗi lần render thành vòng lặp
+  // "Maximum update depth exceeded". Mỗi ô một callback ổn định.
+  const handlers = useRef(new Map<string, (v: string) => void>());
+  const onChangeOf = (name: string) => {
+    let h = handlers.current.get(name);
+    if (!h) {
+      h = (v: string) => set(name, v);
+      handlers.current.set(name, h);
+    }
+    return h;
+  };
 
   const submit = () => {
     const errs = props.validate?.(values) ?? {};
@@ -411,7 +425,7 @@ export function Form(props: {
                   : {})}
                 placeholder={f.placeholder ?? ''}
                 isDisabled={props.busy}
-                onChange={(v: string) => set(f.name, v)}
+                onChange={onChangeOf(f.name)}
                 onSubmit={() => next()}
               />
             );
