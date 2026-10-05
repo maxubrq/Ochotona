@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url';
 import { copyFile, readFile, readdir, stat, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { PassThrough } from 'node:stream';
@@ -13,10 +14,9 @@ import {
 } from './helpers';
 import { expectValid } from './schemas';
 
-const DEFINITIONS = new URL(
-  '../../../../SUT/common/definitions.json',
-  import.meta.url,
-).pathname;
+const DEFINITIONS = fileURLToPath(
+  new URL('../../../../SUT/common/definitions.json', import.meta.url),
+);
 const env = { OCHO_PASSWORD: PASSWORD };
 
 async function withDefinitions(): Promise<string> {

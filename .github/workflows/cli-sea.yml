@@ -77,25 +77,24 @@ jobs:
         env:
           OCHO_BIN: dist/sea/ocho${{ matrix.exe }}
 
+      # Hai dạng cho mỗi nền tảng: binary trần (tải về là chạy, nhớ chmod +x)
+      # và archive (nhỏ hơn khoảng 3 lần, giữ bit thực thi).
       - name: Package
-        id: package
         working-directory: node/packages/cli/dist/sea
         run: |
           name="ocho-${{ steps.version.outputs.version }}-${{ matrix.target }}"
+          mkdir -p out
+          cp "ocho${{ matrix.exe }}" "out/$name${{ matrix.exe }}"
           if [ "${{ runner.os }}" = "Windows" ]; then
-            7z a -tzip -mx=9 "$name.zip" ocho.exe > /dev/null
-            echo "file=$name.zip" >> "$GITHUB_OUTPUT"
+            7z a -tzip -mx=9 "out/$name.zip" ocho.exe > /dev/null
           else
-            tar -czf "$name.tar.gz" ocho
-            echo "file=$name.tar.gz" >> "$GITHUB_OUTPUT"
+            tar -czf "out/$name.tar.gz" ocho
           fi
-          ls -l ocho${{ matrix.exe }} "$name".*
+          ls -l out
 
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: ocho-${{ matrix.target }}
-          path: node/packages/cli/dist/sea/${{ steps.package.outputs.file }}
+          path: node/packages/cli/dist/sea/out/
           if-no-files-found: error
           retention-days: ${{ inputs.retention-days || 7 }}
-          # Đã là archive nén.
-          compression-level: 0

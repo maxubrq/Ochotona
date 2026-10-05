@@ -11,15 +11,21 @@ Phiên bản nâng tự động bằng [release-please](https://github.com/googl
 3. Merge PR đó khi muốn phát hành. release-please tạo tag `cli-vX.Y.Z` và GitHub Release.
 4. Cùng workflow dựng binary SEA từ đúng tag cho 4 nền tảng, chạy test trên từng binary, rồi đính kèm vào release:
 
-| File                             | Nền tảng                 |
-| -------------------------------- | ------------------------ |
-| `ocho-X.Y.Z-linux-x64.tar.gz`    | Linux x64                |
-| `ocho-X.Y.Z-linux-arm64.tar.gz`  | Linux arm64              |
-| `ocho-X.Y.Z-darwin-arm64.tar.gz` | macOS Apple Silicon      |
-| `ocho-X.Y.Z-win-x64.zip`         | Windows x64              |
-| `SHA256SUMS`                     | checksum của mọi archive |
+| File | Nền tảng |
+| --- | --- |
+| `ocho-X.Y.Z-linux-x64`, `ocho-X.Y.Z-linux-x64.tar.gz` | Linux x64 |
+| `ocho-X.Y.Z-linux-arm64`, `ocho-X.Y.Z-linux-arm64.tar.gz` | Linux arm64 |
+| `ocho-X.Y.Z-darwin-arm64`, `ocho-X.Y.Z-darwin-arm64.tar.gz` | macOS Apple Silicon |
+| `ocho-X.Y.Z-win-x64.exe`, `ocho-X.Y.Z-win-x64.zip` | Windows x64 |
+| `SHA256SUMS` | checksum của mọi file trên |
 
-Mỗi archive có attestation nguồn gốc (SLSA build provenance) của GitHub.
+Binary trần tải về là chạy (trên Linux, macOS cần `chmod +x`); archive nhỏ hơn khoảng 3 lần (43 MB so với 118 MB) và giữ bit thực thi. Một nền tảng hỏng không chặn cả release: các bản còn lại vẫn được đính kèm, workflow báo đỏ kèm tên nền tảng thiếu.
+
+Mỗi file có attestation nguồn gốc (SLSA build provenance) của GitHub.
+
+## Dựng lại binary cho một release đã có
+
+Actions → Release → Run workflow, nhập `tag` (ví dụ `cli-v0.1.0`). Workflow dựng từ đúng tag đó và đính kèm (ghi đè) file vào release. Binary luôn dựng từ code của tag, không từ `main`, để attestation và phiên bản khớp nhau.
 
 ## Commit nào nâng phiên bản nào
 

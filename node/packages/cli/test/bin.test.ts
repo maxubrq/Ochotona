@@ -88,7 +88,7 @@ describe.skipIf(!BIN)(`tệp thực thi ${BIN ?? ''}`, () => {
       LANG: 'C',
     };
   });
-  afterAll(() => mock.close());
+  afterAll(() => mock?.close());
 
   it('--version, version --json, help', async () => {
     expect(await ocho(['--version'])).toMatchObject({

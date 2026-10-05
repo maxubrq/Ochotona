@@ -1,6 +1,7 @@
 // Management API giả phát lại bản ghi thô thật (`fixtures/raw`, do
 // SUT/record.sh ghi), và ảnh chụp tất định cho báo cáo vàng. IO giả ở `io.ts`.
 
+import { fileURLToPath } from 'node:url';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import {
@@ -22,8 +23,9 @@ import { USER } from './io';
 
 export * from './io';
 
-export const RAW_ROOT = new URL('../../../fixtures/raw/', import.meta.url)
-  .pathname;
+export const RAW_ROOT = fileURLToPath(
+  new URL('../../../fixtures/raw/', import.meta.url),
+);
 
 // ------------------------------------------------------------- bản ghi thô
 
