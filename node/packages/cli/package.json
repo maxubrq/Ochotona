@@ -1,6 +1,6 @@
 {
   "name": "@ochotona/cli",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Lệnh ocho: phân tích tham số, đọc ghi đĩa, nói chuyện với terminal, rồi gọi năm gói Ocho theo đúng thứ tự",
   "type": "module",
   "bin": {
