@@ -4,7 +4,7 @@
 name: ocho-sut-313
 
 x-broker: &broker
-  image: rabbitmq:3.13-management
+  image: rabbitmq:4.3-management
   healthcheck:
     test: ["CMD", "rabbitmq-diagnostics", "-q", "check_running"]
     interval: 5s
