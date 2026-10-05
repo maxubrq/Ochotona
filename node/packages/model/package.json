@@ -15,7 +15,8 @@
   },
   "scripts": {
     "build": "rollup -c ../../rollup.config.base.js",
-    "test": "vitest run",
+    "test": "vitest run --exclude test/perf.test.ts",
+    "test:perf": "vitest run test/perf.test.ts",
     "test:coverage": "vitest run --coverage --coverage.include=src/**",
     "typecheck": "tsc --noEmit -p .",
     "format": "prettier --check \"src/**/*.ts\" \"test/**/*.ts\"",

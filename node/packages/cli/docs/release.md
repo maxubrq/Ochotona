@@ -51,13 +51,14 @@ Lần phát hành đầu: `.release-please-manifest.json` còn rỗng, nên rele
 
 ## Workflow
 
-| File                                 | Khi nào                          | Làm gì                                                                                                                                                        |
-| ------------------------------------ | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `.github/workflows/cli-ci.yml`       | PR và push chạm `node/`          | Typecheck, format, `codegen:check`; test 6 gói trên Node 20, 22, 24; test `dist/bin`; gọi `cli-sea.yml`. Test hiệu năng compiler chạy riêng, không chặn       |
-| `.github/workflows/cli-sea.yml`      | Được gọi, hoặc chạy tay          | Dựng SEA trên 4 runner, kiểm `--version` khớp `package.json`, đo khởi động (p95 ≤ 100 ms; Windows chỉ báo cáo), chạy `test/bin.test.ts` trên binary, đóng gói |
-| `.github/workflows/release.yml`      | Push lên `main`                  | release-please; khi có release thì dựng, tính SHA256SUMS, attestation, đính kèm                                                                               |
-| `.github/workflows/cli-mutation.yml` | Thứ Hai hằng tuần, hoặc chạy tay | Stryker, ngưỡng 85%                                                                                                                                           |
-| `.github/dependabot.yml`             | Hằng tuần                        | PR nâng các action (pin theo SHA)                                                                                                                             |
+| File                                 | Khi nào                                                         | Làm gì                                                                                                                                             |
+| ------------------------------------ | --------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `.github/workflows/cli-ci.yml`       | PR và push chạm `node/`                                         | Typecheck, format, `codegen:check`; test 6 gói trên Node 20, 22, 24 (không gồm test hiệu năng); test `dist/bin`; gọi `cli-sea.yml`                 |
+| `.github/workflows/cli-sea.yml`      | Được gọi, hoặc chạy tay                                         | Dựng SEA trên 4 runner, kiểm `--version` khớp `package.json`, chạy `test/bin.test.ts` trên binary, đóng gói                                        |
+| `.github/workflows/release.yml`      | Push lên `main`                                                 | release-please; khi có release thì dựng, tính SHA256SUMS, attestation, đính kèm                                                                    |
+| `.github/workflows/cli-perf.yml`     | Thứ Hai hằng tuần, chạy tay (chọn Node), hoặc PR có nhãn `perf` | `test:perf` của model, rules, compiler, cli; dựng SEA rồi đo `ocho --version` p95 ≤ 100 ms trên 4 nền tảng (Windows chỉ báo cáo). Không chặn merge |
+| `.github/workflows/cli-mutation.yml` | Thứ Hai hằng tuần, hoặc chạy tay                                | Stryker, ngưỡng 85%                                                                                                                                |
+| `.github/dependabot.yml`             | Hằng tuần                                                       | PR nâng các action (pin theo SHA)                                                                                                                  |
 
 ## Người dùng tải về
 
@@ -88,5 +89,5 @@ Archive cho kết quả gần bằng mà không đụng tới binary: 43 MB `.ta
 cd node
 pnpm exec turbo run build --filter=@ochotona/cli...
 pnpm --filter @ochotona/cli test:sea          # dựng dist/sea/ocho rồi chạy test/bin.test.ts trên nó
-node packages/cli/scripts/startup.mjs packages/cli/dist/sea/ocho
+node packages/cli/scripts/startup.mjs packages/cli/dist/sea/ocho   # cùng phép đo của cli-perf.yml
 ```

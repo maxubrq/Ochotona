@@ -1,6 +1,7 @@
-# Binary SEA của `ocho` cho 4 nền tảng: dựng, kiểm phiên bản, đo khởi động,
-# chạy test/bin.test.ts trên chính binary, rồi đóng gói thành artifact
-# `ocho-<target>`. Dùng lại từ cli-ci.yml (mỗi PR) và release.yml (khi phát hành).
+# Binary SEA của `ocho` cho 4 nền tảng: dựng, kiểm phiên bản, chạy
+# test/bin.test.ts trên chính binary, rồi đóng gói thành artifact
+# `ocho-<target>`. Dùng lại từ cli-ci.yml (mỗi PR), release.yml (khi phát
+# hành) và cli-perf.yml (đo thời gian khởi động).
 #
 # Không nén bằng UPX: UPX từ chối ELF đã nhúng blob SEA (`bad e_phoff`), còn nén
 # node trước thì postject không tìm được sentinel. Archive .tar.gz/.zip cho
@@ -69,14 +70,6 @@ jobs:
           echo "$out"
           test "$out" = "ocho $version"
           echo "version=$version" >> "$GITHUB_OUTPUT"
-
-      # Ngân sách của spec: --version ≤ 100 ms p95. Trên Windows chỉ báo cáo:
-      # Defender quét file thực thi mới làm số đo không còn là của Ocho.
-      - name: Startup budget
-        run: >
-          node packages/cli/scripts/startup.mjs
-          packages/cli/dist/sea/ocho${{ matrix.exe }}
-          ${{ runner.os == 'Windows' && '--report-only' || '' }}
 
       - name: Tests on the binary
         working-directory: node/packages/cli

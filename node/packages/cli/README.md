@@ -85,6 +85,7 @@ src/
 pnpm build          # rollup → dist/ (ESM, tách chunk theo lệnh)
 pnpm build:sea      # esbuild + Node SEA → dist/sea/ocho cho nền tảng đang chạy
 pnpm test           # vitest; broker giả phát lại bản ghi thô trong fixtures/raw
+pnpm test:perf      # ngân sách trên broker giả 10.000 queue: doctor, explain, dòng xác nhận
 pnpm test:sea       # dựng binary SEA rồi chạy test/bin.test.ts trên chính nó (test:bin: dist/bin)
 pnpm test:coverage
 pnpm test:mutation  # Stryker trên exit, target, args, layout; ngưỡng 85%

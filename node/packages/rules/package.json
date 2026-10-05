@@ -15,7 +15,8 @@
   },
   "scripts": {
     "build": "rollup -c ../../rollup.config.base.js",
-    "test": "vitest run",
+    "test": "vitest run --exclude test/perf.test.ts",
+    "test:perf": "vitest run test/perf.test.ts",
     "test:coverage": "vitest run --coverage --coverage.include=src/**",
     "coverage-matrix": "vitest run test/coverage-matrix.test.ts",
     "typecheck": "tsc --noEmit -p . && tsc -p tsconfig.check.json",

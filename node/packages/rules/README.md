@@ -97,7 +97,8 @@ fixtures/
 
 ```sh
 pnpm build             # rollup → dist/
-pnpm test              # vitest: fixture, tích hợp trên bản ghi, tính chất, hiệu năng
+pnpm test              # vitest: fixture, tích hợp trên bản ghi, tính chất
+pnpm test:perf         # mọi luật trên 10.000 queue ≤ 1 giây
 pnpm coverage-matrix
 pnpm examples          # sinh lại src/gen/examples.ts từ fixtures/unit
 pnpm test:mutation     # Stryker trên tám luật S1, ngưỡng 85%

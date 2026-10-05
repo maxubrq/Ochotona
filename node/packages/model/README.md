@@ -77,7 +77,8 @@ src/
 
 ```sh
 pnpm build          # rollup → dist/
-pnpm test           # vitest
+pnpm test           # vitest, trừ test hiệu năng
+pnpm test:perf      # buildActual 10.000 queue ≤ 500 ms
 pnpm test:coverage
 pnpm typecheck
 pnpm format

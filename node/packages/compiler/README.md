@@ -77,8 +77,8 @@ src/
 
 ```sh
 pnpm build          # rollup → dist/
-pnpm test           # vitest; test hiệu năng chạy riêng sau bộ chính
-pnpm test:perf
+pnpm test           # vitest, trừ test hiệu năng
+pnpm test:perf      # import 10.000 queue ≤ 2 giây
 pnpm test:coverage
 pnpm test:mutation  # Stryker trên scalar, families, merge, write; ngưỡng 85%
 pnpm typecheck

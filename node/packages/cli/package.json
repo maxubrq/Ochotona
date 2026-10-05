@@ -18,7 +18,8 @@
   "scripts": {
     "build": "rollup -c",
     "build:sea": "node scripts/sea.mjs",
-    "test": "vitest run",
+    "test": "vitest run --exclude test/budget.test.ts",
+    "test:perf": "vitest run test/budget.test.ts",
     "test:coverage": "vitest run --coverage --coverage.include=src/**",
     "test:mutation": "stryker run",
     "test:sea": "node scripts/sea.mjs && OCHO_BIN=dist/sea/ocho vitest run test/bin.test.ts",

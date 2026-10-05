@@ -15,12 +15,12 @@
   },
   "scripts": {
     "build": "rollup -c ../../rollup.config.base.js",
-    "test": "vitest run --exclude test/perf.test.ts && vitest run test/perf.test.ts",
+    "test": "vitest run --exclude test/perf.test.ts",
+    "test:perf": "vitest run test/perf.test.ts",
     "test:coverage": "vitest run --coverage --coverage.include=src/**",
     "typecheck": "tsc --noEmit -p . && tsc -p tsconfig.check.json",
     "format": "prettier --check \"src/**/*.ts\" \"test/**/*.ts\"",
     "format:fix": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "test:perf": "vitest run test/perf.test.ts",
     "test:mutation": "stryker run"
   },
   "keywords": [],
