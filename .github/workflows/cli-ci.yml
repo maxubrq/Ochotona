@@ -1,0 +1,124 @@
+# CI của `ocho` và năm gói nó dùng (spec, model, rules, broker, compiler):
+# kiểm mã, test trên Node 20, 22, 24, rồi dựng binary SEA cho 4 nền tảng và
+# chạy test trên chính binary.
+
+name: CLI CI
+
+on:
+  pull_request:
+    paths:
+      - node/**
+      - SUT/common/definitions.json
+      - release-please-config.json
+      - .github/workflows/cli-*.yml
+  push:
+    branches: [main]
+    paths:
+      - node/**
+      - SUT/common/definitions.json
+      - release-please-config.json
+      - .github/workflows/cli-*.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+defaults:
+  run:
+    shell: bash
+    working-directory: node
+
+jobs:
+  check:
+    name: Typecheck, format, codegen
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+        with:
+          package_json_file: node/package.json
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: node/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec turbo run build --filter=@ochotona/cli...
+      # Mã sinh từ data/ của spec phải khớp với bản đã commit.
+      - run: pnpm --filter @ochotona/spec codegen:check
+      - run: pnpm --filter "@ochotona/cli..." --workspace-concurrency=1 typecheck
+      - run: pnpm --filter "@ochotona/cli..." --workspace-concurrency=1 format
+
+  test:
+    name: Test (Node ${{ matrix.node }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [20, 22, 24]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+        with:
+          package_json_file: node/package.json
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: ${{ matrix.node }}
+          cache: pnpm
+          cache-dependency-path: node/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec turbo run build --filter=@ochotona/cli...
+      # Lần lượt từng gói: test ngân sách thời gian không được tranh CPU với nhau.
+      - name: Test spec, model, rules, broker, cli
+        run: >
+          pnpm --workspace-concurrency=1
+          --filter @ochotona/spec --filter @ochotona/model
+          --filter @ochotona/rules --filter @ochotona/broker
+          --filter @ochotona/cli
+          test
+      # Test hiệu năng của compiler chạy ở job riêng bên dưới.
+      - name: Test compiler
+        run: pnpm --filter @ochotona/compiler exec vitest run --exclude test/perf.test.ts
+      - name: Test the built CLI (dist/bin)
+        working-directory: node/packages/cli
+        run: pnpm exec vitest run test/bin.test.ts
+        env:
+          OCHO_BIN: dist/bin/ocho.js
+
+  # import 10.000 queue ≤ 2 giây. Sát ngưỡng trên máy phát triển và vượt trên
+  # Node 20 (xem compiler/docs/implementation-notes.md): báo kết quả, không chặn.
+  compiler-perf:
+    name: Compiler perf budget (informational)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+        with:
+          package_json_file: node/package.json
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: node/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec turbo run build --filter=@ochotona/compiler...
+      - run: pnpm --filter @ochotona/compiler test:perf
+
+  sea:
+    name: SEA
+    needs: [check, test]
+    uses: ./.github/workflows/cli-sea.yml

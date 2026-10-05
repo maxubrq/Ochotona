@@ -1,5 +1,7 @@
+import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { COMMAND_FLAGS } from '../src/args';
+import { TOOL_VERSION } from '../src/version';
 import { runCli } from './helpers';
 import { expectValid } from './schemas';
 
@@ -48,10 +50,10 @@ describe('help', () => {
 describe('version', () => {
   it('text and ocho.version/1', async () => {
     expect((await runCli(['version'])).stdout).toBe(
-      'ocho 0.1.0 (spec 0.4.0, Node v22.0.0, linux-x64)\n',
+      `ocho ${TOOL_VERSION} (spec 0.4.0, Node v22.0.0, linux-x64)\n`,
     );
     expect((await runCli(['--version'])).stdout).toBe(
-      'ocho 0.1.0 (spec 0.4.0, Node v22.0.0, linux-x64)\n',
+      `ocho ${TOOL_VERSION} (spec 0.4.0, Node v22.0.0, linux-x64)\n`,
     );
     const j = await runCli(['version', '--json']);
     expectValid(j.json());
@@ -86,5 +88,15 @@ describe('usage errors point to help (D5)', () => {
     expect(r.stderr.split('\n')[0]).toBe('error: cờ lạ --bogus');
     const eq = await runCli(['doctor', '--bogus', '--lang=vi', '--json']);
     expect(eq.json().next).toBe('Chạy ocho help doctor để xem cờ và ví dụ.');
+  });
+});
+
+describe('TOOL_VERSION', () => {
+  // release-please đổi cả hai cùng lúc; lệch nhau là cấu hình phát hành sai.
+  it('matches package.json', async () => {
+    const pkg = JSON.parse(
+      readFileSync(new URL('../package.json', import.meta.url), 'utf8'),
+    );
+    expect(TOOL_VERSION).toBe(pkg.version);
   });
 });

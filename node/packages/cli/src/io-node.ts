@@ -35,13 +35,29 @@ export const nodeFs: Fs = {
   },
 };
 
+/**
+ * Tiến trình chạy một dòng lệnh shell. Trên Windows giống `shell: true` của
+ * Node: cả dòng lệnh trong một cặp nháy, `windowsVerbatimArguments`, vì cách
+ * escape mặc định (`\"`) của Node không phải cú pháp của `cmd.exe`.
+ * @example shellCommand('linux', 'pass show x') // { file: '/bin/sh', args: ['-c', 'pass show x'], verbatim: false }
+ */
+export function shellCommand(
+  platform: NodeJS.Platform,
+  command: string,
+): { file: string; args: string[]; verbatim: boolean } {
+  return platform === 'win32'
+    ? {
+        file: 'cmd.exe',
+        args: ['/d', '/s', '/c', `"${command}"`],
+        verbatim: true,
+      }
+    : { file: '/bin/sh', args: ['-c', command], verbatim: false };
+}
+
 /** `/bin/sh -c`, trên Windows `cmd.exe /d /s /c`; stdin đóng; giết khi quá giờ. */
 export const nodeExec: Exec = (command, opts) =>
   new Promise((resolve) => {
-    const [file, args] =
-      process.platform === 'win32'
-        ? ['cmd.exe', ['/d', '/s', '/c', command]]
-        : ['/bin/sh', ['-c', command]];
+    const { file, args, verbatim } = shellCommand(process.platform, command);
     let stdout = '';
     let stderr = '';
     let timedOut = false;
@@ -49,6 +65,7 @@ export const nodeExec: Exec = (command, opts) =>
     const child = spawn(file, args, {
       stdio: ['ignore', 'pipe', 'pipe'],
       windowsHide: true,
+      windowsVerbatimArguments: verbatim,
     });
     const timer = setTimeout(() => {
       timedOut = true;

@@ -12,9 +12,33 @@ import {
   targetFlags,
   tempDir,
 } from './helpers';
+import { TOOL_VERSION } from '../src/version';
 import { expectValid } from './schemas';
 
 const BIN = process.env.OCHO_BIN;
+const WIN = process.platform === 'win32';
+
+/**
+ * Môi trường tối thiểu: không rò biến của máy chạy test (OCHO_*, LANG). Trên
+ * Windows tiến trình con cần thêm SystemRoot, ComSpec… để có mạng và `cmd.exe`.
+ */
+function baseEnv(): Record<string, string> {
+  const keep = WIN
+    ? [
+        'PATH',
+        'Path',
+        'SystemRoot',
+        'ComSpec',
+        'PATHEXT',
+        'WINDIR',
+        'TEMP',
+        'TMP',
+      ]
+    : ['PATH'];
+  const out: Record<string, string> = {};
+  for (const k of keep) if (process.env[k]) out[k] = process.env[k]!;
+  return out;
+}
 
 interface Ran {
   code: number | null;
@@ -33,7 +57,7 @@ function ocho(
     : [BIN!, []];
   return new Promise((resolve, reject) => {
     const p = spawn(cmd, [...pre, ...args], {
-      env: { PATH: process.env.PATH ?? '', ...env },
+      env: { ...baseEnv(), ...env },
       timeout: 60_000,
     });
     let stdout = '';
@@ -56,14 +80,20 @@ describe.skipIf(!BIN)(`tệp thực thi ${BIN ?? ''}`, () => {
   // Thư mục tạm bị dọn sau mỗi test: mỗi test một HOME riêng.
   beforeEach(async () => {
     home = await tempDir();
-    env = { HOME: home, XDG_CONFIG_HOME: join(home, '.config'), LANG: 'C' };
+    env = {
+      HOME: home,
+      USERPROFILE: home,
+      XDG_CONFIG_HOME: join(home, '.config'),
+      APPDATA: join(home, 'AppData'),
+      LANG: 'C',
+    };
   });
   afterAll(() => mock.close());
 
   it('--version, version --json, help', async () => {
     expect(await ocho(['--version'])).toMatchObject({
       code: 0,
-      stdout: 'ocho 0.1.0\n',
+      stdout: `ocho ${TOOL_VERSION}\n`,
     });
     const v = await ocho(['version', '--json'], env);
     expectValid(expectSingleJson(v.stdout));
@@ -111,13 +141,16 @@ describe.skipIf(!BIN)(`tệp thực thi ${BIN ?? ''}`, () => {
         '--user',
         'ocho-doctor',
         '--password-command',
-        `cat ${secret}`,
+        WIN ? `type "${secret}"` : `cat '${secret}'`,
       ],
       env,
     );
     expect(add.code).toBe(0);
-    const file = join(home, '.config', 'ochotona', 'contexts.yaml');
-    expect(statSync(file).mode & 0o777).toBe(0o600);
+    const file = WIN
+      ? join(home, 'AppData', 'ochotona', 'contexts.yaml')
+      : join(home, '.config', 'ochotona', 'contexts.yaml');
+    // Windows không có bit quyền POSIX.
+    if (!WIN) expect(statSync(file).mode & 0o777).toBe(0o600);
     expect(readFileSync(file, 'utf8')).not.toContain(PASSWORD);
     const ex = await ocho(['explain', 'queue', 'overlap', '--json'], env);
     expect(ex.code).toBe(0);

@@ -1,0 +1,91 @@
+# Phát hành `ocho` tự động bằng release-please.
+#
+# 1. Mỗi lần push lên main, release-please đọc commit theo Conventional Commits
+#    (feat:, fix:, feat!: …) kể từ lần phát hành trước, rồi mở hoặc cập nhật một
+#    PR "chore(main): release cli x.y.z": nâng phiên bản trong
+#    node/packages/cli/package.json, src/version.ts, node/package.json, và viết
+#    node/packages/cli/CHANGELOG.md.
+# 2. Merge PR đó thì release-please tạo tag cli-vX.Y.Z và GitHub Release; job
+#    build dựng binary SEA từ đúng tag, job publish đính kèm archive, SHA256SUMS
+#    và attestation nguồn gốc vào release.
+#
+# Xem node/packages/cli/docs/release.md.
+
+name: Release
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release-please:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write # nhãn "autorelease: pending" trên PR phát hành
+    outputs:
+      created: ${{ steps.rp.outputs['node--release_created'] }}
+      tag: ${{ steps.rp.outputs['node--tag_name'] }}
+      version: ${{ steps.rp.outputs['node--version'] }}
+    steps:
+      - uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
+        id: rp
+        with:
+          # PR mở bằng GITHUB_TOKEN không kích hoạt workflow khác (CI sẽ không
+          # chạy trên PR phát hành). Đặt secret RELEASE_PLEASE_TOKEN (PAT hoặc
+          # token của GitHub App) để CI chạy trên PR đó.
+          token: ${{ secrets.RELEASE_PLEASE_TOKEN || github.token }}
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+  build:
+    needs: release-please
+    if: needs.release-please.outputs.created == 'true'
+    permissions:
+      contents: read
+    uses: ./.github/workflows/cli-sea.yml
+    with:
+      ref: ${{ needs.release-please.outputs.tag }}
+      retention-days: 30
+
+  publish:
+    needs: [release-please, build]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write # đính kèm file vào release
+      id-token: write # ký attestation
+      attestations: write
+    steps:
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          pattern: ocho-*
+          path: dist
+          merge-multiple: true
+
+      - name: Checksums
+        working-directory: dist
+        run: |
+          sha256sum ocho-* > SHA256SUMS
+          cat SHA256SUMS
+
+      # Người dùng kiểm được binary dựng từ đúng commit này:
+      # gh attestation verify ocho-<...>.tar.gz --repo <owner>/<repo>
+      - uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
+        with:
+          subject-path: dist/ocho-*
+
+      - name: Upload to the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ needs.release-please.outputs.tag }}
+        run: gh release upload "$TAG" dist/* --clobber --repo "$GITHUB_REPOSITORY"

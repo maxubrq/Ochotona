@@ -94,7 +94,12 @@ pnpm format
 
 Chạy thử trên broker thật: xem từng bước ở [README gốc](../../../README.md).
 
+## Phát hành
+
+Tự động bằng release-please: commit theo Conventional Commits (`feat:`, `fix:`) lên `main`, merge PR phát hành mà bot mở, rồi binary SEA cho Linux x64/arm64, macOS arm64, Windows x64 được dựng, test và đính kèm vào GitHub Release. Chi tiết ở [docs/release.md](docs/release.md).
+
 ## Tài liệu
 
 - [docs/spec.md](docs/spec.md): spec đầy đủ (ngữ pháp, context và mật khẩu, trình tự từng lệnh, bố cục báo cáo, JSON, exit code, lỗi, test bắt buộc).
+- [docs/release.md](docs/release.md): luồng phát hành, commit nào nâng phiên bản nào, workflow, cài đặt một lần trên GitHub.
 - [docs/implementation-notes.md](docs/implementation-notes.md): chỗ mã khác hoặc thêm so với spec, thay đổi ở gói khác, và tình trạng so với định nghĩa hoàn thành.

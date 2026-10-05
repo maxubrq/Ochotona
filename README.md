@@ -32,7 +32,7 @@ ocho version
 # ocho 0.1.0 (spec 0.4.0, Node v24.10.0, darwin-arm64)
 ```
 
-Muốn một file chạy được không cần Node: `pnpm --filter @ochotona/cli build:sea` ra `packages/cli/dist/sea/ocho` cho nền tảng đang chạy.
+Muốn một file chạy được không cần Node: `pnpm --filter @ochotona/cli build:sea` ra `packages/cli/dist/sea/ocho` cho nền tảng đang chạy, hoặc tải binary dựng sẵn ở GitHub Releases (tag `cli-v*`, xem [cách phát hành](node/packages/cli/docs/release.md)).
 
 ### 3. Dựng SUT 4.2
 

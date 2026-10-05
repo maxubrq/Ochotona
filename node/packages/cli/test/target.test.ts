@@ -1,3 +1,4 @@
+import { nodeExec, shellCommand } from '../src/io-node';
 import '@ochotona/spec/i18n/en';
 import { PassThrough } from 'node:stream';
 import { describe, expect, it } from 'vitest';
@@ -594,5 +595,29 @@ describe('target details', () => {
       passwordCommand: 'from-override',
     });
     expect(ran).toBe('from-override');
+  });
+});
+
+describe('shellCommand', () => {
+  it('Windows: whole line quoted once, verbatim, like shell: true in Node', () => {
+    expect(shellCommand('win32', 'type "C:\\a b\\pw.txt"')).toEqual({
+      file: 'cmd.exe',
+      args: ['/d', '/s', '/c', '"type "C:\\a b\\pw.txt""'],
+      verbatim: true,
+    });
+  });
+
+  it('POSIX: /bin/sh -c, unchanged', async () => {
+    expect(shellCommand('linux', "cat 'a b'")).toEqual({
+      file: '/bin/sh',
+      args: ['-c', "cat 'a b'"],
+      verbatim: false,
+    });
+    if (process.platform === 'win32') return;
+    const r = await nodeExec(`printf '%s\\n' "x y"`, {
+      timeoutMs: 5_000,
+      maxBytes: 100,
+    });
+    expect(r.stdout).toBe('x y\n');
   });
 });

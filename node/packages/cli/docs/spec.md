@@ -6,13 +6,13 @@ Oct 4, 2026 · @Max Darius
 
 `@ochotona/cli` là lớp mỏng: nó phân tích tham số, đọc và ghi đĩa, nói chuyện với terminal, rồi gọi năm gói kia theo đúng thứ tự. Mọi quyết định về dữ liệu (luật nào `fail`, giá trị nào hiệu lực, YAML viết thế nào) đã nằm ở gói khác; CLI chỉ quyết định cách hiện chúng ra.
 
-| Gói này làm | Gói này không làm |
-| --- | --- |
-| Tham số, biến môi trường, file context, mật khẩu | Gọi HTTP (broker) |
-| Đọc, ghi `ocho.yaml`, ảnh chụp, file context | Parse YAML, chuẩn hoá (compiler, model) |
-| Hỏi đáp trên terminal cho `import` | Sinh câu hỏi (compiler) |
-| Render văn bản, JSON, tiến trình | Dựng finding (rules) |
-| Exit code | Chấm luật (rules) |
+| Gói này làm                                      | Gói này không làm                       |
+| ------------------------------------------------ | --------------------------------------- |
+| Tham số, biến môi trường, file context, mật khẩu | Gọi HTTP (broker)                       |
+| Đọc, ghi `ocho.yaml`, ảnh chụp, file context     | Parse YAML, chuẩn hoá (compiler, model) |
+| Hỏi đáp trên terminal cho `import`               | Sinh câu hỏi (compiler)                 |
+| Render văn bản, JSON, tiến trình                 | Dựng finding (rules)                    |
+| Exit code                                        | Chấm luật (rules)                       |
 
 **Bốn quyết định.**
 
@@ -49,36 +49,36 @@ Cờ đặt trước hay sau tên lệnh đều được. Phân tích bằng `no
 
 **Cờ chung.**
 
-| Cờ | Biến môi trường | Ý nghĩa |
-| --- | --- | --- |
-| `--context <tên>` | `OCHO_CONTEXT` | Context trong file context |
-| `--url <url>` | `OCHO_URL` | Đích tạm, không cần context; đi kèm `--user` |
-| `--user <tên>` | `OCHO_USER` | User cho `--url` |
-| `--password-stdin` | — | Đọc mật khẩu từ dòng đầu của stdin |
-| — | `OCHO_PASSWORD` | Mật khẩu |
-| `--ca <file>` | `OCHO_CA` | CA riêng, PEM |
-| `--insecure` | — | Tắt kiểm chứng chỉ (CX5) |
-| `--prometheus-url <url>`, `--no-prometheus` | — | Ghi đè phát hiện Prometheus |
-| `--max-rps <n>`, `--concurrency <n>` | — | Kiểm soát tải (tab broker) |
-| `--lang en\|vi` | `OCHO_LANG` | Ngôn ngữ |
-| `--json` | — | Đầu ra JSON |
-| `--no-color` | `NO_COLOR` | Tắt màu |
-| `--debug` | `OCHO_DEBUG=1` | Nhật ký request ra stderr |
-| `--version`, `--help` | — | — |
+| Cờ                                          | Biến môi trường | Ý nghĩa                                      |
+| ------------------------------------------- | --------------- | -------------------------------------------- |
+| `--context <tên>`                           | `OCHO_CONTEXT`  | Context trong file context                   |
+| `--url <url>`                               | `OCHO_URL`      | Đích tạm, không cần context; đi kèm `--user` |
+| `--user <tên>`                              | `OCHO_USER`     | User cho `--url`                             |
+| `--password-stdin`                          | —               | Đọc mật khẩu từ dòng đầu của stdin           |
+| —                                           | `OCHO_PASSWORD` | Mật khẩu                                     |
+| `--ca <file>`                               | `OCHO_CA`       | CA riêng, PEM                                |
+| `--insecure`                                | —               | Tắt kiểm chứng chỉ (CX5)                     |
+| `--prometheus-url <url>`, `--no-prometheus` | —               | Ghi đè phát hiện Prometheus                  |
+| `--max-rps <n>`, `--concurrency <n>`        | —               | Kiểm soát tải (tab broker)                   |
+| `--lang en\|vi`                             | `OCHO_LANG`     | Ngôn ngữ                                     |
+| `--json`                                    | —               | Đầu ra JSON                                  |
+| `--no-color`                                | `NO_COLOR`      | Tắt màu                                      |
+| `--debug`                                   | `OCHO_DEBUG=1`  | Nhật ký request ra stderr                    |
+| `--version`, `--help`                       | —               | —                                            |
 
 **Thứ tự ưu tiên** cho mọi giá trị: cờ > biến môi trường > context đang chọn > mặc định. `--url` và `--context` cùng có thì `--url` thắng, kèm một dòng cảnh báo trên stderr.
 
 **Lệnh của v0.1.**
 
-| Lệnh | Cờ riêng |
-| --- | --- |
-| `doctor` | `--vhost <v>` (lặp được), `--flow <tên>`, `--target-version <x.y>`, `--fail-on S1\|S2\|S3`, `--file <đường dẫn>`, `--no-file`, `--save <file>`, `--redact-hosts`, `--from <file>`, `--why`, `--verbose`, `--experimental` |
-| `import` | `--from <definitions.json>`, `--out <đường dẫn>`, `--non-interactive` |
-| `explain <đích>` | `--vhost <v>`, `--file <đường dẫn>` |
-| `context add <tên>` | `--url`, `--user`, `--ca`, `--password-command '<lệnh>'`, `--prometheus-url`, `--no-prometheus`, `--insecure`, `--no-verify` |
-| `context use <tên>`, `context list`, `context show [tên]`, `context remove <tên>` | — |
-| `version` | — |
-| `help [lệnh]` | — |
+| Lệnh                                                                              | Cờ riêng                                                                                                                                                                                                                  |
+| --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `doctor`                                                                          | `--vhost <v>` (lặp được), `--flow <tên>`, `--target-version <x.y>`, `--fail-on S1\|S2\|S3`, `--file <đường dẫn>`, `--no-file`, `--save <file>`, `--redact-hosts`, `--from <file>`, `--why`, `--verbose`, `--experimental` |
+| `import`                                                                          | `--from <definitions.json>`, `--out <đường dẫn>`, `--non-interactive`                                                                                                                                                     |
+| `explain <đích>`                                                                  | `--vhost <v>`, `--file <đường dẫn>`                                                                                                                                                                                       |
+| `context add <tên>`                                                               | `--url`, `--user`, `--ca`, `--password-command '<lệnh>'`, `--prometheus-url`, `--no-prometheus`, `--insecure`, `--no-verify`                                                                                              |
+| `context use <tên>`, `context list`, `context show [tên]`, `context remove <tên>` | —                                                                                                                                                                                                                         |
+| `version`                                                                         | —                                                                                                                                                                                                                         |
+| `help [lệnh]`                                                                     | —                                                                                                                                                                                                                         |
 
 `--file` mặc định là `./ocho.yaml` nếu file đó tồn tại; `--no-file` bỏ qua nó hoàn toàn (mọi luồng thành `undeclared`).
 
@@ -97,10 +97,10 @@ contexts:
   prod:
     url: https://b-1234.mq.ap-southeast-1.amazonaws.com
     user: ocho-doctor
-    password_command: "op read op://infra/rabbit-prod/password"
-    ca: null                      # đường dẫn file PEM
+    password_command: 'op read op://infra/rabbit-prod/password'
+    ca: null # đường dẫn file PEM
     insecure: false
-    prometheus: auto              # auto | off | URL
+    prometheus: auto # auto | off | URL
 ```
 
 **Mật khẩu, theo thứ tự; nguồn đầu tiên có giá trị thắng.**
@@ -121,21 +121,21 @@ contexts:
 
 Trình tự dưới đây là toàn bộ việc của lệnh; mỗi bước ghi gói nào được gọi và lỗi ở bước đó ra exit code nào.
 
-| # | Bước | Gọi | Lỗi |
-| --- | --- | --- | --- |
-| 1 | Phân tích tham số | `args.ts` | Exit 4 |
-| 2 | In dòng xác nhận lên stderr (TTY): `Connecting to prod…` | — | — |
-| 3 | Đọc `ocho.yaml` nếu có | `compiler.loadOchoYaml` | Có lỗi YP hoặc Y → in chẩn đoán dạng GNU, exit 4. Cảnh báo YW, Y10 → in, chạy tiếp |
-| 4 | Chọn luật, tính đường dẫn cần, lập kế hoạch đọc | `rules.selectRules`, `rules.requiredPaths`, `model.planRead` | — |
-| 5 | Dựng đích | `resolveTarget`, `broker.createReader` | CX4, CX10, CX11 → exit 4 |
-| 6 | Nhận diện, in ba dòng đầu báo cáo | `reader.identify` | CX1, CX2, CX3, CX8, CX9 → exit 3 |
-| 7 | Đọc, có tiến trình | `reader.read` | Ctrl-C → exit 130 |
-| 8 | Dựng mô hình | `model.buildActual`, `model.checkInvariants` | Vi phạm bất biến → exit 5 |
-| 9 | Gán luồng | `model.buildFlowMap` | — |
-| 10 | Chấm luật, chọn ba việc | `rules.runRules`, `rules.planActions` | `internal` không rỗng → báo cáo vẫn in, exit 5 |
-| 11 | Lưu ảnh chụp nếu có `--save` | `model.saveSnapshot` | Ghi file lỗi → stderr, không đổi exit code của chẩn đoán |
-| 12 | Render | `render/text` hoặc `render/json` | — |
-| 13 | Tính exit code | `exit.ts` | — |
+| #   | Bước                                                     | Gọi                                                          | Lỗi                                                                                |
+| --- | -------------------------------------------------------- | ------------------------------------------------------------ | ---------------------------------------------------------------------------------- |
+| 1   | Phân tích tham số                                        | `args.ts`                                                    | Exit 4                                                                             |
+| 2   | In dòng xác nhận lên stderr (TTY): `Connecting to prod…` | —                                                            | —                                                                                  |
+| 3   | Đọc `ocho.yaml` nếu có                                   | `compiler.loadOchoYaml`                                      | Có lỗi YP hoặc Y → in chẩn đoán dạng GNU, exit 4. Cảnh báo YW, Y10 → in, chạy tiếp |
+| 4   | Chọn luật, tính đường dẫn cần, lập kế hoạch đọc          | `rules.selectRules`, `rules.requiredPaths`, `model.planRead` | —                                                                                  |
+| 5   | Dựng đích                                                | `resolveTarget`, `broker.createReader`                       | CX4, CX10, CX11 → exit 4                                                           |
+| 6   | Nhận diện, in ba dòng đầu báo cáo                        | `reader.identify`                                            | CX1, CX2, CX3, CX8, CX9 → exit 3                                                   |
+| 7   | Đọc, có tiến trình                                       | `reader.read`                                                | Ctrl-C → exit 130                                                                  |
+| 8   | Dựng mô hình                                             | `model.buildActual`, `model.checkInvariants`                 | Vi phạm bất biến → exit 5                                                          |
+| 9   | Gán luồng                                                | `model.buildFlowMap`                                         | —                                                                                  |
+| 10  | Chấm luật, chọn ba việc                                  | `rules.runRules`, `rules.planActions`                        | `internal` không rỗng → báo cáo vẫn in, exit 5                                     |
+| 11  | Lưu ảnh chụp nếu có `--save`                             | `model.saveSnapshot`                                         | Ghi file lỗi → stderr, không đổi exit code của chẩn đoán                           |
+| 12  | Render                                                   | `render/text` hoặc `render/json`                             | —                                                                                  |
+| 13  | Tính exit code                                           | `exit.ts`                                                    | —                                                                                  |
 
 **`--from <ảnh chụp>`** thay bước 5 tới 8 bằng `model.loadSnapshot`; SNAP1 tới SNAP3 → exit 4. Dòng đầu báo cáo là `From snapshot taken 2026-10-04 01:22 UTC (context prod)`.
 
@@ -171,15 +171,15 @@ S1  DATA SAFETY (3)
 
 **Khối theo mức.**
 
-| Mức | Hiện gì |
-| --- | --- |
-| S1 | Mỗi kết quả một khối, đủ năm nhãn. Cùng (luật, biến thể) có hơn 3 đối tượng thì gộp một khối: `Objects (40): a, b, c and 37 more`, các trường lấy từ đối tượng đầu; `--verbose` tách ra |
-| S2, S3 | Như S1 nhưng bỏ `Why`; `--why` hiện lại |
-| S4, S5 | Một dòng mỗi luật: `C2 x5 consumers · Prefetch is 1 on a busy queue`; `--verbose` mở ra |
-| Chưa kiểm | Gom theo (lý do, cách mở khoá): `Not checked (6): R1 x6 channels · management statistics are disabled · enable the Prometheus plugin or management stats` |
-| Điểm mù | Một dòng: `Not visible from the broker: LE2, LE5, LE6, LE10 (client) · LE14, LE17 (lint) · LE8, LE19 (no tool) · ocho explain LE2` |
-| Ba việc làm trước | Đánh số, từ `rules.toActionText`; dòng cuối mỗi việc là `ocho explain <mã>` |
-| Tổng kết | `38 rules · 9 fail · 21 pass · 4 not checked · 4 n/a · 2 waived · exit 1` |
+| Mức               | Hiện gì                                                                                                                                                                                 |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| S1                | Mỗi kết quả một khối, đủ năm nhãn. Cùng (luật, biến thể) có hơn 3 đối tượng thì gộp một khối: `Objects (40): a, b, c and 37 more`, các trường lấy từ đối tượng đầu; `--verbose` tách ra |
+| S2, S3            | Như S1 nhưng bỏ `Why`; `--why` hiện lại                                                                                                                                                 |
+| S4, S5            | Một dòng mỗi luật: `C2 x5 consumers · Prefetch is 1 on a busy queue`; `--verbose` mở ra                                                                                                 |
+| Chưa kiểm         | Gom theo (lý do, cách mở khoá): `Not checked (6): R1 x6 channels · management statistics are disabled · enable the Prometheus plugin or management stats`                               |
+| Điểm mù           | Một dòng: `Not visible from the broker: LE2, LE5, LE6, LE10 (client) · LE14, LE17 (lint) · LE8, LE19 (no tool) · ocho explain LE2`                                                      |
+| Ba việc làm trước | Đánh số, từ `rules.toActionText`; dòng cuối mỗi việc là `ocho explain <mã>`                                                                                                             |
+| Tổng kết          | `38 rules · 9 fail · 21 pass · 4 not checked · 4 n/a · 2 waived · exit 1`                                                                                                               |
 
 Nhãn trường ở tiếng Việt: `Chuyện gì`, `Dữ liệu an toàn?`, `Làm gì tiếp`, `Bằng chứng`, `Vì sao`. Chiều rộng cột nhãn tính theo nhãn dài nhất của ngôn ngữ đang dùng.
 
@@ -213,24 +213,24 @@ Bước 6 đọc `meta.severities`, không đọc mức của kết quả, vì k
 
 **Exit code của các lệnh khác.**
 
-| Lệnh | 0 | 3 | 4 | 5 | 130 |
-| --- | --- | --- | --- | --- | --- |
-| `import` | Đã ghi, hoặc không có gì thay đổi | Không đọc được broker, hoặc topology `unknown` | Cờ sai, file cũ có lỗi (IM2), file đổi trong lúc hỏi, stdin đóng giữa phiên | IM1, lỗi nội bộ | Ctrl-C, không ghi gì |
-| `explain` | In được | Không đọc được broker | Đích không tồn tại hoặc mơ hồ | Lỗi nội bộ | Ctrl-C |
-| `context add` | Đã lưu (và nối thử thành công, trừ khi `--no-verify`) | Nối thử thất bại; context vẫn **không** được lưu | Tên trùng, cờ thiếu | Lỗi nội bộ | Ctrl-C |
+| Lệnh          | 0                                                     | 3                                                | 4                                                                           | 5               | 130                  |
+| ------------- | ----------------------------------------------------- | ------------------------------------------------ | --------------------------------------------------------------------------- | --------------- | -------------------- |
+| `import`      | Đã ghi, hoặc không có gì thay đổi                     | Không đọc được broker, hoặc topology `unknown`   | Cờ sai, file cũ có lỗi (IM2), file đổi trong lúc hỏi, stdin đóng giữa phiên | IM1, lỗi nội bộ | Ctrl-C, không ghi gì |
+| `explain`     | In được                                               | Không đọc được broker                            | Đích không tồn tại hoặc mơ hồ                                               | Lỗi nội bộ      | Ctrl-C               |
+| `context add` | Đã lưu (và nối thử thành công, trừ khi `--no-verify`) | Nối thử thất bại; context vẫn **không** được lưu | Tên trùng, cờ thiếu                                                         | Lỗi nội bộ      | Ctrl-C               |
 
 ## Lệnh `import`
 
-| # | Bước | Gọi | Lỗi |
-| --- | --- | --- | --- |
-| 1 | Phân tích tham số; `--out` mặc định `./ocho.yaml` | `args.ts` | Exit 4 |
-| 2 | Đọc file cũ nếu có, băm nội dung | `compiler.loadOchoYaml` | Có lỗi → IM2, in chẩn đoán, exit 4 |
-| 3 | Lấy topology: từ broker (kế hoạch đọc cho đường dẫn topology và tốc độ), hoặc từ `--from definitions.json` | `broker`, `model.buildActual`, `model.topologyFromActual`; hoặc `model.topologyFromDefinitions` | Topology `unknown` → in bộ sưu tập nào và vì sao, exit 3 |
-| 4 | Tạo phiên | `compiler.createImportSession` | — |
-| 5 | Hỏi, hoặc `answerDefaults` khi không tương tác | `prompt/terminal.ts` | Xem dưới |
-| 6 | Lấy kết quả | `session.result()` | IM1 → in bước hỏng và khác biệt, không ghi, exit 5 |
-| 7 | In tổng kết và thay đổi | `render/text` | — |
-| 8 | Ghi file nguyên tử | `fs` | Xem dưới |
+| #   | Bước                                                                                                       | Gọi                                                                                             | Lỗi                                                      |
+| --- | ---------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| 1   | Phân tích tham số; `--out` mặc định `./ocho.yaml`                                                          | `args.ts`                                                                                       | Exit 4                                                   |
+| 2   | Đọc file cũ nếu có, băm nội dung                                                                           | `compiler.loadOchoYaml`                                                                         | Có lỗi → IM2, in chẩn đoán, exit 4                       |
+| 3   | Lấy topology: từ broker (kế hoạch đọc cho đường dẫn topology và tốc độ), hoặc từ `--from definitions.json` | `broker`, `model.buildActual`, `model.topologyFromActual`; hoặc `model.topologyFromDefinitions` | Topology `unknown` → in bộ sưu tập nào và vì sao, exit 3 |
+| 4   | Tạo phiên                                                                                                  | `compiler.createImportSession`                                                                  | —                                                        |
+| 5   | Hỏi, hoặc `answerDefaults` khi không tương tác                                                             | `prompt/terminal.ts`                                                                            | Xem dưới                                                 |
+| 6   | Lấy kết quả                                                                                                | `session.result()`                                                                              | IM1 → in bước hỏng và khác biệt, không ghi, exit 5       |
+| 7   | In tổng kết và thay đổi                                                                                    | `render/text`                                                                                   | —                                                        |
+| 8   | Ghi file nguyên tử                                                                                         | `fs`                                                                                            | Xem dưới                                                 |
 
 **Khi nào không tương tác.** Có `--non-interactive`, hoặc stdin không phải TTY, hoặc có `--json`. Trường hợp thứ hai và thứ ba in một dòng lên stderr nói rõ đã chuyển sang không tương tác.
 
@@ -246,13 +246,13 @@ Bước 6 đọc `meta.severities`, không đọc mức của kết quả, vì k
 
 **Phân giải đích của `explain`**, theo thứ tự, dừng ở dạng đầu tiên khớp:
 
-| Dạng | Ví dụ | Cần broker |
-| --- | --- | --- |
-| Mã luật có trong `codes.json` | `ocho explain T2` | không |
-| Mã điểm mù | `ocho explain LE5` | không |
-| Mã chẩn đoán | `ocho explain CX9`, `ocho explain Y4` | không |
-| `<loại> <tên>` với loại là `queue`, `exchange`, `flow` | `ocho explain queue orders` | có (`flow` cần thêm `ocho.yaml`) |
-| Tên trơn | `ocho explain orders` | có: tìm queue rồi exchange cùng tên trong vhost được chọn; khớp cả hai → exit 4, in hai cách viết rõ |
+| Dạng                                                   | Ví dụ                                 | Cần broker                                                                                           |
+| ------------------------------------------------------ | ------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| Mã luật có trong `codes.json`                          | `ocho explain T2`                     | không                                                                                                |
+| Mã điểm mù                                             | `ocho explain LE5`                    | không                                                                                                |
+| Mã chẩn đoán                                           | `ocho explain CX9`, `ocho explain Y4` | không                                                                                                |
+| `<loại> <tên>` với loại là `queue`, `exchange`, `flow` | `ocho explain queue orders`           | có (`flow` cần thêm `ocho.yaml`)                                                                     |
+| Tên trơn                                               | `ocho explain orders`                 | có: tìm queue rồi exchange cùng tên trong vhost được chọn; khớp cả hai → exit 4, in hai cách viết rõ |
 
 **Đích là đối tượng.** Kế hoạch đọc chỉ gồm đối tượng đó, các policy, operator policy của vhost, và binding liên quan, nên `explain` trên broker 10.000 queue vẫn trả trong ≤ 2 giây (K5). Đầu ra như ví dụ ở tab v0.1, cộng hai dòng cuối: kết quả các luật áp cho đối tượng đó, và `Broker agrees` hoặc `Broker disagrees (model_mismatch)` từ `effectiveCheck`.
 
@@ -285,20 +285,20 @@ Dòng `Data` lấy từ một trong ba câu chung của CLI theo loại lỗi: l
 
 Mọi test đầu-cuối gọi `run(argv, io)` trong tiến trình, với broker là `mock-mgmt` của gói broker phát lại bản ghi thô thật.
 
-| Nhóm | Test | Nghiệm thu |
-| --- | --- | --- |
-| Báo cáo vàng | Ba broker đại diện (Amazon MQ 3.13, 4.2 có nhiều lỗi, 4.3 sạch) × tiếng Anh, tiếng Việt × 80, 120 cột × màu bật, tắt | Khớp snapshot |
-| JSON | Mọi đầu ra `--json` của mọi test, kể cả đường lỗi | stdout parse được và qua đúng schema |
-| stdout sạch | Mọi test với `--json` | stdout chỉ có một document; mọi thứ khác ở stderr |
-| Exit code | Một ca cho mỗi bước của thuật toán và mỗi ô của bảng exit code các lệnh khác | Đúng mã |
-| Tham số | Mọi cờ; cờ lạ có gợi ý; bảng thứ tự ưu tiên cờ, biến môi trường, context | Đúng giá trị thắng |
-| Mật khẩu | Từng nguồn; `password_command` quá giờ, mã thoát khác 0, dòng rỗng, nhiều dòng; ô ẩn với TTY giả; CX11 | Đúng nguồn, đúng chẩn đoán |
-| File context | Tạo với 0600, 0700; quyền rộng → CX6; đường dẫn Windows | Đúng |
-| Import | Kịch bản trả lời qua stdin; Ctrl-C ở từng câu; EOF; file đổi giữa phiên; giả lập sập giữa ghi file tạm và rename; stdin không phải TTY | Đúng file ra hoặc file cũ nguyên vẹn, đúng exit code |
-| Explain | Mọi dạng đích; tên mơ hồ; số request với đích là đối tượng | Đúng; ≤ 6 request |
-| CL1 | Proxy ghi request cho `doctor`, `import`, `explain`, `context add` | Chỉ GET |
-| Bí mật | Hook toàn cục quét stdout, stderr, file đã ghi của mọi test | Không có mật khẩu, không có base64 của `user:pass` |
-| Ngân sách | Binary SEA trên máy CI; broker 10.000 queue | `--version` ≤ 100 ms p95; dòng xác nhận ≤ 100 ms; `doctor` ≤ 3 phút ở 5 request mỗi giây; `explain` ≤ 2 giây |
+| Nhóm         | Test                                                                                                                                   | Nghiệm thu                                                                                                   |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Báo cáo vàng | Ba broker đại diện (Amazon MQ 3.13, 4.2 có nhiều lỗi, 4.3 sạch) × tiếng Anh, tiếng Việt × 80, 120 cột × màu bật, tắt                   | Khớp snapshot                                                                                                |
+| JSON         | Mọi đầu ra `--json` của mọi test, kể cả đường lỗi                                                                                      | stdout parse được và qua đúng schema                                                                         |
+| stdout sạch  | Mọi test với `--json`                                                                                                                  | stdout chỉ có một document; mọi thứ khác ở stderr                                                            |
+| Exit code    | Một ca cho mỗi bước của thuật toán và mỗi ô của bảng exit code các lệnh khác                                                           | Đúng mã                                                                                                      |
+| Tham số      | Mọi cờ; cờ lạ có gợi ý; bảng thứ tự ưu tiên cờ, biến môi trường, context                                                               | Đúng giá trị thắng                                                                                           |
+| Mật khẩu     | Từng nguồn; `password_command` quá giờ, mã thoát khác 0, dòng rỗng, nhiều dòng; ô ẩn với TTY giả; CX11                                 | Đúng nguồn, đúng chẩn đoán                                                                                   |
+| File context | Tạo với 0600, 0700; quyền rộng → CX6; đường dẫn Windows                                                                                | Đúng                                                                                                         |
+| Import       | Kịch bản trả lời qua stdin; Ctrl-C ở từng câu; EOF; file đổi giữa phiên; giả lập sập giữa ghi file tạm và rename; stdin không phải TTY | Đúng file ra hoặc file cũ nguyên vẹn, đúng exit code                                                         |
+| Explain      | Mọi dạng đích; tên mơ hồ; số request với đích là đối tượng                                                                             | Đúng; ≤ 6 request                                                                                            |
+| CL1          | Proxy ghi request cho `doctor`, `import`, `explain`, `context add`                                                                     | Chỉ GET                                                                                                      |
+| Bí mật       | Hook toàn cục quét stdout, stderr, file đã ghi của mọi test                                                                            | Không có mật khẩu, không có base64 của `user:pass`                                                           |
+| Ngân sách    | Binary SEA trên máy CI; broker 10.000 queue                                                                                            | `--version` ≤ 100 ms p95; dòng xác nhận ≤ 100 ms; `doctor` ≤ 3 phút ở 5 request mỗi giây; `explain` ≤ 2 giây |
 
 **Cổng phát hành có người.** Không tự động hoá được, nhưng là điều kiện phát hành `0.1.0-alpha`:
 
@@ -315,19 +315,19 @@ Mọi test đầu-cuối gọi `run(argv, io)` trong tiến trình, với broker
 
 ## Thay đổi và giả định
 
-| # | Thay đổi | Chỗ cần sửa |
-| --- | --- | --- |
-| 1 | Ô nhập mật khẩu ẩn; mã mới CX11 (không có nguồn mật khẩu) | Tab chính, mục kết nối; tab spec, `codes.json` |
-| 2 | Cờ mới: `--url`, `--user`, `--file`, `--no-file`, `--experimental`, `--why`, `--verbose`, `--no-prometheus`, `--yes` | Tab chính, mục bề mặt lệnh |
-| 3 | Schema mới `ocho.error/1`, `ocho.explain/1`, `ocho.contexts/1`, `ocho.version/1`; `ocho.report/1` thêm `internal` tuỳ chọn | Tab spec, mục JSON Schema |
-| 4 | `explain` nhận mã điểm mù và mã chẩn đoán; khoá văn bản mới `rule.<MÃ>.predicate`; gói rules xuất bản rút gọn của fixture | Tab spec, tab rules |
-| 5 | Model có thêm `topologyFromDefinitions` và phạm vi một đối tượng cho `planRead` | Tab model, API |
-| 6 | Báo cáo gộp S1 khi cùng (luật, biến thể) có hơn 3 đối tượng | Tab v0.1, mục báo cáo |
-| 7 | `context add` nối thử trước khi lưu; thất bại thì không lưu | Tab chính, mục `ocho context` |
-| 8 | `import` không lưu một phần; bảng exit code riêng | Tab v0.1, mục import |
+| #   | Thay đổi                                                                                                                   | Chỗ cần sửa                                    |
+| --- | -------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| 1   | Ô nhập mật khẩu ẩn; mã mới CX11 (không có nguồn mật khẩu)                                                                  | Tab chính, mục kết nối; tab spec, `codes.json` |
+| 2   | Cờ mới: `--url`, `--user`, `--file`, `--no-file`, `--experimental`, `--why`, `--verbose`, `--no-prometheus`, `--yes`       | Tab chính, mục bề mặt lệnh                     |
+| 3   | Schema mới `ocho.error/1`, `ocho.explain/1`, `ocho.contexts/1`, `ocho.version/1`; `ocho.report/1` thêm `internal` tuỳ chọn | Tab spec, mục JSON Schema                      |
+| 4   | `explain` nhận mã điểm mù và mã chẩn đoán; khoá văn bản mới `rule.<MÃ>.predicate`; gói rules xuất bản rút gọn của fixture  | Tab spec, tab rules                            |
+| 5   | Model có thêm `topologyFromDefinitions` và phạm vi một đối tượng cho `planRead`                                            | Tab model, API                                 |
+| 6   | Báo cáo gộp S1 khi cùng (luật, biến thể) có hơn 3 đối tượng                                                                | Tab v0.1, mục báo cáo                          |
+| 7   | `context add` nối thử trước khi lưu; thất bại thì không lưu                                                                | Tab chính, mục `ocho context`                  |
+| 8   | `import` không lưu một phần; bảng exit code riêng                                                                          | Tab v0.1, mục import                           |
 
-| Mã | Giả định | Kiểm ở |
-| --- | --- | --- |
-| GC30 | esbuild gói một file cho Node SEA mà khởi tạo lười vẫn giữ `--version` ≤ 100 ms | Ngân sách khởi động trong CI |
-| GC31 | Ô nhập ẩn qua `readline` chế độ raw chạy đúng trên Windows Terminal và PowerShell | Chạy tay trên Windows |
+| Mã   | Giả định                                                                                  | Kiểm ở                               |
+| ---- | ----------------------------------------------------------------------------------------- | ------------------------------------ |
+| GC30 | esbuild gói một file cho Node SEA mà khởi tạo lười vẫn giữ `--version` ≤ 100 ms           | Ngân sách khởi động trong CI         |
+| GC31 | Ô nhập ẩn qua `readline` chế độ raw chạy đúng trên Windows Terminal và PowerShell         | Chạy tay trên Windows                |
 | GC32 | `rename` đè file có sẵn là nguyên tử trên Windows (Node gọi `MoveFileEx` với cờ thay thế) | Test giả lập sập trên runner Windows |
