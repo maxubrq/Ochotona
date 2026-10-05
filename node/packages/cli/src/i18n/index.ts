@@ -40,39 +40,54 @@ function plural(lang: Lang, n: number): string {
   return r.select(n);
 }
 
+export type Translate = (lang: Lang, key: string, params?: Params) => string;
+
+/**
+ * Hàm dịch trên một bộ khuôn câu cùng cú pháp với CLI. TUI dùng nó cho chữ
+ * giao diện của riêng mình.
+ * @example translator({ en: { hi: 'Hi {name}' }, vi: {} }, 'tui')('vi', 'hi', { name: 'Max' }) // 'Hi Max'
+ */
+export function translator(
+  messages: Readonly<Record<Lang, Readonly<Record<string, string>>>>,
+  label: string,
+): Translate {
+  return (lang, key, params = {}) => {
+    const template = messages[lang][key] ?? messages.en[key];
+    if (template === undefined)
+      throw new Error(`${label} i18n: unknown key ${key}`);
+    const value = (name: string): string | number => {
+      const v = params[name];
+      if (v === undefined)
+        throw new Error(`${label} i18n: ${key} needs parameter ${name}`);
+      return v;
+    };
+    return template
+      .replace(
+        PLURAL,
+        (_, name: string, one: string | undefined, other: string) => {
+          const n = value(name);
+          if (typeof n !== 'number')
+            throw new Error(
+              `${label} i18n: ${key} parameter ${name} must be a number`,
+            );
+          const branch =
+            one !== undefined && plural(lang, n) === 'one' ? one : other;
+          return branch.replace(/#/g, fmtNumber(lang, n));
+        },
+      )
+      .replace(ARG, (_, name: string) => {
+        const v = value(name);
+        return typeof v === 'number' ? fmtNumber(lang, v) : v;
+      });
+  };
+}
+
 /**
  * Điền khuôn câu `key`. Khoá vắng trong `lang` thì dùng tiếng Anh; vắng cả hai
  * hoặc thiếu tham số thì ném, vì đó là lỗi lập trình (test i18n bắt trước).
  * @example t('en', 'report.summary.rules', { count: 38 }) // '38 rules'
  */
-export function t(lang: Lang, key: string, params: Params = {}): string {
-  const template = MESSAGES[lang][key] ?? MESSAGES.en[key];
-  if (template === undefined) throw new Error(`cli i18n: unknown key ${key}`);
-  const value = (name: string): string | number => {
-    const v = params[name];
-    if (v === undefined)
-      throw new Error(`cli i18n: ${key} needs parameter ${name}`);
-    return v;
-  };
-  return template
-    .replace(
-      PLURAL,
-      (_, name: string, one: string | undefined, other: string) => {
-        const n = value(name);
-        if (typeof n !== 'number')
-          throw new Error(
-            `cli i18n: ${key} parameter ${name} must be a number`,
-          );
-        const branch =
-          one !== undefined && plural(lang, n) === 'one' ? one : other;
-        return branch.replace(/#/g, fmtNumber(lang, n));
-      },
-    )
-    .replace(ARG, (_, name: string) => {
-      const v = value(name);
-      return typeof v === 'number' ? fmtNumber(lang, v) : v;
-    });
-}
+export const t: Translate = translator(MESSAGES, 'cli');
 
 /**
  * Ngôn ngữ, theo thứ tự `--lang`, `OCHO_LANG`, `LC_ALL`, `LC_MESSAGES`, `LANG`.

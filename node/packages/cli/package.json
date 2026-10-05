@@ -13,6 +13,10 @@
       "types": "./dist/types/index.d.ts",
       "import": "./dist/index.js"
     },
+    "./api": {
+      "types": "./dist/types/api.d.ts",
+      "import": "./dist/api.js"
+    },
     "./package.json": "./package.json"
   },
   "scripts": {

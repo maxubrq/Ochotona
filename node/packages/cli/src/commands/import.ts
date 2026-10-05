@@ -390,7 +390,18 @@ function finalLine(s: Session, file: string, r: ImportResult): string {
   });
 }
 
-export async function importCmd(s: Session): Promise<ExitCode> {
+/** Phiên import đã sẵn sàng hỏi: file ra, file cũ, phiên của compiler. */
+export interface PreparedImport {
+  readonly out: { readonly path: string; readonly display: string };
+  readonly old: OldFile | null;
+  readonly session: ImportSession;
+}
+
+/**
+ * Bước 1 tới 4 của `import`: đọc file cũ, lấy topology (broker hoặc
+ * `--from definitions.json`), tạo phiên. Chưa hỏi gì, chưa ghi gì.
+ */
+export async function prepareImport(s: Session): Promise<PreparedImport> {
   const { io } = s;
   const now = new Date(io.clock()).toISOString() as Instant;
   const outDisplay = str(s.args, 'out') ?? 'ocho.yaml';
@@ -439,31 +450,19 @@ export async function importCmd(s: Session): Promise<ExitCode> {
     existing: old ? { text: old.text, file: outDisplay } : null,
     context: { name, toolVersion: TOOL_VERSION, now },
   });
+  return { out, old, session };
+}
 
-  // 5. Hỏi, hoặc mặc định
-  const nonInteractive =
-    bool(s.args, 'non-interactive') || !io.isTTY.stdin || s.json;
-  if (!bool(s.args, 'non-interactive')) {
-    if (!io.isTTY.stdin) s.note(s.t('import.auto_non_interactive.stdin'));
-    else if (s.json) s.note(s.t('import.auto_non_interactive.json'));
-  }
-  if (nonInteractive) session.answerDefaults();
-  else {
-    try {
-      await interview(s, session);
-    } catch (e) {
-      if (e instanceof Interrupted)
-        throw new Interrupted('file_write', outDisplay);
-      throw e;
-    }
-  }
-
-  // 6. Kết quả
-  const r = session.result();
+/**
+ * Bước 6 của `import`: kết quả của phiên đã hết câu hỏi. IM1 (tự kiểm vòng
+ * tròn hỏng) in khác biệt lên stderr rồi ném exit 5; IM2 ném exit 4.
+ */
+export function importResult(s: Session, p: PreparedImport): ImportResult {
+  const r = p.session.result();
   if (!r.ok) {
     const e = r.error;
     if (e.code === 'IM1') {
-      for (const d of e.differences) io.stderr.write(`  ${d}\n`);
+      for (const d of e.differences) s.io.stderr.write(`  ${d}\n`);
       throw diag(
         'IM1',
         5,
@@ -488,27 +487,67 @@ export async function importCmd(s: Session): Promise<ExitCode> {
   }
   for (const w of r.value.warnings)
     s.note(s.t('import.below_min_version', { actual: w.actual, min: w.min }));
+  return r.value;
+}
 
-  // 7, 8. Thay đổi, ghi
-  const unchanged = old !== null && old.text === r.value.yaml;
-  if (!unchanged) await writeAtomic(s, out, r.value.yaml, old);
-  const changes = r.value.changes?.lines ?? [];
+/**
+ * Bước 7, 8 của `import`: ghi nguyên tử (trừ khi không có gì đổi). Trả các
+ * dòng thay đổi và dòng cuối (`Wrote ocho.yaml: …` hoặc `… is up to date`).
+ */
+export async function writeImport(
+  s: Session,
+  p: PreparedImport,
+  r: ImportResult,
+): Promise<{ readonly written: boolean; readonly lines: string[] }> {
+  const unchanged = p.old !== null && p.old.text === r.yaml;
+  if (!unchanged) await writeAtomic(s, p.out, r.yaml, p.old);
+  return {
+    written: !unchanged,
+    lines: [
+      ...(r.changes?.lines ?? []),
+      unchanged
+        ? s.t('import.unchanged', { file: p.out.display })
+        : finalLine(s, p.out.display, r),
+    ],
+  };
+}
+
+export async function importCmd(s: Session): Promise<ExitCode> {
+  const { io } = s;
+  const prepared = await prepareImport(s);
+  const { session, out } = prepared;
+
+  // 5. Hỏi, hoặc mặc định
+  const nonInteractive =
+    bool(s.args, 'non-interactive') || !io.isTTY.stdin || s.json;
+  if (!bool(s.args, 'non-interactive')) {
+    if (!io.isTTY.stdin) s.note(s.t('import.auto_non_interactive.stdin'));
+    else if (s.json) s.note(s.t('import.auto_non_interactive.json'));
+  }
+  if (nonInteractive) session.answerDefaults();
+  else {
+    try {
+      await interview(s, session);
+    } catch (e) {
+      if (e instanceof Interrupted)
+        throw new Interrupted('file_write', out.display);
+      throw e;
+    }
+  }
+
+  // 6. Kết quả; 7, 8. Thay đổi, ghi
+  const r = importResult(s, prepared);
+  const { written, lines } = await writeImport(s, prepared, r);
   if (s.json) {
     writeJson(s, {
       schema: 'ocho.import/1',
-      file: outDisplay,
-      written: !unchanged,
-      summary: r.value.summary,
-      changes,
-      warnings: r.value.warnings,
+      file: out.display,
+      written,
+      summary: r.summary,
+      changes: r.changes?.lines ?? [],
+      warnings: r.warnings,
     });
   } else {
-    const lines = [...changes];
-    lines.push(
-      unchanged
-        ? s.t('import.unchanged', { file: outDisplay })
-        : finalLine(s, outDisplay, r.value),
-    );
     io.stdout.write(lines.map((l) => `${l}\n`).join(''));
   }
   return 0;

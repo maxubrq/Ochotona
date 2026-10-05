@@ -28,6 +28,8 @@ export interface DoctorOutcome {
   readonly durationMs: number;
   /** Tên hiện ở dòng đầu (context, hoặc host). */
   readonly name: string;
+  /** URL của broker; rỗng khi đọc từ ảnh chụp. */
+  readonly url: string;
   /** Thời gian tới khi nhận diện xong; `null` khi đọc từ ảnh chụp. */
   readonly connectMs: number | null;
 }

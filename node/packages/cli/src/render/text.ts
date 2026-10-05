@@ -157,7 +157,7 @@ function objectList(s: Session, results: readonly RuleResult[]): string {
 }
 
 /** Một khối kết quả `fail`: S1 đủ năm nhãn; S2–S5 bỏ `Why` trừ khi `--why`. */
-function failBlock(
+export function failBlock(
   group: readonly RuleResult[],
   s: Session,
   withWhy: boolean,
@@ -197,7 +197,7 @@ function failBlock(
 }
 
 /** Gom theo (luật, biến thể); hơn 3 đối tượng thì một khối, trừ khi `--verbose`. */
-function groupFails(
+export function groupFails(
   results: readonly RuleResult[],
   verbose: boolean,
 ): RuleResult[][] {
@@ -303,7 +303,7 @@ function notCheckedLines(results: readonly RuleResult[], s: Session): string[] {
 }
 
 /** Điểm mù: một dòng, gom theo nơi sẽ bắt. */
-function blindSpotLine(s: Session): string[] {
+export function blindSpotLine(s: Session): string[] {
   const order = ['client', 'lint', 'decide', 'none'] as const;
   const parts = order
     .map((where) => {

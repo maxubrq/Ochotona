@@ -3,11 +3,12 @@
 # 1. Mỗi lần push lên main, release-please đọc commit theo Conventional Commits
 #    (feat:, fix:, feat!: …) kể từ lần phát hành trước, rồi mở hoặc cập nhật một
 #    PR "chore(main): release cli x.y.z": nâng phiên bản trong
-#    node/packages/cli/package.json, src/version.ts, node/package.json, và viết
-#    node/packages/cli/CHANGELOG.md.
+#    node/packages/cli/package.json, src/version.ts, node/package.json, cùng
+#    node/packages/tui/package.json, src/version.ts (TUI phát hành cùng CLI), và
+#    viết node/packages/cli/CHANGELOG.md.
 # 2. Merge PR đó thì release-please tạo tag cli-vX.Y.Z và GitHub Release; job
-#    build dựng binary SEA từ đúng tag, job publish đính kèm archive, binary,
-#    SHA256SUMS và attestation nguồn gốc vào release.
+#    build dựng binary SEA của `ocho` và `ocho-tui` từ đúng tag, job publish
+#    đính kèm archive, binary, SHA256SUMS và attestation nguồn gốc vào release.
 #
 # Chạy tay với `tag` để dựng lại và đính kèm binary cho một release đã có.
 #
@@ -83,11 +84,20 @@ jobs:
       ref: ${{ needs.target.outputs.tag }}
       retention-days: 30
 
+  build-tui:
+    needs: target
+    permissions:
+      contents: read
+    uses: ./.github/workflows/tui-sea.yml
+    with:
+      ref: ${{ needs.target.outputs.tag }}
+      retention-days: 30
+
   # Chạy cả khi một nền tảng hỏng: đính kèm những gì đã dựng và qua test, rồi
   # báo đỏ nếu thiếu nền tảng nào, thay vì để release không có binary nào.
   publish:
-    needs: [target, build]
-    if: always() && needs.target.result == 'success' && needs.build.result != 'cancelled'
+    needs: [target, build, build-tui]
+    if: always() && needs.target.result == 'success' && needs.build.result != 'cancelled' && needs.build-tui.result != 'cancelled'
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     permissions:
@@ -114,7 +124,8 @@ jobs:
           cat SHA256SUMS
           missing=""
           for t in linux-x64 linux-arm64 darwin-arm64 win-x64; do
-            ls ocho-*-"$t"* > /dev/null 2>&1 || missing="$missing $t"
+            ls ocho-[0-9]*-"$t"* > /dev/null 2>&1 || missing="$missing ocho/$t"
+            ls ocho-tui-*-"$t"* > /dev/null 2>&1 || missing="$missing ocho-tui/$t"
           done
           echo "missing=${missing# }" >> "$GITHUB_OUTPUT"
 

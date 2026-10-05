@@ -4,11 +4,11 @@ Mục đích của Project này là đem lại khả năng làm việc với Rab
 
 ## Cấu trúc
 
-| Thư mục              | Nội dung                                                                                                   |
-| -------------------- | ---------------------------------------------------------------------------------------------------------- |
-| `node/`              | Monorepo pnpm, turbo. Các gói `spec`, `model`, `rules`, `broker`, `compiler`, `cli` (lệnh `ocho`)          |
-| `SUT/`               | Ma trận broker RabbitMQ thật (3.13, 4.0, 4.2, 4.3) trên Docker để test, xem [SUT/README.md](SUT/README.md) |
-| `node/fixtures/raw/` | Bản ghi thô của SUT, cho test không cần mạng                                                               |
+| Thư mục              | Nội dung                                                                                                                   |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `node/`              | Monorepo pnpm, turbo. Các gói `spec`, `model`, `rules`, `broker`, `compiler`, `cli` (lệnh `ocho`), `tui` (lệnh `ocho-tui`) |
+| `SUT/`               | Ma trận broker RabbitMQ thật (3.13, 4.0, 4.2, 4.3) trên Docker để test, xem [SUT/README.md](SUT/README.md)                 |
+| `node/fixtures/raw/` | Bản ghi thô của SUT, cho test không cần mạng                                                                               |
 
 ## Kiểm chứng `ocho` trên SUT, từng bước
 
@@ -154,7 +154,23 @@ ocho doctor --bogus; echo $?
 
 Phiên bản khác: thay `4.2` bằng `3.13`, `4.0`, `4.3` và đổi cổng theo bảng trong [SUT/README.md](SUT/README.md) (ví dụ 3.13 `full` là 31311). Trên 3.13, `--target-version 4.2` bật thêm VT1 (queue `legacy` mirror bằng `ha-mode`) và VT2 (`orders.parking` sẽ nhận delivery limit mặc định sau nâng cấp).
 
-### 11. Dỡ SUT
+### 11. Giao diện terminal: `ocho-tui`
+
+Cùng những việc trên, nhưng chọn bằng phím mũi tên thay vì nhớ cờ:
+
+```sh
+cd node
+pnpm exec turbo run build --filter=@ochotona/tui...
+alias ocho-tui="node $PWD/packages/tui/dist/bin/ocho-tui.js"
+
+ocho-tui                   # Home: sut42 (● mặc định), Enter mở menu: doctor, explain, import…
+ocho-tui --context sut42   # vào thẳng doctor
+ocho-tui --from snap.json  # đọc ảnh chụp
+```
+
+Doctor hiện danh sách bên trái (làm trước, lỗi theo mức, chưa kiểm, đã qua, điểm mù) và khối chi tiết bên phải; Enter giải thích luật, `o` giải thích queue đang chọn, `/` lọc, `s` lưu ảnh chụp. Mỗi kết quả in mờ lệnh `ocho` tương đương. `?` ở bất kỳ màn hình nào liệt kê phím. Xem [node/packages/tui/README.md](node/packages/tui/README.md).
+
+### 12. Dỡ SUT
 
 ```sh
 cd SUT
@@ -166,5 +182,6 @@ ocho context remove sut42 --yes
 
 - [docs/cli-usage.md](docs/cli-usage.md): các luồng dùng `ocho` điển hình (lần đầu khám broker, context, `ocho.yaml`, CI, điều tra, nâng cấp, chia sẻ ảnh chụp).
 - [node/packages/cli/README.md](node/packages/cli/README.md): lệnh `ocho`, exit code, phát triển; spec đầy đủ ở `docs/`.
+- [node/packages/tui/README.md](node/packages/tui/README.md): lệnh `ocho-tui`, các màn hình, phím, binary SEA.
 - [SUT/README.md](SUT/README.md): ma trận broker, cổng, ghi bản ghi thô.
 - README của từng gói trong `node/packages/`.

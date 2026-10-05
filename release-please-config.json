@@ -27,7 +27,13 @@
           "path": "packages/cli/package.json",
           "jsonpath": "$.version"
         },
-        { "type": "generic", "path": "packages/cli/src/version.ts" }
+        { "type": "generic", "path": "packages/cli/src/version.ts" },
+        {
+          "type": "json",
+          "path": "packages/tui/package.json",
+          "jsonpath": "$.version"
+        },
+        { "type": "generic", "path": "packages/tui/src/version.ts" }
       ]
     }
   }

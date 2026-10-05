@@ -6,10 +6,10 @@ Phiên bản nâng tự động bằng [release-please](https://github.com/googl
 
 1. Commit lên `main` theo [Conventional Commits](https://www.conventionalcommits.org/): `feat: …`, `fix: …`, `feat!: …`.
 2. Workflow `Release` chạy release-please. Nó mở (hoặc cập nhật) PR `chore(main): release cli X.Y.Z`, trong đó:
-   - `node/packages/cli/package.json`, `node/packages/cli/src/version.ts` (dòng có `x-release-please-version`), `node/package.json` có phiên bản mới;
+   - `node/packages/cli/package.json`, `node/packages/cli/src/version.ts` (dòng có `x-release-please-version`), `node/package.json` có phiên bản mới; `node/packages/tui/package.json`, `node/packages/tui/src/version.ts` cũng vậy (TUI phát hành cùng CLI, cùng phiên bản);
    - `node/packages/cli/CHANGELOG.md` có mục mới, nhóm theo Features, Bug Fixes, Performance.
 3. Merge PR đó khi muốn phát hành. release-please tạo tag `cli-vX.Y.Z` và GitHub Release.
-4. Cùng workflow dựng binary SEA từ đúng tag cho 4 nền tảng, chạy test trên từng binary, rồi đính kèm vào release:
+4. Cùng workflow dựng binary SEA của `ocho` và `ocho-tui` từ đúng tag cho 4 nền tảng, chạy test trên từng binary, rồi đính kèm vào release:
 
 | File | Nền tảng |
 | --- | --- |
@@ -17,6 +17,7 @@ Phiên bản nâng tự động bằng [release-please](https://github.com/googl
 | `ocho-X.Y.Z-linux-arm64`, `ocho-X.Y.Z-linux-arm64.tar.gz` | Linux arm64 |
 | `ocho-X.Y.Z-darwin-arm64`, `ocho-X.Y.Z-darwin-arm64.tar.gz` | macOS Apple Silicon |
 | `ocho-X.Y.Z-win-x64.exe`, `ocho-X.Y.Z-win-x64.zip` | Windows x64 |
+| `ocho-tui-X.Y.Z-<nền tảng>`, cùng archive | `ocho-tui` (giao diện terminal) cho 4 nền tảng trên |
 | `SHA256SUMS` | checksum của mọi file trên |
 
 Binary trần tải về là chạy (trên Linux, macOS cần `chmod +x`); archive nhỏ hơn khoảng 3 lần (43 MB so với 118 MB) và giữ bit thực thi. Một nền tảng hỏng không chặn cả release: các bản còn lại vẫn được đính kèm, workflow báo đỏ kèm tên nền tảng thiếu.
@@ -63,6 +64,8 @@ Lần phát hành đầu: `.release-please-manifest.json` còn rỗng, nên rele
 | `.github/workflows/cli-sea.yml`      | Được gọi, hoặc chạy tay                                         | Dựng SEA trên 4 runner, kiểm `--version` khớp `package.json`, chạy `test/bin.test.ts` trên binary, đóng gói                                        |
 | `.github/workflows/release.yml`      | Push lên `main`                                                 | release-please; khi có release thì dựng, tính SHA256SUMS, attestation, đính kèm                                                                    |
 | `.github/workflows/cli-perf.yml`     | Thứ Hai hằng tuần, chạy tay (chọn Node), hoặc PR có nhãn `perf` | `test:perf` của model, rules, compiler, cli; dựng SEA rồi đo `ocho --version` p95 ≤ 100 ms trên 4 nền tảng (Windows chỉ báo cáo). Không chặn merge |
+| `.github/workflows/tui-ci.yml`       | PR và push chạm `node/`                                         | Typecheck, format, test `@ochotona/tui` trên Node 22, 24 (gồm `dist/bin`); gọi `tui-sea.yml`                                                       |
+| `.github/workflows/tui-sea.yml`      | Được gọi, hoặc chạy tay                                         | Dựng SEA `ocho-tui` trên 4 runner, kiểm `--version`, chạy `test/bin.test.ts` trên binary, đóng gói                                                 |
 | `.github/workflows/cli-mutation.yml` | Thứ Hai hằng tuần, hoặc chạy tay                                | Stryker, ngưỡng 85%                                                                                                                                |
 | `.github/dependabot.yml`             | Hằng tuần                                                       | PR nâng các action (pin theo SHA)                                                                                                                  |
 

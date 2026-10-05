@@ -52,7 +52,7 @@ export function makeSession(
 }
 
 /** Nạp văn bản của spec (luật, mã chẩn đoán); tiếng Anh luôn có làm dự phòng. */
-async function loadSpecText(lang: Lang): Promise<void> {
+export async function loadSpecText(lang: Lang): Promise<void> {
   await import('@ochotona/spec/i18n/en');
   if (lang === 'vi') await import('@ochotona/spec/i18n/vi');
 }

@@ -38,6 +38,8 @@ import { nodeIO, run } from '@ochotona/cli';
 const code = await run(['doctor', '--json'], nodeIO());
 ```
 
+Công cụ cần nhiều hơn exit code (như `@ochotona/tui`) dùng `@ochotona/cli/api`: `makeSession`, `parse`, từng bước của lệnh không in gì (`diagnose`, `prepareImport`, `importResult`, `writeImport`), và các khối render của báo cáo (`headLines`, `failBlock`, `summaryLine`…). `doctor` và `import` của CLI chính là các bước đó cộng phần in ra terminal.
+
 ## Lệnh
 
 | Lệnh                                   | Việc                                                                                    |

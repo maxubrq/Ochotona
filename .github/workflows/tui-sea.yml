@@ -1,0 +1,98 @@
+# Binary SEA của `ocho-tui` cho 4 nền tảng: dựng, kiểm phiên bản, chạy
+# test/bin.test.ts trên chính binary, rồi đóng gói thành artifact
+# `ocho-tui-<target>`. Dùng lại từ tui-ci.yml (mỗi PR) và release.yml (khi phát
+# hành, đính kèm cùng release với `ocho`).
+#
+# Cách dựng như cli-sea.yml; riêng Ink cần thay yoga-layout bằng shim nạp WASM
+# trước (xem node/packages/tui/scripts/sea.mjs).
+
+name: TUI SEA
+
+on:
+  workflow_call:
+    inputs:
+      ref:
+        description: Ref để dựng (tag khi phát hành); trống là commit hiện tại
+        type: string
+        default: ""
+      retention-days:
+        type: number
+        default: 7
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sea:
+    name: SEA ${{ matrix.target }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: ubuntu-24.04, target: linux-x64, exe: "" }
+          - { os: ubuntu-24.04-arm, target: linux-arm64, exe: "" }
+          - { os: macos-15, target: darwin-arm64, exe: "" }
+          - { os: windows-2025, target: win-x64, exe: .exe }
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    defaults:
+      run:
+        shell: bash
+        working-directory: node
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.ref }}
+          persist-credentials: false
+
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+        with:
+          package_json_file: node/package.json
+
+      # Node của binary là chính node này: giữ một dòng LTS cho mọi nền tảng.
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: node/pnpm-lock.yaml
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec turbo run build --filter=@ochotona/tui...
+      - run: pnpm --filter @ochotona/tui build:sea
+
+      - name: Version matches package.json
+        id: version
+        run: |
+          version=$(node -p "require('./packages/tui/package.json').version")
+          out=$(packages/tui/dist/sea/ocho-tui${{ matrix.exe }} --version)
+          echo "$out"
+          test "$out" = "ocho-tui $version"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Tests on the binary
+        working-directory: node/packages/tui
+        run: pnpm exec vitest run test/bin.test.ts
+        env:
+          OCHO_TUI_BIN: dist/sea/ocho-tui${{ matrix.exe }}
+
+      # Hai dạng cho mỗi nền tảng: binary trần và archive giữ bit thực thi.
+      - name: Package
+        working-directory: node/packages/tui/dist/sea
+        run: |
+          name="ocho-tui-${{ steps.version.outputs.version }}-${{ matrix.target }}"
+          mkdir -p out
+          cp "ocho-tui${{ matrix.exe }}" "out/$name${{ matrix.exe }}"
+          if [ "${{ runner.os }}" = "Windows" ]; then
+            7z a -tzip -mx=9 "out/$name.zip" ocho-tui.exe > /dev/null
+          else
+            tar -czf "out/$name.tar.gz" ocho-tui
+          fi
+          ls -l out
+
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: ocho-tui-${{ matrix.target }}
+          path: node/packages/tui/dist/sea/out/
+          if-no-files-found: error
+          retention-days: ${{ inputs.retention-days || 7 }}

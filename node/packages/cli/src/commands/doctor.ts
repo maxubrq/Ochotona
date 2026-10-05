@@ -21,6 +21,7 @@ import {
   runRules,
   selectRules,
 } from '@ochotona/rules';
+import type { ReadEvent } from '@ochotona/broker';
 import { SPEC_VERSION, type Severity } from '@ochotona/spec';
 import { resolve } from 'node:path';
 import { gunzipSync, gzipSync } from 'node:zlib';
@@ -83,11 +84,15 @@ async function fromSnapshot(s: Session, file: string): Promise<Actual> {
   return r.value;
 }
 
-async function writeSnapshot(
-  s: Session,
+/**
+ * Ghi ảnh chụp (`.gz` thì nén). Ghi file lỗi thì ném `CliError` `FILE`.
+ * @example await saveSnapshotFile(s, 'snap.json', actual, { name: 'prod', url, now, redactHosts: true })
+ */
+export async function saveSnapshotFile(
+  s: Pick<Session, 'io' | 'debug'>,
   file: string,
   actual: Actual,
-  opts: { name: string; url: string; now: Instant },
+  opts: { name: string; url: string; now: Instant; redactHosts: boolean },
 ): Promise<void> {
   const json = saveSnapshot(actual, {
     toolVersion: TOOL_VERSION,
@@ -95,7 +100,7 @@ async function writeSnapshot(
     takenAt: opts.now,
     contextName: opts.name,
     url: opts.url,
-    redactHosts: bool(s.args, 'redact-hosts'),
+    redactHosts: opts.redactHosts,
     randomBytes: s.io.randomBytes,
   });
   const data = file.endsWith('.gz') ? gzipSync(json) : json;
@@ -103,24 +108,67 @@ async function writeSnapshot(
     await s.io.fs.writeFile(resolve(s.io.cwd, file), data);
     s.debug(`wrote snapshot ${file}`);
   } catch (e) {
-    // Ghi file lỗi không đổi exit code của chẩn đoán.
-    renderError(
-      { ...s, json: false },
-      new CliError({
-        code: 'FILE',
-        exitCode: 4,
-        data: 'file_write',
-        file,
-        msg: {
-          key: 'file.write_failed',
-          params: { file, detail: (e as Error).message },
-        },
-      }),
-    );
+    throw new CliError({
+      code: 'FILE',
+      exitCode: 4,
+      data: 'file_write',
+      file,
+      msg: {
+        key: 'file.write_failed',
+        params: { file, detail: (e as Error).message },
+      },
+    });
   }
 }
 
-export async function doctor(s: Session): Promise<ExitCode> {
+async function writeSnapshot(
+  s: Session,
+  file: string,
+  actual: Actual,
+  opts: { name: string; url: string; now: Instant },
+): Promise<void> {
+  try {
+    await saveSnapshotFile(s, file, actual, {
+      ...opts,
+      redactHosts: bool(s.args, 'redact-hosts'),
+    });
+  } catch (e) {
+    // Ghi file lỗi không đổi exit code của chẩn đoán.
+    if (!(e instanceof CliError)) throw e;
+    renderError({ ...s, json: false }, e);
+  }
+}
+
+/** Những gì `diagnose` báo ra trong lúc chạy, để người gọi tự hiện. */
+export interface DiagnoseHooks {
+  /** Trước khi nối tới broker (không gọi khi đọc ảnh chụp). */
+  onConnecting?(name: string): void;
+  /**
+   * Ngay sau nhận diện: `head` chỉ có dữ liệu của pha nhận diện, đủ để in ba
+   * dòng đầu báo cáo; `estimate` là ước tính của broker cho pha đọc.
+   */
+  onIdentified?(info: {
+    readonly head: Actual;
+    readonly name: string;
+    readonly connectMs: number;
+    readonly queues: number;
+    readonly estimate: { readonly requests: number; readonly seconds: number };
+  }): void;
+  /** Sự kiện đọc của broker (trang, giảm tốc, thử lại…). */
+  onEvent?(e: ReadEvent): void;
+  /** Pha đọc broker xong (thành công hay không). */
+  onReadEnd?(): void;
+}
+
+/**
+ * Bước 1 tới 11 của `doctor`: đọc broker (hoặc ảnh chụp), chấm luật, lưu ảnh
+ * chụp nếu có `--save`. Không in gì lên stdout; tiến trình đi qua `hooks`.
+ * CLI và TUI cùng gọi hàm này, chỉ khác cách hiện kết quả.
+ */
+export async function diagnose(
+  s: Session,
+  hooks: DiagnoseHooks = {},
+): Promise<DoctorOutcome> {
   const { io, args } = s;
   const startedMs = io.clock();
   const step = (name: string, since: number) =>
@@ -142,9 +190,9 @@ export async function doctor(s: Session): Promise<ExitCode> {
 
   // 2. Dòng xác nhận (chỉ khi đọc broker)
   const contexts = from ? null : await readContexts(io, (e) => s.warn(e));
-  if (contexts && io.isTTY.stderr && !s.json) {
+  if (contexts && hooks.onConnecting) {
     const spec = pickTarget(s, contexts.data);
-    s.note(s.t('doctor.connecting', { name: spec.context ?? spec.url }));
+    hooks.onConnecting(spec.context ?? spec.url);
   }
 
   // 3. ocho.yaml
@@ -174,7 +222,6 @@ export async function doctor(s: Session): Promise<ExitCode> {
   let name: string;
   let url = '';
   let connectMs: number | null = null;
-  let headPrinted = false;
 
   if (from) {
     // --from thay bước 5 tới 8
@@ -187,9 +234,8 @@ export async function doctor(s: Session): Promise<ExitCode> {
     name = target.name;
     url = target.target.url;
     const reader = openReader(s, target);
-    const progress = createProgress(s, limits);
     try {
-      const opts = readOptions(s, limits, (e) => progress.onEvent(e));
+      const opts = readOptions(s, limits, hooks.onEvent);
       let plan = planRead({ ...needs, users: false, scope });
       // 6. Nhận diện, in ba dòng đầu
       const identified = await identify(s, reader, plan, target, opts);
@@ -208,31 +254,19 @@ export async function doctor(s: Session): Promise<ExitCode> {
           target: tv.raw,
           version: identified.version.raw,
         });
-      if (!s.json) {
-        out(
-          s,
-          headLines(identifiedActual(identified, name, plan), s, {
-            name,
-            connectMs,
-          }),
-        );
-        headPrinted = true;
-      }
-      const queues = identified.totals?.queues ?? 0;
-      if (queues > ESTIMATE_ABOVE_QUEUES && !s.json)
-        s.note(
-          s.t('doctor.estimate', {
-            queues,
-            requests: identified.estimate.requests,
-            duration: fmtDuration(identified.estimate.seconds * 1000, s.lang),
-          }),
-        );
+      hooks.onIdentified?.({
+        head: identifiedActual(identified, name, plan),
+        name,
+        connectMs,
+        queues: identified.totals?.queues ?? 0,
+        estimate: identified.estimate,
+      });
       // 7. Đọc
       t0 = io.clock();
       actual = await readActual(s, reader, plan, identified, name, opts);
       step('read', t0);
     } finally {
-      progress.clear();
+      hooks.onReadEnd?.();
       await reader.close();
     }
   }
@@ -264,9 +298,9 @@ export async function doctor(s: Session): Promise<ExitCode> {
   // 11. Ảnh chụp
   if (save) await writeSnapshot(s, save, actual, { name, url, now });
 
-  // 12, 13. Render, exit code
+  // 13. Exit code
   const exitCode = doctorExit(results, { failOn, internal: internal.length });
-  const outcome: DoctorOutcome = {
+  return {
     actual,
     results,
     internal,
@@ -279,8 +313,43 @@ export async function doctor(s: Session): Promise<ExitCode> {
     startedAt: now,
     durationMs: io.clock() - startedMs,
     name,
+    url,
     connectMs,
   };
+}
+
+export async function doctor(s: Session): Promise<ExitCode> {
+  const { io, args } = s;
+  const progress = createProgress(s, limitsOf(s));
+  let headPrinted = false;
+  const outcome = await diagnose(s, {
+    // 2. Dòng xác nhận
+    ...(io.isTTY.stderr && !s.json
+      ? {
+          onConnecting: (name: string) =>
+            s.note(s.t('doctor.connecting', { name })),
+        }
+      : {}),
+    // 6. Ba dòng đầu, ước tính cho broker lớn
+    onIdentified: ({ head, name, connectMs, queues, estimate }) => {
+      if (s.json) return;
+      out(s, headLines(head, s, { name, connectMs }));
+      headPrinted = true;
+      if (queues > ESTIMATE_ABOVE_QUEUES)
+        s.note(
+          s.t('doctor.estimate', {
+            queues,
+            requests: estimate.requests,
+            duration: fmtDuration(estimate.seconds * 1000, s.lang),
+          }),
+        );
+    },
+    onEvent: (e) => progress.onEvent(e),
+    onReadEnd: () => progress.clear(),
+  });
+
+  // 12. Render
+  const { actual, name, connectMs, exitCode } = outcome;
   if (s.json) {
     writeJson(s, buildReport(outcome, s));
   } else {

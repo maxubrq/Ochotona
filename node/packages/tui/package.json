@@ -1,14 +1,59 @@
 {
   "name": "@ochotona/tui",
   "version": "0.1.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Lệnh ocho-tui: giao diện terminal toàn màn hình của Ocho, dựng trên @ochotona/cli. Cùng dữ liệu, cùng chữ, nhưng chọn bằng phím mũi tên thay vì nhớ cờ",
+  "type": "module",
+  "bin": {
+    "ocho-tui": "dist/bin/ocho-tui.js"
+  },
+  "main": "dist/index.js",
+  "types": "dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "scripts": {
-    "build": "rollup -c ../../rollup.config.base.js",
-    "format": "prettier --check \"src/**/*.ts\"",
-    "format:fix": "prettier --write \"src/**/*.ts\""
+    "build": "rollup -c",
+    "build:sea": "node scripts/sea.mjs",
+    "test": "vitest run",
+    "test:sea": "node scripts/sea.mjs && OCHO_TUI_BIN=dist/sea/ocho-tui vitest run test/bin.test.ts",
+    "test:bin": "rollup -c && OCHO_TUI_BIN=dist/bin/ocho-tui.js vitest run test/bin.test.ts",
+    "typecheck": "tsc --noEmit -p . && tsc -p tsconfig.check.json",
+    "format": "prettier --check \"src/**/*.{ts,tsx,json}\" \"test/**/*.{ts,tsx}\"",
+    "format:fix": "prettier --write \"src/**/*.{ts,tsx,json}\" \"test/**/*.{ts,tsx}\""
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@inkjs/ui": "^2.0.0",
+    "@ochotona/cli": "workspace:*",
+    "@ochotona/compiler": "workspace:*",
+    "@ochotona/model": "workspace:*",
+    "@ochotona/rules": "workspace:*",
+    "@ochotona/spec": "workspace:*",
+    "ink": "^8.0.0",
+    "react": "^19.3.0",
+    "wrap-ansi": "^10.0.2"
+  },
+  "devDependencies": {
+    "@ochotona/broker": "workspace:*",
+    "@rollup/plugin-json": "^6.1.0",
+    "@types/node": "^26.6.4",
+    "@types/react": "^19.3.0",
+    "esbuild": "^0.28.2",
+    "ink-testing-library": "^4.0.0",
+    "postject": "1.0.0-alpha.6",
+    "vitest": "^5.0.3",
+    "yoga-layout": "~3.2.1"
+  }
 }
