@@ -7,3 +7,7 @@ coverage
 # Stryker
 reports/mutation
 .stryker-tmp
+
+# Ocho
+ocho.yaml
+snap.json

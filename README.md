@@ -4,11 +4,11 @@ Mục đích của Project này là đem lại khả năng làm việc với Rab
 
 ## Cấu trúc
 
-| Thư mục | Nội dung |
-| --- | --- |
-| `node/` | Monorepo pnpm, turbo. Các gói `spec`, `model`, `rules`, `broker`, `compiler`, `cli` (lệnh `ocho`) |
-| `SUT/` | Ma trận broker RabbitMQ thật (3.13, 4.0, 4.2, 4.3) trên Docker để test, xem [SUT/README.md](SUT/README.md) |
-| `node/fixtures/raw/` | Bản ghi thô của SUT, cho test không cần mạng |
+| Thư mục              | Nội dung                                                                                                   |
+| -------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `node/`              | Monorepo pnpm, turbo. Các gói `spec`, `model`, `rules`, `broker`, `compiler`, `cli` (lệnh `ocho`)          |
+| `SUT/`               | Ma trận broker RabbitMQ thật (3.13, 4.0, 4.2, 4.3) trên Docker để test, xem [SUT/README.md](SUT/README.md) |
+| `node/fixtures/raw/` | Bản ghi thô của SUT, cho test không cần mạng                                                               |
 
 ## Kiểm chứng `ocho` trên SUT, từng bước
 
@@ -43,12 +43,12 @@ docker compose -f 4.2/docker-compose.yml --profile traffic up -d --wait
 
 Lệnh dựng bốn broker và lưu lượng giả (perf-test). Chờ khoảng 20 giây để thống kê kịp có, rồi mới chạy `doctor`.
 
-| Broker | Management | Prometheus | Có gì |
-| --- | --- | --- | --- |
-| `full` | http://localhost:42011 | http://localhost:42021/metrics | Đủ nguồn dữ liệu |
-| `nostats` | http://localhost:42012 | http://localhost:42022/metrics | Tắt thống kê của management |
-| `noprom` | http://localhost:42013 | không có | Không bật plugin Prometheus |
-| `listonly` | http://localhost:42014 | không có | Cả hai |
+| Broker     | Management             | Prometheus                     | Có gì                       |
+| ---------- | ---------------------- | ------------------------------ | --------------------------- |
+| `full`     | http://localhost:42011 | http://localhost:42021/metrics | Đủ nguồn dữ liệu            |
+| `nostats`  | http://localhost:42012 | http://localhost:42022/metrics | Tắt thống kê của management |
+| `noprom`   | http://localhost:42013 | không có                       | Không bật plugin Prometheus |
+| `listonly` | http://localhost:42014 | không có                       | Cả hai                      |
 
 Hai user: `ocho-doctor` / `ocho-doctor` (tag `monitoring`, chỉ đọc, dùng cho `ocho`) và `ocho-admin` / `ocho-admin` (quản trị, chỉ để chạy lưu lượng).
 
@@ -164,6 +164,7 @@ ocho context remove sut42 --yes
 
 ## Tài liệu
 
+- [docs/cli-usage.md](docs/cli-usage.md): các luồng dùng `ocho` điển hình (lần đầu khám broker, context, `ocho.yaml`, CI, điều tra, nâng cấp, chia sẻ ảnh chụp).
 - [node/packages/cli/README.md](node/packages/cli/README.md): lệnh `ocho`, exit code, phát triển; spec đầy đủ ở `docs/`.
 - [SUT/README.md](SUT/README.md): ma trận broker, cổng, ghi bản ghi thô.
 - README của từng gói trong `node/packages/`.
