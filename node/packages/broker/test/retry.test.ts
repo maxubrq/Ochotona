@@ -48,6 +48,15 @@ describe('classifyError: mỗi dòng của bảng lỗi', () => {
       },
     );
   });
+  it('lỗi gộp không có thông báo: chỉ mã, không dấu hai chấm treo', () => {
+    const agg = Object.assign(new AggregateError([], ''), {
+      code: 'ECONNREFUSED',
+    });
+    expect(classifyError(agg, id).raw).toMatchObject({
+      kind: 'connect',
+      message: 'ECONNREFUSED',
+    });
+  });
   it('che origin trong thông báo', () => {
     const f = classifyError(
       err('ECONNREFUSED', 'connect ECONNREFUSED http://h:1'),

@@ -14,9 +14,12 @@ describe('readNeeds', () => {
       'exchanges',
       'operatorPolicies',
       'policies',
+      'prometheus',
       'vhosts',
     ]);
     expect(readNeeds(only('T2')).prometheus).toBe(true);
+    expect(planRead(readNeeds(only('T2'))).prometheus).toBe(true);
+    expect(planRead(readNeeds(only('C2'))).prometheus).toBe(false);
     expect([...readNeeds(only('C2')).requires].sort()).toEqual([
       'consumers',
       'queues',

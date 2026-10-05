@@ -55,7 +55,7 @@ Kiểu literal (`RuleCode`, `DiagCode`, `I18nKey`, `Severity`…) được sinh 
 ```
 data/          dữ liệu gốc, chỉ sửa ở đây
 schemas/data/  schema cho từng file trong data/
-schemas/contracts/  finding-1, report-1, snapshot-1, ocho-yaml-0.1
+schemas/contracts/  finding-1, report-1, snapshot-1, ocho-yaml-0.1; error-1, explain-1, contexts-1, version-1, import-1 (CLI)
 src/gen/       sinh từ data/, có trong git, không sửa tay
 src/           hàm tra cứu và format viết tay
 scripts/       codegen và kiểm chéo, chỉ dùng lúc dev

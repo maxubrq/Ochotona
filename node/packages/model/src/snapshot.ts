@@ -10,7 +10,7 @@ import type { CapabilityTable } from './caps';
 import { baseOf, deriveActual } from './derive';
 import { type Violation, checkInvariants } from './invariants';
 import { type Observed, unknown } from './observed';
-import { type ObjectRef, sha256Hex } from './ref';
+import { type ObjectRef, sha256Hex, sortByRefKey } from './ref';
 import { actualBaseShape, bool, instant, obj, str } from './snapshot-shape';
 import { type Instant, type Result, err, ok } from './units';
 
@@ -78,11 +78,12 @@ class Redactor {
 }
 
 function redact(base: ActualBase, r: Redactor): ActualBase {
-  const mapList = <T>(
+  // Tên đổi thì thứ tự theo refKey đổi: sắp lại để ảnh chụp giữ INV2.
+  const mapList = <T extends { readonly ref: ObjectRef }>(
     o: Observed<readonly T[]>,
     f: (x: T) => T,
   ): Observed<readonly T[]> =>
-    o.state === 'known' ? { ...o, value: o.value.map(f) } : o;
+    o.state === 'known' ? { ...o, value: sortByRefKey(o.value.map(f)) } : o;
   return {
     ...base,
     connections: mapList(base.connections, (c: Connection) => ({

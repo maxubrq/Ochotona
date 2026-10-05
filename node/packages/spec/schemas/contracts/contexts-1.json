@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ochotona:schema:contexts:1",
+  "title": "ocho.contexts/1",
+  "$comment": "Output of ocho context list and ocho context show. Secrets never appear: passwordCommand only says whether one is set.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "file", "current", "contexts"],
+  "properties": {
+    "schema": { "const": "ocho.contexts/1" },
+    "file": { "type": "string" },
+    "current": { "type": ["string", "null"] },
+    "contexts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "current",
+          "url",
+          "user",
+          "passwordCommand",
+          "ca",
+          "insecure",
+          "prometheus"
+        ],
+        "properties": {
+          "name": { "type": "string" },
+          "current": { "type": "boolean" },
+          "url": { "type": "string" },
+          "user": { "type": "string" },
+          "passwordCommand": { "enum": ["set", "not set"] },
+          "ca": { "type": ["string", "null"] },
+          "insecure": { "type": "boolean" },
+          "prometheus": { "type": "string" }
+        }
+      }
+    }
+  }
+}

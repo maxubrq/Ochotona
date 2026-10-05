@@ -201,7 +201,7 @@ export function estimateRead(
       continue;
     reads.set(r.id, [...(reads.get(r.id) ?? []), r]);
   }
-  let requests = 1; // pha đóng
+  let requests = (plan.totalsAtEnd ?? true) ? 1 : 0; // pha đóng
   for (const [id, rs] of reads) {
     if (rs[0].paginated) {
       const key = TOTAL_OF[id];
@@ -468,6 +468,7 @@ export function createReader(
       }
 
       ctx.emit({ type: 'phase', phase: 'close', at: clock() });
+      const closing = plan.totalsAtEnd ?? true;
       const overviewRead = plan.identify.find((r) => r.id === 'overview') ?? {
         id: 'overview' as const,
         segments: ['overview'],
@@ -475,12 +476,16 @@ export function createReader(
         columns: null,
         query: {},
       };
-      const end = await readEndpoint(
-        ctx,
-        { ...overviewRead, id: 'totalsAtEnd' },
-        overviewRead.segments,
-        null,
-      );
+      const end: RawResult = closing
+        ? toRaw(
+            await readEndpoint(
+              ctx,
+              { ...overviewRead, id: 'totalsAtEnd' },
+              overviewRead.segments,
+              null,
+            ),
+          )
+        : { status: 'not_attempted' };
       const readFinishedAt = clock();
 
       const inv = (id: EndpointId): RawResult =>
@@ -497,7 +502,7 @@ export function createReader(
         connections: inv('connections'),
         channels: inv('channels'),
         consumers: inv('consumers'),
-        totalsAtEnd: toRaw(end),
+        totalsAtEnd: end,
         // Chỉ có khi kế hoạch đọc /api/users (CLI chạy bằng user quản trị).
         ...(results.has('users') ? { users: inv('users') } : {}),
       };

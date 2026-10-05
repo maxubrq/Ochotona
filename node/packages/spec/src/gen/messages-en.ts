@@ -12,6 +12,8 @@ export const messages: Readonly<Record<I18nKey, string>> = {
     'Switch this consumer to manual ack, sent after the work is committed.',
   'rule.C1.mechanism':
     'With auto-ack the broker deletes a message the moment it writes it to the socket; whatever the consumer had not finished is gone.',
+  'rule.C1.predicate':
+    'A consumer subscribes with automatic acknowledgement instead of manual ack.',
   'rule.C1.action': 'Use manual ack on {objects}',
   'rule.C2.title': 'Consumer prefetch is unbounded or 1',
   'rule.C2.what': 'A consumer on queue {queue} has prefetch {prefetch}.',
@@ -23,6 +25,8 @@ export const messages: Readonly<Record<I18nKey, string>> = {
     'Set prefetch on this consumer to a measured value, such as 20 to 100.',
   'rule.C2.mechanism':
     'Prefetch 0 lets the broker push every ready message to the consumer; prefetch 1 waits a full round trip for each message.',
+  'rule.C2.predicate':
+    'A consumer has prefetch 0 (unlimited), or prefetch 1 on a queue delivering more than {highRate} messages per second.',
   'rule.C2.action': 'Tune prefetch on {objects}',
   'rule.DX1.title': 'Queue is used as storage',
   'rule.DX1.what':
@@ -33,6 +37,7 @@ export const messages: Readonly<Record<I18nKey, string>> = {
     'Find out why consumers fall behind, or move long-lived data to a database.',
   'rule.DX1.mechanism':
     'RabbitMQ is built for short queues; with millions of ready messages, restarts, syncs and memory use grow with the backlog.',
+  'rule.DX1.predicate': 'A queue holds more than {ready} ready messages.',
   'rule.DX1.action': 'Drain the backlog on {objects}',
   'rule.DX2.title': 'Disk free limit is below node memory',
   'rule.DX2.what':
@@ -43,6 +48,8 @@ export const messages: Readonly<Record<I18nKey, string>> = {
     'Set disk_free_limit to at least the memory limit of the node, for example disk_free_limit.relative = 1.0.',
   'rule.DX2.mechanism':
     'When paging memory to disk a node can write up to its memory size; a lower free-disk limit lets that write run out of space.',
+  'rule.DX2.predicate':
+    "A node's disk free limit is lower than its memory limit.",
   'rule.DX2.action': 'Raise disk_free_limit on {objects}',
   'rule.DX3.title': 'Connections or queues are created constantly',
   'rule.DX3.what':
@@ -55,6 +62,8 @@ export const messages: Readonly<Record<I18nKey, string>> = {
     'Reuse long-lived connections and channels instead of opening one per request.',
   'rule.DX3.mechanism':
     'Each new connection and queue goes through authentication and a metadata store write; at high rates this competes with message traffic.',
+  'rule.DX3.predicate':
+    'Connections or queues are created faster than {perSecond} per second.',
   'rule.DX3.action': 'Reuse connections on {objects}',
   'rule.F4.title': 'Messages are redelivered in a loop',
   'rule.F4.what':
@@ -65,6 +74,8 @@ export const messages: Readonly<Record<I18nKey, string>> = {
     'Reject failing messages with requeue false so they go to dead-letter.',
   'rule.F4.mechanism':
     'A nack with requeue puts the message back at the head of the queue; a message that always fails is delivered again at once, without end.',
+  'rule.F4.predicate':
+    'A queue delivers at least {minDeliverRate} message per second and more than {ratio} of its deliveries are redeliveries.',
   'rule.F4.action': 'Stop requeueing failures on {objects}',
   'rule.L3.title': 'Several policies match; only one applies',
   'rule.L3.what':
@@ -79,6 +90,8 @@ export const messages: Readonly<Record<I18nKey, string>> = {
     'Merge the keys into one policy, or change the patterns so the policies do not overlap.',
   'rule.L3.mechanism':
     'RabbitMQ applies a single policy, the one with the highest priority, and never merges keys from other matching policies.',
+  'rule.L3.predicate':
+    'Two or more user policies match the same exchange or queue; only the one with the highest priority applies.',
   'rule.L3.action': 'Merge overlapping policies on {objects}',
   'rule.N1.title': 'One connection both publishes and consumes',
   'rule.N1.what':
@@ -88,6 +101,8 @@ export const messages: Readonly<Record<I18nKey, string>> = {
   'rule.N1.next': 'Open separate connections for publishing and for consuming.',
   'rule.N1.mechanism':
     'During a resource alarm the broker blocks publishing connections; consumers on the same connection stop too, so the backlog cannot drain.',
+  'rule.N1.predicate':
+    'One AMQP connection has both a channel that publishes and a channel with consumers.',
   'rule.N1.action': 'Split publishing and consuming on {objects}',
   'rule.N2.title': 'Connection has no name',
   'rule.N2.what': 'A connection from user {user} sets no connection_name.',
@@ -99,6 +114,8 @@ export const messages: Readonly<Record<I18nKey, string>> = {
     'Set connection_name in the client properties when opening the connection.',
   'rule.N2.mechanism':
     'The broker shows only an address for an unnamed connection, so tracing a finding back to a service takes guesswork.',
+  'rule.N2.predicate':
+    'An AMQP connection sends no connection_name in its client properties.',
   'rule.N2.action': 'Set a connection name on {objects}',
   'rule.N3.title': 'Heartbeats are disabled',
   'rule.N3.what': 'A connection from user {user} has heartbeat timeout 0.',
@@ -108,6 +125,8 @@ export const messages: Readonly<Record<I18nKey, string>> = {
     'Set a heartbeat timeout in the client, for example 60 seconds.',
   'rule.N3.mechanism':
     'Without heartbeats neither side notices a half-open TCP connection; its channels hold messages unacked until the operating system closes it.',
+  'rule.N3.predicate':
+    'An AMQP connection negotiated heartbeat 0, which turns heartbeats off.',
   'rule.N3.action': 'Enable heartbeats on {objects}',
   'rule.Q3.title': 'An application connects with an administrator user',
   'rule.Q3.what':
@@ -121,6 +140,8 @@ export const messages: Readonly<Record<I18nKey, string>> = {
     'Create a user for this service with only the permissions it needs.',
   'rule.Q3.mechanism':
     'A shared administrator account lets any bug or leaked credential delete queues and policies across the broker.',
+  'rule.Q3.predicate':
+    'A connection uses the guest user, or a user tagged administrator.',
   'rule.Q3.action':
     'Give {objects} a service user without the administrator tag',
   'rule.R1.title': 'Messages are published without confirms',
@@ -132,6 +153,8 @@ export const messages: Readonly<Record<I18nKey, string>> = {
     'Enable publisher confirms on this channel and wait for them before treating a publish as done.',
   'rule.R1.mechanism':
     'Without confirms a publish returns once the bytes leave the client; a message lost in transit or on a failing node raises no error.',
+  'rule.R1.predicate':
+    'A channel has published messages with publisher confirms off.',
   'rule.R1.action': 'Enable publisher confirms on {objects}',
   'rule.T1.title': 'Durable data sits in a classic queue',
   'rule.T1.what':
@@ -143,6 +166,8 @@ export const messages: Readonly<Record<I18nKey, string>> = {
   'rule.T1.next': 'Move this queue to a quorum queue through a migration.',
   'rule.T1.mechanism':
     'A classic queue keeps its data on a single node with no replica; a quorum queue copies every message to a majority before confirming it.',
+  'rule.T1.predicate':
+    'A durable classic queue that is not auto-delete belongs to a strict flow, or is undeclared and has consumers and waiting messages.',
   'rule.T1.action': 'Move {objects} to quorum queues',
   'rule.T2.title': 'Unroutable messages can be dropped',
   'rule.T2.what':
@@ -159,6 +184,8 @@ export const messages: Readonly<Record<I18nKey, string>> = {
     'Set an alternate exchange on this exchange through a policy; the fanout exchange ocho.unroutable and its queue must exist first.',
   'rule.T2.mechanism':
     'An exchange stores nothing: with no matching binding and no alternate exchange, the broker discards the message and still confirms it.',
+  'rule.T2.predicate':
+    'An exchange with outgoing bindings has no usable alternate exchange: none set, one that does not exist, or one with no bindings.',
   'rule.T2.action': 'Add an alternate exchange to {objects}',
   'rule.T3.title': 'A full queue drops its oldest messages',
   'rule.T3.what':
@@ -169,6 +196,8 @@ export const messages: Readonly<Record<I18nKey, string>> = {
     'Set overflow to reject-publish or reject-publish-dlx through a policy.',
   'rule.T3.mechanism':
     'drop-head is the default overflow: at the length limit the broker discards the oldest message, and the publisher still gets a confirm.',
+  'rule.T3.predicate':
+    'A queue has max-length or max-length-bytes, and overflow is drop-head, including by default.',
   'rule.T3.action': 'Set overflow reject-publish on {objects}',
   'rule.T4.title': 'Poison messages can be dropped silently',
   'rule.T4.what':
@@ -183,6 +212,8 @@ export const messages: Readonly<Record<I18nKey, string>> = {
     'Set a delivery limit, a dead-letter exchange, at-least-once dead-lettering and overflow reject-publish together through a policy.',
   'rule.T4.mechanism':
     'Since 4.0 quorum queues default to a delivery limit of 20; past the limit, a message with no dead-letter target is discarded.',
+  'rule.T4.predicate':
+    'A quorum queue without dead-letter-exchange has a delivery-limit (set, or the default 20 from 4.0); or, on 3.13, has no delivery-limit.',
   'rule.T4.mechanism.loop':
     'On 3.13 a quorum queue has no delivery limit by default, so a message that always fails returns to the queue without end.',
   'rule.T4.action': 'Add a dead-letter exchange to {objects}',
@@ -195,6 +226,8 @@ export const messages: Readonly<Record<I18nKey, string>> = {
     'Set dead-letter-strategy at-least-once and overflow reject-publish together.',
   'rule.T5.mechanism':
     'At-least-once dead-lettering needs overflow reject-publish; without it the broker silently falls back to at-most-once.',
+  'rule.T5.predicate':
+    'A quorum queue has dead-letter-exchange without both dead-letter-strategy at-least-once and overflow reject-publish.',
   'rule.T5.action': 'Make dead-lettering at-least-once on {objects}',
   'rule.T9.title': 'Expired messages are deleted, not dead-lettered',
   'rule.T9.what':
@@ -210,6 +243,8 @@ export const messages: Readonly<Record<I18nKey, string>> = {
     'Remove expires from the policy or the queue arguments; a dead-letter exchange does not save an expired queue.',
   'rule.T9.mechanism':
     'An expired message with no dead-letter exchange is discarded.',
+  'rule.T9.predicate':
+    'A queue has message-ttl without dead-letter-exchange, or has expires, with or without dead-letter.',
   'rule.T9.mechanism.expires':
     'expires removes an unused queue and everything in it, without dead-lettering.',
   'rule.T9.action': 'Add a dead-letter exchange or remove the TTL on {objects}',
@@ -221,6 +256,8 @@ export const messages: Readonly<Record<I18nKey, string>> = {
   'rule.VT1.next': 'Migrate this queue to a quorum queue before upgrading.',
   'rule.VT1.mechanism':
     'RabbitMQ 4.0 removed classic queue mirroring; ha-mode keys are ignored and the queue silently becomes a single-node classic queue.',
+  'rule.VT1.predicate':
+    'With --target-version 4.0 or later on a broker older than 4.0: a classic queue whose policy has ha-mode.',
   'rule.VT1.action': 'Migrate {objects} to quorum queues before upgrading',
   'rule.VT2.title': 'Upgrade will start dropping poison messages',
   'rule.VT2.what':
@@ -231,6 +268,8 @@ export const messages: Readonly<Record<I18nKey, string>> = {
     'Set a dead-letter exchange with at-least-once dead-lettering before upgrading.',
   'rule.VT2.mechanism':
     'From 4.0 quorum queues have a default delivery limit; a queue that redelivered without end on 3.13 starts discarding messages instead.',
+  'rule.VT2.predicate':
+    'With --target-version 4.0 or later on a broker older than 4.0: a quorum queue with neither dead-letter nor delivery-limit.',
   'rule.VT2.action': 'Add a dead-letter exchange to {objects} before upgrading',
   'rule.VT3.title': 'Deprecated features are in use',
   'rule.VT3.what': 'The broker reports deprecated feature {feature} in use.',
@@ -240,6 +279,7 @@ export const messages: Readonly<Record<I18nKey, string>> = {
     'Plan to stop using each listed feature before the next upgrade.',
   'rule.VT3.mechanism':
     'RabbitMQ marks a feature deprecated before removing it, and a broker can be set to deny it, which breaks clients that still use it.',
+  'rule.VT3.predicate': 'The broker reports a deprecated feature in use.',
   'rule.VT3.action': 'Stop using deprecated features on {objects}',
   'rule.VT4.title': 'Nodes run different RabbitMQ versions',
   'rule.VT4.what': 'Nodes in the cluster report versions {versions}.',
@@ -249,6 +289,7 @@ export const messages: Readonly<Record<I18nKey, string>> = {
     'Finish the rolling upgrade so every node runs the same version.',
   'rule.VT4.mechanism':
     'A cluster with mixed versions runs only the features all nodes share, and version-dependent defaults can differ from node to node.',
+  'rule.VT4.predicate': 'Running nodes report different RabbitMQ versions.',
   'rule.VT4.action': 'Bring {objects} to one version',
   'diag.Y1.message': 'Unknown key {key}.',
   'diag.Y1.next': 'Remove the key or fix its spelling.',
@@ -357,6 +398,10 @@ export const messages: Readonly<Record<I18nKey, string>> = {
   'diag.CX10.message': 'The URL {url} is not a valid management URL.',
   'diag.CX10.next':
     'Use the form https://host:15671, with no query or fragment.',
+  'diag.CX11.message':
+    'No password for user {user}: there is no --password-stdin, OCHO_PASSWORD, password_command, or terminal to ask.',
+  'diag.CX11.next':
+    'Pass --password-stdin, set OCHO_PASSWORD, or add password_command to the context.',
   'diag.OC1.message':
     'A read-only command runs as {user}, which has the administrator tag.',
   'diag.OC1.next': 'Create a user with only the monitoring tag for Ocho.',

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ochotona:schema:error:1",
+  "title": "ocho.error/1",
+  "$comment": "An error that stops a command before it has a result. Printed on stdout with --json so callers can always parse stdout.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "code", "message", "data", "next", "exitCode"],
+  "properties": {
+    "schema": { "const": "ocho.error/1" },
+    "code": { "type": "string", "pattern": "^[A-Z]+[0-9]*$" },
+    "message": { "type": "string", "minLength": 1 },
+    "data": { "type": "string", "minLength": 1 },
+    "next": { "type": "string" },
+    "exitCode": { "enum": [1, 2, 3, 4, 5, 130] },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["file", "line", "column", "code", "severity", "message"],
+        "properties": {
+          "file": { "type": "string" },
+          "line": { "type": "integer", "minimum": 1 },
+          "column": { "type": "integer", "minimum": 1 },
+          "endLine": { "type": "integer", "minimum": 1 },
+          "endColumn": { "type": "integer", "minimum": 1 },
+          "code": { "type": "string" },
+          "severity": { "enum": ["error", "warning"] },
+          "message": { "type": "string" },
+          "path": {
+            "type": "array",
+            "items": { "anyOf": [{ "type": "string" }, { "type": "integer" }] }
+          }
+        }
+      }
+    }
+  }
+}

@@ -11,6 +11,8 @@ import {
   ENDPOINT_IDS,
   buildActual,
   checkInvariants,
+  loadSnapshot,
+  saveSnapshot,
 } from '../src';
 
 const ROOT = new URL('../../../fixtures/raw/', import.meta.url).pathname;
@@ -65,6 +67,18 @@ describe.skipIf(recs.length === 0)('buildActual trên bản ghi thật', () => {
         caps: DEFAULT_CAPABILITY_TABLE,
       });
       expect(checkInvariants(a)).toEqual([]);
+      // Che host đổi tên connection, channel: ảnh chụp vẫn phải nạp lại được.
+      const snap = saveSnapshot(a, {
+        toolVersion: '0.1.0',
+        specVersion: '0.4.0',
+        takenAt: end,
+        contextName: 'fixture',
+        url: 'http://h',
+        redactHosts: true,
+        randomBytes: (n) => new Uint8Array(n).fill(7),
+      });
+      const back = loadSnapshot(snap, DEFAULT_CAPABILITY_TABLE);
+      expect(back.ok ? [] : back.error).toEqual([]);
       expect(a.queues.state).toBe('known');
       expect(a.broker.version.state).toBe('known');
 

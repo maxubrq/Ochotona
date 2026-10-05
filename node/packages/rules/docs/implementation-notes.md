@@ -10,14 +10,16 @@ Bảng "Thay đổi và giả định" của spec có tám dòng; phần thuộc
 | --- | --------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 5   | Tham số mới của T2 và các luật khác; khoá văn bản theo biến thể | `spec/data/rules.json` (`params` của 22 luật), `spec/data/i18n/{en,vi}.json`, kiểm chéo trong `spec/scripts/checks.ts` cho khoá `rule.<MÃ>.<trường>.<biến thể>` |
 | 6   | `thresholds` trong `rules.json`, file `fix-templates.json`      | `spec/data/rules.json`, `spec/data/fix-templates.json` cùng schema, `fixTemplate()`, `hasMessage()` trong `@ochotona/spec`                                      |
-| 7   | `matchingPolicies(obj)`, bộ sưu tập `users` của model           | `model/src/effective.ts`; `Actual.users`, `planRead({ users })`, broker đọc `/api/users` khi kế hoạch có                                                      |
-| —   | Giả định GC25, GC26, GC27                                       | Đăng ký trong `spec/data/codes.json`. GC25 đã kiểm (dưới); GC26 thấy đúng trên bản ghi 3.13 (`ha-mode` có trong `definition`)                                 |
+| 7   | `matchingPolicies(obj)`, bộ sưu tập `users` của model           | `model/src/effective.ts`; `Actual.users`, `planRead({ users })`, broker đọc `/api/users` khi kế hoạch có                                                        |
+| —   | Giả định GC25, GC26, GC27                                       | Đăng ký trong `spec/data/codes.json`. GC25 đã kiểm (dưới); GC26 thấy đúng trên bản ghi 3.13 (`ha-mode` có trong `definition`)                                   |
 
 Các dòng 1–4 và 8 là sửa văn bản của các tab trước; các tab đó không nằm trong repo này.
 
 `rules.json` cũng đổi `appliesTo` của VT4 từ `node` sang `broker`, cho khớp bảng mười bốn luật: một kết quả cho cả cluster.
 
 ## Chỗ khác spec
+
+- **`readNeeds` thêm `'prometheus'` vào `requires`** khi luật cần `broker.counters.unroutableDropped`. `model.planRead` chỉ đọc Prometheus khi `requires` có endpoint đó và cờ `prometheus` bật; trước sửa CLI không bao giờ đọc Prometheus. Thấy khi chạy `ocho doctor` trên SUT 4.2.
 
 | Spec                                                     | Mã                                                                                                                              | Lý do                                                                                                                                                                      |
 | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -29,8 +31,8 @@ Các dòng 1–4 và 8 là sửa văn bản của các tab trước; các tab đ
 | `RuleResult`                                             | Thêm `tolerance`; `notChecked.source` là đường dẫn nguồn của nguyên nhân gốc                                                    | `toFinding` cần đường dẫn nguồn để điền `{path}` của `reason.forbidden`…                                                                                                   |
 | Bộ sưu tập `unknown`: `not_checked` cấp broker           | `notChecked.path` là tên thực thể (`queue`, `channel`)                                                                          | Không có `FieldPath` nào đứng cho cả bộ sưu tập                                                                                                                            |
 | Chế độ `test` ném khi vi phạm hợp đồng                   | Ngoại lệ của luật cũng ném                                                                                                      | Trong test, nuốt ngoại lệ thành `not_checked` sẽ giấu lỗi của luật                                                                                                         |
-| Ba kiểm hợp đồng của `fail`                              | Thêm: `urgency` hợp lệ; bằng chứng chỉ trỏ tới trường đã khai trong `requires`/`optional`; verdict lạ là vi phạm               | Bằng chứng ngoài các trường đã khai là dữ liệu bộ máy không biết luật đọc; verdict sai hình dạng trước đây bị bỏ qua im lặng                                              |
-| `requiredPaths` → `model.planRead` đổi đường dẫn          | `readNeeds(rules)` của gói này trả `{ requires, prometheus, wantsUsers }` cho `planRead`                                        | `FieldPath` thuộc gói rules; model không biết nó. Bảng ở `src/read-plan.ts`                                                                                                 |
+| Ba kiểm hợp đồng của `fail`                              | Thêm: `urgency` hợp lệ; bằng chứng chỉ trỏ tới trường đã khai trong `requires`/`optional`; verdict lạ là vi phạm                | Bằng chứng ngoài các trường đã khai là dữ liệu bộ máy không biết luật đọc; verdict sai hình dạng trước đây bị bỏ qua im lặng                                               |
+| `requiredPaths` → `model.planRead` đổi đường dẫn         | `readNeeds(rules)` của gói này trả `{ requires, prometheus, wantsUsers }` cho `planRead`                                        | `FieldPath` thuộc gói rules; model không biết nó. Bảng ở `src/read-plan.ts`                                                                                                |
 | Truy cập dữ liệu chỉ qua view                            | Luật vẫn đọc `ctx.index`, `ctx.actual.policies` khi cần đối tượng khác (T2 tìm exchange đích của AE, L3 gọi `matchingPolicies`) | Đường dẫn chỉ trả giá trị trường; trường hợp này cần cả đối tượng. Luật vẫn khai trường tương ứng trong `requires` để `not_checked` đúng                                   |
 
 ## Quyết định theo luật
@@ -60,6 +62,7 @@ Các dòng 1–4 và 8 là sửa văn bản của các tab trước; các tab đ
 - Kỳ vọng có thể nêu thêm `urgency`, một phần `params`, `fixSet` và danh sách bằng chứng (`"<kind> <path> <note>"`); tám luật S1 dùng chúng ở các ca chính.
 - Tầng tích hợp: chưa có thư mục `definitions.json`, `traffic.ts` riêng cho mỗi ca. Thay vào đó `fixtures/integration/recorded.ts` chạy mọi luật trên 16 bản ghi thô của ma trận `SUT/` (3.13, 4.0, 4.2, 4.3 × `full`, `nostats`, `noprom`, `listonly`), cùng định dạng `expect`. Tên connection, channel trong bản ghi bị che, nên ca của R1, C1 dùng `object: '*'` (đối tượng bất kỳ của luật). Definitions và lưu lượng của SUT đã được bổ sung để mọi luật S1 có ca `fail` và `near` (xem `SUT/README.md`).
 - Ma trận phủ chạy qua vitest (`pnpm coverage-matrix`), vì mã dùng import không đuôi theo kiểu bundler nên `node` không chạy thẳng được. Cả hai tầng đủ ô. Ma trận cũng báo biến thể mà fixture thấy luật trả nhưng luật không khai.
+- `ruleExamples(code)` xuất ca `fail` đầu tiên và ca `near` đầu tiên của mỗi luật ở tầng đơn vị (tên ca, nhãn đối tượng, kết quả, mức, biến thể) cho `ocho explain <MÃ>` (thay đổi 4 của spec CLI). Dữ liệu ở `src/gen/examples.ts`, sinh bằng `pnpm examples` (chạy fixture thật để lấy nhãn); `test/examples.test.ts` hỏng khi file lệch fixture. Tên ca chỉ có tiếng Anh.
 
 ## Phát hiện trên bản ghi thật
 
@@ -69,22 +72,22 @@ Các dòng 1–4 và 8 là sửa văn bản của các tab trước; các tab đ
 
 ## Tình trạng so với định nghĩa hoàn thành
 
-| Mục                                                               | Tình trạng                                                                                                      |
-| ----------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| 22 luật, mỗi luật một file ≤ 120 dòng                             | Có (`src/catalog/`; L3 có hai `RuleDef` trong một file, dài nhất 110 dòng)                                      |
-| Ma trận phủ                                                       | Đủ cả hai tầng                                                                                                  |
-| Fixture đơn vị ở chế độ `test`                                    | Có, `test/unit-fixtures.test.ts`                                                                                |
-| Tích hợp 3.13, 4.2, 4.3 × 4 biến thể                              | Có trên bản ghi (cả 4.0), `test/recorded.test.ts`; mọi ca `fail` S1 bắt được, không ca `near`, `anti` nào sai    |
-| Tính chất (fast-check)                                            | Có, `test/property.test.ts`, 150 ca mỗi lần chạy                                                                |
-| Schema `finding:1`, en và vi                                      | Có, `test/finding.test.ts`                                                                                      |
-| Bảng ca `planActions`                                             | Có, `test/actions.test.ts`                                                                                      |
-| Lệnh sửa: snapshot, tên có nháy, dấu cách, `/`, `sh -n`           | Có, `test/fix.test.ts`                                                                                          |
-| Hiệu năng ≤ 1 giây                                                | Có, `test/perf.test.ts`; khoảng 350 ms cho 162.000 kết quả trên máy dev                                         |
+| Mục                                                               | Tình trạng                                                                                                        |
+| ----------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| 22 luật, mỗi luật một file ≤ 120 dòng                             | Có (`src/catalog/`; L3 có hai `RuleDef` trong một file, dài nhất 110 dòng)                                        |
+| Ma trận phủ                                                       | Đủ cả hai tầng                                                                                                    |
+| Fixture đơn vị ở chế độ `test`                                    | Có, `test/unit-fixtures.test.ts`                                                                                  |
+| Tích hợp 3.13, 4.2, 4.3 × 4 biến thể                              | Có trên bản ghi (cả 4.0), `test/recorded.test.ts`; mọi ca `fail` S1 bắt được, không ca `near`, `anti` nào sai     |
+| Tính chất (fast-check)                                            | Có, `test/property.test.ts`, 150 ca mỗi lần chạy                                                                  |
+| Schema `finding:1`, en và vi                                      | Có, `test/finding.test.ts`                                                                                        |
+| Bảng ca `planActions`                                             | Có, `test/actions.test.ts`                                                                                        |
+| Lệnh sửa: snapshot, tên có nháy, dấu cách, `/`, `sh -n`           | Có, `test/fix.test.ts`                                                                                            |
+| Hiệu năng ≤ 1 giây                                                | Có, `test/perf.test.ts`; khoảng 350 ms cho 162.000 kết quả trên máy dev                                           |
 | Mutation ≥ 85% (Stryker) trên tám luật S1                         | 96,6% (`pnpm test:mutation`, khoảng 3 phút). 17 mutant sống: phần lớn tương đương hoặc chỉ đổi giá trị bằng chứng |
-| Ngưỡng DX1, F4, C2, DX3 đọc từ `thresholds`                       | Có                                                                                                              |
-| Khuôn lệnh đọc từ `fix-templates.json`, đã kiểm với rabbitmqadmin | Có; rabbitmqadmin 2.35.0 trên 3.13 và 4.2 (`pnpm test:live`)                                                     |
-| Không phụ thuộc lúc chạy ngoài `spec`, `model`                    | Có                                                                                                              |
-| `requiredPaths` → `model.planRead`                                | Có, qua `readNeeds` (bảng `FieldPath` → endpoint ở `src/read-plan.ts`)                                          |
+| Ngưỡng DX1, F4, C2, DX3 đọc từ `thresholds`                       | Có                                                                                                                |
+| Khuôn lệnh đọc từ `fix-templates.json`, đã kiểm với rabbitmqadmin | Có; rabbitmqadmin 2.35.0 trên 3.13 và 4.2 (`pnpm test:live`)                                                      |
+| Không phụ thuộc lúc chạy ngoài `spec`, `model`                    | Có                                                                                                                |
+| `requiredPaths` → `model.planRead`                                | Có, qua `readNeeds` (bảng `FieldPath` → endpoint ở `src/read-plan.ts`)                                            |
 
 ## Stryker
 

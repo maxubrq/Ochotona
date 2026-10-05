@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ochotona:schema:explain:1",
+  "title": "ocho.explain/1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "kind", "id"],
+  "properties": {
+    "schema": { "const": "ocho.explain/1" },
+    "kind": {
+      "enum": ["rule", "blind_spot", "code", "queue", "exchange", "flow"]
+    },
+    "id": { "type": "string", "minLength": 1 },
+    "rule": {
+      "type": "object",
+      "required": ["code", "title", "severities", "mechanism", "specRef"],
+      "properties": {
+        "code": { "type": "string" },
+        "title": { "type": "string" },
+        "severities": {
+          "type": "array",
+          "items": { "enum": ["S1", "S2", "S3", "S4", "S5"] }
+        },
+        "predicate": { "type": "string" },
+        "mechanism": { "type": "string" },
+        "next": { "type": "string" },
+        "fix": { "type": "string" },
+        "specRef": { "type": "string" },
+        "lessonRefs": { "type": "array", "items": { "type": "string" } },
+        "status": { "type": "string" },
+        "examples": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["kind", "title", "object", "result"],
+            "properties": {
+              "kind": { "enum": ["fail", "near"] },
+              "title": { "type": "string" },
+              "object": { "type": "string" },
+              "result": {
+                "enum": [
+                  "pass",
+                  "fail",
+                  "not_checked",
+                  "not_applicable",
+                  "none"
+                ]
+              },
+              "severity": { "enum": ["S1", "S2", "S3", "S4", "S5"] },
+              "variant": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "blindSpot": {
+      "type": "object",
+      "required": ["id", "name", "caughtBy", "rules"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "caughtBy": { "type": "string" },
+        "rules": { "type": "array", "items": { "type": "string" } },
+        "plannedIn": { "type": "string" }
+      }
+    },
+    "code": {
+      "type": "object",
+      "required": ["code", "kind", "meaning", "status"],
+      "properties": {
+        "code": { "type": "string" },
+        "kind": { "type": "string" },
+        "meaning": { "type": "string" },
+        "status": { "type": "string" },
+        "message": { "type": "string" },
+        "next": { "type": "string" }
+      }
+    },
+    "object": {
+      "type": "object",
+      "required": ["id", "label", "keys", "policies", "brokerCheck"],
+      "properties": {
+        "id": { "type": "string" },
+        "label": { "type": "string" },
+        "type": { "type": "string" },
+        "vhost": { "type": "string" },
+        "flows": { "type": "array", "items": { "type": "string" } },
+        "tolerance": { "enum": ["strict", "loose", "undeclared"] },
+        "keys": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["key", "value", "layer", "runtime"],
+            "properties": {
+              "key": { "type": "string" },
+              "value": true,
+              "layer": { "type": "string" },
+              "by": { "type": ["string", "null"] },
+              "runtime": { "type": "boolean" },
+              "overridden": { "type": "array" },
+              "rules": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        },
+        "policies": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "priority", "applied"],
+            "properties": {
+              "name": { "type": "string" },
+              "kind": { "enum": ["policy", "operator_policy"] },
+              "priority": { "type": "integer" },
+              "applied": { "type": "boolean" }
+            }
+          }
+        },
+        "brokerCheck": { "enum": ["agrees", "disagrees", "unverified"] }
+      }
+    },
+    "flow": {
+      "type": "object",
+      "required": ["name", "tolerance", "members"],
+      "properties": {
+        "name": { "type": "string" },
+        "tolerance": { "enum": ["strict", "loose", "undeclared"] },
+        "members": {
+          "type": "object",
+          "properties": {
+            "exchanges": { "type": "array", "items": { "type": "string" } },
+            "queues": { "type": "array", "items": { "type": "string" } },
+            "bindings": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      }
+    },
+    "findings": {
+      "type": "array",
+      "items": { "$ref": "urn:ochotona:schema:finding:1" }
+    }
+  }
+}

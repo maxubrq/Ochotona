@@ -54,11 +54,21 @@ export async function readEndpoint(
       kind: 'json',
       maxBytes: MAX_BODY_BYTES,
     });
-    if (!r.ok) return { ok: false, raw: r.failure.raw };
+    // Endpoint một đối tượng: 404 là đối tượng không tồn tại, không phải lỗi.
+    const missing =
+      !r.ok &&
+      read.single === true &&
+      r.failure.raw.status === 'http_error' &&
+      r.failure.raw.code === 404;
+    if (!r.ok && !missing) return { ok: false, raw: r.failure.raw };
     const observedAt = ctx.clock();
     ctx.onPage();
     ctx.emit({ type: 'page', endpoint: read.id, page: 1, pageCount: 1 });
-    return { ok: true, pages: [{ body: r.body, observedAt }] };
+    const body = r.ok ? r.body : null;
+    return {
+      ok: true,
+      pages: [{ body: read.single ? (r.ok ? [body] : []) : body, observedAt }],
+    };
   }
 
   const cap = pageCap(total);

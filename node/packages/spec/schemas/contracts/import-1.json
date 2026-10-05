@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ochotona:schema:import:1",
+  "title": "ocho.import/1",
+  "$comment": "Output of ocho import --json after the file is written or found up to date.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "file", "written", "summary", "changes", "warnings"],
+  "properties": {
+    "schema": { "const": "ocho.import/1" },
+    "file": { "type": "string" },
+    "written": { "type": "boolean" },
+    "summary": {
+      "type": "object",
+      "required": ["flows", "families", "unmanaged"],
+      "properties": {
+        "flows": { "type": "integer", "minimum": 0 },
+        "families": { "type": "integer", "minimum": 0 },
+        "newFlows": { "type": "integer", "minimum": 0 },
+        "newFamilies": { "type": "integer", "minimum": 0 },
+        "membersAdded": { "type": "integer", "minimum": 0 },
+        "vanishedFlows": { "type": "integer", "minimum": 0 },
+        "unmanaged": {
+          "type": "object",
+          "additionalProperties": { "type": "integer", "minimum": 0 }
+        },
+        "answered": { "type": "integer", "minimum": 0 },
+        "defaulted": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "changes": { "type": "array", "items": { "type": "string" } },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind"],
+        "properties": { "kind": { "type": "string" } }
+      }
+    }
+  }
+}

@@ -1,17 +1,59 @@
 {
   "name": "@ochotona/cli",
   "version": "0.1.0",
-  "description": "",
+  "description": "Lệnh ocho: phân tích tham số, đọc ghi đĩa, nói chuyện với terminal, rồi gọi năm gói Ocho theo đúng thứ tự",
+  "type": "module",
+  "bin": {
+    "ocho": "dist/bin/ocho.js"
+  },
   "main": "dist/index.js",
-  "module": "dist/index.esm.js",
   "types": "dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "scripts": {
-    "build": "rollup -c ../../rollup.config.base.js",
-    "format": "prettier --check \"src/**/*.ts\"",
-    "format:fix": "prettier --write \"src/**/*.ts\""
+    "build": "rollup -c",
+    "build:sea": "node scripts/sea.mjs",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage --coverage.include=src/**",
+    "test:mutation": "stryker run",
+    "test:sea": "node scripts/sea.mjs && OCHO_BIN=dist/sea/ocho vitest run test/bin.test.ts",
+    "test:bin": "rollup -c && OCHO_BIN=dist/bin/ocho.js vitest run test/bin.test.ts",
+    "typecheck": "tsc --noEmit -p . && tsc -p tsconfig.check.json",
+    "format": "prettier --check \"src/**/*.{ts,json}\" \"test/**/*.ts\"",
+    "format:fix": "prettier --write \"src/**/*.{ts,json}\" \"test/**/*.ts\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module"
+  "files": [
+    "dist",
+    "docs"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@ochotona/broker": "workspace:*",
+    "@ochotona/compiler": "workspace:*",
+    "@ochotona/model": "workspace:*",
+    "@ochotona/rules": "workspace:*",
+    "@ochotona/spec": "workspace:*",
+    "yaml": "^2.9.1"
+  },
+  "devDependencies": {
+    "@rollup/plugin-json": "^6.1.0",
+    "@stryker-mutator/core": "^10.0.0",
+    "@types/node": "^26.6.4",
+    "@vitest/coverage-v8": "^5.0.3",
+    "ajv": "^8",
+    "ajv-formats": "^3",
+    "esbuild": "^0.28.2",
+    "postject": "1.0.0-alpha.6",
+    "vitest": "^5.0.3"
+  }
 }

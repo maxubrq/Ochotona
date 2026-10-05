@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ochotona:schema:version:1",
+  "title": "ocho.version/1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "version", "spec", "node", "platform", "arch"],
+  "properties": {
+    "schema": { "const": "ocho.version/1" },
+    "version": { "type": "string" },
+    "spec": { "type": "string" },
+    "node": { "type": "string" },
+    "platform": { "type": "string" },
+    "arch": { "type": "string" }
+  }
+}

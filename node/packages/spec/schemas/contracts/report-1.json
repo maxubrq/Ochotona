@@ -101,6 +101,23 @@
         "waived": { "$ref": "#/$defs/count" }
       }
     },
+    "internal": {
+      "$comment": "Bugs in Ocho found during the run (InternalIssue). Present only when not empty; the exit code is then 5.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["kind", "rule", "object", "detail"],
+        "properties": {
+          "kind": {
+            "enum": ["exception", "contract", "cl4_downgrade", "invariant"]
+          },
+          "rule": { "type": "string" },
+          "object": { "type": "string" },
+          "detail": { "type": "string" }
+        }
+      }
+    },
     "exitCode": { "enum": [0, 1, 2, 3, 4, 5, 130] }
   }
 }

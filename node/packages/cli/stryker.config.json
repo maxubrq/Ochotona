@@ -1,0 +1,23 @@
+{
+  "$schema": "./node_modules/@stryker-mutator/core/schema/stryker-schema.json",
+  "$comment": "Mutation testing cho phần quyết định mà sai thì không ai thấy: thuật toán exit code, thứ tự ưu tiên của đích và mật khẩu, ngữ pháp tham số, gom khối báo cáo. Runner command như @ochotona/rules và @ochotona/compiler.",
+  "testRunner": "command",
+  "mutate": [
+    "src/exit.ts",
+    "src/target.ts",
+    "src/args.ts",
+    "src/render/layout.ts"
+  ],
+  "thresholds": {
+    "high": 90,
+    "low": 85,
+    "break": 85
+  },
+  "reporters": ["clear-text", "progress", "json"],
+  "tempDirName": ".stryker-tmp",
+  "concurrency": 6,
+  "commandRunner": {
+    "command": "node ../../node_modules/vitest/vitest.mjs run --config vitest.stryker.config.ts"
+  },
+  "coverageAnalysis": "off"
+}

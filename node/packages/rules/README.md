@@ -60,6 +60,7 @@ const findings = results.map((r) => toFinding(r, 'en'));
 | Chạy      | `makeCtx`, `runRules`, `sortResults`                       |
 | Hành động | `planActions`, `toActionText`                              |
 | Finding   | `toFinding`, `textKey`                                     |
+| Ví dụ     | `ruleExamples` (ca `fail`, `near` rút gọn từ fixture)      |
 | Lệnh sửa  | `policyFix`, `renderTemplate`, `shellQuote`, `escapeRegex` |
 | Viết luật | `defineRule`, `modeOf`; kiểu `RuleDef`, `View`, `Verdict`  |
 
@@ -98,6 +99,7 @@ fixtures/
 pnpm build             # rollup → dist/
 pnpm test              # vitest: fixture, tích hợp trên bản ghi, tính chất, hiệu năng
 pnpm coverage-matrix
+pnpm examples          # sinh lại src/gen/examples.ts từ fixtures/unit
 pnpm test:mutation     # Stryker trên tám luật S1, ngưỡng 85%
 pnpm test:live         # lệnh sửa trên broker SUT thật, xem SUT/README.md
 pnpm typecheck

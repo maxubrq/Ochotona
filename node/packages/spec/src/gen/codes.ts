@@ -73,6 +73,7 @@ export type Code =
   | 'CX8'
   | 'CX9'
   | 'CX10'
+  | 'CX11'
   | 'D5'
   | 'DX1'
   | 'DX2'
@@ -126,6 +127,9 @@ export type Code =
   | 'GC25'
   | 'GC26'
   | 'GC27'
+  | 'GC30'
+  | 'GC31'
+  | 'GC32'
   | 'H2'
   | 'I1'
   | 'I6'
@@ -231,6 +235,7 @@ export type DiagCode =
   | 'CX8'
   | 'CX9'
   | 'CX10'
+  | 'CX11'
   | 'IM1'
   | 'IM2'
   | 'OC1'
@@ -283,7 +288,10 @@ export type AssumptionCode =
   | 'GC19'
   | 'GC25'
   | 'GC26'
-  | 'GC27';
+  | 'GC27'
+  | 'GC30'
+  | 'GC31'
+  | 'GC32';
 export type LessonErrorCode =
   | 'LE1'
   | 'LE2'
@@ -802,6 +810,14 @@ export const CODES = [
     status: 'active',
   },
   {
+    code: 'CX11',
+    owner: 'tool',
+    kind: 'diagnostic',
+    meaning:
+      'No password source: no --password-stdin, OCHO_PASSWORD, password_command, or terminal to ask',
+    status: 'active',
+  },
+  {
     code: 'D5',
     owner: 'spec-core',
     kind: 'invariant',
@@ -1178,6 +1194,30 @@ export const CODES = [
     kind: 'assumption',
     meaning:
       'Channel consumer_count is present when management statistics are disabled',
+    status: 'active',
+  },
+  {
+    code: 'GC30',
+    owner: 'tool',
+    kind: 'assumption',
+    meaning:
+      'A single-file esbuild bundle for Node SEA with lazy loading keeps ocho --version within 100 ms',
+    status: 'active',
+  },
+  {
+    code: 'GC31',
+    owner: 'tool',
+    kind: 'assumption',
+    meaning:
+      'Hidden password input through readline raw mode works in Windows Terminal and PowerShell',
+    status: 'active',
+  },
+  {
+    code: 'GC32',
+    owner: 'tool',
+    kind: 'assumption',
+    meaning:
+      'rename over an existing file is atomic on Windows (MoveFileEx with replace)',
     status: 'active',
   },
   {

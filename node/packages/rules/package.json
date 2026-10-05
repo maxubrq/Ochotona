@@ -22,7 +22,8 @@
     "format": "prettier --check \"src/**/*.ts\" \"test/**/*.ts\" \"fixtures/**/*.ts\"",
     "format:fix": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" \"fixtures/**/*.ts\"",
     "test:live": "vitest run test/live.test.ts",
-    "test:mutation": "stryker run"
+    "test:mutation": "stryker run",
+    "examples": "UPDATE_EXAMPLES=1 vitest run test/examples.test.ts"
   },
   "keywords": [],
   "author": "",

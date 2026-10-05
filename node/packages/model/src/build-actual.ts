@@ -31,6 +31,7 @@ import {
   parseQueue,
 } from './ingest/objects';
 import type { FieldCtx, RawResponses } from './ingest/raw';
+import type { ReadScope } from './plan';
 import { emptyButCounted, statsOffGuard } from './ingest/stats-off';
 import type { Observed } from './observed';
 import { type ObjectRef, refKey } from './ref';
@@ -40,7 +41,12 @@ export interface BuildContext {
   contextName: string;
   readStartedAt: Instant;
   readFinishedAt: Instant;
-  scope: { vhosts: readonly string[] | 'all' };
+  /**
+   * `object`: dữ liệu chỉ có một queue hoặc exchange (`planRead` phạm vi một
+   * đối tượng); binding trỏ tới đối tượng khác là bình thường, không phải
+   * `dangling_ref`.
+   */
+  scope: ReadScope;
   /** Bảng năng lực theo phiên bản (sẽ đến từ @ochotona/spec). */
   caps: CapabilityTable;
 }
@@ -214,16 +220,17 @@ function ingestBase(raw: RawResponses, ctx: BuildContext): ActualBase {
     }
   }
 
-  anomalies.push(
-    ...danglingRefs(
-      exchanges.list,
-      queues.list,
-      bindings.list,
-      connections.list,
-      channels.list,
-      consumers.list,
-    ),
-  );
+  if (!ctx.scope.object)
+    anomalies.push(
+      ...danglingRefs(
+        exchanges.list,
+        queues.list,
+        bindings.list,
+        connections.list,
+        channels.list,
+        consumers.list,
+      ),
+    );
 
   return {
     meta: {

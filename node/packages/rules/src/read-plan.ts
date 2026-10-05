@@ -57,7 +57,11 @@ export function readNeeds(defs: readonly AnyRuleDef[]): Required<
       const e = entityOf(p);
       add(BY_ENTITY[e]);
       add(BY_PATH[p]);
-      if (p === 'broker.counters.unroutableDropped') prometheus = true;
+      if (p === 'broker.counters.unroutableDropped') {
+        // planRead chỉ đọc Prometheus khi `requires` có 'prometheus' và cờ bật.
+        prometheus = true;
+        ids.add('prometheus');
+      }
       if (e === 'user') {
         wantsUsers = true;
         ids.add('users');

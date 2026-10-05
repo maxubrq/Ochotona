@@ -29,10 +29,19 @@ export type {
   NotAttemptedReason,
 } from './ingest/raw';
 export { planRead, ENDPOINT_IDS } from './plan';
-export type { EndpointId, EndpointRead, ReadPlan, PlanOptions } from './plan';
+export type {
+  EndpointId,
+  EndpointRead,
+  ReadPlan,
+  PlanOptions,
+  ReadScope,
+  ObjectScope,
+} from './plan';
 
 // Dựng
 export { buildActual } from './build-actual';
+export { actualFromDefinitions, topologyFromDefinitions } from './definitions';
+export type { DefinitionsContext, DefinitionsResult } from './definitions';
 export type { BuildContext } from './build-actual';
 export * from './desired';
 export { parseTemplate, renderTemplate, matchTemplate } from './template';

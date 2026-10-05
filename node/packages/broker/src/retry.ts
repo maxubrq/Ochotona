@@ -51,7 +51,9 @@ export function classifyError(
   redact: (s: string) => string,
 ): Failure {
   const code = errorCode(error) ?? 'UNKNOWN';
-  const message = redact(`${code}: ${errorMessage(error)}`);
+  // Lỗi gộp (AggregateError khi localhost từ chối cả IPv4 lẫn IPv6) có thông báo rỗng.
+  const text = errorMessage(error);
+  const message = redact(text ? `${code}: ${text}` : code);
   const net = (
     kind: 'dns' | 'connect' | 'timeout' | 'reset' | 'tls',
     retry: 'no' | 'yes',

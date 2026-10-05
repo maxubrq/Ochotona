@@ -8,6 +8,10 @@ import { parseTemplate, templateParams } from '../src/template.ts';
 import { compareRelease, parseVersion } from '../src/version.ts';
 
 type Obj = Record<string, any>;
+export interface GlossaryTerm {
+  readonly term: string;
+  readonly forbidden: readonly string[];
+}
 
 export interface SpecData {
   spec: Obj;
@@ -18,7 +22,7 @@ export interface SpecData {
   exclusions: Obj[];
   blindSpots: Obj[];
   i18n: { en: Record<string, string>; vi: Record<string, string> };
-  glossary: Obj[];
+  glossary: GlossaryTerm[];
   fixTemplates: Obj[];
 }
 
@@ -56,6 +60,11 @@ export const CONTRACT_FILES = {
   report1: 'report-1.json',
   snapshot1: 'snapshot-1.json',
   ochoYaml01: 'ocho-yaml-0.1.json',
+  error1: 'error-1.json',
+  explain1: 'explain-1.json',
+  contexts1: 'contexts-1.json',
+  version1: 'version-1.json',
+  import1: 'import-1.json',
 } as const;
 
 const readJson = (p: string): any => JSON.parse(readFileSync(p, 'utf8'));
@@ -195,6 +204,7 @@ const RULE_KEYS = [
   'dataSafety',
   'next',
   'mechanism',
+  'predicate',
   'action',
 ] as const;
 const DIAG_KEYS = ['message', 'next'] as const;
@@ -224,6 +234,42 @@ const PLURAL_CATS: Record<string, readonly string[]> = {
   en: ['one', 'other'],
   vi: ['other'],
 };
+
+/**
+ * Quy tắc viết cho một văn bản giao diện: cú pháp khuôn, số nhiều đúng loại
+ * của ngôn ngữ, không tính từ mức độ, không đổ lỗi, không Markdown, tiếng Việt
+ * không dịch thuật ngữ của bảng thuật ngữ. Dùng cho văn bản của gói này và của
+ * CLI (`cli/test/i18n.test.ts`).
+ */
+export function textProblems(
+  lang: 'en' | 'vi',
+  v: string,
+  glossary: readonly GlossaryTerm[],
+): string[] {
+  const out: string[] = [];
+  const p = parseTemplate(v);
+  if (!p.ok) return [p.error];
+  for (const part of p.parts) {
+    if (part.t !== 'plural') continue;
+    const cats = Object.keys(part.branches).sort().join();
+    if (cats !== [...PLURAL_CATS[lang]].sort().join())
+      out.push(
+        `plural ${part.name} must use exactly ${PLURAL_CATS[lang].join(', ')}`,
+      );
+  }
+  const lower = v.toLowerCase();
+  for (const word of DEGREE_WORDS[lang])
+    if (lower.includes(word)) out.push(`degree adjective "${word}"`);
+  for (const re of BLAME) if (re.test(v)) out.push('blaming wording');
+  for (const re of MARKUP)
+    if (re.test(v)) out.push('Markdown or terminal codes');
+  if (lang === 'vi')
+    for (const t of glossary)
+      for (const bad of t.forbidden)
+        if (lower.includes(bad.toLowerCase()))
+          out.push(`"${bad}" translates the glossary term "${t.term}"`);
+  return out;
+}
 
 /** Tách mã thành tiền tố và số: `CT-07` → `['CT', 7]`. */
 export function splitCode(code: string): [string, number] {
@@ -417,40 +463,18 @@ export function crossCheck(d: SpecData): string[] {
           `${f}: ${k} does not belong to any rule, code, reason, exclusion or import text`,
         );
       if (v === '' && !k.endsWith('.unlock')) err(`${f}: ${k} is empty`);
+      for (const problem of textProblems(lang, v, d.glossary))
+        err(`${f}: ${k}: ${problem}`);
       const p = parseTemplate(v);
-      if (!p.ok) {
-        err(`${f}: ${k}: ${p.error}`);
-        continue;
-      }
+      if (!p.ok) continue;
       parsed[lang].set(k, templateParams(p.parts));
-      for (const part of p.parts) {
-        if (part.t !== 'plural') continue;
-        const cats = Object.keys(part.branches).sort().join();
-        if (cats !== [...PLURAL_CATS[lang]].sort().join())
-          err(
-            `${f}: ${k}: plural ${part.name} must use exactly ${PLURAL_CATS[lang].join(', ')}`,
-          );
-      }
-      // Quy tắc viết
-      const lower = v.toLowerCase();
-      for (const word of DEGREE_WORDS[lang])
-        if (lower.includes(word)) err(`${f}: ${k}: degree adjective "${word}"`);
-      for (const re of BLAME)
-        if (re.test(v)) err(`${f}: ${k}: blaming wording`);
-      for (const re of MARKUP)
-        if (re.test(v)) err(`${f}: ${k}: Markdown or terminal codes`);
-      if (lang === 'vi')
-        for (const t of d.glossary)
-          for (const bad of t.forbidden)
-            if (lower.includes(bad.toLowerCase()))
-              err(
-                `${f}: ${k}: "${bad}" translates the glossary term "${t.term}"`,
-              );
       const len = [...v].length;
       if (k.endsWith('.title') && len > 60)
         err(`${f}: ${k}: title has ${len} characters, max 60`);
       if (/\.mechanism(\.[a-z0-9_]+)?$/.test(k) && len > 200)
         err(`${f}: ${k}: mechanism has ${len} characters, max 200`);
+      if (k.endsWith('.predicate') && len > 200)
+        err(`${f}: ${k}: predicate has ${len} characters, max 200`);
       if (
         (k.endsWith('.dataSafety') || /\.dataSafety\.[a-z0-9_]+$/.test(k)) &&
         !SAFETY_PREFIX[lang].some((s) => v.startsWith(s))
@@ -495,7 +519,8 @@ export function crossCheck(d: SpecData): string[] {
         const m = parsed[lang].get(`rule.${r.code}.${k}`);
         if (!m) continue;
         for (const [name, { plural }] of m) {
-          if (k === 'action') continue;
+          // action nhận {objects}; predicate chỉ nhận ngưỡng của luật (kiểm dưới).
+          if (k === 'action' || k === 'predicate') continue;
           used.set(name, (used.get(name) ?? false) || plural);
         }
       }
@@ -507,6 +532,12 @@ export function crossCheck(d: SpecData): string[] {
       for (const [name, plural] of used)
         if (plural && r.params[name] !== 'number')
           err(`${f}: plural parameter ${name} must be declared number`);
+      const predicate = parsed[lang].get(`rule.${r.code}.predicate`);
+      for (const name of predicate?.keys() ?? [])
+        if (!(name in (r.thresholds ?? {})))
+          err(
+            `${f}.predicate: parameter ${name} is not a threshold of the rule`,
+          );
       const action = parsed[lang].get(`rule.${r.code}.action`);
       if (action) {
         if (!action.has('objects')) err(`${f}.action: must contain {objects}`);

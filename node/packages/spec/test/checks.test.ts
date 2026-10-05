@@ -188,6 +188,24 @@ const broken: [string, (d: SpecData) => void, RegExp][] = [
     /mechanism has 201 characters/,
   ],
   [
+    'predicate too long',
+    (d) => (d.i18n.en['rule.T2.predicate'] = 'x'.repeat(201)),
+    /predicate has 201 characters/,
+  ],
+  [
+    'predicate missing',
+    (d) => delete d.i18n.vi['rule.T2.predicate'],
+    /missing rule\.T2\.predicate/,
+  ],
+  [
+    'predicate param not a threshold',
+    (d) => {
+      d.i18n.en['rule.DX1.predicate'] = 'More than {limit} ready messages.';
+      d.i18n.vi['rule.DX1.predicate'] = 'Hơn {limit} message sẵn sàng.';
+    },
+    /DX1\.predicate: parameter limit is not a threshold/,
+  ],
+  [
     'dataSafety without answer',
     (d) =>
       (d.i18n.en['rule.T2.dataSafety'] =

@@ -36,6 +36,23 @@ export interface EndpointRead {
    * từng vhost (`[...segments, vhost]`), để không response nào quá lớn.
    */
   readonly splitByVhost?: boolean;
+  /**
+   * Endpoint của một đối tượng (`/api/queues/<vhost>/<tên>`): response là một
+   * object, broker gói thành mảng một phần tử; 404 là mảng rỗng.
+   */
+  readonly single?: boolean;
+}
+
+/** Đối tượng duy nhất cần đọc, cho `ocho explain queue|exchange <tên>`. */
+export interface ObjectScope {
+  readonly kind: 'queue' | 'exchange';
+  readonly name: string;
+}
+
+export interface ReadScope {
+  readonly vhosts: readonly string[] | 'all';
+  /** Chỉ hợp lệ khi `vhosts` có đúng một vhost. */
+  readonly object?: ObjectScope;
 }
 
 export interface ReadPlan {
@@ -43,13 +60,15 @@ export interface ReadPlan {
   /** Thứ tự có nghĩa: nhỏ và ít đổi trước, thay đổi nhanh nhất đọc sát nhau. */
   readonly inventory: readonly EndpointRead[];
   readonly prometheus: boolean;
-  readonly scope: { readonly vhosts: readonly string[] | 'all' };
+  readonly scope: ReadScope;
+  /** Đọc lại `/api/overview` sau kiểm kê (`totalsAtEnd`). Không có nghĩa là `true`. */
+  readonly totalsAtEnd?: boolean;
 }
 
 export interface PlanOptions {
   /** Endpoint kiểm kê cần đọc; mặc định mọi endpoint. Pha nhận diện luôn đủ. */
   readonly requires?: ReadonlySet<EndpointId> | 'all';
-  readonly scope?: { readonly vhosts: readonly string[] | 'all' };
+  readonly scope?: ReadScope;
   /** Mặc định `true`. */
   readonly prometheus?: boolean;
   /**
@@ -218,12 +237,47 @@ const INVENTORY_ORDER: readonly EndpointId[] = [
 const CLUSTER_WIDE = new Set<EndpointId>(['vhosts', 'users', 'deprecatedUsed']);
 
 /**
+ * Kế hoạch đọc một đối tượng: nhận diện chỉ `overview`, `whoami`; kiểm kê là
+ * policy, operator policy của vhost (giá trị hiệu lực cần cả hai, kể cả với
+ * exchange), chính đối tượng và binding liên quan. Không Prometheus, không đọc
+ * lại totals: 6 request.
+ */
+function objectPlan(vhost: string, o: ObjectScope): ReadPlan {
+  const one = (id: EndpointId, ...segments: string[]): EndpointRead => ({
+    ...simple(id, ...segments),
+    single: true,
+  });
+  const base = o.kind === 'queue' ? 'queues' : 'exchanges';
+  return {
+    identify: [simple('overview', 'overview'), simple('whoami', 'whoami')],
+    inventory: [
+      simple('policies', 'policies', vhost),
+      simple('operatorPolicies', 'operator-policies', vhost),
+      one(base, base, vhost, o.name),
+      // Binding liên quan: đi vào queue; đi ra từ exchange (luật chỉ dùng chiều này).
+      o.kind === 'queue'
+        ? simple('bindings', 'queues', vhost, o.name, 'bindings')
+        : simple('bindings', 'exchanges', vhost, o.name, 'bindings', 'source'),
+    ],
+    prometheus: false,
+    scope: { vhosts: [vhost], object: o },
+    totalsAtEnd: false,
+  };
+}
+
+/**
  * Kế hoạch đọc cho `@ochotona/broker`: endpoint, cột và tham số truy vấn.
  * @example planRead({ scope: { vhosts: ['/'] } }).inventory[1].segments // ['policies', '/']
+ * @example planRead({ scope: { vhosts: ['/'], object: { kind: 'queue', name: 'orders' } } })
  */
 export function planRead(opts: PlanOptions = {}): ReadPlan {
   const requires = opts.requires ?? 'all';
   const scope = opts.scope ?? { vhosts: 'all' };
+  if (scope.object) {
+    if (scope.vhosts === 'all' || scope.vhosts.length !== 1)
+      throw new Error('planRead: scope.object needs exactly one vhost');
+    return objectPlan(scope.vhosts[0], scope.object);
+  }
   const inventory: EndpointRead[] = [];
   for (const id of INVENTORY_ORDER) {
     if (id === 'users' && opts.users !== true) continue;

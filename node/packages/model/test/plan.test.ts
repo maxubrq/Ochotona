@@ -27,6 +27,54 @@ describe('planRead', () => {
     expect(p.scope).toEqual({ vhosts: 'all' });
   });
 
+  it('phạm vi một queue: đúng 6 request, không Prometheus, không đọc lại totals', () => {
+    const p = planRead({
+      scope: { vhosts: ['billing'], object: { kind: 'queue', name: 'orders' } },
+      requires: new Set(['queues']),
+    });
+    expect(p.identify.map((r) => r.segments)).toEqual([
+      ['overview'],
+      ['whoami'],
+    ]);
+    expect(
+      p.inventory.map((r) => [r.id, r.segments, r.single ?? false]),
+    ).toEqual([
+      ['policies', ['policies', 'billing'], false],
+      ['operatorPolicies', ['operator-policies', 'billing'], false],
+      ['queues', ['queues', 'billing', 'orders'], true],
+      ['bindings', ['queues', 'billing', 'orders', 'bindings'], false],
+    ]);
+    expect(p.prometheus).toBe(false);
+    expect(p.totalsAtEnd).toBe(false);
+    expect(p.scope).toEqual({
+      vhosts: ['billing'],
+      object: { kind: 'queue', name: 'orders' },
+    });
+  });
+
+  it('phạm vi một exchange: binding đi ra', () => {
+    const p = planRead({
+      scope: { vhosts: ['/'], object: { kind: 'exchange', name: 'events' } },
+    });
+    expect(p.identify.length + p.inventory.length).toBe(6);
+    expect(p.inventory.map((r) => r.segments)).toEqual([
+      ['policies', '/'],
+      ['operator-policies', '/'],
+      ['exchanges', '/', 'events'],
+      ['exchanges', '/', 'events', 'bindings', 'source'],
+    ]);
+  });
+
+  it('phạm vi một đối tượng cần đúng một vhost', () => {
+    const object = { kind: 'queue', name: 'q' } as const;
+    expect(() => planRead({ scope: { vhosts: 'all', object } })).toThrow(
+      /exactly one vhost/,
+    );
+    expect(() => planRead({ scope: { vhosts: ['a', 'b'], object } })).toThrow(
+      /exactly one vhost/,
+    );
+  });
+
   it('tham số và cột', () => {
     const byId = Object.fromEntries(planRead().inventory.map((r) => [r.id, r]));
     expect(byId.exchanges.query).toEqual({

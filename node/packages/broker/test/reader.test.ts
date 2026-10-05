@@ -231,6 +231,73 @@ describe('identify và read trên broker giả', () => {
     expect(m.requests.some((x) => x.path === '/api/bindings/a%20b')).toBe(true);
   });
 
+  it('phạm vi một đối tượng: 6 request, object gói thành mảng, 404 là rỗng', async () => {
+    const routes = brokerRoutes();
+    const queue = {
+      vhost: '/',
+      name: 'orders',
+      type: 'quorum',
+      durable: true,
+      auto_delete: false,
+      exclusive: false,
+      arguments: { 'x-queue-type': 'quorum' },
+    };
+    Object.assign(routes, {
+      '/api/policies/%2F': { json: [] },
+      '/api/operator-policies/%2F': { json: [] },
+      '/api/queues/%2F/orders': { json: queue },
+      '/api/queues/%2F/orders/bindings': {
+        json: [
+          {
+            vhost: '/',
+            source: 'ex',
+            destination: 'orders',
+            destination_type: 'queue',
+            routing_key: 'o.#',
+            arguments: {},
+          },
+        ],
+      },
+    });
+    const m = await mock(routes);
+    const r = reader({ url: m.url });
+    const plan = planRead({
+      scope: { vhosts: ['/'], object: { kind: 'queue', name: 'orders' } },
+    });
+    const id = await identifyOk(r, plan);
+    expect(id.estimate.requests).toBe(4);
+    const out = await r.read(plan, id, fast);
+    if (out.status !== 'complete') throw new Error(out.status);
+    expect(m.requests).toHaveLength(6);
+    expect(out.raw.totalsAtEnd).toEqual({ status: 'not_attempted' });
+    expect(
+      out.raw.queues.status === 'ok' && out.raw.queues.pages[0].body,
+    ).toEqual([queue]);
+    const actual = buildActual(out.raw, {
+      contextName: 'lab',
+      readStartedAt: out.readStartedAt,
+      readFinishedAt: out.readFinishedAt,
+      scope: plan.scope,
+      caps: DEFAULT_CAPABILITY_TABLE,
+    });
+    // Binding trỏ tới exchange không đọc: không phải dangling_ref trong phạm vi này.
+    expect(actual.anomalies).toEqual([]);
+    expect(
+      actual.bindings.state === 'known' && actual.bindings.value,
+    ).toHaveLength(1);
+
+    const gone = planRead({
+      scope: { vhosts: ['/'], object: { kind: 'queue', name: 'nope' } },
+    });
+    const out2 = await r.read(gone, await identifyOk(r, gone), fast);
+    if (out2.status !== 'complete') throw new Error(out2.status);
+    expect(
+      out2.raw.queues.status === 'ok' && out2.raw.queues.pages[0].body,
+    ).toEqual([]);
+    // 404 ở endpoint không phải một đối tượng vẫn là lỗi.
+    expect(out2.raw.bindings.status).toBe('http_error');
+  });
+
   it('endpoint phiên bản không có: not_attempted, không tốn request', async () => {
     const m = await mock(brokerRoutes());
     const r = reader({ url: m.url });

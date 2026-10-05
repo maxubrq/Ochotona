@@ -47,16 +47,16 @@ flows.toleranceOf({ kind: 'queue', vhost: '/', name: 'orders' }); // 'strict' | 
 
 ## API chính
 
-| Nhóm               | Hàm                                                                                                    |
-| ------------------ | ------------------------------------------------------------------------------------------------------ |
-| Dựng               | `buildActual`, `validateDesired`, `buildDesired`, `buildFlowMap`, `buildIndexes`                       |
-| Kế hoạch đọc       | `planRead`, `ENDPOINT_IDS` (cho `@ochotona/broker`)                                                    |
-| Giá trị hiệu lực   | `resolveEffective`, `matchingPolicies`                                                                 |
-| Topology           | `topologyFromActual`, `normalizeTopology`, `diffTopology`                                              |
-| Ảnh chụp           | `saveSnapshot`, `loadSnapshot`                                                                         |
-| Bất biến           | `checkInvariants`                                                                                      |
-| Định danh, giá trị | `refKey`, `refLabel`, `parseObjectSelector`, `stableJson`, `argsKey`, `parseVersion`, `compareVersion` |
-| `Observed`         | `known`, `unknown`, `isKnown`, `map`, `all`, `firstKnown`, `derive`, `rootReason`, `displayOr`         |
+| Nhóm               | Hàm                                                                                                       |
+| ------------------ | --------------------------------------------------------------------------------------------------------- |
+| Dựng               | `buildActual`, `actualFromDefinitions`, `validateDesired`, `buildDesired`, `buildFlowMap`, `buildIndexes` |
+| Kế hoạch đọc       | `planRead` (mọi vhost, vài vhost, hoặc một queue/exchange), `ENDPOINT_IDS` (cho `@ochotona/broker`)       |
+| Giá trị hiệu lực   | `resolveEffective`, `matchingPolicies`                                                                    |
+| Topology           | `topologyFromActual`, `topologyFromDefinitions`, `normalizeTopology`, `diffTopology`                      |
+| Ảnh chụp           | `saveSnapshot`, `loadSnapshot`                                                                            |
+| Bất biến           | `checkInvariants`                                                                                         |
+| Định danh, giá trị | `refKey`, `refLabel`, `parseObjectSelector`, `stableJson`, `argsKey`, `parseVersion`, `compareVersion`    |
+| `Observed`         | `known`, `unknown`, `isKnown`, `map`, `all`, `firstKnown`, `derive`, `rootReason`, `displayOr`            |
 
 ## Cấu trúc mã
 

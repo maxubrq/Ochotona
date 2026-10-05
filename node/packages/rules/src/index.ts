@@ -28,3 +28,5 @@ export { planActions } from './actions';
 export { toFinding, toActionText, textKey } from './finding';
 export type { Finding } from './finding';
 export { shellQuote, renderTemplate, escapeRegex, policyFix } from './fix';
+export { ruleExamples } from './examples';
+export type { RuleExample } from './examples';
