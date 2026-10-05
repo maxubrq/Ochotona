@@ -14,6 +14,7 @@ import {
   type Row,
   ScrollText,
   listStatus,
+  selectedItem,
   paneBody,
   paneInner,
 } from '../ui';
@@ -26,7 +27,7 @@ export function Explain(props: { readonly target: Target | null }) {
   const { active, setTyping } = useScreen();
   const [filter, setFilter] = useState('');
   const [filtering, setFiltering] = useState(false);
-  const [code, setCode] = useState<string | null>(null);
+  const [selectedKey, setSelectedKey] = useState<string | null>(null);
   const [focus, setFocus] = useState<'list' | 'detail'>('list');
   const [text, setText] = useState<Record<string, string[]>>({});
   const [status, setStatus] = useState('');
@@ -104,6 +105,8 @@ export function Explain(props: { readonly target: Target | null }) {
     );
     return out;
   }, [filter, lang, t]);
+  // Mã đang chọn (khoá vắng hay bị lọc mất thì mục đầu).
+  const code = selectedItem(rows, selectedKey)?.value ?? null;
 
   // Đầu ra `ocho explain <mã>` của mục đang chọn, nhớ lại theo mã.
   useEffect(() => {
@@ -195,7 +198,8 @@ export function Explain(props: { readonly target: Target | null }) {
           height={paneBody(bodyRows) - (filterShown ? 1 : 0)}
           active={active && focus === 'list' && !filtering}
           focused={focus === 'list'}
-          onChange={(c) => setCode(c)}
+          selectedKey={selectedKey}
+          onSelect={setSelectedKey}
           onSubmit={(c) =>
             nav.push(
               `${t('explain.title')} ${c}`,

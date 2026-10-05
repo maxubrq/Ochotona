@@ -82,17 +82,39 @@ export function moveDelta(
   return null;
 }
 
+/**
+ * Mục đang chọn của `rows`: mục có khoá `key`, hoặc mục đầu tiên khi khoá vắng
+ * (chưa chọn gì, hay mục cũ đã bị lọc mất). Màn hình dùng hàm này để khung chi
+ * tiết luôn khớp với mục đang tô sáng trong cùng một lần render.
+ */
+export function selectedItem<T>(
+  rows: readonly Row<T>[],
+  key: string | null | undefined,
+): Item<T> | undefined {
+  let first: Item<T> | undefined;
+  for (const r of rows) {
+    if (r.kind !== 'item') continue;
+    if (r.key === key) return r;
+    first ??= r;
+  }
+  return first;
+}
+
+/**
+ * Danh sách được điều khiển: người gọi giữ `selectedKey` và đổi nó trong
+ * `onSelect`. Không có state hay effect riêng cho lựa chọn, nên danh sách và
+ * khung chi tiết bên cạnh không bao giờ lệch nhau giữa hai lần render.
+ */
 export function ListView<T>(props: {
   readonly rows: readonly Row<T>[];
   readonly height: number;
+  readonly selectedKey: string | null;
+  readonly onSelect: (key: string) => void;
+  readonly onSubmit?: (value: T, key: string) => void;
   /** Nhận phím ↑↓. */
   readonly active: boolean;
   /** Mục tô sáng đảo màu (khung đang được chọn) hay chỉ đậm. */
   readonly focused?: boolean;
-  readonly onChange?: (value: T, key: string) => void;
-  readonly onSubmit?: (value: T, key: string) => void;
-  /** Mục chọn lúc đầu. */
-  readonly initialKey?: string;
 }) {
   const { rows, height } = props;
   const items = useMemo(
@@ -102,52 +124,47 @@ export function ListView<T>(props: {
         .filter((x): x is { r: Item<T>; i: number } => x.r.kind === 'item'),
     [rows],
   );
-  const [key, setKey] = useState<string | null>(props.initialKey ?? null);
+  const current = selectedItem(rows, props.selectedKey);
+  const at = current ? items.findIndex((x) => x.r === current) : -1;
   const offset = useRef(0);
-  const at = Math.max(
-    0,
-    items.findIndex((x) => x.r.key === key),
-  );
-  const current = items[at];
 
-  // Báo mục đang tô sáng khi nó đổi, hoặc khi tập mục đổi dưới chân (lọc,
-  // tải lại). Chỉ theo khoá: người gọi dựng lại `rows` mỗi lần render cũng
-  // không làm effect chạy vô hạn.
-  const currentKey = current?.r.key;
-  const signature = items.map((x) => x.r.key).join('\u0000');
-  useEffect(() => {
-    if (current) props.onChange?.(current.r.value, current.r.key);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentKey, signature]);
+  // Khoá mới nhất, kể cả khi phím tới dồn trước lần render kế tiếp (giữ phím,
+  // dán): mỗi phím đi tiếp từ phím trước, không từ closure cũ.
+  const latest = useRef(at);
+  latest.current = at;
+  const itemsRef = useRef(items);
+  itemsRef.current = items;
 
   useInput(
     (input, k) => {
-      if (k.return && current) {
-        props.onSubmit?.(current.r.value, current.r.key);
+      const list = itemsRef.current;
+      if (list.length === 0) return;
+      const now = Math.max(0, latest.current);
+      if (k.return) {
+        const item = list[now].r;
+        props.onSubmit?.(item.value, item.key);
         return;
       }
       const d = moveDelta(input, k, Math.max(1, height - 1));
-      if (d === null || items.length === 0) return;
+      if (d === null) return;
       const next =
         d === 'first'
           ? 0
           : d === 'last'
-            ? items.length - 1
-            : Math.max(0, Math.min(items.length - 1, at + d));
-      setKey(items[next].r.key);
+            ? list.length - 1
+            : Math.max(0, Math.min(list.length - 1, now + d));
+      latest.current = next;
+      props.onSelect(list[next].r.key);
     },
     { isActive: props.active },
   );
 
   // Cuộn để mục chọn luôn hiện, kèm dòng tiêu đề ngay trên nó.
-  if (current) {
-    const top =
-      current.i > 0 && rows[current.i - 1].kind === 'header'
-        ? current.i - 1
-        : current.i;
+  const row = at >= 0 ? items[at].i : -1;
+  if (row >= 0) {
+    const top = row > 0 && rows[row - 1].kind === 'header' ? row - 1 : row;
     if (top < offset.current) offset.current = top;
-    if (current.i >= offset.current + height)
-      offset.current = current.i - height + 1;
+    if (row >= offset.current + height) offset.current = row - height + 1;
   }
   offset.current = Math.max(0, Math.min(offset.current, rows.length - height));
 
@@ -161,7 +178,7 @@ export function ListView<T>(props: {
               {r.text}
             </Text>
           );
-        const selected = current?.i === i;
+        const selected = row === i;
         // Một Text duy nhất: phần chính giữ nguyên, gợi ý xám bị cắt trước.
         return (
           <Text key={r.key} wrap="truncate">
@@ -185,8 +202,8 @@ export function ListView<T>(props: {
 export function listStatus<T>(rows: readonly Row<T>[], key: string | null) {
   const items = rows.filter((r): r is Item<T> => r.kind === 'item');
   if (items.length === 0) return '';
-  const at = items.findIndex((r) => r.key === key);
-  return `${Math.max(0, at) + 1}/${items.length}`;
+  const current = selectedItem(rows, key);
+  return `${items.indexOf(current as Item<T>) + 1}/${items.length}`;
 }
 
 // ------------------------------------------------------------- vùng chữ cuộn
@@ -227,20 +244,20 @@ export function ScrollText(props: {
   const max = Math.max(0, lines.length - height);
   const at = Math.min(offset, max);
 
+  // Cập nhật dạng hàm: phím dồn trước lần render kế tiếp vẫn cộng dồn đúng.
+  const maxRef = useRef(max);
+  maxRef.current = max;
   useInput(
     (input, k) => {
-      const d = moveDelta(input, k, Math.max(1, height - 1));
-      if (d === null) {
-        if (input === ' ') setOffset(Math.min(max, at + height - 1));
-        return;
-      }
-      setOffset(
-        d === 'first'
-          ? 0
-          : d === 'last'
-            ? max
-            : Math.max(0, Math.min(max, at + d)),
-      );
+      const page = Math.max(1, height - 1);
+      const d = input === ' ' ? page : moveDelta(input, k, page);
+      if (d === null) return;
+      setOffset((o) => {
+        const m = maxRef.current;
+        if (d === 'first') return 0;
+        if (d === 'last') return m;
+        return Math.max(0, Math.min(m, Math.min(o, m) + d));
+      });
     },
     { isActive: props.active },
   );

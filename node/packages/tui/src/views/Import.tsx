@@ -24,6 +24,7 @@ import {
   Lines,
   Pane,
   type Row,
+  selectedItem,
   ScrollText,
   paneBody,
 } from '../ui';
@@ -68,7 +69,9 @@ export function Import(props: { readonly target: Target }) {
   const ref = useRef<{ s: Session; p: PreparedImport } | null>(null);
   const [tick, setTick] = useState(0);
   const [sub, setSub] = useState<'none' | 'exchange' | 'rename'>('none');
-  const [choice, setChoice] = useState<Choice | null>(null);
+  // Khoá chứa id câu hỏi: sang câu mới thì tự về lựa chọn đầu (mặc định).
+  const [choiceKey, setChoiceKey] = useState<string | null>(null);
+  const [restKey, setRestKey] = useState<string | null>(null);
   const [param, setParam] = useState('');
   const [paramError, setParamError] = useState('');
   const progress = useRef({
@@ -165,7 +168,10 @@ export function Import(props: { readonly target: Target }) {
   const answer = (value: string) => {
     if (!q || !session) return;
     if (q.kind === 'tolerance') {
-      if (value === 'exchange') return setSub('exchange');
+      if (value === 'exchange') {
+        setRestKey(null);
+        return setSub('exchange');
+      }
       session.answer(q.id, {
         kind: 'tolerance',
         value: value as Tolerance,
@@ -409,6 +415,7 @@ export function Import(props: { readonly target: Target }) {
     text: i === 0 ? `${c.label}  ${t('import.default')}` : c.label,
     value: c,
   }));
+  const choice = selectedItem(rows, choiceKey)?.value ?? null;
   const tolRows: Row<Tolerance>[] = (
     ['undeclared', 'strict', 'loose'] as const
   ).map((v) => ({
@@ -430,11 +437,11 @@ export function Import(props: { readonly target: Target }) {
       <Box marginTop={1} flexDirection="column">
         {sub === 'none' ? (
           <ListView
-            key={q.id}
             rows={rows}
             height={rows.length}
             active={active}
-            onChange={(c) => setChoice(c)}
+            selectedKey={choiceKey}
+            onSelect={setChoiceKey}
             onSubmit={(c) => answer(c.value)}
           />
         ) : sub === 'exchange' ? (
@@ -444,6 +451,8 @@ export function Import(props: { readonly target: Target }) {
               rows={tolRows}
               height={tolRows.length}
               active={active}
+              selectedKey={restKey}
+              onSelect={setRestKey}
               onSubmit={(v) => {
                 if (q.kind !== 'tolerance') return;
                 session.answer(q.id, {

@@ -14,6 +14,7 @@ import {
   type Row,
   Lines,
   listStatus,
+  selectedItem,
   paneBody,
   paneInner,
 } from '../ui';
@@ -100,9 +101,11 @@ export function Home(props: {
     null,
   );
   const [loadError, setLoadError] = useState<string[]>([]);
-  const [selected, setSelected] = useState<Item | undefined>();
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
-  const [details, setDetails] = useState<string[]>([]);
+  const [details, setDetails] = useState<{
+    key: string | null;
+    lines: string[];
+  }>({ key: null, lines: [] });
   const [reload, setReload] = useState(0);
   const c: Ctx = { ocho, nav, t, cols };
 
@@ -181,20 +184,39 @@ export function Home(props: {
     return out;
   }, [file, t, props.cliTarget, ocho]);
 
-  // Chi tiết của context đang chọn: đúng như `ocho context show <tên>`.
+  // Chưa chọn gì: đích từ dòng lệnh, rồi context mặc định, rồi mục đầu.
+  const preferred =
+    selectedKey ??
+    (props.cliTarget
+      ? 'cli'
+      : file?.data.current
+        ? `context:${file.data.current}`
+        : null);
+  const selectedRow = selectedItem(rows, preferred);
+  const selected = selectedRow?.value;
+  const shownKey = selectedRow?.key ?? null;
+
+  // Chi tiết của context đang chọn: đúng như `ocho context show <tên>`. Gắn
+  // với khoá của mục, để khung phải không bao giờ hiện chi tiết của mục khác
+  // trong lúc chờ; kết quả về muộn của mục cũ bị bỏ.
   useEffect(() => {
-    if (selected?.kind !== 'target' || selected.target.kind !== 'context') {
-      setDetails([]);
+    if (selected?.kind !== 'target' || selected.target.kind !== 'context')
       return;
-    }
     const name = selected.target.name;
+    const key = shownKey;
+    let live = true;
     ocho
       .run(['context', 'show', name], { width: paneInner(rightW) }, context)
       .then(
-        (r) => setDetails(r.out),
-        (e) => setDetails(ocho.errorLines(e, paneInner(rightW))),
+        (r) => live && setDetails({ key, lines: r.out }),
+        (e) =>
+          live &&
+          setDetails({ key, lines: ocho.errorLines(e, paneInner(rightW)) }),
       );
-  }, [selected, lang, rightW, reload]);
+    return () => {
+      live = false;
+    };
+  }, [shownKey, lang, rightW, reload]);
 
   const run = (item: Extract<Item, { kind: 'target' }>, a: Action) => {
     const target = item.target;
@@ -294,7 +316,7 @@ export function Home(props: {
       return (
         <Box flexDirection="column">
           {selected.target.kind === 'context' ? (
-            <Lines lines={details} />
+            <Lines lines={details.key === shownKey ? details.lines : []} />
           ) : (
             <Text wrap="wrap">{t(`home.about.${selected.target.kind}`)}</Text>
           )}
@@ -327,24 +349,14 @@ export function Home(props: {
           width={leftW}
           height={paneH}
           focused
-          status={listStatus(rows, selectedKey)}
+          status={listStatus(rows, shownKey)}
         >
           <ListView
-            key={file ? 'loaded' : 'loading'}
             rows={rows}
             height={paneBody(paneH)}
             active={active}
-            initialKey={
-              props.cliTarget
-                ? 'cli'
-                : file?.data.current
-                  ? `context:${file.data.current}`
-                  : undefined
-            }
-            onChange={(v, key) => {
-              setSelected(v);
-              setSelectedKey(key);
-            }}
+            selectedKey={shownKey}
+            onSelect={setSelectedKey}
             onSubmit={open}
           />
         </Pane>

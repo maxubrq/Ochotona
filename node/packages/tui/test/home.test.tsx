@@ -61,9 +61,11 @@ describe('home', () => {
       );
       await ui.waitFor('Password needed');
       await ui.press(PASSWORD, KEY.enter);
-      const f = await ui.waitFor('● sut');
+      await ui.waitFor('● sut');
+      // Chi tiết là đầu ra của `ocho context show`, nạp sau khi danh sách đổi.
+      const f = await ui.waitFor('password_command  not set');
       expect(f).toContain(mock.url);
-      expect(f).toContain('password_command  not set');
+      expect(f).toMatch(/1\/5/);
       const file = await readFile(
         join(dir, 'cfg', 'ochotona', 'contexts.yaml'),
         'utf8',

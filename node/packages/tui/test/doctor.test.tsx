@@ -60,8 +60,9 @@ describe('doctor on a snapshot', () => {
     const dir = await snapshotDir();
     ui = await mount(doctorOn('snap.json'), { cwd: dir }, dir);
     await ui.waitFor('Findings');
-    await ui.press(KEY.down, KEY.down, KEY.down, KEY.down);
-    const f = await ui.waitFor('5/');
+    let f = '';
+    for (const at of ['2/', '3/', '4/', '5/'])
+      f = await ui.pressUntil(KEY.down, ` ${at}`);
     const rule = /│ › ([A-Z]+\d+) /.exec(f)?.[1];
     expect(rule).toMatch(/^[A-Z]+\d+$/);
     await ui.press(KEY.enter);

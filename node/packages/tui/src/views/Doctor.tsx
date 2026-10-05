@@ -48,6 +48,7 @@ import {
   type Row,
   ScrollText,
   listStatus,
+  selectedItem,
   paneBody,
   paneInner,
 } from '../ui';
@@ -463,11 +464,13 @@ export function Doctor(props: {
     () => (outcome ? buildRows(outcome, listSession, t, filter) : []),
     [outcome, listSession, t, filter],
   );
-  // Mục chọn suy ra từ danh sách hiện tại: chạy lại thì khoá giữ, dữ liệu mới.
-  const selected = useMemo(() => {
-    const r = rows.find((x) => x.kind === 'item' && x.key === selectedKey);
-    return r?.kind === 'item' ? r.value : undefined;
-  }, [rows, selectedKey]);
+  // Mục chọn suy ra từ danh sách hiện tại (khoá vắng thì mục đầu): chạy lại
+  // thì khoá giữ, dữ liệu mới; lọc mất mục cũ thì sang mục đầu còn lại.
+  const selectedRow = useMemo(
+    () => selectedItem(rows, selectedKey),
+    [rows, selectedKey],
+  );
+  const selected = selectedRow?.value;
   const detail = useMemo(
     () =>
       outcome && selected
@@ -743,7 +746,8 @@ export function Doctor(props: {
               height={listH}
               active={active && focus === 'list' && !filtering}
               focused={focus === 'list'}
-              onChange={(_, key) => setSelectedKey(key)}
+              selectedKey={selectedKey}
+              onSelect={setSelectedKey}
               onSubmit={(v) => {
                 const code = ruleOf(o, v);
                 if (code) explainRule(code);
@@ -768,7 +772,7 @@ export function Doctor(props: {
             width={detailWidth}
             height={paneBody(paneH)}
             active={active && focus === 'detail'}
-            resetKey={selectedKey ?? ''}
+            resetKey={selectedRow?.key ?? ''}
             onStatus={setDetailStatus}
           />
         </Pane>

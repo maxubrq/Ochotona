@@ -20,8 +20,11 @@ class Stdout extends EventEmitter {
     super();
   }
   readonly isTTY = true;
+  /** Số lần Ink đã ghi, để biết khung còn đang đổi không. */
+  writes = 0;
   write = (s: string) => {
     this.frame = s;
+    this.writes++;
     return true;
   };
 }
@@ -62,6 +65,9 @@ export const KEY = {
 // eslint-disable-next-line no-control-regex
 const strip = (s: string) => s.replace(/\u001b\[[0-9;?]*[A-Za-z]/g, '');
 
+/** Khung không đổi trong ngần này thì coi như màn hình đã sẵn sàng nhận phím. */
+const STABLE_MS = 150;
+
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 export interface Mounted {
@@ -72,6 +78,13 @@ export interface Mounted {
   press(...keys: string[]): Promise<void>;
   /** Đợi tới khi khung chứa `text` (hoặc khớp biểu thức). */
   waitFor(text: string | RegExp, timeoutMs?: number): Promise<string>;
+  /**
+   * Gõ `key` rồi đợi `expected`; chưa thấy thì gõ lại (tối đa 5 lần). Ink vẽ
+   * khung trước khi `useInput` của màn hình mới kịp nghe stdin, nên phím gõ
+   * ngay sau khi khung hiện có thể rơi khi máy bận. Mỗi bước kiểm đúng kết
+   * quả mong đợi, nên phím thừa vẫn làm test hỏng.
+   */
+  pressUntil(key: string, expected: string | RegExp): Promise<string>;
   readonly exited: Promise<void>;
   unmount(): void;
 }
@@ -96,7 +109,7 @@ export async function mount(
     patchConsole: false,
   });
   const frame = () => strip(stdout.frame);
-  return {
+  const ui: Mounted = {
     ocho,
     frame,
     async press(...keys) {
@@ -115,15 +128,39 @@ export async function mount(
       const ok = (f: string) =>
         typeof text === 'string' ? f.includes(text) : text.test(f);
       while (Date.now() < end) {
-        const f = frame();
-        if (ok(f)) return f;
+        if (ok(frame())) {
+          // Khung khớp có thể vẽ trước effect của cùng lần commit (useInput
+          // đăng ký nghe stdin, useHints). Đợi khung đứng yên rồi mới trả, để
+          // phím gõ tiếp theo không rơi khi máy bận.
+          let last = stdout.writes;
+          let quietSince = Date.now();
+          while (Date.now() - quietSince < STABLE_MS && Date.now() < end) {
+            await sleep(20);
+            if (stdout.writes !== last) {
+              last = stdout.writes;
+              quietSince = Date.now();
+            }
+          }
+          if (ok(frame())) return frame();
+        }
         await sleep(30);
       }
       throw new Error(
         `timed out waiting for ${String(text)}; frame:\n${frame()}`,
       );
     },
+    async pressUntil(key, expected) {
+      for (let attempt = 1; ; attempt++) {
+        await ui.press(key);
+        try {
+          return await ui.waitFor(expected, 1500);
+        } catch (e) {
+          if (attempt >= 5) throw e;
+        }
+      }
+    },
     exited: ink.waitUntilExit().then(() => {}),
     unmount: () => ink.unmount(),
   };
+  return ui;
 }
