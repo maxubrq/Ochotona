@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/maxubrq/Ochotona/compare/cli-v0.1.0...cli-v0.2.0) (2026-10-05)
+
+
+### Features
+
+* add TUI ([aaa9303](https://github.com/maxubrq/Ochotona/commit/aaa93038b76c6e1e223fa08d4508ebd4f96d7a6e))
+
 ## 0.1.0 (2026-10-05)
 
 

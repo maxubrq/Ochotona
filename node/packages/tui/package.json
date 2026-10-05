@@ -1,6 +1,6 @@
 {
   "name": "@ochotona/tui",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Lệnh ocho-tui: giao diện terminal toàn màn hình của Ocho, dựng trên @ochotona/cli. Cùng dữ liệu, cùng chữ, nhưng chọn bằng phím mũi tên thay vì nhớ cờ",
   "type": "module",
   "bin": {
