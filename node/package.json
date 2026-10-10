@@ -2,7 +2,7 @@
   "name": "ochotona",
   "version": "0.2.1",
   "private": true,
-  "packageManager": "pnpm@9.15.9",
+  "packageManager": "pnpm@12.11.2",
   "type": "module",
   "scripts": {
     "build": "turbo build",
